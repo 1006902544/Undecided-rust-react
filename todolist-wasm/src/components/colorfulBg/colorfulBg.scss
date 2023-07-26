@@ -1,0 +1,44 @@
+.colorful-bg-container {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+
+  .colorful-bg-container-bg {
+    overflow: hidden;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    position: absolute;
+    left: -2px;
+    top: -2px;
+    z-index: -1;
+
+    >div {
+      width: 400%;
+      height: 400%;
+      transform: translate(-40%,-40%);
+      background-image: linear-gradient(to right top,blue,red,rgb(204, 0, 255),white);
+      animation: colorful-bg-container-bg-move 5s infinite;
+    }
+  }
+}
+
+@keyframes colorful-bg-container-bg-move {
+  0% {
+    transform: translate(-40%,-40%);
+  }
+  20% {
+    transform: translate(-60%,-60%)
+  }
+  40% {
+    transform: translate(-20%,-20%)
+  }
+  60% {
+    transform: translate(-20%,-60%)
+  }
+  80% {
+    transform: translate(-60%,-20%)
+  }
+  100% {
+    transform: translate(-40%,-40%);
+  }
+}

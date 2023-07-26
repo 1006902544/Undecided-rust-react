@@ -1,0 +1,13 @@
+.form-item-error {
+  height: 0;
+  overflow: hidden;
+  transition: all 0.3s;
+  line-height: 18px;
+  font-size: 14px;
+  color: rgb(228, 67, 67);
+  text-indent: 10px;
+}
+
+.form-item-error-true {
+  height: 18px;
+}

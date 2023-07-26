@@ -1,0 +1,36 @@
+@import '../../../globals.module.scss';
+
+.menu-container {
+  ul {
+    li {
+        width: 90px;
+        height:60px;
+        box-shadow: 0 0 5px 0 #ccc;
+        cursor: pointer;
+        overflow: hidden;
+        padding: 5px;
+        display: flex;
+        user-select:none;
+
+        .li-content {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 18px;
+          transition: all 0.2s;
+
+          &:hover {
+            transform: scale(1.2);
+            color:$color1;
+            text-shadow: 0 0 2px $color1;
+          }
+        }
+
+        .list-content-active {
+          transform: scale(1.2);
+          color:$color1;
+        }
+      }
+    }
+  }

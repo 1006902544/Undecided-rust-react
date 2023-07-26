@@ -1,0 +1,10 @@
+$bg-color: white !global;
+$color1:#bb02e3 !global;
+$color2:#07f4fd !global;
+
+:export {
+  bgColor:$bg-color;
+  color1:$color1;
+  color2:$color2;
+}
+

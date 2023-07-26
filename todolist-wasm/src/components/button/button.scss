@@ -1,0 +1,21 @@
+.nazabanma-btn {
+  transition: all .2s;
+
+  &:hover {
+
+    >span {
+      transform: scale(1.2);
+    }
+  }
+
+  &:active {
+    >span {
+      transform: scale(0.8);
+    }
+  }
+
+
+  >span {
+    transition: all .2s;
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "4157272",
+  "name": "rust-next",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "21730742",
+      "name": "icloading",
+      "font_class": "icloading",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    }
+  ]
+}

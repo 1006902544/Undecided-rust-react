@@ -1,0 +1,87 @@
+.nazabanma-prompt-wrap {
+  width: 0;
+  height: 0;
+  position: fixed;
+  right:20px;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items:flex-end;
+  z-index: 99999;
+}
+
+.nazabanma-prompt-option-container-appearing {
+  animation: nazabanma-prompt-option-container-appearing 300ms;
+}
+
+.nazabanma-prompt-option-container-disappearing {
+  animation: nazabanma-prompt-option-container-disappearing 300ms;
+}
+
+.nazabanma-prompt-option-container {
+  transition: all 0.3s;;
+
+  .nazabanma-prompt-option-bg {
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    left: -2px;
+    top: -2px;
+    z-index: -1;
+    overflow: hidden;
+
+    >div {
+      background-image: linear-gradient(to right top,rgb(189, 24, 65),rgb(117, 40, 189),rgb(255, 0, 242),rgb(163, 115, 230));
+      width: 200%;
+      height: 200%;
+      animation: nazabanma-prompt-option-bg-move 5s infinite;
+    }
+  }
+}
+
+@keyframes nazabanma-prompt-option-bg-move {
+  0% {
+    transform: translate(0%,0%)
+  }
+  25% {
+    transform: translate(0,-50%)
+  }
+  50% {
+    transform: translate(-50%,-50%)
+  }
+  75% {
+    transform: translate(-50%,0%)
+  }
+  100% {
+    transform: translate(0%,0%)
+  }
+}
+
+@keyframes nazabanma-prompt-option-container-appearing {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes nazabanma-prompt-option-container-disappearing {
+  0% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
