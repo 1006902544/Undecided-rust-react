@@ -5,11 +5,10 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface Route {
+export interface UpdateRouteReq {
   key?: number | null;
   label: string;
-  level: number;
-  p_key?: string | null;
+  p_key?: number | null;
   path: string;
   sort: number;
 }

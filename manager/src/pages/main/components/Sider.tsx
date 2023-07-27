@@ -11,7 +11,7 @@ export default function Sider() {
   const [selectedKey, setSelectedKey] = useState<string[]>([]);
 
   const onSelect: MenuProps['onSelect'] = ({ key }) => {
-    const selected = res?.data?.find((item) => item.key === key);
+    const selected = res?.data?.find((item) => item.key === Number(key));
 
     if (selected) {
       const pathname = selected?.path;
@@ -24,7 +24,7 @@ export default function Sider() {
   useEffect(() => {
     const keys = res?.data
       ?.filter((item) => item.path === curPathname)
-      ?.map((item) => item.key!);
+      ?.map((item) => item.key!.toString());
     if (keys) {
       setSelectedKey(keys);
     }

@@ -1,9 +1,10 @@
 import { ListContext, ListContextProps } from '../';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 
 export function useListContext<Req = any, Res = any>():
   | ListContextProps<Req, Res>
   | undefined {
   const context = useContext(ListContext);
-  return context;
+
+  return useMemo(() => context, [context]);
 }

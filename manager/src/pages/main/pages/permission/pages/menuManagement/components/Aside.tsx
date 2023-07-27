@@ -1,31 +1,59 @@
-import React, { useState } from 'react';
-import { PriRoute } from '../menuManagement';
-import { useGetAllRouter } from '@/libs/api';
+import React from 'react';
+import { useMenuManagementContext } from '../menuManagement';
+import type { PriRoute } from '../menuManagement';
 import { Tree, TreeProps } from 'antd';
 import { mapToTree } from '@/utils';
+import { UpdateModalButton } from '.';
+import { CloseOutlined, FormOutlined } from '@ant-design/icons';
+import { DeleteButton } from './';
 
-interface IProps {
-  setDataSource: React.Dispatch<React.SetStateAction<PriRoute[]>>;
-}
+export default function Aside() {
+  const { data: res, setSelectedKeys } = useMenuManagementContext() ?? {};
 
-export default function Aside({ setDataSource }: IProps) {
-  const { data: res } = useGetAllRouter({
-    query: {},
-  });
-
-  const onSelect: TreeProps['onSelect'] = (_, { node, selected }) => {
+  const onSelect: TreeProps['onSelect'] = (keys, { selected }) => {
     if (selected) {
-      setDataSource((node.children as any) ?? []);
+      setSelectedKeys?.(keys);
     } else {
-      setDataSource([]);
+      setSelectedKeys?.([]);
     }
   };
 
+  const titleRender = (node: PriRoute) => {
+    return (
+      <div className="flex justify-between">
+        <span className="flex-1 truncate">{node.label}</span>
+        {node.p_key ? null : (
+          <div
+            className="w-[40px] flex justify-between"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <UpdateModalButton
+              childNode={
+                <FormOutlined className="hover:scale-125 transition-all" />
+              }
+              record={node}
+            />
+
+            <DeleteButton
+              routerKey={node.key!}
+              childNode={
+                <CloseOutlined className="hover:scale-125 transition-all text-[brown]" />
+              }
+            />
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
-    <div className="w-[300px] h-full">
+    <div className="w-[300px] h-full flex flex-col">
+      <div className="flex-shrink-0 mb-[20px]">
+        <UpdateModalButton>Create Root Router</UpdateModalButton>
+      </div>
       <Tree
         onSelect={onSelect}
-        className="h-full w-[300px]"
+        className="flex-1 w-[300px]"
         treeData={mapToTree({
           data: (res?.data as any) ?? [],
           fieldProps: {
@@ -35,6 +63,7 @@ export default function Aside({ setDataSource }: IProps) {
         fieldNames={{
           title: 'label',
         }}
+        titleRender={titleRender as any}
       />
     </div>
   );

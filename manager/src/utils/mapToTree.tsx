@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+import { cloneDeep, sortBy } from 'lodash';
 
 export interface MapToTreeOptions<T> {
   data: T[];
@@ -37,5 +37,5 @@ export const mapToTree: MapToTree = (opt) => {
       container.push(route);
     }
   }
-  return container;
+  return sortBy(container, 'sort');
 };

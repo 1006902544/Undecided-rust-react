@@ -32,6 +32,7 @@ import type {
   PermissionAssociateAuthLimitRes,
   GetPermissionAuthParams,
   RoutesVecRes,
+  UpdateRouteReq,
   DeleteRouterParams
 } from './schema'
 import { custom_instance } from './custom_instance';
@@ -578,10 +579,12 @@ export const useGetRouter = <TData = Awaited<ReturnType<typeof getRouter>>, TErr
  * @summary update router
  */
 export const updateRouter = (
-    
+    updateRouteReq: UpdateRouteReq,
  ) => {
       return custom_instance<ResPonseU8>(
-      {url: `/manager/router`, method: 'post'
+      {url: `/manager/router`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: updateRouteReq
     },
       );
     }
@@ -589,18 +592,18 @@ export const updateRouter = (
 
 
 export const getUpdateRouterMutationOptions = <TError = ErrorType<unknown>,
-    TVariables = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRouter>>, TError,TVariables, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof updateRouter>>, TError,TVariables, TContext> => {
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRouter>>, TError,{data: UpdateRouteReq}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof updateRouter>>, TError,{data: UpdateRouteReq}, TContext> => {
  const {mutation: mutationOptions} = options ?? {};
 
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateRouter>>, TVariables> = () => {
-          
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateRouter>>, {data: UpdateRouteReq}> = (props) => {
+          const {data} = props ?? {};
 
-          return  updateRouter()
+          return  updateRouter(data,)
         }
 
         
@@ -609,15 +612,15 @@ export const getUpdateRouterMutationOptions = <TError = ErrorType<unknown>,
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateRouterMutationResult = NonNullable<Awaited<ReturnType<typeof updateRouter>>>
-    
+    export type UpdateRouterMutationBody = UpdateRouteReq
     export type UpdateRouterMutationError = ErrorType<unknown>
 
     /**
  * @summary update router
  */
 export const useUpdateRouter = <TError = ErrorType<unknown>,
-    TVariables = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRouter>>, TError,TVariables, TContext>, }
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRouter>>, TError,{data: UpdateRouteReq}, TContext>, }
 ) => {
     
       const mutationOptions = getUpdateRouterMutationOptions(options);

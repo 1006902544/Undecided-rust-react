@@ -16,7 +16,13 @@ export default function Main() {
         <S />
       </Sider>
       <Content style={{ height: '100%' }}>
-        <Header style={{ height: 60, background: 'transparent', padding: 0 }}>
+        <Header
+          style={{
+            height: 60,
+            background: 'transparent',
+            padding: 0,
+          }}
+        >
           <H />
         </Header>
 

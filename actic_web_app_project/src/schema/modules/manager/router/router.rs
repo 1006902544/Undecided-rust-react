@@ -4,7 +4,7 @@ use utoipa::ToSchema;
 
 #[derive(Debug, Deserialize, Serialize, ToSchema, FromRow)]
 pub struct Route {
-    pub key: Option<String>,
+    pub key: Option<u128>,
     pub label: String,
     pub path: String,
     pub p_key: Option<String>,
@@ -15,4 +15,13 @@ pub struct Route {
 #[derive(Debug, Deserialize, Serialize, ToSchema, FromRow)]
 pub struct DeleteRouteQuery {
     pub key: String,
+}
+
+#[derive(Debug, Deserialize, Serialize, ToSchema, FromRow)]
+pub struct UpdateRouteReq {
+    pub key: Option<u128>,
+    pub label: String,
+    pub path: String,
+    pub p_key: Option<u128>,
+    pub sort: u128,
 }

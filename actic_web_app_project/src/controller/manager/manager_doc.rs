@@ -50,6 +50,7 @@ use utoipa::OpenApi;
         AssociateAuthLimit,
         AssociateAuthLimitReq,
         PermissionAssociateAuthLimitRes,
+        UpdateRouteReq
     ))
 )]
 pub struct ApiDoc;

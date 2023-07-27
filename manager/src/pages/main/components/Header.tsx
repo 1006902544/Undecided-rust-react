@@ -31,7 +31,7 @@ export default function Header() {
           }}
           placement="bottomLeft"
         >
-          <span className="text-[18px]">
+          <span className="text-[18px] leading-[18px]">
             {auth?.name}
             <span className="text-[12px] text-[gray] ml-[10px]">
               #{auth?.id}

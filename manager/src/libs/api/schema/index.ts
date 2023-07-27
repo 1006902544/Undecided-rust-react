@@ -34,3 +34,4 @@ export * from './resPonseU8';
 export * from './route';
 export * from './routesVecRes';
 export * from './updatePermissionBody';
+export * from './updateRouteReq';

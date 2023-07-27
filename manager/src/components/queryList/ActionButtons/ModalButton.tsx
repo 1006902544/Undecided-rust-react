@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Modal, Button } from 'antd';
 import type { ModalProps } from 'antd';
 import { ButtonProps } from 'antd/lib/button';
@@ -28,11 +28,13 @@ export default function ModalButton({
   const onCancel = useCallback(() => {
     setOpen(false);
     onceCancel?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onOpen = useCallback(() => {
     onceOpen?.();
     setOpen(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

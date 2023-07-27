@@ -10,7 +10,7 @@ use derive_more::{Display, Error as DeriveError};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Display, DeriveError)]
-#[display(fmt = "错误: {}", name)]
+#[display(fmt = "Error: {}", name)]
 pub struct MyError {
     pub name: String,
     pub status: Option<StatusCode>,

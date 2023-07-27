@@ -1,34 +1,53 @@
 use crate::app::error::MyError;
-use crate::nako::connection::handle_none;
 use crate::schema::modules::manager::router::router::*;
 use actix_http::StatusCode;
 use mysql::prelude::Queryable;
 use mysql::{params, PooledConn, TxOpts};
 
 //创建路由
-pub fn create_route(route: Route, conn: &mut PooledConn) {
-    let sql_str = format!(
-        "insert into router (label,path,p_key,level) values({:?},{:?},{},{:?})",
-        route.label,
-        route.path,
-        handle_none(&route.p_key, false),
-        route.level
-    );
-    conn.query::<String, String>(sql_str).unwrap();
-}
-
-//修改路由
-pub fn edit_route(route: Route, conn: &mut PooledConn) -> Result<u8, MyError> {
+pub fn create_route(route: UpdateRouteReq, conn: &mut PooledConn) -> Result<u8, MyError> {
     let sql_str =
-        "update router set label=:label,path=:path,level=:level where router.key=:key;".to_string();
-    let mut conn = conn.start_transaction(TxOpts::default()).unwrap();
-    let res = conn.exec_first::<String, String, params::Params>(
+        format!("insert into router (label,path,p_key,sort) values(:label,:path,:p_key,:sort)");
+    let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
+    let res = trans.exec_drop(
         sql_str,
         params! {
             "label" => route.label,
             "path" => route.path,
-            "level" => route.level,
-            "key" => handle_none(&route.key,false)
+            "p_key" => route.p_key,
+            "sort" => route.sort
+        },
+    );
+    match res {
+        Ok(_) => {
+            let row = trans.affected_rows() as u8;
+            if row > 0 {
+                trans.commit().unwrap();
+                Ok(row)
+            } else {
+                trans.rollback().unwrap();
+                Err(MyError::no_changes_happen())
+            }
+        }
+        Err(e) => {
+            trans.rollback().unwrap();
+            Err(MyError::sql_error(e))
+        }
+    }
+}
+
+//修改路由
+pub fn edit_route(route: UpdateRouteReq, conn: &mut PooledConn) -> Result<u8, MyError> {
+    let sql_str =
+        "update router set label=:label,path=:path,sort=:sort where router.key=:key;".to_string();
+    let mut conn = conn.start_transaction(TxOpts::default()).unwrap();
+    let res = conn.exec_drop(
+        sql_str,
+        params! {
+            "label" => route.label,
+            "path" => route.path,
+            "sort" => route.sort,
+            "key" => route.key
         },
     );
     match res {

@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import { ButtonProps } from 'antd/lib/button';
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 import { useListContext } from '../hooks';
 import { useMutation } from '@tanstack/react-query';
 

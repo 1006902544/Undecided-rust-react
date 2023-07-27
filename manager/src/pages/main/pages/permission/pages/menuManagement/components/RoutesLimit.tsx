@@ -1,31 +1,30 @@
 import React from 'react';
-import type { PriRoute } from '../menuManagement';
-import { Button, Table } from 'antd';
+import { useMenuManagementContext, type PriRoute } from '../menuManagement';
+import { Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
+import { DeleteButton, UpdateModalButton } from './';
 
-interface IProps {
-  dataSource: PriRoute[];
-}
+export default function RoutesLimit() {
+  const { selectedNode } = useMenuManagementContext() ?? {};
 
-export default function RoutesLimit({ dataSource }: IProps) {
   const columns: ColumnsType<PriRoute> = [
     { dataIndex: 'key', title: 'KEY', width: 60, align: 'center' },
     { dataIndex: 'label', title: 'LABEL', width: 180, ellipsis: true },
     { dataIndex: 'path', title: 'PATH', width: 180, ellipsis: true },
-    { dataIndex: 'p_key', title: 'PKEY', width: 60, align: 'center' },
-    { dataIndex: 'sort', title: 'SORT', width: 60, align: 'center' },
+    { dataIndex: 'p_key', title: 'PKEY', width: 90, align: 'center' },
+    { dataIndex: 'sort', title: 'SORT', width: 90, align: 'center' },
     {
       dataIndex: 'option',
       title: 'OPTION',
       width: 180,
       align: 'center',
-      render(_, { key }) {
+      render(_, record) {
         return (
           <div className="flex justify-center">
-            <Button type="link" style={{ color: 'red' }}>
-              DELETE
-            </Button>
-            <Button type="link">EDIT</Button>
+            <DeleteButton routerKey={record.key!} />
+            <UpdateModalButton type="link" record={record}>
+              EDIT
+            </UpdateModalButton>
           </div>
         );
       },
@@ -33,15 +32,25 @@ export default function RoutesLimit({ dataSource }: IProps) {
   ];
 
   return (
-    <div className="flex-1 px-[20px]">
-      <Table
-        dataSource={dataSource}
-        columns={columns}
-        scroll={{
-          x: '100%',
-          y: '100%',
-        }}
-      />
+    <div className="flex-1 px-[20px] flex flex-col w-0">
+      <div className="flex-shrink-0 mb-[20px]">
+        <UpdateModalButton disabled={!selectedNode} parentRecord={selectedNode}>
+          {selectedNode
+            ? `Create Router For ${selectedNode?.label}`
+            : 'Chose TreeNode To Create Router'}
+        </UpdateModalButton>
+      </div>
+
+      <div className="flex-1">
+        <Table
+          dataSource={selectedNode?.children ?? []}
+          columns={columns}
+          scroll={{
+            x: '100%',
+            y: '100%',
+          }}
+        />
+      </div>
     </div>
   );
 }

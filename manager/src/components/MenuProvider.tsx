@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import type { Route, RoutesVecRes } from '@/libs/api/schema';
 import { getToken } from '@/utils';
 import type { ErrorType } from '@/libs/api/custom_instance';
-import { cloneDeep } from 'lodash';
 import { mapToTree } from '@/utils';
 
 interface IProps {

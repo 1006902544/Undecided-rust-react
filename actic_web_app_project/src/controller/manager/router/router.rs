@@ -13,15 +13,19 @@ use actix_web::{
 use mysql::{Pool, PooledConn};
 use utoipa;
 
-#[utoipa::path(post, path = "/manager/router", responses((
-  status = 200 ,
-  description = "success",
-  body = ResPonseU8
+#[utoipa::path(
+    post,
+    path = "/manager/router",
+    request_body = UpdateRouteReq,
+    responses((
+    status = 200 ,
+    description = "success",
+    body = ResPonseU8
 )))]
 ///update router
 #[post("")]
 pub async fn update_router(
-    body: Json<Route>,
+    body: Json<UpdateRouteReq>,
     pool: Data<Pool>,
     req: HttpRequest,
 ) -> Result<impl Responder, MyError> {

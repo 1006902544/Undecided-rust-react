@@ -6,7 +6,7 @@
  */
 
 export interface UpdatePermissionBody {
-  id?: string | null;
+  id?: number | null;
   method?: string | null;
   name: string;
   path?: string | null;
