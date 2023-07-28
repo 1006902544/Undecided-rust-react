@@ -12,6 +12,7 @@ export * from './associateAuthLimit';
 export * from './associateAuthLimitReq';
 export * from './associateRouterAuthLimit';
 export * from './associateRouterAuthLimitReq';
+export * from './associateRouterAuthReq';
 export * from './authLimitRes';
 export * from './authRes';
 export * from './deletePermissionParams';

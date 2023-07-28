@@ -10,5 +10,5 @@ export interface AssociateRouterAuthLimitReq {
   limit?: string | null;
   name?: string | null;
   page?: string | null;
-  rkey: number;
+  rkey: string;
 }

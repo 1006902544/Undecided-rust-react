@@ -3,6 +3,7 @@ import { Button, Modal } from 'antd';
 import React, { useState } from 'react';
 import { useMenuManagementContext } from '../menuManagement';
 import type { ButtonProps } from 'antd/lib/button';
+import { useMenuContext } from '@/components';
 
 interface IProps extends ButtonProps {
   routerKey?: number;
@@ -18,6 +19,7 @@ export default function DeleteButton({
 }: IProps) {
   const [deleting, setDeleting] = useState(false);
   const { refetch } = useMenuManagementContext() ?? {};
+  const { refetch: menuRefetch } = useMenuContext() ?? {};
 
   const onDelete = () => {
     if (routerKey) {
@@ -29,6 +31,7 @@ export default function DeleteButton({
           deleteRouter({ key: routerKey })
             .then(() => {
               refetch?.();
+              menuRefetch?.();
             })
             .finally(() => setDeleting(false));
         },

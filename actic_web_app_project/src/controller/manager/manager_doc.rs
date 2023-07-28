@@ -6,9 +6,13 @@ use crate::schema::modules::{
             associate::{associate::*, auth::*},
             permission::*,
         },
-        router::{associate::auth::*, router::*},
+        router::{
+            associate::{associate::*, auth::*},
+            router::*,
+        },
     },
 };
+use chrono::NaiveDate;
 use utoipa::OpenApi;
 
 #[derive(OpenApi)]
@@ -19,6 +23,7 @@ use utoipa::OpenApi;
         super::router::router::delete_router,
         super::router::router::get_all_router,
         super::router::associate::auth::get_auth_with_router,
+        super::router::associate::associate::associate_auth_router,
         super::auth::auth::sign_in,
         super::auth::auth::get_admin_info,
         super::auth::auth::get_auth_limit,
@@ -52,11 +57,12 @@ use utoipa::OpenApi;
         AssociateAuthLimitReq,
         PermissionAssociateAuthLimitRes,
         UpdateRouteReq,
-        //用户菜单权限分页
+        //用户菜单权限相关
         AssociateRouterAuthLimitReq,
         AssociateRouterAuthLimit,
         RouterAssociateAuthRes,
         RouterAssociateAuthLimitRes,
+        AssociateRouterAuthReq,
     ))
 )]
 pub struct ApiDoc;

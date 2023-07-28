@@ -1,4 +1,4 @@
-import { Button, InputNumber, Modal } from 'antd';
+import { Button, InputNumber, Modal, Tooltip } from 'antd';
 import React, {
   forwardRef,
   useRef,
@@ -14,6 +14,7 @@ import type { UpdateRouteReq } from '@/libs/api/schema';
 import { PriRoute, useMenuManagementContext } from '../menuManagement';
 import { updateRouter } from '@/libs/api';
 import { useMenuContext } from '@/components';
+import styled from 'styled-components';
 
 interface IProps extends ButtonProps {
   modalProps?: ModalProps;
@@ -41,13 +42,12 @@ export default function UpdateModalButton({
   };
   //refresh menu list after submitting
   const { refetch } = useMenuManagementContext() ?? {};
-
   //submit fn
   const mutationFn = async () => {
     const isRoot = !parentRecord;
     const isCreate = !record;
 
-    let params: UpdateRouteReq = {} as UpdateRouteReq;
+    let params: Record<string, any> = {};
     await formRef.current?.validateFields().then((res) => {
       params = res;
     });
@@ -58,9 +58,8 @@ export default function UpdateModalButton({
     }
     if (!isRoot) {
       params.p_key = parentRecord?.key;
-      params.path = parentRecord.path + params.key;
     }
-    return updateRouter(params);
+    return updateRouter(params as UpdateRouteReq);
   };
 
   const { mutate, isLoading } = useMutation({
@@ -107,7 +106,7 @@ export default function UpdateModalButton({
         }}
         {...modalProps}
       >
-        <UpdateBody record={record} ref={formRef} />
+        <UpdateBody record={record} ref={formRef} parentRecord={parentRecord} />
       </Modal>
     </>
   );
@@ -115,53 +114,76 @@ export default function UpdateModalButton({
 
 interface UpdateBodyProps {
   record?: PriRoute;
+  parentRecord?: PriRoute;
 }
 
-const UpdateBody = forwardRef(({ record }: UpdateBodyProps, ref) => {
-  const [form] = ProForm.useForm();
+const UpdateBody = forwardRef(
+  ({ record, parentRecord }: UpdateBodyProps, ref) => {
+    const [form] = ProForm.useForm();
 
-  useImperativeHandle(ref, () => form);
+    useImperativeHandle(ref, () => form);
 
-  return (
-    <ProForm
-      form={form}
-      submitter={false}
-      initialValues={{ sort: 0, ...record }}
-    >
-      <ProFormText
-        name="label"
-        label="Label"
-        rules={[
-          {
-            required: true,
-            message: 'please input label',
-          },
-        ]}
-      />
+    return (
+      <Container
+        form={form}
+        submitter={false}
+        initialValues={{
+          sort: 0,
 
-      <ProFormText
-        name="path"
-        label="Path"
-        rules={[
-          {
-            required: true,
-            message: 'please input path',
-          },
-        ]}
-      />
-
-      <ProForm.Item
-        name="sort"
-        label="Sort"
-        rules={[
-          {
-            required: true,
-            message: 'please input sort',
-          },
-        ]}
+          ...record,
+          path: record ? record.path : parentRecord?.path,
+        }}
       >
-        <InputNumber precision={0} min={0} />
-      </ProForm.Item>
-    </ProForm>
-  );
-});
+        <ProFormText
+          name="label"
+          label="Label"
+          rules={[
+            {
+              required: true,
+              message: 'please input label',
+            },
+          ]}
+        />
+
+        <ProFormText
+          name="path"
+          label="Path"
+          rules={[
+            {
+              required: true,
+              message: 'please input path',
+            },
+          ]}
+        />
+
+        <ProForm.Item
+          name="sort"
+          label="Sort"
+          rules={[
+            {
+              required: true,
+              message: 'please input sort',
+            },
+          ]}
+        >
+          <InputNumber precision={0} min={0} />
+        </ProForm.Item>
+      </Container>
+    );
+  }
+);
+
+const Container = styled(ProForm)`
+  .parent-path-input-container {
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+
+    * {
+      border: 0;
+      box-shadow: none;
+      background-color: transparent;
+    }
+  }
+`;

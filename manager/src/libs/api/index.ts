@@ -34,6 +34,7 @@ import type {
   RoutesVecRes,
   UpdateRouteReq,
   DeleteRouterParams,
+  AssociateRouterAuthReq,
   RouterAssociateAuthLimitRes,
   GetAuthWithRouterParams
 } from './schema'
@@ -737,6 +738,53 @@ export const useGetAllRouter = <TData = Awaited<ReturnType<typeof getAllRouter>>
 }
 
 
+export const associateAuthRouter = (
+    associateRouterAuthReq: AssociateRouterAuthReq,
+ ) => {
+      return custom_instance<ResPonseU8>(
+      {url: `/manager/router/associate`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: associateRouterAuthReq
+    },
+      );
+    }
+  
+
+
+export const getAssociateAuthRouterMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof associateAuthRouter>>, TError,{data: AssociateRouterAuthReq}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof associateAuthRouter>>, TError,{data: AssociateRouterAuthReq}, TContext> => {
+ const {mutation: mutationOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof associateAuthRouter>>, {data: AssociateRouterAuthReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  associateAuthRouter(data,)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type AssociateAuthRouterMutationResult = NonNullable<Awaited<ReturnType<typeof associateAuthRouter>>>
+    export type AssociateAuthRouterMutationBody = AssociateRouterAuthReq
+    export type AssociateAuthRouterMutationError = ErrorType<unknown>
+
+    export const useAssociateAuthRouter = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof associateAuthRouter>>, TError,{data: AssociateRouterAuthReq}, TContext>, }
+) => {
+    
+      const mutationOptions = getAssociateAuthRouterMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
 /**
  * get auth limit with router associated
  * @summary get auth limit with router associated

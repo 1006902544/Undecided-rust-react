@@ -4,9 +4,10 @@ import List from './list';
 
 interface IProps {
   rkey: number;
+  childNode?: React.ReactNode;
 }
 
-export default function AssociateModalButton({ rkey }: IProps) {
+export default function AssociateModalButton({ rkey, childNode }: IProps) {
   const [open, setOpen] = useState(false);
   const onOpen = () => {
     setOpen(true);
@@ -17,9 +18,10 @@ export default function AssociateModalButton({ rkey }: IProps) {
 
   return (
     <>
-      <Button onClick={onOpen} type="link">
-        ASSOCIATE
-      </Button>
+      <span onClick={onOpen}>
+        {childNode ?? <Button type="link">ASSOCIATE</Button>}
+      </span>
+
       <Modal
         open={open}
         onCancel={onCancel}

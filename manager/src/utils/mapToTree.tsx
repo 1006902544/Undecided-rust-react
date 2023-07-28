@@ -28,10 +28,12 @@ export const mapToTree: MapToTree = (opt) => {
     const route = mapContainer[curKey];
     if (route[pkey]) {
       const parent = mapContainer[route[pkey]];
-      if (parent[children]) {
-        parent[children].push(route);
-      } else {
-        parent[children] = [route];
+      if (parent) {
+        if (parent[children]) {
+          parent[children].push(route);
+        } else {
+          parent[children] = [route];
+        }
       }
     } else {
       container.push(route);

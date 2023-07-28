@@ -1,8 +1,9 @@
 import React from 'react';
-import { List, StatusButton, Table } from '@/components';
+import { Filter, List, StatusButton, Table } from '@/components';
 import { resourceName } from '.';
 import type { ColumnsType } from 'antd/es/table';
 import type { AssociateAuthLimit } from '@/libs/api/schema';
+import { ProFormText } from '@ant-design/pro-components';
 
 interface IProps {
   pid: number;
@@ -33,7 +34,16 @@ export default function ListContainer({ pid }: IProps) {
 
   return (
     <div className="w-full">
-      <List resource={resourceName} filterValue={{ pid }}>
+      <List
+        resource={resourceName}
+        filterValue={{ pid }}
+        filters={
+          <Filter>
+            <ProFormText name="id" label="ID" />
+            <ProFormText name="name" label="NAME" />
+          </Filter>
+        }
+      >
         <Table rowKey="id" columns={columns} />
       </List>
     </div>

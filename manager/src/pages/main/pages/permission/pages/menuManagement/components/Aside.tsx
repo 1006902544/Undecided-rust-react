@@ -3,8 +3,12 @@ import { useMenuManagementContext } from '../menuManagement';
 import type { PriRoute } from '../menuManagement';
 import { Tree, TreeProps } from 'antd';
 import { mapToTree } from '@/utils';
-import { UpdateModalButton } from '.';
-import { CloseOutlined, FormOutlined } from '@ant-design/icons';
+import { AssociateModalButton, UpdateModalButton } from '.';
+import {
+  CloseOutlined,
+  FormOutlined,
+  OrderedListOutlined,
+} from '@ant-design/icons';
 import { DeleteButton } from './';
 
 export default function Aside() {
@@ -24,9 +28,16 @@ export default function Aside() {
         <span className="flex-1 truncate">{node.label}</span>
         {node.p_key ? null : (
           <div
-            className="w-[40px] flex justify-between"
+            className="flex justify-between"
             onClick={(e) => e.stopPropagation()}
           >
+            <AssociateModalButton
+              rkey={node.key!}
+              childNode={
+                <OrderedListOutlined className="hover:scale-125 transition-all" />
+              }
+            />
+
             <UpdateModalButton
               childNode={
                 <FormOutlined className="hover:scale-125 transition-all" />

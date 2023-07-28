@@ -34,7 +34,10 @@ export default function MenuProvider({ children }: IProps) {
       enabled: !!getToken(),
       onSuccess(data) {
         setRoutesTree(
-          mapToTree({ data: data.data, fieldProps: { pkey: 'p_key' } })
+          mapToTree({
+            data: data.data,
+            fieldProps: { pkey: 'p_key' },
+          })
         );
       },
     },

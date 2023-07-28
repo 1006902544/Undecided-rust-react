@@ -18,7 +18,9 @@ pub struct AssociateRouterAuthLimit {
     pub name: String,
     pub username: String,
     pub age: u128,
+    #[schema(value_type = String)]
     pub create_time: NaiveDate,
+    #[schema(value_type = String)]
     pub update_time: NaiveDate,
     pub associated: u8,
 }

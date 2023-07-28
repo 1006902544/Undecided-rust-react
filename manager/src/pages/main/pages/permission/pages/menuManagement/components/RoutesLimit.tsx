@@ -16,13 +16,18 @@ export default function RoutesLimit() {
     {
       dataIndex: 'option',
       title: 'OPTION',
-      width: 180,
+      width: 260,
       align: 'center',
+      fixed: 'right',
       render(_, record) {
         return (
           <div className="flex justify-center">
             <DeleteButton routerKey={record.key!} />
-            <UpdateModalButton type="link" record={record}>
+            <UpdateModalButton
+              type="link"
+              record={record}
+              parentRecord={selectedNode}
+            >
               EDIT
             </UpdateModalButton>
             <AssociateModalButton rkey={record.key!} />

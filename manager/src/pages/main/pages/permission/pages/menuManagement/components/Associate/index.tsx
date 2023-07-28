@@ -1,6 +1,9 @@
 import type { Resource } from '@/components';
-import { getAuthWithRouter } from '@/libs/api';
-import type { GetAuthWithRouterParams } from '@/libs/api/schema';
+import { associateAuthRouter, getAuthWithRouter } from '@/libs/api';
+import type {
+  AssociateRouterAuthReq,
+  GetAuthWithRouterParams,
+} from '@/libs/api/schema';
 export { default as AssociateModalButton } from './AssociateModalButton';
 
 export const permissionsMenuRouterAssociateResourceName =
@@ -17,5 +20,9 @@ export const permissionsMenuRouterAssociateResource: Resource<GetAuthWithRouterP
         total: res.total,
         current: res.current,
       };
+    },
+
+    async handleStatus(data: AssociateRouterAuthReq) {
+      return await associateAuthRouter(data);
     },
   };
