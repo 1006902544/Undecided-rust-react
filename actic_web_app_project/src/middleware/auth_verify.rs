@@ -3,11 +3,10 @@ use std::{
     rc::Rc,
 };
 
-use actix_http::StatusCode;
 use actix_web::{
     body::{BoxBody, EitherBody, MessageBody},
     dev::{forward_ready, Service, ServiceRequest, ServiceResponse, Transform},
-    http::header::AUTHORIZATION,
+    http::{header::AUTHORIZATION, StatusCode},
     web::Bytes,
     Error, HttpResponse,
 };

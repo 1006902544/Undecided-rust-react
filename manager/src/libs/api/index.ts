@@ -33,7 +33,9 @@ import type {
   GetPermissionAuthParams,
   RoutesVecRes,
   UpdateRouteReq,
-  DeleteRouterParams
+  DeleteRouterParams,
+  RouterAssociateAuthLimitRes,
+  GetAuthWithRouterParams
 } from './schema'
 import { custom_instance } from './custom_instance';
 import type { ErrorType } from './custom_instance';
@@ -726,6 +728,61 @@ export const useGetAllRouter = <TData = Awaited<ReturnType<typeof getAllRouter>>
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetAllRouterQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * get auth limit with router associated
+ * @summary get auth limit with router associated
+ */
+export const getAuthWithRouter = (
+    params: GetAuthWithRouterParams,
+ signal?: AbortSignal
+) => {
+      return custom_instance<RouterAssociateAuthLimitRes>(
+      {url: `/manager/router/associate/auth`, method: 'get',
+        params, signal
+    },
+      );
+    }
+  
+
+export const getGetAuthWithRouterQueryKey = (params: GetAuthWithRouterParams,) => [`/manager/router/associate/auth`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetAuthWithRouterQueryOptions = <TData = Awaited<ReturnType<typeof getAuthWithRouter>>, TError = ErrorType<unknown>>(params: GetAuthWithRouterParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAuthWithRouter>>, TError, TData>, }
+): UseQueryOptions<Awaited<ReturnType<typeof getAuthWithRouter>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAuthWithRouterQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAuthWithRouter>>> = ({ signal }) => getAuthWithRouter(params, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetAuthWithRouterQueryResult = NonNullable<Awaited<ReturnType<typeof getAuthWithRouter>>>
+export type GetAuthWithRouterQueryError = ErrorType<unknown>
+
+/**
+ * @summary get auth limit with router associated
+ */
+export const useGetAuthWithRouter = <TData = Awaited<ReturnType<typeof getAuthWithRouter>>, TError = ErrorType<unknown>>(
+ params: GetAuthWithRouterParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAuthWithRouter>>, TError, TData>, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetAuthWithRouterQueryOptions(params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

@@ -11,7 +11,7 @@ use crate::{
         },
     },
 };
-use actix_http::StatusCode;
+use actix_web::http::StatusCode;
 use mysql::{
     from_row,
     prelude::{Queryable, TextQuery},

@@ -1,6 +1,6 @@
 import { useGetRouter } from '@/libs/api';
 import type { UseQueryResult } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import type { Route, RoutesVecRes } from '@/libs/api/schema';
 import { getToken } from '@/utils';
 import type { ErrorType } from '@/libs/api/custom_instance';
@@ -20,6 +20,11 @@ export const MenuContext = React.createContext<
     })
   | null
 >(null);
+
+export const useMenuContext = () => {
+  const context = useContext(MenuContext);
+  return useMemo(() => context, [context]);
+};
 
 export default function MenuProvider({ children }: IProps) {
   const [routesTree, setRoutesTree] = useState<PriRoute[]>([]);

@@ -5,7 +5,7 @@ use crate::controller::manager::{
         associate::{associate::*, auth::*},
         permission::*,
     },
-    router::router::*,
+    router::{associate::auth::*, router::*},
 };
 use actix_web::{web, web::ServiceConfig};
 use utoipa::OpenApi;
@@ -24,7 +24,8 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                     .service(update_router)
                     .service(get_router)
                     .service(delete_router)
-                    .service(get_all_router),
+                    .service(get_all_router)
+                    .service(web::scope("associate").service(get_auth_with_router)),
             )
             .service(
                 web::scope("auth")

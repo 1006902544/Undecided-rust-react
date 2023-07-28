@@ -1,5 +1,5 @@
-use actix_http::body::{BoxBody, MessageBody};
 use actix_web::{
+    body::{BoxBody, MessageBody},
     dev::{forward_ready, Service, ServiceRequest, ServiceResponse, Transform},
     web::Bytes,
     Error, HttpResponse,

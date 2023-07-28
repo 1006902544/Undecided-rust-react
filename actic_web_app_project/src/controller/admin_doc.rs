@@ -2,7 +2,7 @@ use crate::{
     app::error::MyError,
     schema::modules::admin::{admin::*, admin_response::*},
 };
-use actix_http::StatusCode;
+use actix_web::http::StatusCode;
 use utoipa::OpenApi;
 
 #[derive(OpenApi)]

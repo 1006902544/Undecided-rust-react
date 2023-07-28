@@ -21,7 +21,7 @@ export interface ResourceGetRes<Res> {
 }
 
 export interface ResourceReq<Req = any> {
-  data?: Req;
+  data: Req;
   pagination: Pagination;
 }
 

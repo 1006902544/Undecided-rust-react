@@ -13,6 +13,7 @@ import { useMutation } from '@tanstack/react-query';
 import type { UpdateRouteReq } from '@/libs/api/schema';
 import { PriRoute, useMenuManagementContext } from '../menuManagement';
 import { updateRouter } from '@/libs/api';
+import { useMenuContext } from '@/components';
 
 interface IProps extends ButtonProps {
   modalProps?: ModalProps;
@@ -29,6 +30,8 @@ export default function UpdateModalButton({
   childNode,
   ...buttonProps
 }: IProps) {
+  const menuContext = useMenuContext();
+
   const [open, setOpen] = useState(false);
   const onCancel = () => {
     setOpen(false);
@@ -65,6 +68,7 @@ export default function UpdateModalButton({
     onSuccess() {
       onCancel();
       refetch?.();
+      menuContext?.refetch();
     },
   });
 

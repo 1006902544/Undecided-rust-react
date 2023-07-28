@@ -4,7 +4,7 @@ use utoipa::ToSchema;
 
 use super::{
     permission::{associate::auth::*, permission::Permission},
-    router::router::*,
+    router::{associate::auth::*, router::*},
 };
 use crate::schema::modules::admin::admin::AdminInfo;
 
@@ -17,7 +17,8 @@ use crate::schema::modules::admin::admin::AdminInfo;
     AdminInfoListRes = ResponseData<Vec<AdminInfo>>,
     AuthLimitRes = ResponseData<AuthRes>,
     PermissionLimitRes = ResponseData<PermissionRes>,
-    PermissionAssociateAuthLimitRes = ResponseData<PermissionAssociateAuthRes>
+    PermissionAssociateAuthLimitRes = ResponseData<PermissionAssociateAuthRes>,
+    RouterAssociateAuthLimitRes = ResponseData<RouterAssociateAuthRes>
 )]
 pub struct ResponseData<B> {
     pub data: B,
@@ -52,7 +53,8 @@ impl<B> ResponseData<B> {
 #[aliases(
     AuthRes = LimitResults<AdminInfo>,
     PermissionRes = LimitResults<Permission>,
-    PermissionAssociateAuthRes = LimitResults<AssociateAuthLimit>
+    PermissionAssociateAuthRes = LimitResults<AssociateAuthLimit>,
+    RouterAssociateAuthRes = LimitResults<AssociateRouterAuthLimit>
 )]
 pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,

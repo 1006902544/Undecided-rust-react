@@ -1,2 +1,2 @@
 pub mod associate;
-pub mod router;
+pub mod auth;

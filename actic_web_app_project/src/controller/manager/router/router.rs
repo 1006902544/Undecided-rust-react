@@ -7,7 +7,7 @@ use crate::{
 };
 use actix_web::{
     delete, get, post,
-    web::{Data, Form, Json, Query},
+    web::{Data, Json, Query},
     HttpRequest, Responder,
 };
 use mysql::{Pool, PooledConn};
@@ -45,8 +45,11 @@ pub async fn update_router(
                             Err(e) => Err(e),
                         },
                         None => {
-                            router_service::create_route(body, &mut conn);
-                            Ok(ResponseData::new(1).into_json_response())
+                            let res = router_service::create_route(body, &mut conn);
+                            match res {
+                                Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+                                Err(e) => Err(e),
+                            }
                         }
                     }
                 }

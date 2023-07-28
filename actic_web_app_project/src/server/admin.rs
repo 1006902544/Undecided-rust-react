@@ -2,7 +2,7 @@ use crate::{
     app::error::MyError,
     schema::modules::admin::admin::{AdminInfo, LoginBody, SignUpReq},
 };
-use actix_http::StatusCode;
+use actix_web::http::StatusCode;
 use mysql::{prelude::Queryable, Error, PooledConn, TxOpts};
 
 //注册

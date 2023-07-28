@@ -27,7 +27,7 @@ export default function Main() {
         </Header>
 
         <Content style={{ height: 'calc(100% - 60px)', padding: 20 }}>
-          <div className="p-[20px] w-full h-full bg-[white] rounded-[8px]">
+          <div className="p-[20px] w-full h-full bg-[white] shadow-lg rounded-[8px]">
             <Outlet />
           </div>
         </Content>
