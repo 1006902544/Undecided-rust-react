@@ -27,13 +27,7 @@ export default function AssociateModalButton({ rkey, childNode }: IProps) {
         onCancel={onCancel}
         title="Associate"
         width={1200}
-        footer={
-          <div>
-            <Button type="primary" size="large">
-              cancel
-            </Button>
-          </div>
-        }
+        footer={null}
       >
         <List rkey={rkey} />
       </Modal>
