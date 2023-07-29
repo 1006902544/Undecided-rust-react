@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
 
 use super::{
+    game_center::general::tags::tags::*,
     permission::{associate::auth::*, permission::Permission},
     router::{associate::auth::*, router::*},
 };
@@ -18,7 +19,9 @@ use crate::schema::modules::admin::admin::AdminInfo;
     AuthLimitRes = ResponseData<AuthRes>,
     PermissionLimitRes = ResponseData<PermissionRes>,
     PermissionAssociateAuthLimitRes = ResponseData<PermissionAssociateAuthRes>,
-    RouterAssociateAuthLimitRes = ResponseData<RouterAssociateAuthRes>
+    RouterAssociateAuthLimitRes = ResponseData<RouterAssociateAuthRes>,
+    //游戏标签limit
+    GameTagsRes = ResponseData<GameTagsLimitRes>
 )]
 pub struct ResponseData<B> {
     pub data: B,
@@ -54,7 +57,9 @@ impl<B> ResponseData<B> {
     AuthRes = LimitResults<AdminInfo>,
     PermissionRes = LimitResults<Permission>,
     PermissionAssociateAuthRes = LimitResults<AssociateAuthLimit>,
-    RouterAssociateAuthRes = LimitResults<AssociateRouterAuthLimit>
+    RouterAssociateAuthRes = LimitResults<AssociateRouterAuthLimit>,
+    //游戏标签
+    GameTagsLimitRes = LimitResults<Tag>
 )]
 pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,

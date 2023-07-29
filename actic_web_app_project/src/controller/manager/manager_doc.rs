@@ -1,6 +1,7 @@
 use crate::schema::modules::{
     admin::admin::*,
     manager::{
+        game_center::general::tags::tags::*,
         manager_response::*,
         permission::{
             associate::{associate::*, auth::*},
@@ -33,7 +34,11 @@ use utoipa::OpenApi;
         super::permission::permission::delete_permission,
         super::permission::associate::auth::get_permission_auth,
         super::permission::associate::associate::associate,
-        super::permission::associate::associate::disassociate
+        super::permission::associate::associate::disassociate,
+        //游戏中心-通用-标签
+        super::game_center::general::tags::tags::get_tags_limit,
+        super::game_center::general::tags::tags::update_tags,
+        super::game_center::general::tags::tags::delete_tags,
     ),
     components(schemas(
         RoutesVecRes,
@@ -58,11 +63,9 @@ use utoipa::OpenApi;
         PermissionAssociateAuthLimitRes,
         UpdateRouteReq,
         //用户菜单权限相关
-        AssociateRouterAuthLimitReq,
-        AssociateRouterAuthLimit,
-        RouterAssociateAuthRes,
-        RouterAssociateAuthLimitRes,
-        AssociateRouterAuthReq,
+        AssociateRouterAuthLimitReq,AssociateRouterAuthLimit,RouterAssociateAuthRes,RouterAssociateAuthLimitRes,AssociateRouterAuthReq,
+        //游戏标签
+        Tag,UpdateTagReq,TagLimitReq,DeleteTagReq,GameTagsRes,GameTagsLimitRes
     ))
 )]
 pub struct ApiDoc;

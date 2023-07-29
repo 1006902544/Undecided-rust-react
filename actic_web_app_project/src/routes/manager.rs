@@ -1,5 +1,6 @@
 use crate::controller::manager::{
     auth::auth::*,
+    game_center::general::tags::tags::*,
     manager_doc::ApiDoc,
     permission::{
         associate::{associate::*, auth::*},
@@ -51,6 +52,20 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                             .service(disassociate)
                             .service(get_permission_auth),
                     ),
+            )
+            .service(
+                web::scope("gameCenter").service(
+                    web::scope("general")
+                        .service(
+                            web::scope("tags")
+                                .service(get_tags_limit)
+                                .service(update_tags)
+                                .service(delete_tags),
+                        )
+                        .service(web::scope("types"))
+                        .service(web::scope("companyStudio"))
+                        .service(web::scope("systems")),
+                ),
             ),
     );
 }

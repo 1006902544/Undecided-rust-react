@@ -15,9 +15,9 @@ pub struct LimitResults<T> {
     pub total: u128,
 }
 
-pub fn handle_limit(limit: &Option<String>) -> u128 {
+pub fn handle_limit(limit: &Option<impl ToString>) -> u128 {
     match limit.clone() {
-        Some(limit) => match limit.parse::<u128>() {
+        Some(limit) => match limit.to_string().parse::<u128>() {
             Ok(limit) => limit,
             Err(_) => 10,
         },
@@ -25,9 +25,9 @@ pub fn handle_limit(limit: &Option<String>) -> u128 {
     }
 }
 
-pub fn handle_page(page: &Option<String>) -> u128 {
+pub fn handle_page(page: &Option<impl ToString>) -> u128 {
     match page.clone() {
-        Some(page) => match page.parse::<u128>() {
+        Some(page) => match page.to_string().parse::<u128>() {
             Ok(page) => page,
             Err(_) => 1,
         },
