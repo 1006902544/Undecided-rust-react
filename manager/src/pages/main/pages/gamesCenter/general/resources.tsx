@@ -1,0 +1,1 @@
+export { gamesCenterGeneralTagsResource } from './tags';

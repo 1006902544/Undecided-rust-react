@@ -29,13 +29,13 @@ pub struct UpdateTagReq {
 
 #[derive(Debug, ToSchema, Serialize, Deserialize, IntoParams)]
 pub struct TagLimitReq {
-    pub limit: Option<u128>,
-    pub page: Option<u128>,
-    pub id: Option<u128>,
+    pub limit: Option<u64>,
+    pub page: Option<u64>,
+    pub id: Option<u64>,
     pub name: Option<String>,
 }
 
-#[derive(Debug, ToSchema, Serialize, Deserialize, IntoParams)]
+#[derive(Debug, Serialize, Deserialize, ToSchema, IntoParams, Clone)]
 pub struct DeleteTagReq {
-    pub id: u128,
+    pub id: u64,
 }

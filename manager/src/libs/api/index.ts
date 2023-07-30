@@ -212,14 +212,14 @@ export const getTagsLimit = (
  signal?: AbortSignal
 ) => {
       return custom_instance<GameTagsRes>(
-      {url: `/manager/gameCenter/general/tags`, method: 'get',
+      {url: `/manager/gamesCenter/general/tags`, method: 'get',
         params, signal
     },
       );
     }
   
 
-export const getGetTagsLimitQueryKey = (params?: GetTagsLimitParams,) => [`/manager/gameCenter/general/tags`, ...(params ? [params]: [])] as const;
+export const getGetTagsLimitQueryKey = (params?: GetTagsLimitParams,) => [`/manager/gamesCenter/general/tags`, ...(params ? [params]: [])] as const;
   
 
     
@@ -266,7 +266,7 @@ export const updateTags = (
     updateTagReq: UpdateTagReq,
  ) => {
       return custom_instance<ResPonseU8>(
-      {url: `/manager/gameCenter/general/tags`, method: 'post',
+      {url: `/manager/gamesCenter/general/tags`, method: 'post',
       headers: {'Content-Type': 'application/json', },
       data: updateTagReq
     },
@@ -320,7 +320,7 @@ export const deleteTags = (
     params: DeleteTagsParams,
  ) => {
       return custom_instance<ResPonseU8>(
-      {url: `/manager/gameCenter/general/tags`, method: 'delete',
+      {url: `/manager/gamesCenter/general/tags`, method: 'delete',
         params
     },
       );

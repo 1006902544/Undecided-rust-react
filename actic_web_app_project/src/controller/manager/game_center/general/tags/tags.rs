@@ -17,7 +17,7 @@ use mysql::Pool;
 
 #[utoipa::path(
   get,
-  path = "/manager/gameCenter/general/tags",
+  path = "/manager/gamesCenter/general/tags",
   params (TagLimitReq),
   responses (
     (status = 200 , body = GameTagsRes , description = "success")
@@ -49,7 +49,7 @@ pub async fn get_tags_limit(
 
 #[utoipa::path(
   post,
-  path = "/manager/gameCenter/general/tags",
+  path = "/manager/gamesCenter/general/tags",
   request_body = UpdateTagReq,
   responses (
     (status = 200 , body = ResPonseU8 , description = "success")
@@ -80,12 +80,12 @@ pub async fn update_tags(
 }
 
 #[utoipa::path(
-  delete,
-  path = "/manager/gameCenter/general/tags",
-  params (DeleteTagReq),
-  responses (
+    delete,
+    path = "/manager/gamesCenter/general/tags",
+    params (DeleteTagReq),
+    responses (
     (status = 200 , body = ResPonseU8 , description = "success")
-  )
+    )
 )]
 #[delete("")]
 ///delete tags
@@ -98,7 +98,7 @@ pub async fn delete_tags(
     if is_manager {
         let mut conn = pool.get_conn().unwrap();
         if has_permission(&mut conn, &req) {
-            let res = tags_server::delete_tags(&mut conn, query.id).await;
+            let res = tags_server::delete_tags(&mut conn, query.into_inner().id).await;
             match res {
                 Ok(res) => Ok(ResponseData::new(res).into_json_response()),
                 Err(e) => Err(e),

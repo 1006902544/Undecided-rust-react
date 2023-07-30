@@ -6,3 +6,4 @@ export {
   useMenuContext,
 } from './MenuProvider';
 export { default as ModalButton } from './ModalButton';
+export { default as ProFormHexColorPicker } from './ProFormHexColorPicker';

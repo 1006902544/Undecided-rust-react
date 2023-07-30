@@ -54,7 +54,7 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                     ),
             )
             .service(
-                web::scope("gameCenter").service(
+                web::scope("gamesCenter").service(
                     web::scope("general")
                         .service(
                             web::scope("tags")

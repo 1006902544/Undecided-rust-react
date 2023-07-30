@@ -132,7 +132,6 @@ where
 
         Box::pin(async move {
             let mut could_pass = false;
-
             let path = req.path().to_string();
             let method = req.method().as_str().to_string();
             let cur_unless = Unless { path, method };

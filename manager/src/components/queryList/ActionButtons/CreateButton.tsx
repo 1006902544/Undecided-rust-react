@@ -14,12 +14,14 @@ import {
   message,
 } from 'antd';
 import { ProForm, ProFormInstance } from '@ant-design/pro-components';
+import type { ProFormProps } from '@ant-design/pro-components';
 import { Resource } from '../types.d';
 import { useQuery } from '@tanstack/react-query';
 
 interface IProps extends ButtonProps {
   children?: React.ReactNode;
   modalProps?: ModalProps;
+  formProps?: ProFormProps;
   label?: string;
   data?: Record<string, any>;
   meta?: Record<string, any>;
@@ -31,6 +33,7 @@ export default function CreateButton({
   label,
   data,
   meta,
+  formProps,
   ...btnProps
 }: IProps) {
   const listContext = useListContext();
@@ -84,7 +87,12 @@ export default function CreateButton({
         }}
         {...modalProps}
       >
-        <UpdateBody data={data} resource={resource} ref={containerRef}>
+        <UpdateBody
+          data={data}
+          formProps={formProps}
+          resource={resource}
+          ref={containerRef}
+        >
           {children}
         </UpdateBody>
       </Modal>
@@ -94,12 +102,16 @@ export default function CreateButton({
 
 interface UpdateBodyProps {
   resource: Resource<Record<string, any>, any>;
+  formProps?: ProFormProps;
   children?: React.ReactNode;
   data?: Record<string, any>;
 }
 
 const UpdateBody = forwardRef(
-  ({ resource, data: dataProps, children }: UpdateBodyProps, ref) => {
+  (
+    { resource, data: dataProps, children, formProps }: UpdateBodyProps,
+    ref
+  ) => {
     const [form] = ProForm.useForm();
 
     //share form with modal for submitting
@@ -116,7 +128,7 @@ const UpdateBody = forwardRef(
 
     return (
       <Spin spinning={isLoading}>
-        <ProForm form={form} submitter={false}>
+        <ProForm form={form} submitter={false} {...formProps}>
           {children}
         </ProForm>
       </Spin>

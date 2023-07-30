@@ -21,10 +21,10 @@ pub async fn get_tags_limit(
     let res = conn.exec_map(
         sql_str,
         params! {
-          "id" => query.id,
-          "name" => query.name,
-          "scope" => limit*(page-1),
-          "id" => limit
+            "id" => query.id,
+            "name" => query.name,
+            "scope" => limit*(page-1),
+            "limit" => limit
         },
         |row| from_row::<Tag>(row),
     );
@@ -59,7 +59,7 @@ pub async fn update_tags(conn: &mut PooledConn, data: UpdateTagReq) -> Result<u8
             after_update(trans, res).await
         }
         None => {
-            let sql_str = "insert into games_tags name,description,bg_color,border_color,text_color values(:name,:description,:bg_color,:border_color,:text_color)";
+            let sql_str = "insert into games_tags (name,description,bg_color,border_color,text_color) values(:name,:description,:bg_color,:border_color,:text_color)";
             let res = trans.exec_drop(sql_str, params);
             after_update(trans, res).await
         }
@@ -88,8 +88,8 @@ pub async fn after_update(
     }
 }
 
-pub async fn delete_tags(conn: &mut PooledConn, id: u128) -> Result<u8, MyError> {
-    let sql_str = "delete from games_tags where id=1";
+pub async fn delete_tags(conn: &mut PooledConn, id: u64) -> Result<u8, MyError> {
+    let sql_str = "delete from games_tags where id=:id";
     let res = conn.exec_drop(
         sql_str,
         params! {
