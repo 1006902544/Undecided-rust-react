@@ -22,11 +22,15 @@ import type {
   AdminInfoRes,
   ResPonseString,
   LoginBody,
+  GameTagsRes,
+  GetTagsLimitParams,
+  ResPonseU8,
+  UpdateTagReq,
+  DeleteTagsParams,
   PermissionLimitRes,
   GetPermissionParams,
   UpdatePermissionBody,
   DeletePermissionParams,
-  ResPonseU8,
   PermissionAssociateAuthReqBody,
   DisassociateParams,
   PermissionAssociateAuthLimitRes,
@@ -195,6 +199,168 @@ export const useSignIn = <TError = ErrorType<unknown>,
 ) => {
     
       const mutationOptions = getSignInMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * get tags limit
+ * @summary get tags limit
+ */
+export const getTagsLimit = (
+    params?: GetTagsLimitParams,
+ signal?: AbortSignal
+) => {
+      return custom_instance<GameTagsRes>(
+      {url: `/manager/gameCenter/general/tags`, method: 'get',
+        params, signal
+    },
+      );
+    }
+  
+
+export const getGetTagsLimitQueryKey = (params?: GetTagsLimitParams,) => [`/manager/gameCenter/general/tags`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetTagsLimitQueryOptions = <TData = Awaited<ReturnType<typeof getTagsLimit>>, TError = ErrorType<unknown>>(params?: GetTagsLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getTagsLimit>>, TError, TData>, }
+): UseQueryOptions<Awaited<ReturnType<typeof getTagsLimit>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetTagsLimitQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTagsLimit>>> = ({ signal }) => getTagsLimit(params, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetTagsLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getTagsLimit>>>
+export type GetTagsLimitQueryError = ErrorType<unknown>
+
+/**
+ * @summary get tags limit
+ */
+export const useGetTagsLimit = <TData = Awaited<ReturnType<typeof getTagsLimit>>, TError = ErrorType<unknown>>(
+ params?: GetTagsLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getTagsLimit>>, TError, TData>, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetTagsLimitQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * update tags
+ * @summary update tags
+ */
+export const updateTags = (
+    updateTagReq: UpdateTagReq,
+ ) => {
+      return custom_instance<ResPonseU8>(
+      {url: `/manager/gameCenter/general/tags`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: updateTagReq
+    },
+      );
+    }
+  
+
+
+export const getUpdateTagsMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateTags>>, TError,{data: UpdateTagReq}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof updateTags>>, TError,{data: UpdateTagReq}, TContext> => {
+ const {mutation: mutationOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateTags>>, {data: UpdateTagReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateTags(data,)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateTagsMutationResult = NonNullable<Awaited<ReturnType<typeof updateTags>>>
+    export type UpdateTagsMutationBody = UpdateTagReq
+    export type UpdateTagsMutationError = ErrorType<unknown>
+
+    /**
+ * @summary update tags
+ */
+export const useUpdateTags = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateTags>>, TError,{data: UpdateTagReq}, TContext>, }
+) => {
+    
+      const mutationOptions = getUpdateTagsMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * delete tags
+ * @summary delete tags
+ */
+export const deleteTags = (
+    params: DeleteTagsParams,
+ ) => {
+      return custom_instance<ResPonseU8>(
+      {url: `/manager/gameCenter/general/tags`, method: 'delete',
+        params
+    },
+      );
+    }
+  
+
+
+export const getDeleteTagsMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteTags>>, TError,{params: DeleteTagsParams}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof deleteTags>>, TError,{params: DeleteTagsParams}, TContext> => {
+ const {mutation: mutationOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteTags>>, {params: DeleteTagsParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteTags(params,)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteTagsMutationResult = NonNullable<Awaited<ReturnType<typeof deleteTags>>>
+    
+    export type DeleteTagsMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete tags
+ */
+export const useDeleteTags = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteTags>>, TError,{params: DeleteTagsParams}, TContext>, }
+) => {
+    
+      const mutationOptions = getDeleteTagsMutationOptions(options);
      
       return useMutation(mutationOptions);
     }

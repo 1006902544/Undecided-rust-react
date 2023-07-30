@@ -52,7 +52,7 @@ pub async fn get_tags_limit(
   path = "/manager/gameCenter/general/tags",
   request_body = UpdateTagReq,
   responses (
-    (status = 200 , body = ResponseU8 , description = "success")
+    (status = 200 , body = ResPonseU8 , description = "success")
   )
 )]
 #[post("")]
@@ -84,7 +84,7 @@ pub async fn update_tags(
   path = "/manager/gameCenter/general/tags",
   params (DeleteTagReq),
   responses (
-    (status = 200 , body = ResponseU8 , description = "success")
+    (status = 200 , body = ResPonseU8 , description = "success")
   )
 )]
 #[delete("")]
