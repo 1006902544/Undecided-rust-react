@@ -4,3 +4,4 @@ pub mod game_center;
 pub mod manager_doc;
 pub mod permission;
 pub mod router;
+pub mod upload;

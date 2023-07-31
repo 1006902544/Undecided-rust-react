@@ -17,10 +17,10 @@ import type {
   QueryKey
 } from '@tanstack/react-query'
 import type {
+  ResPonseString,
   AuthLimitRes,
   GetAuthLimitParams,
   AdminInfoRes,
-  ResPonseString,
   LoginBody,
   GameTagsRes,
   GetTagsLimitParams,
@@ -47,6 +47,62 @@ import type { ErrorType } from './custom_instance';
 
 
 
+/**
+ * upload static file
+ * @summary upload static file
+ */
+export const uploadFile = (
+    uploadFileBody: string,
+ ) => {const formData = new FormData();
+formData.append('data', uploadFileBody)
+
+      return custom_instance<ResPonseString>(
+      {url: ``, method: 'post',
+      headers: {'Content-Type': 'multipart/form-data', },
+       data: formData
+    },
+      );
+    }
+  
+
+
+export const getUploadFileMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof uploadFile>>, TError,{data: string}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof uploadFile>>, TError,{data: string}, TContext> => {
+ const {mutation: mutationOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof uploadFile>>, {data: string}> = (props) => {
+          const {data} = props ?? {};
+
+          return  uploadFile(data,)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UploadFileMutationResult = NonNullable<Awaited<ReturnType<typeof uploadFile>>>
+    export type UploadFileMutationBody = string
+    export type UploadFileMutationError = ErrorType<unknown>
+
+    /**
+ * @summary upload static file
+ */
+export const useUploadFile = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof uploadFile>>, TError,{data: string}, TContext>, }
+) => {
+    
+      const mutationOptions = getUploadFileMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
 /**
  * auth limit
  * @summary auth limit

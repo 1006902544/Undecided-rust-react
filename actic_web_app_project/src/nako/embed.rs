@@ -1,7 +1,8 @@
 use rust_embed::RustEmbed;
 
 #[derive(RustEmbed)]
-#[folder = "assets/images/"]
+#[folder = "$CARGO_MANIFEST_DIR/assets/images/"]
+#[include = "images/*"]
 pub struct Images;
 
 #[derive(RustEmbed)]

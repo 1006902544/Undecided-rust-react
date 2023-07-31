@@ -6,6 +6,8 @@ import {
 import { ProFormHexColorPicker } from '@/components';
 import React from 'react';
 import styled from 'styled-components';
+import { Button, Upload } from 'antd';
+import { getToken } from '@/utils';
 
 export default function UpdateCreate() {
   return (
@@ -48,7 +50,7 @@ export default function UpdateCreate() {
 
       <ProForm.Item shouldUpdate label="Preview">
         {({ getFieldsValue }) => {
-          const { bg_color, border_color, text_color } = getFieldsValue();
+          const { bg_color, border_color, text_color, name } = getFieldsValue();
           return (
             <div
               className="px-[8px] py-[2px] rounded-[4px] inline-block"
@@ -58,7 +60,7 @@ export default function UpdateCreate() {
                 color: text_color,
               }}
             >
-              Tags Preview
+              {name ?? 'Tags Preview'}
             </div>
           );
         }}
@@ -72,6 +74,18 @@ export default function UpdateCreate() {
           maxLength: 100,
         }}
       />
+
+      <Upload
+        action={process.env.REACT_APP_BASE_API_URL + '/manager/upload'}
+        headers={{
+          Authorization: getToken()!,
+        }}
+        data={{
+          name: 'aaaaa.png',
+        }}
+      >
+        <Button>Upload</Button>
+      </Upload>
     </Container>
   );
 }
