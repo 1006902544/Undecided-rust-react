@@ -10,7 +10,7 @@ use crate::controller::manager::{
         associate::{associate::*, auth::*},
         router::*,
     },
-    upload::upload_file,
+    upload::{get_static_file, upload_file},
 };
 use actix_web::{web, web::ServiceConfig};
 use utoipa::OpenApi;
@@ -20,7 +20,11 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
     let base_url = "manager";
     cfg.service(
         web::scope(base_url)
-            .service(web::scope("upload").service(upload_file))
+            .service(
+                web::scope("upload")
+                    .service(upload_file)
+                    .service(get_static_file),
+            )
             .service(
                 SwaggerUi::new("/swagger-ui/{_:.*}")
                     .url("/api-docs/openapi.json", ApiDoc::openapi()),

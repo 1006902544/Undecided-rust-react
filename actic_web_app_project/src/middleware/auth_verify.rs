@@ -13,6 +13,7 @@ use actix_web::{
 use futures_util::future::LocalBoxFuture;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
+use validators::regex::Regex;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AuthErr {
@@ -24,18 +25,25 @@ pub struct AuthErr {
 pub struct Unless {
     pub path: String,
     pub method: String,
+    pub regex: Option<Regex>,
 }
 
 impl Unless {
     pub fn is_same(&self, other: &Unless) -> bool {
-        self.path == other.path && self.method == other.method
+        self.method == other.method
+            && (self.path == other.path
+                || match &other.regex {
+                    Some(regex) => regex.is_match(&self.path),
+                    None => false,
+                })
     }
 
     #[allow(unused)]
-    pub fn new(path: &str, method: &str) -> Self {
+    pub fn new(path: &str, regex: Option<Regex>, method: &str) -> Self {
         Unless {
             path: path.to_string(),
             method: method.to_string(),
+            regex,
         }
     }
 }
@@ -44,13 +52,23 @@ impl Unless {
 pub struct UnlessTree {
     pub path: String,
     pub method: Option<String>,
+    pub regex: Option<Regex>,
     pub children: Option<Vec<UnlessTree>>,
 }
 
 impl UnlessTree {
-    pub fn new(path: &str, method: Option<&str>, children: Option<Vec<Self>>) -> Self {
+    pub fn new(
+        path: &str,
+        method: Option<&str>,
+        regex: Option<&str>,
+        children: Option<Vec<Self>>,
+    ) -> Self {
         UnlessTree {
             path: path.to_string(),
+            regex: match regex {
+                Some(regex) => Some(Regex::new(regex).unwrap()),
+                None => None,
+            },
             method: match method {
                 Some(m) => Some(m.to_string()),
                 None => None,
@@ -73,6 +91,7 @@ pub fn handle_unless_tree(vecs: Vec<UnlessTree>, scope: Option<String>) -> Vec<U
             Some(method) => {
                 arr.push(Unless {
                     path: path.clone(),
+                    regex: unless.regex,
                     method,
                 });
             }
@@ -134,7 +153,11 @@ where
             let mut could_pass = false;
             let path = req.path().to_string();
             let method = req.method().as_str().to_string();
-            let cur_unless = Unless { path, method };
+            let cur_unless = Unless {
+                path,
+                regex: None,
+                method,
+            };
 
             let app_data = req.app_data::<Vec<UnlessTree>>();
 

@@ -93,21 +93,30 @@ pub fn get_unless_tree() -> Vec<UnlessTree> {
         UnlessTree::new(
             "/admin",
             None,
+            None,
             Some(vec![
-                UnlessTree::new("/signUp", Some("POST"), None),
-                UnlessTree::new("/signIn", Some("POST"), None),
-                UnlessTree::new("/api-docs/openapi.json", Some("GET"), None),
+                UnlessTree::new("/signUp", Some("POST"), None, None),
+                UnlessTree::new("/signIn", Some("POST"), None, None),
+                UnlessTree::new("/api-docs/openapi.json", Some("GET"), None, None),
             ]),
         ),
         UnlessTree::new(
             "/manager",
             None,
+            None,
             Some(vec![
-                UnlessTree::new("/api-docs/openapi.json", Some("GET"), None),
+                UnlessTree::new("/api-docs/openapi.json", Some("GET"), None, None),
                 UnlessTree::new(
                     "/auth",
                     None,
-                    Some(vec![UnlessTree::new("/signIn", Some("POST"), None)]),
+                    None,
+                    Some(vec![UnlessTree::new("/signIn", Some("POST"), None, None)]),
+                ),
+                UnlessTree::new(
+                    "/upload/static/assets",
+                    Some("GET"),
+                    Some(r"^/manager/upload/static/assets"),
+                    None,
                 ),
             ]),
         ),

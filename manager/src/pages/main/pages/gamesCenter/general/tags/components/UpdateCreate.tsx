@@ -74,18 +74,6 @@ export default function UpdateCreate() {
           maxLength: 100,
         }}
       />
-
-      <Upload
-        action={process.env.REACT_APP_BASE_API_URL + '/manager/upload'}
-        headers={{
-          Authorization: getToken()!,
-        }}
-        data={{
-          name: 'aaaaa.png',
-        }}
-      >
-        <Button>Upload</Button>
-      </Upload>
     </Container>
   );
 }
