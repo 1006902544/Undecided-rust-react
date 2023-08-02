@@ -82,8 +82,10 @@ struct GetStaticFileQuery {
 #[utoipa::path(get, path = "/manager/upload/static")]
 #[get("/static/{filename:.*}")]
 ///get static file
-async fn get_static_file(req: HttpRequest) -> Result<impl Responder, impl ResponseError> {
-    let image_content = web::block(|| std::fs::read("./assets/images/aaaaa.png")).await;
+async fn get_static_file(path: web::Path<String>) -> Result<impl Responder, impl ResponseError> {
+    let filename = path.into_inner();
+    let image_content =
+        web::block(move || std::fs::read(format!("./assets/images/{}", &filename))).await;
     match image_content {
         Ok(file) => match file {
             Ok(file) => Ok(HttpResponse::build(StatusCode::OK)

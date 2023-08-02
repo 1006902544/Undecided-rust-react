@@ -113,9 +113,9 @@ pub fn get_unless_tree() -> Vec<UnlessTree> {
                     Some(vec![UnlessTree::new("/signIn", Some("POST"), None, None)]),
                 ),
                 UnlessTree::new(
-                    "/upload/static/assets",
+                    "/upload/static",
                     Some("GET"),
-                    Some(r"^/manager/upload/static/assets"),
+                    Some(r"^/manager/upload/static/"),
                     None,
                 ),
             ]),
