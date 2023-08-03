@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { ProForm } from '@ant-design/pro-components';
 import { ColorPicker, ColorPickerProps } from 'antd';
 import type { ProFormItemProps } from '@ant-design/pro-components';
@@ -47,6 +47,7 @@ const ColorPickerContainer = ({
     if (!value) {
       form.setFieldValue(name, defaultColor);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   const onChange = (_: Color, hex: string) => {
