@@ -1,6 +1,6 @@
 use actix_web::{
     delete, get, post,
-    web::{Data, Form, Json, Query},
+    web::{Data, Json, Query},
     HttpRequest, Responder, ResponseError,
 };
 use mysql::Pool;

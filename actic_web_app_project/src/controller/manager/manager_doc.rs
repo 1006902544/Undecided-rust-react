@@ -13,7 +13,6 @@ use crate::schema::modules::{
         },
     },
 };
-use chrono::NaiveDate;
 use utoipa::OpenApi;
 
 #[derive(OpenApi)]
@@ -39,8 +38,6 @@ use utoipa::OpenApi;
         super::game_center::general::tags::tags::get_tags_limit,
         super::game_center::general::tags::tags::update_tags,
         super::game_center::general::tags::tags::delete_tags,
-        //上传文件
-        super::upload::upload_file,
     ),
     components(schemas(
         RoutesVecRes,

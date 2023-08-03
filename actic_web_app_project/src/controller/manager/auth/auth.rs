@@ -16,7 +16,7 @@ use crate::{
 };
 use actix_web::{
     get, post,
-    web::{Data, Form, Json, Query},
+    web::{Data, Json, Query},
     HttpRequest, Responder, ResponseError, Result,
 };
 use mysql::Pool;

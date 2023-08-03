@@ -84,6 +84,7 @@ impl MyError {
         }
     }
 
+    #[allow(unused)]
     pub fn create_err() -> MyError {
         MyError {
             name: "create failed".to_string(),

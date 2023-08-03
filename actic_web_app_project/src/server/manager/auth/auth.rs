@@ -1,5 +1,3 @@
-use std::fmt::format;
-
 use crate::{
     app::error::MyError,
     nako::connection::{get_current, get_total, handle_none},
@@ -12,11 +10,7 @@ use crate::{
     },
 };
 use actix_web::http::StatusCode;
-use mysql::{
-    from_row,
-    prelude::{Queryable, TextQuery},
-    PooledConn, TxOpts,
-};
+use mysql::{prelude::Queryable, PooledConn};
 
 //登录
 pub async fn sign_in(data: LoginBody, mut conn: PooledConn) -> Result<AdminInfo, MyError> {

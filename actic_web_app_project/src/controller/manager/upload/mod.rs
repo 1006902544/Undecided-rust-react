@@ -1,41 +1,22 @@
-use actix_files as fs;
-use actix_multipart::{
-    form::{tempfile::TempFile, text::Text, MultipartForm},
-    Multipart,
-};
+use actix_multipart::Multipart;
 use actix_web::{
     get,
-    http::{
-        header::{ContentDisposition, DispositionType},
-        StatusCode,
-    },
+    http::StatusCode,
     post,
-    web::{self, Query},
-    Error, HttpRequest, HttpResponse, Responder, ResponseError,
+    web::{self},
+    HttpResponse, Responder, ResponseError,
 };
-use fs::NamedFile;
-use futures_util::{future::ok, StreamExt};
+
+use futures_util::StreamExt;
 use serde::{Deserialize, Serialize};
-use std::{
-    borrow::BorrowMut,
-    fs::File,
-    io::{BufReader, Write},
-    path::PathBuf,
-};
+use std::{fs::File, io::Write};
 use utoipa::ToSchema;
 
 use crate::{
     app::error::MyError,
-    nako::embed::Images,
     schema::modules::manager::manager_response::{self, ResponseData},
 };
 
-// #[derive(MultipartForm)]
-// Attributes available to this derive:
-// pub struct UploadFile {
-//     name: Text<String>,
-//     file: TempFile,
-// }
 #[utoipa::path(
   post,
   path = "/manager/upload/static",
@@ -46,7 +27,7 @@ use crate::{
 )]
 #[post("/static")]
 ///upload static file
-async fn upload_file(mut payload: Multipart) -> Result<impl Responder, impl ResponseError> {
+async fn upload_image(mut payload: Multipart) -> Result<impl Responder, impl ResponseError> {
     let mut name: Option<String> = None;
     while let Some(item) = payload.next().await {
         let mut field = item.unwrap();
@@ -82,7 +63,7 @@ struct GetStaticFileQuery {
 #[utoipa::path(get, path = "/manager/upload/static")]
 #[get("/static/{filename:.*}")]
 ///get static file
-async fn get_static_file(path: web::Path<String>) -> Result<impl Responder, impl ResponseError> {
+async fn get_static_image(path: web::Path<String>) -> Result<impl Responder, impl ResponseError> {
     let filename = path.into_inner();
     let image_content =
         web::block(move || std::fs::read(format!("./assets/images/{}", &filename))).await;
@@ -91,8 +72,8 @@ async fn get_static_file(path: web::Path<String>) -> Result<impl Responder, impl
             Ok(file) => Ok(HttpResponse::build(StatusCode::OK)
                 .content_type("image/jpeg")
                 .body(file)),
-            Err(err) => Err(MyError::not_found()),
+            Err(_) => Err(MyError::not_found()),
         },
-        Err(err) => Err(MyError::not_found()),
+        Err(_) => Err(MyError::not_found()),
     }
 }

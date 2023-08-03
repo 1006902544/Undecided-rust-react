@@ -1,13 +1,6 @@
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
 
-use crate::app::error::MyError;
-
-pub struct Limit {
-    limit: u128,
-    page: u128,
-}
-
 #[derive(Serialize, Deserialize, Debug, ToSchema)]
 pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,

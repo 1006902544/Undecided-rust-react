@@ -6,8 +6,6 @@ import {
 import { ProFormHexColorPicker } from '@/components';
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Upload } from 'antd';
-import { getToken } from '@/utils';
 
 export default function UpdateCreate() {
   return (

@@ -1,4 +1,3 @@
-use crate::schema::base_struct::*;
 use mysql::prelude::FromRow;
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
