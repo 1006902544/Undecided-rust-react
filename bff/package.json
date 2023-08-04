@@ -39,6 +39,9 @@
   },
 
   "_moduleAliases": {
-    "@": "."
+    "@": ".",
+    "@middleware": "./middleware",
+    "@controller": "./controller",
+    "@server": "./server"
   }
 }

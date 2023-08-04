@@ -3,18 +3,24 @@ use actix_web::{
     get,
     http::StatusCode,
     post,
-    web::{self},
-    HttpResponse, Responder, ResponseError,
+    web::{self, Data},
+    Error, HttpRequest, HttpResponse, Responder, ResponseError,
 };
 
 use futures_util::StreamExt;
+use mysql::{Pool, PooledConn};
 use serde::{Deserialize, Serialize};
 use std::{fs::File, io::Write};
 use utoipa::ToSchema;
 
 use crate::{
     app::error::MyError,
-    schema::modules::manager::manager_response::{self, ResponseData},
+    nako::auth::is_manager,
+    schema::modules::manager::{
+        manager_response::{self, ResponseData},
+        upload::AccessKey,
+    },
+    server::manager::permissions::has_permission,
 };
 
 #[utoipa::path(
@@ -75,5 +81,34 @@ async fn get_static_image(path: web::Path<String>) -> Result<impl Responder, imp
             Err(_) => Err(MyError::not_found()),
         },
         Err(_) => Err(MyError::not_found()),
+    }
+}
+
+#[utoipa::path(
+    get,
+    path = "/manager/upload/accessKey",
+    responses(
+    (status = 200 ,description="success" ,body = AccessKeyRes)
+    )
+)]
+#[get("/accessKey")]
+///get accessKey
+async fn get_access_key(
+    req: HttpRequest,
+    pool: Data<Pool>,
+) -> Result<impl Responder, impl ResponseError> {
+    let mut conn = pool.get_conn().unwrap();
+    let has_permission = has_permission(&mut conn, &req);
+    if has_permission {
+        Ok(ResponseData::new(AccessKey {
+            endpoint: "minio.zxc.cc",
+            port: 80,
+            use_ssl: false,
+            access_key: "nazabanma",
+            secret_key: "zdc86039606",
+        })
+        .into_json_response())
+    } else {
+        Err(MyError::permissions_error())
     }
 }

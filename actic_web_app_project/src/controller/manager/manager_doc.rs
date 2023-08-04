@@ -11,6 +11,7 @@ use crate::schema::modules::{
             associate::{associate::*, auth::*},
             router::*,
         },
+        upload::*,
     },
 };
 use utoipa::OpenApi;
@@ -38,6 +39,8 @@ use utoipa::OpenApi;
         super::game_center::general::tags::tags::get_tags_limit,
         super::game_center::general::tags::tags::update_tags,
         super::game_center::general::tags::tags::delete_tags,
+        //upload,accessKey
+        super::upload::get_access_key
     ),
     components(schemas(
         RoutesVecRes,
@@ -64,7 +67,9 @@ use utoipa::OpenApi;
         //用户菜单权限相关
         AssociateRouterAuthLimitReq,AssociateRouterAuthLimit,RouterAssociateAuthRes,RouterAssociateAuthLimitRes,AssociateRouterAuthReq,
         //游戏标签
-        Tag,UpdateTagReq,TagLimitReq,DeleteTagReq,GameTagsRes,GameTagsLimitRes
+        Tag,UpdateTagReq,TagLimitReq,DeleteTagReq,GameTagsRes,GameTagsLimitRes,
+        //上传，accessKey
+        AccessKeyRes,AccessKey
     ))
 )]
 pub struct ApiDoc;

@@ -6,6 +6,7 @@ use super::{
     game_center::general::tags::tags::*,
     permission::{associate::auth::*, permission::Permission},
     router::{associate::auth::*, router::*},
+    upload::*,
 };
 use crate::schema::modules::admin::admin::AdminInfo;
 
@@ -21,7 +22,9 @@ use crate::schema::modules::admin::admin::AdminInfo;
     PermissionAssociateAuthLimitRes = ResponseData<PermissionAssociateAuthRes>,
     RouterAssociateAuthLimitRes = ResponseData<RouterAssociateAuthRes>,
     //游戏标签limit
-    GameTagsRes = ResponseData<GameTagsLimitRes>
+    GameTagsRes = ResponseData<GameTagsLimitRes>,
+    //上传，accessKey
+    AccessKeyRes = ResponseData<AccessKey>
 )]
 pub struct ResponseData<B> {
     pub data: B,
@@ -59,7 +62,7 @@ impl<B> ResponseData<B> {
     PermissionAssociateAuthRes = LimitResults<AssociateAuthLimit>,
     RouterAssociateAuthRes = LimitResults<AssociateRouterAuthLimit>,
     //游戏标签
-    GameTagsLimitRes = LimitResults<Tag>
+    GameTagsLimitRes = LimitResults<Tag>,
 )]
 pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,
