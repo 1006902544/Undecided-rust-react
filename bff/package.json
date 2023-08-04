@@ -1,6 +1,12 @@
 {
   "name": "bff",
   "version": "0.1.0",
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  },
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon bin/www",
@@ -22,11 +28,17 @@
     "koa-views": "^6.2.0",
     "koa2-swagger-ui": "^5.8.0",
     "minio": "^7.1.1",
+    "module-alias": "^2.2.3",
     "pug": "^2.0.3",
     "swagger-jsdoc": "^6.2.8"
   },
   "devDependencies": {
+    "@types/koa": "^2.13.8",
     "cross-env": "^7.0.3",
     "nodemon": "^1.19.1"
+  },
+
+  "_moduleAliases": {
+    "@": "."
   }
 }

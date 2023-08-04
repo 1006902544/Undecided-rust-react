@@ -1,6 +1,6 @@
 const router = require('koa-router')();
 const swaggerUI = require('koa2-swagger-ui').koaSwagger;
-const spec = require('../openapi');
+const spec = require('@/openapi');
 
 router.prefix('/openapi');
 

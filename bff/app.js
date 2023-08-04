@@ -1,3 +1,4 @@
+require('module-alias/register');
 const Koa = require('koa');
 const app = new Koa();
 const views = require('koa-views');
@@ -7,8 +8,8 @@ const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
 
 const index = require('./routes/index');
-const users = require('./routes/users');
 const openapi = require('./routes/openapi');
+const manager = require('./routes/manager');
 
 // error handler
 onerror(app);
@@ -39,8 +40,8 @@ app.use(async (ctx, next) => {
 
 // routes
 app.use(index.routes(), index.allowedMethods());
-app.use(users.routes(), users.allowedMethods());
 app.use(openapi.routes(), openapi.allowedMethods());
+app.use(manager.routes(), manager.allowedMethods());
 
 // error-handling
 app.on('error', (err, ctx) => {
