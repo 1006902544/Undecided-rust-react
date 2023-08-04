@@ -7,7 +7,7 @@ const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
 const auth = require('@/middleware/auth');
-
+const cors = require('koa2-cors');
 const index = require('./routes/index');
 const openapi = require('./routes/openapi');
 const manager = require('./routes/manager');
@@ -16,6 +16,13 @@ const manager = require('./routes/manager');
 onerror(app);
 
 // middlewares
+app.use(
+  cors({
+    origin: '*',
+    // 必要配置
+    credentials: true,
+  })
+);
 app.use(
   bodyparser({
     enableTypes: ['json', 'form', 'text'],

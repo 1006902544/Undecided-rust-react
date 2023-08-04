@@ -6,6 +6,8 @@ import {
 import { ProFormHexColorPicker } from '@/components';
 import React from 'react';
 import styled from 'styled-components';
+import { Button, Upload } from 'antd';
+import { getToken } from '@/utils';
 
 export default function UpdateCreate() {
   return (
@@ -72,6 +74,15 @@ export default function UpdateCreate() {
           maxLength: 100,
         }}
       />
+
+      <Upload
+        action="http://127.0.0.1:8081/manager/upload"
+        headers={{
+          Authorization: getToken() ?? '',
+        }}
+      >
+        <Button>upload</Button>
+      </Upload>
     </Container>
   );
 }

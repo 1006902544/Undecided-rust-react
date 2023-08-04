@@ -104,8 +104,8 @@ async fn get_access_key(
             endpoint: "minio.zxc.cc",
             port: 80,
             use_ssl: false,
-            access_key: "nazabanma",
-            secret_key: "zdc86039606",
+            access_key: "wlfmGDKHskJscNQEQrxW",
+            secret_key: "WAEsxv9gEx2VequCDqWERh4nqAXoO4EcAjiYrjEQ",
         })
         .into_json_response())
     } else {

@@ -14,9 +14,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@koa/multer": "^3.0.2",
     "axios": "^1.4.0",
     "debug": "^4.1.1",
     "dotenv": "^16.3.1",
+    "joi": "^17.9.2",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-convert": "^1.2.0",
@@ -26,9 +28,11 @@
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.0",
+    "koa2-cors": "^2.0.6",
     "koa2-swagger-ui": "^5.8.0",
     "minio": "^7.1.1",
     "module-alias": "^2.2.3",
+    "multer": "^2.0.0-rc.4",
     "pug": "^2.0.3",
     "swagger-jsdoc": "^6.2.8"
   },
@@ -37,11 +41,11 @@
     "cross-env": "^7.0.3",
     "nodemon": "^1.19.1"
   },
-
   "_moduleAliases": {
     "@": ".",
     "@middleware": "./middleware",
     "@controller": "./controller",
-    "@server": "./server"
+    "@server": "./server",
+    "@schema": "./schema"
   }
 }
