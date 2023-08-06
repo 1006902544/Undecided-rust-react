@@ -33,6 +33,7 @@
     "minio": "^7.1.1",
     "module-alias": "^2.2.3",
     "multer": "^2.0.0-rc.4",
+    "nanoid": "^4.0.2",
     "pug": "^2.0.3",
     "swagger-jsdoc": "^6.2.8"
   },

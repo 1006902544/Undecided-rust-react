@@ -101,11 +101,11 @@ async fn get_access_key(
     let has_permission = has_permission(&mut conn, &req);
     if has_permission {
         Ok(ResponseData::new(AccessKey {
-            endpoint: "minio.zxc.cc",
-            port: 80,
+            endpoint: "124.71.205.17",
+            port: 9000,
             use_ssl: false,
-            access_key: "wlfmGDKHskJscNQEQrxW",
-            secret_key: "WAEsxv9gEx2VequCDqWERh4nqAXoO4EcAjiYrjEQ",
+            access_key: "zdcNazabanma86039606",
+            secret_key: "zdc86039606",
         })
         .into_json_response())
     } else {
