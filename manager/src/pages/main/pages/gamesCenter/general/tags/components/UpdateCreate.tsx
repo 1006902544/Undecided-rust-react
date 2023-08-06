@@ -3,7 +3,7 @@ import {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-components';
-import { ProFormHexColorPicker, DraggerUpload } from '@/components';
+import { ProFormHexColorPicker, ProFormDraggerUpload } from '@/components';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -72,8 +72,6 @@ export default function UpdateCreate() {
           maxLength: 100,
         }}
       />
-
-      <DraggerUpload />
     </Container>
   );
 }

@@ -6,12 +6,11 @@ import styled from 'styled-components';
 import { DraggerProps } from 'antd/es/upload';
 import ItemRender from './ItemRender';
 const { Dragger } = Upload;
+export { default as ProFormDraggerUpload } from './ProFormDraggerUpload';
 
 interface IProps extends DraggerProps {}
 
 export default function DraggerUpload(props: IProps) {
-  console.log(process.env.REACT_APP_UPLOAD_API_URL);
-
   return (
     <UploadContainer
       action={`${process.env.REACT_APP_UPLOAD_API_URL}/manager/upload`}

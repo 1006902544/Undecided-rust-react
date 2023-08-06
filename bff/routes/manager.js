@@ -19,7 +19,7 @@ const upload = multer();
 router.post(
   '/upload',
   upload.fields([{ name: 'file', maxCount: 1 }]),
-  async (ctx, next) => {
+  async (ctx) => {
     const file = ctx.files?.file?.at(-1);
 
     const id = (await nanoid).nanoid(10);
@@ -32,7 +32,6 @@ router.post(
         method: 'get',
         headers: ctx.headers,
       });
-      console.log(access);
       const endPoint = access.data.data.endpoint;
       const port = access.data.data.port;
       const minioClient = new Minio.Client({
@@ -45,8 +44,6 @@ router.post(
 
       var metaData = {
         'Content-Type': 'application/octet-stream',
-        // 'X-Amz-Meta-Testing': 1234,
-        // example: 5678,
       };
 
       await new Promise((resolve, reject) => {
