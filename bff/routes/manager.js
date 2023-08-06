@@ -27,10 +27,17 @@ router.post(
 
     try {
       const url = `http://${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/manager/upload/accessKey`;
-      const access = await axios({ url, method: 'get', headers: ctx.headers });
+      const access = await axios({
+        url,
+        method: 'get',
+        headers: ctx.headers,
+      });
+      console.log(access);
+      const endPoint = access.data.data.endpoint;
+      const port = access.data.data.port;
       const minioClient = new Minio.Client({
-        endPoint: access.data.data.endpoint,
-        port: access.data.data.port,
+        endPoint,
+        port,
         useSSL: access.data.data.use_ssl,
         accessKey: access.data.data.access_key,
         secretKey: access.data.data.secret_key,
@@ -57,10 +64,14 @@ router.post(
               fileName,
               file.stream,
               metaData,
-              (err, data) => {
-                if (data) {
+              (err, res) => {
+                if (res) {
                   ctx.body = {
-                    data,
+                    data: {
+                      etag: res.etag,
+                      url: `http://${endPoint}:${port}/images/${fileName}`,
+                      fileName,
+                    },
                     status: 200,
                   };
                   resolve();
@@ -69,6 +80,7 @@ router.post(
                   ctx.status = 500;
                   ctx.body = {
                     message: err.message,
+                    status: 500,
                   };
                   reject(err);
                 }

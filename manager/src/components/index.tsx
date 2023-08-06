@@ -7,3 +7,4 @@ export {
 } from './MenuProvider';
 export { default as ModalButton } from './ModalButton';
 export { default as ProFormHexColorPicker } from './ProFormHexColorPicker';
+export { default as DraggerUpload } from './DraggerUpload';

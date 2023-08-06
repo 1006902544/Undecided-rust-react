@@ -3,11 +3,9 @@ import {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-components';
-import { ProFormHexColorPicker } from '@/components';
+import { ProFormHexColorPicker, DraggerUpload } from '@/components';
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Upload } from 'antd';
-import { getToken } from '@/utils';
 
 export default function UpdateCreate() {
   return (
@@ -75,14 +73,7 @@ export default function UpdateCreate() {
         }}
       />
 
-      <Upload
-        action="http://127.0.0.1:8081/manager/upload"
-        headers={{
-          Authorization: getToken() ?? '',
-        }}
-      >
-        <Button>upload</Button>
-      </Upload>
+      <DraggerUpload />
     </Container>
   );
 }
