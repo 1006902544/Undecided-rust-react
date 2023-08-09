@@ -29,7 +29,7 @@ export default function list() {
       dataIndex: 'path',
       title: 'PATH',
       ellipsis: true,
-      width: 800,
+      width: 500,
     },
     {
       dataIndex: 'method',

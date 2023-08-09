@@ -17,16 +17,20 @@ import type {
   QueryKey
 } from '@tanstack/react-query'
 import type {
-  ResPonseString,
   AuthLimitRes,
   GetAuthLimitParams,
   AdminInfoRes,
+  ResPonseString,
   LoginBody,
   GameTagsRes,
   GetTagsLimitParams,
   ResPonseU8,
   UpdateTagReq,
   DeleteTagsParams,
+  GameTypeRes,
+  GetGameTypesParams,
+  UpdateGameTypeReq,
+  DeleteGameTypeParams,
   PermissionLimitRes,
   GetPermissionParams,
   UpdatePermissionBody,
@@ -40,69 +44,14 @@ import type {
   DeleteRouterParams,
   AssociateRouterAuthReq,
   RouterAssociateAuthLimitRes,
-  GetAuthWithRouterParams
+  GetAuthWithRouterParams,
+  AccessKeyRes
 } from './schema'
 import { custom_instance } from './custom_instance';
 import type { ErrorType } from './custom_instance';
 
 
 
-/**
- * upload static file
- * @summary upload static file
- */
-export const uploadFile = (
-    uploadFileBody: string,
- ) => {const formData = new FormData();
-formData.append('data', uploadFileBody)
-
-      return custom_instance<ResPonseString>(
-      {url: ``, method: 'post',
-      headers: {'Content-Type': 'multipart/form-data', },
-       data: formData
-    },
-      );
-    }
-  
-
-
-export const getUploadFileMutationOptions = <TError = ErrorType<unknown>,
-    
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof uploadFile>>, TError,{data: string}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof uploadFile>>, TError,{data: string}, TContext> => {
- const {mutation: mutationOptions} = options ?? {};
-
-      
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof uploadFile>>, {data: string}> = (props) => {
-          const {data} = props ?? {};
-
-          return  uploadFile(data,)
-        }
-
-        
-
- 
-   return  { mutationFn, ...mutationOptions }}
-
-    export type UploadFileMutationResult = NonNullable<Awaited<ReturnType<typeof uploadFile>>>
-    export type UploadFileMutationBody = string
-    export type UploadFileMutationError = ErrorType<unknown>
-
-    /**
- * @summary upload static file
- */
-export const useUploadFile = <TError = ErrorType<unknown>,
-    
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof uploadFile>>, TError,{data: string}, TContext>, }
-) => {
-    
-      const mutationOptions = getUploadFileMutationOptions(options);
-     
-      return useMutation(mutationOptions);
-    }
-    
 /**
  * auth limit
  * @summary auth limit
@@ -417,6 +366,168 @@ export const useDeleteTags = <TError = ErrorType<unknown>,
 ) => {
     
       const mutationOptions = getDeleteTagsMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * get game types limit
+ * @summary get game types limit
+ */
+export const getGameTypes = (
+    params?: GetGameTypesParams,
+ signal?: AbortSignal
+) => {
+      return custom_instance<GameTypeRes>(
+      {url: `/manager/gamesCenter/general/types`, method: 'get',
+        params, signal
+    },
+      );
+    }
+  
+
+export const getGetGameTypesQueryKey = (params?: GetGameTypesParams,) => [`/manager/gamesCenter/general/types`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetGameTypesQueryOptions = <TData = Awaited<ReturnType<typeof getGameTypes>>, TError = ErrorType<unknown>>(params?: GetGameTypesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getGameTypes>>, TError, TData>, }
+): UseQueryOptions<Awaited<ReturnType<typeof getGameTypes>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetGameTypesQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getGameTypes>>> = ({ signal }) => getGameTypes(params, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetGameTypesQueryResult = NonNullable<Awaited<ReturnType<typeof getGameTypes>>>
+export type GetGameTypesQueryError = ErrorType<unknown>
+
+/**
+ * @summary get game types limit
+ */
+export const useGetGameTypes = <TData = Awaited<ReturnType<typeof getGameTypes>>, TError = ErrorType<unknown>>(
+ params?: GetGameTypesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getGameTypes>>, TError, TData>, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetGameTypesQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * update game types
+ * @summary update game types
+ */
+export const updateGameType = (
+    updateGameTypeReq: UpdateGameTypeReq,
+ ) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/gamesCenter/general/types`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: updateGameTypeReq
+    },
+      );
+    }
+  
+
+
+export const getUpdateGameTypeMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateGameType>>, TError,{data: UpdateGameTypeReq}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof updateGameType>>, TError,{data: UpdateGameTypeReq}, TContext> => {
+ const {mutation: mutationOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateGameType>>, {data: UpdateGameTypeReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateGameType(data,)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateGameTypeMutationResult = NonNullable<Awaited<ReturnType<typeof updateGameType>>>
+    export type UpdateGameTypeMutationBody = UpdateGameTypeReq
+    export type UpdateGameTypeMutationError = ErrorType<unknown>
+
+    /**
+ * @summary update game types
+ */
+export const useUpdateGameType = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateGameType>>, TError,{data: UpdateGameTypeReq}, TContext>, }
+) => {
+    
+      const mutationOptions = getUpdateGameTypeMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * delete game type
+ * @summary delete game type
+ */
+export const deleteGameType = (
+    params: DeleteGameTypeParams,
+ ) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/gamesCenter/general/types`, method: 'delete',
+        params
+    },
+      );
+    }
+  
+
+
+export const getDeleteGameTypeMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteGameType>>, TError,{params: DeleteGameTypeParams}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof deleteGameType>>, TError,{params: DeleteGameTypeParams}, TContext> => {
+ const {mutation: mutationOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteGameType>>, {params: DeleteGameTypeParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteGameType(params,)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteGameTypeMutationResult = NonNullable<Awaited<ReturnType<typeof deleteGameType>>>
+    
+    export type DeleteGameTypeMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete game type
+ */
+export const useDeleteGameType = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteGameType>>, TError,{params: DeleteGameTypeParams}, TContext>, }
+) => {
+    
+      const mutationOptions = getDeleteGameTypeMutationOptions(options);
      
       return useMutation(mutationOptions);
     }
@@ -1053,6 +1164,60 @@ export const useGetAuthWithRouter = <TData = Awaited<ReturnType<typeof getAuthWi
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetAuthWithRouterQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * get accessKey
+ * @summary get accessKey
+ */
+export const getAccessKey = (
+    
+ signal?: AbortSignal
+) => {
+      return custom_instance<AccessKeyRes>(
+      {url: `/manager/upload/accessKey`, method: 'get', signal
+    },
+      );
+    }
+  
+
+export const getGetAccessKeyQueryKey = () => [`/manager/upload/accessKey`] as const;
+  
+
+    
+export const getGetAccessKeyQueryOptions = <TData = Awaited<ReturnType<typeof getAccessKey>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAccessKey>>, TError, TData>, }
+): UseQueryOptions<Awaited<ReturnType<typeof getAccessKey>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAccessKeyQueryKey();
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAccessKey>>> = ({ signal }) => getAccessKey(signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetAccessKeyQueryResult = NonNullable<Awaited<ReturnType<typeof getAccessKey>>>
+export type GetAccessKeyQueryError = ErrorType<unknown>
+
+/**
+ * @summary get accessKey
+ */
+export const useGetAccessKey = <TData = Awaited<ReturnType<typeof getAccessKey>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAccessKey>>, TError, TData>, }
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetAccessKeyQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

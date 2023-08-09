@@ -29,6 +29,7 @@ utoipa-swagger-ui = { version = "3", features = ["actix-web"] }
 chrono = { version = "0.4.19", features = ["serde"] }
 actix-multipart = "0.6.0"
 actix-files = "0.6.2"
+validator = { version = "0.15", features = ["derive"] }
 
 [dependencies.mysql_common]
 features = ["chrono"]

@@ -108,30 +108,18 @@ interface UpdateBodyProps {
 }
 
 const UpdateBody = forwardRef(
-  (
-    { resource, data: dataProps, children, formProps }: UpdateBodyProps,
-    ref
-  ) => {
+  ({ children, formProps }: UpdateBodyProps, ref) => {
     const [form] = ProForm.useForm();
 
     //share form with modal for submitting
     useImperativeHandle(ref, () => form);
 
     //query when setup
-    const { isLoading } = useQuery({
-      queryKey: [`${resource.name}-check`],
-      queryFn: () => resource.check?.(dataProps) ?? (() => ({})),
-      onSuccess(data) {
-        form.setFieldsValue(data);
-      },
-    });
 
     return (
-      <Spin spinning={isLoading}>
-        <ProForm form={form} submitter={false} {...formProps}>
-          {children}
-        </ProForm>
-      </Spin>
+      <ProForm form={form} submitter={false} {...formProps}>
+        {children}
+      </ProForm>
     );
   }
 );

@@ -1,6 +1,6 @@
 use crate::controller::manager::{
     auth::auth::*,
-    game_center::general::tags::tags::*,
+    game_center::general::{tags::tags::*, types::types::*},
     manager_doc::ApiDoc,
     permission::{
         associate::{associate::*, auth::*},
@@ -69,7 +69,12 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                                 .service(update_tags)
                                 .service(delete_tags),
                         )
-                        .service(web::scope("types"))
+                        .service(
+                            web::scope("types")
+                                .service(get_game_types)
+                                .service(update_game_type)
+                                .service(delete_game_type),
+                        )
                         .service(web::scope("companyStudio"))
                         .service(web::scope("systems")),
                 ),

@@ -14,6 +14,7 @@ import {
   message,
 } from 'antd';
 import { ProForm, ProFormInstance } from '@ant-design/pro-components';
+import type { ProFormProps } from '@ant-design/pro-components';
 import { Resource } from '../types.d';
 import { useQuery } from '@tanstack/react-query';
 
@@ -23,6 +24,7 @@ interface IProps extends ButtonProps {
   label?: string;
   data?: Record<string, any>;
   meta?: Record<string, any>;
+  formProps?: ProFormProps;
 }
 
 export default function UpdateButton({
@@ -31,6 +33,7 @@ export default function UpdateButton({
   label,
   data,
   meta,
+  formProps,
   ...btnProps
 }: IProps) {
   const listContext = useListContext();
@@ -84,7 +87,12 @@ export default function UpdateButton({
         }}
         {...modalProps}
       >
-        <UpdateBody data={data} resource={resource} ref={containerRef}>
+        <UpdateBody
+          data={data}
+          resource={resource}
+          ref={containerRef}
+          formProps={formProps}
+        >
           {children}
         </UpdateBody>
       </Modal>
@@ -96,19 +104,23 @@ interface UpdateBodyProps {
   resource: Resource<Record<string, any>, any>;
   children?: React.ReactNode;
   data?: Record<string, any>;
+  formProps?: ProFormProps;
 }
 
 const UpdateBody = forwardRef(
-  ({ resource, data: dataProps, children }: UpdateBodyProps, ref) => {
+  (
+    { resource, data: dataProps, children, formProps }: UpdateBodyProps,
+    ref
+  ) => {
     const [form] = ProForm.useForm();
 
     //share form with modal for submitting
     useImperativeHandle(ref, () => form);
 
     //query when setup
-    const { isLoading } = useQuery({
+    const { isLoading, data } = useQuery({
       queryKey: [`${resource.name}-check`],
-      queryFn: () => resource.check?.(dataProps) ?? (() => ({})),
+      queryFn: async () => (await resource.check?.(dataProps)) ?? {},
       onSuccess(data) {
         form.setFieldsValue(data);
       },
@@ -116,7 +128,7 @@ const UpdateBody = forwardRef(
 
     return (
       <Spin spinning={isLoading}>
-        <ProForm form={form} submitter={false}>
+        <ProForm form={form} submitter={false} {...formProps}>
           {children}
         </ProForm>
       </Spin>

@@ -1,7 +1,8 @@
 use crate::schema::modules::{
     admin::admin::*,
     manager::{
-        game_center::general::tags::tags::*,
+        game_center::general::{tags::tags::*, types::types::*},
+        manager::*,
         manager_response::*,
         permission::{
             associate::{associate::*, auth::*},
@@ -40,9 +41,15 @@ use utoipa::OpenApi;
         super::game_center::general::tags::tags::update_tags,
         super::game_center::general::tags::tags::delete_tags,
         //upload,accessKey
-        super::upload::get_access_key
+        super::upload::get_access_key,
+        //游戏中心-通用-类型
+        super::game_center::general::types::types::get_game_types,
+        super::game_center::general::types::types::update_game_type,
+        super::game_center::general::types::types::delete_game_type,
     ),
     components(schemas(
+        //文件通用
+        FileObject,
         RoutesVecRes,
         ResPonseU8,
         ResPonseString,
@@ -69,7 +76,9 @@ use utoipa::OpenApi;
         //游戏标签
         Tag,UpdateTagReq,TagLimitReq,DeleteTagReq,GameTagsRes,GameTagsLimitRes,
         //上传，accessKey
-        AccessKeyRes,AccessKey
+        AccessKeyRes,AccessKey,
+        //游戏类型
+        GameType,UpdateGameTypeReq,DeleteGameTypeReq,GameTypeRes,GameTypeLimitRes,GameTypeLimitReq
     ))
 )]
 pub struct ApiDoc;

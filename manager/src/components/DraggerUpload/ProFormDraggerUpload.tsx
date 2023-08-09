@@ -5,8 +5,8 @@ import type {
   UploadChangeParam,
   UploadFile,
 } from 'antd/es/upload';
-import React, { useEffect, useState } from 'react';
 import DraggerUpload from '.';
+import { useMemo } from 'react';
 
 type UploadChange = (file: UploadFile[]) => void;
 
@@ -30,10 +30,29 @@ export default function ProFormDraggerUpload({
   fieldProps = {},
   ...props
 }: IProps) {
-  const { name } = fieldProps;
+  const { name, required, rules: rulesProp } = props;
+
+  const rules = useMemo(() => {
+    if (required) {
+      return [
+        ...(rulesProp ?? []),
+        {
+          validator(_: any, value: UploadFile<ResponseData>[]) {
+            if (value.some((f) => f.status === 'done')) {
+              Promise.resolve();
+            } else {
+              Promise.reject('please upload file');
+            }
+          },
+        },
+      ];
+    } else {
+      return rulesProp;
+    }
+  }, [rulesProp, required]);
 
   return (
-    <ProForm.Item name={name} {...props}>
+    <ProForm.Item name={name} {...props} {...rules}>
       <DraggerUploadContainer {...fieldProps} />
     </ProForm.Item>
   );
@@ -44,20 +63,12 @@ const DraggerUploadContainer = ({
   value,
   ...props
 }: DraggerContainerProps) => {
-  const [fileList, setFileList] = useState<UploadFile<ResponseData>[]>(
-    value ?? []
-  );
-
-  useEffect(() => {
-    onChangeProp?.(fileList.filter((item) => item.status === 'done'));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fileList]);
-
   const onChange = ({
     fileList,
   }: UploadChangeParam<UploadFile<ResponseData>>) => {
-    setFileList(fileList);
+    // setFileList(fileList);
+    onChangeProp?.(fileList);
   };
 
-  return <DraggerUpload onChange={onChange} fileList={fileList} {...props} />;
+  return <DraggerUpload onChange={onChange} fileList={value} {...props} />;
 };

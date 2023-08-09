@@ -5,6 +5,8 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from './accessKey';
+export * from './accessKeyRes';
 export * from './adminInfo';
 export * from './adminInfoListRes';
 export * from './adminInfoRes';
@@ -15,6 +17,8 @@ export * from './associateRouterAuthLimitReq';
 export * from './associateRouterAuthReq';
 export * from './authLimitRes';
 export * from './authRes';
+export * from './deleteGameTypeParams';
+export * from './deleteGameTypeReq';
 export * from './deletePermissionParams';
 export * from './deletePermissionQuery';
 export * from './deleteRouteReq';
@@ -22,10 +26,16 @@ export * from './deleteRouterParams';
 export * from './deleteTagReq';
 export * from './deleteTagsParams';
 export * from './disassociateParams';
+export * from './fileObject';
 export * from './gameTagsLimitRes';
 export * from './gameTagsRes';
+export * from './gameType';
+export * from './gameTypeLimitReq';
+export * from './gameTypeLimitRes';
+export * from './gameTypeRes';
 export * from './getAuthLimitParams';
 export * from './getAuthWithRouterParams';
+export * from './getGameTypesParams';
 export * from './getPermissionAuthParams';
 export * from './getPermissionParams';
 export * from './getTagsLimitParams';
@@ -46,6 +56,7 @@ export * from './routerAssociateAuthRes';
 export * from './routesVecRes';
 export * from './tag';
 export * from './tagLimitReq';
+export * from './updateGameTypeReq';
 export * from './updatePermissionBody';
 export * from './updateRouteReq';
 export * from './updateTagReq';

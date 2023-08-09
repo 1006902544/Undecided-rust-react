@@ -1,6 +1,6 @@
 use crate::app::error::MyError;
 use actix_web::web::Data;
-use mysql::{prelude::Queryable, Pool, PooledConn};
+use mysql::{prelude::Queryable, Error, Pool, PooledConn, Transaction};
 
 pub fn get_conn(pool: Data<Pool>) -> Result<PooledConn, MyError> {
     let conn = pool.as_ref().get_conn();
@@ -55,5 +55,24 @@ pub fn get_current(total: u128, page: u128, limit: u128) -> u128 {
         return page;
     } else {
         return total_page as u128;
+    }
+}
+
+pub fn after_update<T>(trans: Transaction<'_>, res: Result<T, Error>) -> Result<T, MyError> {
+    match res {
+        Ok(res) => {
+            let row = trans.affected_rows();
+            if row > 0 {
+                trans.commit().unwrap();
+                Ok(res)
+            } else {
+                trans.rollback().unwrap();
+                Err(MyError::no_changes_happen())
+            }
+        }
+        Err(e) => {
+            trans.rollback().unwrap();
+            Err(MyError::sql_error(e))
+        }
     }
 }

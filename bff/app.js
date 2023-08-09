@@ -23,9 +23,13 @@ app.use(
     credentials: true,
   })
 );
+
+// app.use(koaBody({ multipart: true }));
+
 app.use(
   bodyparser({
     enableTypes: ['json', 'form', 'text'],
+    encode: 'utf-8',
   })
 );
 app.use(json());
@@ -43,6 +47,7 @@ app.use(async (ctx, next) => {
   const start = new Date();
   await next();
   const ms = new Date() - start;
+
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 

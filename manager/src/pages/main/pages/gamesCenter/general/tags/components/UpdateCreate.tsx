@@ -3,7 +3,7 @@ import {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-components';
-import { ProFormHexColorPicker, ProFormDraggerUpload } from '@/components';
+import { ProFormHexColorPicker } from '@/components';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -58,7 +58,7 @@ export default function UpdateCreate() {
                 color: text_color,
               }}
             >
-              {name ?? 'Tags Preview'}
+              {name?.trim() || 'Tags Preview'}
             </div>
           );
         }}

@@ -1,1 +1,1 @@
-export { gamesCenterGeneralTagsResource } from './general/resources';
+export * from './general/resources';

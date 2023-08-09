@@ -3,6 +3,7 @@ import {
   permissionHandleAuthAssociateLimitResource,
   permissionsMenuRouterAssociateResource,
   gamesCenterGeneralTagsResource,
+  mainGameCenterGeneralResource,
 } from './pages/main/resources';
 
 export const resources = [
@@ -10,4 +11,5 @@ export const resources = [
   permissionHandleAuthAssociateLimitResource,
   permissionsMenuRouterAssociateResource,
   gamesCenterGeneralTagsResource,
+  mainGameCenterGeneralResource,
 ];

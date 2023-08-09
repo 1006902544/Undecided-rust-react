@@ -16,6 +16,7 @@ export default function DraggerUpload(props: IProps) {
       action={`${process.env.REACT_APP_UPLOAD_API_URL}/manager/upload`}
       headers={{
         Authorization: getToken() ?? '',
+        contentType: 'multipart/form-data',
       }}
       itemRender={(originNode, file, fileList, actions) => (
         <ItemRender
