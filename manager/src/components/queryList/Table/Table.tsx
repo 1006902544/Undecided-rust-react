@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 export default function TableContainer<R extends AnyObject = any>({
   columns: columnsProps,
+  rowKey,
   ...props
 }: Omit<TableProps<R>, 'dataSource'>) {
   const listContext = useContext(ListContext);
@@ -44,6 +45,7 @@ export default function TableContainer<R extends AnyObject = any>({
           loading={isLoading}
           dataSource={data?.data}
           pagination={false}
+          rowKey={rowKey ?? 'id'}
           scroll={{
             scrollToFirstRowOnChange: true,
             x: '100%',
