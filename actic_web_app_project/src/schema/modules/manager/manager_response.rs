@@ -3,10 +3,7 @@ use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
 
 use super::{
-    game_center::general::{
-        tags::tags::*,
-        types::types::{DeleteGameTypeReq, GameType, UpdateGameTypeReq},
-    },
+    game_center::general::{tags::tags::*, types::types::GameType},
     permission::{associate::auth::*, permission::Permission},
     router::{associate::auth::*, router::*},
     upload::*,

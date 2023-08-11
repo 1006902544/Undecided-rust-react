@@ -4,18 +4,17 @@ use actix_web::{
     http::StatusCode,
     post,
     web::{self, Data},
-    Error, HttpRequest, HttpResponse, Responder, ResponseError,
+    HttpRequest, HttpResponse, Responder, ResponseError,
 };
 
 use futures_util::StreamExt;
-use mysql::{Pool, PooledConn};
+use mysql::Pool;
 use serde::{Deserialize, Serialize};
 use std::{fs::File, io::Write};
 use utoipa::ToSchema;
 
 use crate::{
     app::error::MyError,
-    nako::auth::is_manager,
     schema::modules::manager::{
         manager_response::{self, ResponseData},
         upload::AccessKey,
