@@ -1,21 +1,15 @@
-import { useBaseOptions } from './components/baseOptions';
+import { useBaseOptions, useBaseToggle } from './hooks';
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import type { Option, ToolbarProps } from './index.d';
+import type { ToolbarProps } from './index.d';
 import { useEditorContext } from '../../';
-import { baseToggle } from './components';
+import { Menu } from './components';
 export * from './components';
+export * from './hooks';
 
 export default function Toolbar({ options: optionsProp }: ToolbarProps) {
-  const baseOptions: Option[] = [
-    {
-      key: 'bold',
-      toggle: (editor, info) => {
-        console.log(info.baseToggle.isCodeBlockActive(editor));
-      },
-      children: <span>B</span>,
-    },
-  ];
+  const baseOptions = useBaseOptions();
+  const baseToggle = useBaseToggle();
   const { editor } = useEditorContext();
 
   const options = useMemo(() => {
@@ -31,16 +25,25 @@ export default function Toolbar({ options: optionsProp }: ToolbarProps) {
   }
 
   return (
-    <Container className="pb-[5px] rounded-t-[3px]  border-[#e5e7eb] border-b-0 flex">
-      {options.map(({ toggle, children, key }) => (
-        <button
-          key={key}
-          className="option-item"
-          onClick={() => toggle?.(editor, { key, baseToggle })}
-        >
-          {children}
-        </button>
-      ))}
+    <Container className="pb-[5px] rounded-t-[3px]  border-[#e5e7eb] flex">
+      {options.map(({ toggle, children, key, type, configs }) =>
+        type !== 'click' ? (
+          <button
+            key={key}
+            className="option-item"
+            onClick={(e) => {
+              e.preventDefault();
+              toggle?.(editor, { key, baseToggle });
+            }}
+          >
+            {children}
+          </button>
+        ) : (
+          <Menu key={key} configs={configs}>
+            <button className="option-item">{children}</button>
+          </Menu>
+        )
+      )}
     </Container>
   );
 }
@@ -52,9 +55,9 @@ const Container = styled.div`
     flex-shrink: 0;
     margin-left: 5px;
     margin-top: 5px;
-    padding: 2px 10px;
     border-radius: 3px;
     box-shadow: 0 0 3px 0 #ccc;
+    position: relative;
 
     &:active {
       transform: scale(0.9);

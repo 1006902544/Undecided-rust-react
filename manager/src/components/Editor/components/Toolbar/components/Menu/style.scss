@@ -1,0 +1,24 @@
+.toolbar-menu-options {
+  box-shadow: 0 0 5px 0 #ccc;
+  overflow: hidden;
+  animation: toolbar-menu-open 0.2s;
+
+  li {
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+}
+
+@keyframes toolbar-menu-open {
+  from {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0%);
+
+  }
+}
