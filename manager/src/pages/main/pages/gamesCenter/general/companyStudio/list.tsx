@@ -1,5 +1,9 @@
-import { Editor } from '@/components';
+import { Editor, Toolbar } from '@/components';
 
 export default function List() {
-  return <Editor />;
+  return (
+    <Editor>
+      <Toolbar />
+    </Editor>
+  );
 }
