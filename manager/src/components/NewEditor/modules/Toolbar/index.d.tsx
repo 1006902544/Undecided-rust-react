@@ -1,7 +1,7 @@
 import { Editor } from '../index.d';
 
 export interface ToolbarProps {
-  items?: ToolbarItem[];
+  items?: (items: ToolbarItem[]) => ToolbarItem[];
 }
 
 export interface ToolbarItem {
@@ -9,11 +9,13 @@ export interface ToolbarItem {
   children?: React.ReactNode;
   toggle?: ToolbarToggle;
   type?: 'click' | 'option';
+  key: string;
 }
 
 export interface ToolbarItemOption {
   toggle?: ToolbarToggle;
   children?: React.ReactNode;
+  key: string;
 }
 
 export type ToolbarToggle = (editor: Editor) => void;

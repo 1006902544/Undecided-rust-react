@@ -1,6 +1,20 @@
 .editor-toolbar {
+  box-shadow:  0 1px 5px 0 #ccc;
+  border-radius: 5px;
+
   .editor-toolbar-item {
     box-shadow: 0 0 3px 0 #ccc;
+    flex-shrink: 0;
+    transition: all .2s;
+    border-radius: 3px;
+
+    &:hover {
+      transform: scale(1.1)
+    }
+
+    &:active {
+      transform: scale(0.9)
+    }
   }
 }
 
