@@ -5,6 +5,7 @@ export interface EditorContext {
   editor?: Editor;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export const EditorContext = createContext<EditorContext>({});
 
 export const useEditorContext = () => {

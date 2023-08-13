@@ -25,7 +25,11 @@ export default function EditorContainer() {
   const editor = useMemo(() => withReact(createEditor()), []);
 
   const renderElement = useCallback((props: any) => {
+    console.log(props.element.children);
+
     switch (props.element.type) {
+      case 'image':
+        return props.element.children;
       default:
         return <p {...props} />;
     }

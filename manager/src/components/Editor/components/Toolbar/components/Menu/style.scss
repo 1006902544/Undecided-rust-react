@@ -4,8 +4,9 @@
   animation: toolbar-menu-open 0.2s;
 
   li {
+    transition: all 0.2s;
     &:hover {
-      background-color: #ccc;
+      background-color: #f0f0f0;
     }
   }
 }

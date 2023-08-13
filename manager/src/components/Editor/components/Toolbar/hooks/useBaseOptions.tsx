@@ -36,7 +36,10 @@ export const useBaseOptions = () => {
           configs={[
             {
               key: 'picture',
-              label: 'picture',
+              label: <div className="relative cursor-pointer">picture</div>,
+              toggle(editor, info) {
+                info.baseToggle.uploadFile(editor);
+              },
             },
           ]}
         >
