@@ -5,12 +5,27 @@ import './style.scss';
 
 export default function EditableContainer() {
   const renderElement = useCallback((props: RenderElementProps) => {
+    console.log(props);
+
     return <p {...props.attributes}>{props.children}</p>;
   }, []);
 
-  const renderLeaf = useCallback((props: RenderLeafProps) => {
-    return <span {...props.attributes}>{props.children}</span>;
-  }, []);
+  const renderLeaf = useCallback(
+    ({ attributes, children, leaf }: RenderLeafProps) => {
+      return (
+        <span
+          style={{
+            fontWeight: (leaf as any).bold ? 700 : 500,
+            fontStyle: (leaf as any).italic ? 'italic' : undefined,
+          }}
+          {...attributes}
+        >
+          {children ?? ''}
+        </span>
+      );
+    },
+    []
+  );
 
   return (
     <Editable

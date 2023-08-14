@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
-import { useBaseItems, useEditorContext } from '../../';
+import { useBaseItems, useBaseToggle, useEditorContext } from '../../';
 import './style.scss';
 import type { ToolbarProps } from './index.d';
 
 export default function Toolbar({ items: itemsProps }: ToolbarProps) {
   const { editor } = useEditorContext();
+  const baseToggles = useBaseToggle();
   const baseItems = useBaseItems();
 
   const items = useMemo(() => {
@@ -20,7 +21,7 @@ export default function Toolbar({ items: itemsProps }: ToolbarProps) {
   }
 
   return (
-    <div className="editor-toolbar p-[10px] flex">
+    <div className="editor-toolbar p-[10px] flex space-x-[10px]">
       {items.map(({ children, options, type, key, toggle }) =>
         type === 'option' ? (
           <button key={key} className="editor-toolbar-item">
@@ -30,7 +31,7 @@ export default function Toolbar({ items: itemsProps }: ToolbarProps) {
           <button
             key={key}
             onClick={() => {
-              toggle?.(editor);
+              toggle?.(editor, baseToggles);
             }}
             className="editor-toolbar-item"
           >

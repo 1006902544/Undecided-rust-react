@@ -1,3 +1,4 @@
+import { BaseToggles } from '../../index.d';
 import { Editor } from '../index.d';
 
 export interface ToolbarProps {
@@ -18,4 +19,4 @@ export interface ToolbarItemOption {
   key: string;
 }
 
-export type ToolbarToggle = (editor: Editor) => void;
+export type ToolbarToggle = (editor: Editor, baseToggle: BaseToggles) => void;
