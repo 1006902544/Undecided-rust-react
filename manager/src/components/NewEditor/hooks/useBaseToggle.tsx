@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
-import { Editor } from '../index.d';
-import type { Node } from 'slate';
+import { Editor, UploadFile } from '../index.d';
 
 export interface BaseToggles {
   isBold: (editor: Editor) => boolean;
   isItalic: (editor: Editor) => boolean;
   handleBold: (editor: Editor) => void;
   handleItalic: (editor: Editor) => void;
-  uploadImage: (editor: Editor) => void;
+  insertImage: (editor: Editor) => void;
+  uploadImage: (editor: Editor, data: UploadFile) => void;
 }
 
 export const useBaseToggle = () => {
@@ -48,12 +48,21 @@ export const useBaseToggle = () => {
       }
     },
 
-    uploadImage(editor) {
+    insertImage(editor) {
       editor.insertNodes({
-        text: 'http://124.71.205.17:9000/images/YORENmRf3e-fps.png',
-        image: true,
+        children: [{ text: '' }],
         type: 'image',
-      } as Node);
+        url: 'http://124.71.205.17:9000/images/YORENmRf3e-fps.png',
+      });
+    },
+
+    uploadImage(editor, data) {
+      editor.insertNodes({
+        children: [{ text: '' }],
+        type: 'image',
+        url: 'http://124.71.205.17:9000/images/YORENmRf3e-fps.png',
+        upload: data,
+      });
     },
   };
 

@@ -21,7 +21,13 @@ export const useBaseItems = () => {
       key: 'upload',
       children: <span className="px-[8px] font-bold">Upload</span>,
       toggle(editor, { uploadImage }) {
-        uploadImage(editor);
+        uploadImage(editor, {
+          url: process.env.REACT_APP_UPLOAD_API_URL ?? '',
+          requests(file) {
+            return file;
+          },
+          file: '' as any,
+        });
       },
     },
   ];

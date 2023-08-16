@@ -1,0 +1,11 @@
+.editable-image-container {
+  .editable-image-handles {
+    display: none;
+  }
+
+  &:hover {
+    .editable-image-handles {
+      display: block !important;
+    }
+  }
+}
