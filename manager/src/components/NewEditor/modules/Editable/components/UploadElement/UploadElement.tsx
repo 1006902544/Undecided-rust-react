@@ -1,5 +1,11 @@
 import axios from 'axios';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import type { RenderElementProps } from 'slate-react';
 
 export default function UploadElement(props: RenderElementProps) {
@@ -22,11 +28,13 @@ export default function UploadElement(props: RenderElementProps) {
     setSize([size[0] <= 0 ? 0 : size[0], size[1] <= 0 ? 0 : size[1]]);
   }, []);
 
-  const upload = async () => {
+  // const [percent, setPercent] = useState(0);
+
+  const upload = async (file: File) => {
     const { upload } = props.element;
     if (upload) {
       const params = new FormData();
-      params.append('file', upload.file);
+      params.append('file', file);
       for (const key in upload.data) {
         params.append(key, upload.data[key]);
       }
@@ -36,9 +44,10 @@ export default function UploadElement(props: RenderElementProps) {
           ...upload.headers,
         },
         onUploadProgress: (progressEvent: any) => {
-          const persent =
+          const percent =
             ((progressEvent.loaded / progressEvent.total) * 100) | 0;
-          console.log(persent);
+          console.log(percent);
+          // setPercent(percent);
         },
       };
       axios.post(upload.url, params, config).then((response) => {
@@ -51,9 +60,12 @@ export default function UploadElement(props: RenderElementProps) {
   };
 
   useEffect(() => {
-    upload();
+    // upload();
+    uploadRef.current?.click();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const uploadRef = useRef<null | HTMLInputElement>(null);
 
   return (
     <div {...props.attributes}>
@@ -110,7 +122,19 @@ export default function UploadElement(props: RenderElementProps) {
             width: '100%',
             height: '100%',
           }}
-        ></div>
+        >
+          <input
+            type="file"
+            ref={uploadRef}
+            style={{ display: 'none' }}
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                upload(file);
+              }
+            }}
+          />
+        </div>
       </div>
       <span>{props.children}</span>
     </div>

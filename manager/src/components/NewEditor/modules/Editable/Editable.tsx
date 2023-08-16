@@ -3,7 +3,7 @@ import { Editable } from 'slate-react';
 import type { RenderLeafProps, RenderElementProps } from 'slate-react';
 import './style.scss';
 import { useEditorContext } from '../../';
-import { ImageElement } from './components';
+import { ImageElement, UploadElement } from './components';
 
 export default function EditableContainer() {
   const { editor } = useEditorContext();
@@ -13,7 +13,7 @@ export default function EditableContainer() {
       case 'image':
         return <ImageElement {...props} />;
       case 'upload':
-        return <p {...props.attributes}>{props.children}</p>;
+        return <UploadElement {...props} />;
       default:
         return <p {...props.attributes}>{props.children}</p>;
     }

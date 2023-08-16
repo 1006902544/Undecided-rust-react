@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { ToolbarItem } from '../index.d';
+import { getToken } from '@/utils';
 
 export const useBaseItems = () => {
   const baseItems: ToolbarItem[] = [
@@ -20,13 +21,15 @@ export const useBaseItems = () => {
     {
       key: 'upload',
       children: <span className="px-[8px] font-bold">Upload</span>,
-      toggle(editor, { uploadImage }) {
+      async toggle(editor, { uploadImage }) {
         uploadImage(editor, {
-          url: process.env.REACT_APP_UPLOAD_API_URL ?? '',
+          url: (process.env.REACT_APP_UPLOAD_API_URL ?? '') + '/manager/upload',
           requests(file) {
             return file;
           },
-          file: '' as any,
+          headers: {
+            Authorization: getToken(),
+          },
         });
       },
     },

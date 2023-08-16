@@ -56,12 +56,11 @@ export const useBaseToggle = () => {
       });
     },
 
-    uploadImage(editor, data) {
+    uploadImage(editor, upload) {
       editor.insertNodes({
         children: [{ text: '' }],
-        type: 'image',
-        url: 'http://124.71.205.17:9000/images/YORENmRf3e-fps.png',
-        upload: data,
+        type: 'upload',
+        upload,
       });
     },
   };

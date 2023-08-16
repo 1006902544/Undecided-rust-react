@@ -9,7 +9,6 @@ export interface UploadFile<T = any> {
   data?: Record<string, any>;
   headers?: Record<string, any>;
   requests: (file: File) => File;
-  file: File;
 }
 
 export type CustomElement = {
