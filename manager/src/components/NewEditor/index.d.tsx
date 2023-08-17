@@ -29,6 +29,7 @@ export type CustomText = {
   image?: {
     url: string;
   };
+  size?: number;
   upload?: UploadFile;
 };
 

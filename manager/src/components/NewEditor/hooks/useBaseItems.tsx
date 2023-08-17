@@ -55,6 +55,18 @@ export const useBaseItems = () => {
         },
       ],
     },
+    {
+      key: 'fontSize',
+      type: 'option',
+      children: <span className="px-[8px] font-bold">Size</span>,
+      options: new Array(13).fill(0).map((_, i) => ({
+        key: `size-${i + 12}`,
+        children: `${i + 12}px`,
+        toggle(editor, { setFontSize }) {
+          setFontSize(editor, i + 12);
+        },
+      })),
+    },
   ];
 
   // eslint-disable-next-line

@@ -8,6 +8,7 @@ export interface BaseToggles {
   handleItalic: (editor: Editor) => void;
   insertImage: (editor: Editor, url: string) => void;
   uploadImage: (editor: Editor, data: UploadFile) => void;
+  setFontSize: (editor: Editor, size: number) => void;
 }
 
 export const useBaseToggle = () => {
@@ -66,6 +67,10 @@ export const useBaseToggle = () => {
         children: [{ text: '' }],
         type: 'inline',
       });
+    },
+
+    setFontSize(editor, size) {
+      editor.addMark('size', size);
     },
   };
 

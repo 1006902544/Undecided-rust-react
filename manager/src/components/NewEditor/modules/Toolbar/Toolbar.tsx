@@ -28,7 +28,7 @@ export default function Toolbar({ items: itemsProps }: ToolbarProps) {
           <button key={key} className="editor-toolbar-item">
             <Popover
               content={
-                <ul>
+                <ul className=" overflow-y-scroll max-h-[300px]">
                   {options?.map((opt) => (
                     <li key={opt.key}>
                       <button

@@ -17,6 +17,7 @@ export default function Popover({ children, content }: PopoverProps) {
     } else {
       document.body.removeEventListener('click', onCancel);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   return (

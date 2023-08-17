@@ -39,6 +39,7 @@ export default function EditableContainer() {
           style={{
             fontWeight: (leaf as any).bold ? 700 : 500,
             fontStyle: (leaf as any).italic ? 'italic' : undefined,
+            fontSize: leaf.size ?? 16,
           }}
           {...attributes}
         >
