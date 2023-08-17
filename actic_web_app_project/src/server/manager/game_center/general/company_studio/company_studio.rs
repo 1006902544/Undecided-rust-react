@@ -17,8 +17,8 @@ use crate::{
 
 pub async fn create_company(
     conn: &mut PooledConn,
-    body: UploadCompanyStudioReq,
-) -> Result<impl Responder, MyError> {
+    body: UpdateCompanyStudioReq,
+) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let sql_str = "insert into company_studios (name,logo_url,description,region,founder,established_time) values(:name,:logo_url,:description,:region,:founder,:established_time)";
     let res = trans.exec_drop(
@@ -40,8 +40,8 @@ pub async fn create_company(
 
 pub async fn edit_company(
     conn: &mut PooledConn,
-    body: UploadCompanyStudioReq,
-) -> Result<impl Responder, MyError> {
+    body: UpdateCompanyStudioReq,
+) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let sql_str = "update company_studios set name=:name logo_url=:logo_url description=:description region=:region founder=:founder established_time=:established_time where id=:id";
     let res = trans.exec_drop(
@@ -66,18 +66,18 @@ pub async fn get_company(
     conn: &mut PooledConn,
     req: GetCompanyStudioReq,
 ) -> Result<CompanyStudioLimitRes, MyError> {
-    let sql_str = "select * from company_studios where (id=:id or :id is null) and (name=:name or :name is null) and (region=:region or :region is null) and (founder=:founder or :founder is null) order by update_time limit :scope,:limit";
+    let sql_str = "select id,name,logo_url,update_time,create_time,established_time from company_studios where (id=:id or :id is null) and (name=:name or :name is null) and (region=:region or :region is null) and (founder=:founder or :founder is null) order by update_time limit :scope,:limit";
     let limit = handle_limit(&req.limit);
     let page = handle_page(&req.page);
     let res = conn.exec_map(
         sql_str,
         params! {
-          "id" => req.id,
-          "name" => req.name,
-          "region" => req.region,
-          "founder" => req.founder,
-          "scope" => limit*(page-1),
-          "limit" => limit
+            "id" => req.id,
+            "name" => req.name,
+            "region" => req.region,
+            "founder" => req.founder,
+            "scope" => limit*(page-1),
+            "limit" => limit
         },
         |row| from_row::<CompanyStudio>(row),
     );

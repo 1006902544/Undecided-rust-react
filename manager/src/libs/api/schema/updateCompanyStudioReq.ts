@@ -5,13 +5,12 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface GameType {
-  create_time: string;
+export interface UpdateCompanyStudioReq {
   description?: string | null;
-  e_tag: string;
-  filename: string;
-  id: number;
+  established_time: string;
+  founder?: string | null;
+  id?: number | null;
   logo_url: string;
   name: string;
-  update_time: string;
+  region?: string | null;
 }

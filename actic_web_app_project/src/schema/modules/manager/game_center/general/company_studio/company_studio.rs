@@ -1,9 +1,10 @@
 use chrono::NaiveDate;
 use mysql_common::prelude::FromRow;
-use utoipa::ToSchema;
+use serde::{Deserialize, Serialize};
+use utoipa::{IntoParams, ToSchema};
 use validator::Validate;
 
-#[derive(Debug, ToSchema, FromRow, Validate)]
+#[derive(Debug, ToSchema, FromRow, Validate, Deserialize, Serialize)]
 pub struct CompanyStudio {
     pub id: u64,
     pub name: String,
@@ -16,7 +17,7 @@ pub struct CompanyStudio {
     pub established_time: NaiveDate,
 }
 
-#[derive(Debug, ToSchema, FromRow, Validate)]
+#[derive(Debug, ToSchema, FromRow, Validate, Deserialize, Serialize)]
 pub struct CompanyStudioDetail {
     pub id: u64,
     pub name: String,
@@ -34,8 +35,8 @@ pub struct CompanyStudioDetail {
     pub established_time: NaiveDate,
 }
 
-#[derive(Debug, ToSchema, FromRow, Validate)]
-pub struct UploadCompanyStudioReq {
+#[derive(Debug, ToSchema, FromRow, Validate, Deserialize, Serialize)]
+pub struct UpdateCompanyStudioReq {
     pub id: Option<u64>,
     pub name: String,
     pub logo_url: String,
@@ -48,17 +49,15 @@ pub struct UploadCompanyStudioReq {
     pub established_time: NaiveDate,
 }
 
-#[derive(Debug, ToSchema, FromRow, Validate)]
+#[derive(Debug, ToSchema, FromRow, Validate, Deserialize, Serialize, IntoParams)]
 pub struct GetCompanyStudioReq {
     pub id: Option<u64>,
     pub name: Option<String>,
     pub region: Option<String>,
     #[validate(length(min = 0, max = 50), required)]
     pub founder: Option<String>,
-    #[schema(value_type = Option<String>)]
-    pub established_start_time: Option<NaiveDate>,
-    #[schema(value_type = Option<String>)]
-    pub established_end_time: Option<NaiveDate>,
+    pub established_start_time: Option<String>,
+    pub established_end_time: Option<String>,
     pub limit: Option<u64>,
     pub page: Option<u64>,
 }

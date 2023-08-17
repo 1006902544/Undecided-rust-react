@@ -1,0 +1,84 @@
+use actix_web::{
+    get, post,
+    web::{Data, Json, Query},
+    HttpRequest, Responder, ResponseError,
+};
+use mysql::Pool;
+
+use crate::{
+    app::error::MyError,
+    schema::modules::manager::{
+        game_center::general::company_studio::company_studio::*, manager_response::ResponseData,
+    },
+    server::manager::{
+        game_center::general::company_studio::company_studio as company_studio_server,
+        permissions::has_permission,
+    },
+};
+
+#[utoipa::path(
+  post,
+  path = "/manager/gamesCenter/general/companyStudio",
+  request_body = UpdateCompanyStudioReq,
+  responses (
+      (status = 200 ,description = "success" , body = ResPonseString)
+  )
+)]
+#[post("")]
+///update company/studio
+pub async fn update_company(
+    pool: Data<Pool>,
+    body: Json<UpdateCompanyStudioReq>,
+    req: HttpRequest,
+) -> Result<impl Responder, impl ResponseError> {
+    let mut conn = pool.get_conn().unwrap();
+    let has_per = has_permission(&mut conn, &req);
+    if has_per {
+        match body.id {
+            Some(_) => {
+                let res = company_studio_server::edit_company(&mut conn, body.into_inner()).await;
+                match res {
+                    Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+                    Err(e) => Err(e),
+                }
+            }
+            None => {
+                let res = company_studio_server::create_company(&mut conn, body.into_inner()).await;
+                match res {
+                    Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+                    Err(e) => Err(e),
+                }
+            }
+        }
+    } else {
+        Err(MyError::permissions_error())
+    }
+}
+
+#[utoipa::path(
+  get,
+  path = "/manager/gamesCenter/general/companyStudio",
+  params (GetCompanyStudioReq),
+  responses (
+      (status = 200 ,description = "success" , body = CompanyStudioRes)
+  )
+)]
+#[get("")]
+///update company/studio
+pub async fn get_company(
+    pool: Data<Pool>,
+    query: Query<GetCompanyStudioReq>,
+    req: HttpRequest,
+) -> Result<impl Responder, impl ResponseError> {
+    let mut conn = pool.get_conn().unwrap();
+    let has_per = has_permission(&mut conn, &req);
+    if has_per {
+        let res = company_studio_server::get_company(&mut conn, query.into_inner()).await;
+        match res {
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+            Err(e) => Err(e),
+        }
+    } else {
+        Err(MyError::permissions_error())
+    }
+}
