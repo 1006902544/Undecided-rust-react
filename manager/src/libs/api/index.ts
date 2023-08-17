@@ -220,8 +220,8 @@ export const useSignIn = <TError = ErrorType<unknown>,
     }
     
 /**
- * update company/studio
- * @summary update company/studio
+ * get company/studio
+ * @summary get company/studio
  */
 export const getCompany = (
     params?: GetCompanyParams,
@@ -257,7 +257,7 @@ export type GetCompanyQueryResult = NonNullable<Awaited<ReturnType<typeof getCom
 export type GetCompanyQueryError = ErrorType<unknown>
 
 /**
- * @summary update company/studio
+ * @summary get company/studio
  */
 export const useGetCompany = <TData = Awaited<ReturnType<typeof getCompany>>, TError = ErrorType<unknown>>(
  params?: GetCompanyParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCompany>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}

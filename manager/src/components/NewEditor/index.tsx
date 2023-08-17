@@ -1,15 +1,12 @@
+import { EditorProps } from './index.d';
 import { EditorProvider, EditorContainer } from './modules';
 export * from './hooks';
 export * from './modules';
 
-interface IProps {
-  children?: React.ReactNode;
-}
-
-export const Editor = ({ children }: IProps) => {
+export const Editor = ({ children, ...props }: EditorProps) => {
   return (
     <EditorProvider>
-      <EditorContainer>{children}</EditorContainer>
+      <EditorContainer onChange={props.onChange}>{children}</EditorContainer>
     </EditorProvider>
   );
 };

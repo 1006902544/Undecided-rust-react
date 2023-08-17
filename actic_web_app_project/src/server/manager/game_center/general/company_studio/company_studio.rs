@@ -1,4 +1,3 @@
-use actix_web::Responder;
 use mysql::{from_row, prelude::Queryable, PooledConn, TxOpts};
 use mysql_common::params;
 

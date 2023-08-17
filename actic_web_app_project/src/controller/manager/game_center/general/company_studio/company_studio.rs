@@ -64,7 +64,7 @@ pub async fn update_company(
   )
 )]
 #[get("")]
-///update company/studio
+///get company/studio
 pub async fn get_company(
     pool: Data<Pool>,
     query: Query<GetCompanyStudioReq>,

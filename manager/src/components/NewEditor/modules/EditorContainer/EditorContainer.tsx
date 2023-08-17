@@ -1,19 +1,20 @@
 import React from 'react';
 import { Slate } from 'slate-react';
 import { Editable, useEditorContext } from '../../';
+import { EditorProps } from '../../index.d';
 
-const initialValue = [
+const initial = [
   {
     type: 'paragraph',
     children: [{ text: '' }],
   },
 ];
 
-interface IProps {
-  children?: React.ReactNode;
-}
-
-export default function EditorContainer({ children }: IProps) {
+export default function EditorContainer({
+  children,
+  initialValue = initial,
+  ...props
+}: EditorProps) {
   const { editor } = useEditorContext();
 
   if (!editor) {
@@ -21,8 +22,8 @@ export default function EditorContainer({ children }: IProps) {
   }
 
   return (
-    <div className=" shadow-xl rounded-[5px]">
-      <Slate editor={editor} initialValue={initialValue}>
+    <div className="shadow-xl rounded-[5px]">
+      <Slate editor={editor} initialValue={initialValue} {...props}>
         {children}
         <Editable />
       </Slate>

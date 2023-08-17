@@ -4,6 +4,7 @@ import {
   permissionsMenuRouterAssociateResource,
   gamesCenterGeneralTagsResource,
   mainGameCenterGeneralResource,
+  gameCenterGeneralCompanyResource,
 } from './pages/main/resources';
 
 export const resources = [
@@ -12,4 +13,5 @@ export const resources = [
   permissionsMenuRouterAssociateResource,
   gamesCenterGeneralTagsResource,
   mainGameCenterGeneralResource,
+  gameCenterGeneralCompanyResource,
 ];

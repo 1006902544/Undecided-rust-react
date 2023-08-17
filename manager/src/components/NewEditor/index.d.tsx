@@ -1,4 +1,4 @@
-import { BaseEditor } from 'slate';
+import type { BaseEditor, Descendant } from 'slate';
 import { ReactEditor } from 'slate-react';
 
 export * from './modules/index.d';
@@ -39,4 +39,10 @@ declare module 'slate' {
     Element: CustomElement;
     Text: CustomText;
   }
+}
+
+export interface EditorProps {
+  initialValue?: Descendant[];
+  children?: React.ReactNode;
+  onChange?: ((value: Descendant[]) => void) | undefined;
 }
