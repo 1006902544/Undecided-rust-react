@@ -14,6 +14,12 @@ export default function EditableContainer() {
         return <ImageElement {...props} />;
       case 'upload':
         return <UploadElement {...props} />;
+      case 'inline':
+        return (
+          <p style={{ display: 'inline-block' }} {...props.attributes}>
+            {props.children}
+          </p>
+        );
       default:
         return <p {...props.attributes}>{props.children}</p>;
     }

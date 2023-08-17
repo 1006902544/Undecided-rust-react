@@ -6,7 +6,7 @@ export interface BaseToggles {
   isItalic: (editor: Editor) => boolean;
   handleBold: (editor: Editor) => void;
   handleItalic: (editor: Editor) => void;
-  insertImage: (editor: Editor) => void;
+  insertImage: (editor: Editor, url: string) => void;
   uploadImage: (editor: Editor, data: UploadFile) => void;
 }
 
@@ -48,11 +48,11 @@ export const useBaseToggle = () => {
       }
     },
 
-    insertImage(editor) {
+    insertImage(editor, url) {
       editor.insertNodes({
         children: [{ text: '' }],
         type: 'image',
-        url: 'http://124.71.205.17:9000/images/YORENmRf3e-fps.png',
+        url,
       });
     },
 
@@ -61,6 +61,10 @@ export const useBaseToggle = () => {
         children: [{ text: '' }],
         type: 'upload',
         upload,
+      });
+      editor.insertNodes({
+        children: [{ text: '' }],
+        type: 'inline',
       });
     },
   };

@@ -20,18 +20,40 @@ export const useBaseItems = () => {
     },
     {
       key: 'upload',
+      type: 'option',
       children: <span className="px-[8px] font-bold">Upload</span>,
-      async toggle(editor, { uploadImage }) {
-        uploadImage(editor, {
-          url: (process.env.REACT_APP_UPLOAD_API_URL ?? '') + '/manager/upload',
-          requests(file) {
-            return file;
+      options: [
+        {
+          key: 'image',
+          children: 'image',
+          async toggle(editor, { uploadImage }) {
+            uploadImage(editor, {
+              url:
+                (process.env.REACT_APP_UPLOAD_API_URL ?? '') +
+                '/manager/upload',
+              requests(file) {
+                return file;
+              },
+              headers: {
+                Authorization: getToken(),
+              },
+              fileRender(file) {
+                return (
+                  <img
+                    alt=""
+                    style={{
+                      objectFit: 'contain',
+                      width: '100%',
+                      height: '100%',
+                    }}
+                    src={file.response?.data?.url}
+                  />
+                );
+              },
+            });
           },
-          headers: {
-            Authorization: getToken(),
-          },
-        });
-      },
+        },
+      ],
     },
   ];
 

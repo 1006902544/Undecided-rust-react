@@ -25,7 +25,7 @@ export default function ImageElement(props: RenderElementProps) {
   }, []);
 
   return (
-    <div {...props.attributes}>
+    <div style={{ display: 'inline-block' }} {...props.attributes}>
       <div
         contentEditable={false}
         style={{

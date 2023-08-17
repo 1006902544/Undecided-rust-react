@@ -1,3 +1,4 @@
+import type { PriFile } from '../../../../index.d';
 import axios from 'axios';
 import React, {
   useCallback,
@@ -28,10 +29,12 @@ export default function UploadElement(props: RenderElementProps) {
     setSize([size[0] <= 0 ? 0 : size[0], size[1] <= 0 ? 0 : size[1]]);
   }, []);
 
-  // const [percent, setPercent] = useState(0);
+  const [percent, setPercent] = useState(0);
+  const [file, setFile] = useState<PriFile | undefined>(undefined);
 
-  const upload = async (file: File) => {
+  const upload = async (file: PriFile) => {
     const { upload } = props.element;
+
     if (upload) {
       const params = new FormData();
       params.append('file', file);
@@ -46,36 +49,76 @@ export default function UploadElement(props: RenderElementProps) {
         onUploadProgress: (progressEvent: any) => {
           const percent =
             ((progressEvent.loaded / progressEvent.total) * 100) | 0;
-          console.log(percent);
-          // setPercent(percent);
+          setPercent(percent);
         },
       };
       axios.post(upload.url, params, config).then((response) => {
-        var result = response.data;
-        if (result.status === 0) {
-          console.log(result);
+        const result = response.data;
+        file.response = result;
+        if (props.element.upload?.requests) {
+          const res = props.element.upload?.requests(file);
+          setFile(res);
         }
       });
     }
   };
 
   useEffect(() => {
-    // upload();
     uploadRef.current?.click();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const uploadRef = useRef<null | HTMLInputElement>(null);
 
+  const renderElement = useMemo(() => {
+    if (percent === 100 && file) {
+      if (props.element.upload?.fileRender) {
+        return props.element.upload?.fileRender(file);
+      } else {
+        return (
+          <img
+            alt=""
+            src={file.url}
+            style={{ objectFit: 'contain', width: '100%', height: '100%' }}
+          />
+        );
+      }
+    } else {
+      <>
+        <input
+          type="file"
+          ref={uploadRef}
+          style={{ display: 'none' }}
+          onChange={(e) => {
+            console.log(e);
+            const file = e.target.files?.[0];
+            if (file) {
+              upload(file);
+            }
+          }}
+        />
+        <div
+          style={{
+            width: `${percent}%`,
+            height: 8,
+            borderRadius: 8,
+            backgroundColor: 'blue',
+          }}
+        ></div>
+      </>;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [percent, file]);
+
   return (
-    <div {...props.attributes}>
+    <div style={{ display: 'inline-block' }} {...props.attributes}>
       <div
         contentEditable={false}
         style={{
-          maxWidth: size[0],
-          maxHeight: size[1],
+          width: size[0],
+          height: size[1],
           flexShrink: 0,
-          display: 'inline-block',
           position: 'relative',
         }}
         className="editable-image-container"
@@ -120,7 +163,10 @@ export default function UploadElement(props: RenderElementProps) {
         <div
           style={{
             width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
             height: '100%',
+            justifyContent: 'center',
           }}
         >
           <input
@@ -134,9 +180,12 @@ export default function UploadElement(props: RenderElementProps) {
               }
             }}
           />
+
+          {renderElement as any}
         </div>
       </div>
-      <span>{props.children}</span>
+
+      {props.children}
     </div>
   );
 }

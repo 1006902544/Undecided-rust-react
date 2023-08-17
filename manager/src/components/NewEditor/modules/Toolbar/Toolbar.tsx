@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { useBaseItems, useBaseToggle, useEditorContext } from '../../';
 import './style.scss';
 import type { ToolbarProps } from './index.d';
+import { Popover } from '../components';
 
 export default function Toolbar({ items: itemsProps }: ToolbarProps) {
   const { editor } = useEditorContext();
@@ -25,7 +26,24 @@ export default function Toolbar({ items: itemsProps }: ToolbarProps) {
       {items.map(({ children, options, type, key, toggle }) =>
         type === 'option' ? (
           <button key={key} className="editor-toolbar-item">
-            {children}
+            <Popover
+              content={
+                <ul>
+                  {options?.map((opt) => (
+                    <li key={opt.key}>
+                      <button
+                        className=" px-[10px] hover:bg-[#ccc] rounded-[3px]  transition-all"
+                        onClick={() => opt.toggle?.(editor, baseToggles)}
+                      >
+                        {opt.children}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              }
+            >
+              {children}
+            </Popover>
           </button>
         ) : (
           <button

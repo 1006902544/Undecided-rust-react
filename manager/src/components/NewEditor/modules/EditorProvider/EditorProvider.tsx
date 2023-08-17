@@ -1,4 +1,4 @@
-import type { EditorContextInterface } from './index.d';
+import type { Editor, EditorContextInterface } from './index.d';
 import React, { createContext, useState } from 'react';
 import { createEditor } from 'slate';
 import { withReact } from 'slate-react';
@@ -10,7 +10,16 @@ interface IProps {
 }
 
 export default function EditorProvider({ children }: IProps) {
-  const [editor] = useState(() => withReact(createEditor()));
+  const withEmbeds = (editor: Editor) => {
+    const { isVoid } = editor;
+    editor.isVoid = (element) =>
+      element.type === 'image' || element.type === 'upload'
+        ? true
+        : isVoid(element);
+    return editor;
+  };
+
+  const [editor] = useState(() => withEmbeds(withReact(createEditor())));
 
   return (
     <EditorContext.Provider value={{ editor }}>
