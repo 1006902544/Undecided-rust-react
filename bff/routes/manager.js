@@ -18,7 +18,6 @@ const upload = multer();
  */
 router.post('/upload', upload.single('file'), async (ctx, next) => {
   const file = ctx.file;
-  console.log(file);
   const id = (await nanoid).nanoid(10);
   const fileName = `${id}-${file.originalname}`;
 

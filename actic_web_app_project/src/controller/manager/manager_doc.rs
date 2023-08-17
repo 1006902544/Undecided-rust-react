@@ -1,7 +1,7 @@
 use crate::schema::modules::{
     admin::admin::*,
     manager::{
-        game_center::general::{tags::tags::*, types::types::*},
+        game_center::general::{company_studio::company_studio::*, tags::tags::*, types::types::*},
         manager::*,
         manager_response::*,
         permission::{
@@ -78,7 +78,9 @@ use utoipa::OpenApi;
         //上传，accessKey
         AccessKeyRes,AccessKey,
         //游戏类型
-        GameType,UpdateGameTypeReq,DeleteGameTypeReq,GameTypeRes,GameTypeLimitRes,GameTypeLimitReq
+        GameType,UpdateGameTypeReq,DeleteGameTypeReq,GameTypeRes,GameTypeLimitRes,GameTypeLimitReq,
+        //公司/工作室
+        GetCompanyStudioReq,UploadCompanyStudioReq,CompanyStudioDetail,CompanyStudio,CompanyStudioRes,CompanyStudioLimitRes
     ))
 )]
 pub struct ApiDoc;

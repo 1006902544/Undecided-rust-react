@@ -3,7 +3,9 @@ use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
 
 use super::{
-    game_center::general::{tags::tags::*, types::types::GameType},
+    game_center::general::{
+        company_studio::company_studio::*, tags::tags::*, types::types::GameType,
+    },
     permission::{associate::auth::*, permission::Permission},
     router::{associate::auth::*, router::*},
     upload::*,
@@ -26,7 +28,9 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //上传，accessKey
     AccessKeyRes = ResponseData<AccessKey>,
     //游戏类型
-    GameTypeRes = ResponseData<GameTypeLimitRes>
+    GameTypeRes = ResponseData<GameTypeLimitRes>,
+    //公司/工作室
+    CompanyStudioRes = ResponseData<CompanyStudioLimitRes>
 )]
 pub struct ResponseData<B> {
     pub data: B,
@@ -66,7 +70,9 @@ impl<B> ResponseData<B> {
     //游戏标签
     GameTagsLimitRes = LimitResults<Tag>,
     //游戏类型
-    GameTypeLimitRes = LimitResults<GameType>
+    GameTypeLimitRes = LimitResults<GameType>,
+    //公司/工作室
+    CompanyStudioLimitRes = LimitResults<CompanyStudio>
 )]
 pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,
