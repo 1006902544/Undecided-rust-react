@@ -8,9 +8,11 @@
 export interface CompanyStudioDetail {
   create_time: string;
   description?: string | null;
+  e_tag: string;
   established_time: string;
   founder?: string | null;
   id: number;
+  logo_name: string;
   logo_url: string;
   name: string;
   region?: string | null;

@@ -7,9 +7,11 @@
 
 export interface UpdateCompanyStudioReq {
   description?: string | null;
+  e_tag: string;
   established_time: string;
   founder?: string | null;
   id?: number | null;
+  logo_name: string;
   logo_url: string;
   name: string;
   region?: string | null;
