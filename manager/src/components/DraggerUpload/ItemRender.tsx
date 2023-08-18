@@ -12,7 +12,7 @@ interface IProps {
   };
 }
 
-export default function ItemRender({ file, fileList, actions }: IProps) {
+export default function ItemRender({ file, actions }: IProps) {
   const label = useMemo(() => {
     if (file.status === 'uploading') {
       const width = (file.percent ?? 0) / 100 + '%';

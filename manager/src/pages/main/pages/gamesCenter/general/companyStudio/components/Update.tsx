@@ -44,7 +44,7 @@ export default function Update() {
             }}
           />
         </Col>
-        <Col span={16}></Col>
+        <Col span={16} />
 
         <Col span={8}>
           <ProFormSelect

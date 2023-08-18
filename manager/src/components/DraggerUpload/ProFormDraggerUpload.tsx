@@ -13,6 +13,7 @@ type UploadChange = (file: UploadFile[]) => void;
 interface DraggerContainerProps extends Omit<DraggerProps, 'onChange'> {
   onChange?: UploadChange;
   value?: UploadFile<ResponseData>[];
+  'aria-required'?: string;
 }
 
 interface IProps extends Omit<ProFormItemProps, 'onChange'> {
@@ -52,7 +53,7 @@ export default function ProFormDraggerUpload({
   }, [rulesProp, required]);
 
   return (
-    <ProForm.Item name={name} {...props} {...rules}>
+    <ProForm.Item name={name} {...props} rules={rules}>
       <DraggerUploadContainer {...fieldProps} />
     </ProForm.Item>
   );
@@ -66,9 +67,10 @@ const DraggerUploadContainer = ({
   const onChange = ({
     fileList,
   }: UploadChangeParam<UploadFile<ResponseData>>) => {
-    // setFileList(fileList);
     onChangeProp?.(fileList);
   };
 
-  return <DraggerUpload onChange={onChange} fileList={value} {...props} />;
+  return (
+    <DraggerUpload onChange={onChange} fileList={value ?? []} {...props} />
+  );
 };

@@ -25,7 +25,7 @@ export default function Toolbar({ items: itemsProps }: ToolbarProps) {
     <div className="editor-toolbar p-[10px] flex space-x-[10px]">
       {items.map(({ children, options, type, key, toggle }) =>
         type === 'option' ? (
-          <button key={key} className="editor-toolbar-item">
+          <button key={key} className="editor-toolbar-item" type="button">
             <Popover
               content={
                 <ul className=" overflow-y-scroll max-h-[300px]">
@@ -34,6 +34,7 @@ export default function Toolbar({ items: itemsProps }: ToolbarProps) {
                       <button
                         className=" px-[10px] hover:bg-[#ccc] rounded-[3px]  transition-all"
                         onClick={() => opt.toggle?.(editor, baseToggles)}
+                        type="button"
                       >
                         {opt.children}
                       </button>
@@ -47,6 +48,7 @@ export default function Toolbar({ items: itemsProps }: ToolbarProps) {
           </button>
         ) : (
           <button
+            type="button"
             key={key}
             onClick={() => {
               toggle?.(editor, baseToggles);
