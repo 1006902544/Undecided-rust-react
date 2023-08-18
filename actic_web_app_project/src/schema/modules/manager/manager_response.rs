@@ -30,7 +30,7 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //游戏类型
     GameTypeRes = ResponseData<GameTypeLimitRes>,
     //公司/工作室
-    CompanyStudioRes = ResponseData<CompanyStudioLimitRes>
+    CompanyStudioRes = ResponseData<CompanyStudioLimitRes>,CompanyStudioDetailRes = ResponseData<CompanyStudioDetail>
 )]
 pub struct ResponseData<B> {
     pub data: B,

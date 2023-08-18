@@ -49,6 +49,7 @@ use utoipa::OpenApi;
         //游戏中心-通用-公司/工作室
         super::game_center::general::company_studio::company_studio::get_company,
         super::game_center::general::company_studio::company_studio::update_company,
+        super::game_center::general::company_studio::company_studio::get_company_detail,
     ),
     components(schemas(
         //文件通用
@@ -83,7 +84,7 @@ use utoipa::OpenApi;
         //游戏类型
         GameType,UpdateGameTypeReq,DeleteGameTypeReq,GameTypeRes,GameTypeLimitRes,GameTypeLimitReq,
         //公司/工作室
-        GetCompanyStudioReq,UpdateCompanyStudioReq,CompanyStudioDetail,CompanyStudio,CompanyStudioRes,CompanyStudioLimitRes
+        GetCompanyStudioReq,UpdateCompanyStudioReq,CompanyStudioDetail,CompanyStudio,CompanyStudioRes,CompanyStudioLimitRes,GetCompanyStudioDetailReq,DeleteCompanyStudioDetailReq
     ))
 )]
 pub struct ApiDoc;

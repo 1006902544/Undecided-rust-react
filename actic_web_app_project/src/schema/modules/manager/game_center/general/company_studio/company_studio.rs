@@ -21,6 +21,8 @@ pub struct CompanyStudio {
 pub struct CompanyStudioDetail {
     pub id: u64,
     pub name: String,
+    pub e_tag: String,
+    pub logo_name: String,
     pub logo_url: String,
     pub description: Option<String>,
     #[validate(length(min = 0, max = 200), required)]
@@ -40,6 +42,8 @@ pub struct UpdateCompanyStudioReq {
     pub id: Option<u64>,
     pub name: String,
     pub logo_url: String,
+    pub e_tag: String,
+    pub logo_name: String,
     pub description: Option<String>,
     #[validate(length(min = 0, max = 200), required)]
     pub region: Option<String>,
@@ -60,4 +64,14 @@ pub struct GetCompanyStudioReq {
     pub established_end_time: Option<String>,
     pub limit: Option<u64>,
     pub page: Option<u64>,
+}
+
+#[derive(Debug, ToSchema, FromRow, Validate, Deserialize, Serialize, IntoParams)]
+pub struct GetCompanyStudioDetailReq {
+    pub id: u64,
+}
+
+#[derive(Debug, ToSchema, FromRow, Validate, Deserialize, Serialize, IntoParams)]
+pub struct DeleteCompanyStudioDetailReq {
+    pub id: u64,
 }

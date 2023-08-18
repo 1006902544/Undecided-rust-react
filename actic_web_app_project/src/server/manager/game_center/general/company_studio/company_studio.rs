@@ -1,4 +1,4 @@
-use mysql::{from_row, prelude::Queryable, PooledConn, TxOpts};
+use mysql::{from_row, prelude::Queryable, Params, PooledConn, TxOpts};
 use mysql_common::params;
 
 use crate::{
@@ -88,6 +88,26 @@ pub async fn get_company(
             total,
             current,
         }),
+        Err(err) => Err(MyError::sql_error(err)),
+    }
+}
+
+pub async fn get_company_studio_detail(
+    conn: &mut PooledConn,
+    id: u64,
+) -> Result<CompanyStudioDetail, MyError> {
+    let sql_str = "select * from company_studios where id=:id";
+    let res = conn.exec_first::<CompanyStudioDetail, &str, Params>(
+        sql_str,
+        params! {
+            "id" => id
+        },
+    );
+    match res {
+        Ok(res) => match res {
+            Some(res) => Ok(res),
+            None => Err(MyError::not_found()),
+        },
         Err(err) => Err(MyError::sql_error(err)),
     }
 }

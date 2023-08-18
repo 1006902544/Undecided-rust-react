@@ -45,6 +45,7 @@ export default function ProFormDraggerUpload({
               Promise.reject('please upload file');
             }
           },
+          message: 'please upload file',
         },
       ];
     } else {

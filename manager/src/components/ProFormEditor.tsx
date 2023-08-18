@@ -36,12 +36,7 @@ const EditorContainer = ({ children, ...props }: FieldProps) => {
   };
 
   return (
-    <Editor
-      {...props}
-      value={deserialize(props.value)}
-      initialValue={undefined}
-      onChange={onChange}
-    >
+    <Editor {...props} value={deserialize(props.value)} onChange={onChange}>
       {children}
     </Editor>
   );

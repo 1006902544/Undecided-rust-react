@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type { BaseEditor, Descendant } from 'slate';
 import { ReactEditor } from 'slate-react';
 
@@ -46,4 +47,5 @@ export interface EditorProps {
   children?: React.ReactNode;
   onChange?: ((value: Descendant[]) => void) | undefined;
   value?: Descendant[];
+  style?: CSSProperties;
 }

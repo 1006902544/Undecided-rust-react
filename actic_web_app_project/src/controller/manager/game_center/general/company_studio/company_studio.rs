@@ -82,3 +82,31 @@ pub async fn get_company(
         Err(MyError::permissions_error())
     }
 }
+
+#[utoipa::path(
+    get,
+    path = "/manager/gamesCenter/general/companyStudio",
+    params (GetCompanyStudioDetailReq),
+    responses (
+        (status = 200 ,description = "success" , body = CompanyStudioDetailRes)
+    )
+  )]
+#[get("/detail")]
+///get company/studio detail
+pub async fn get_company_detail(
+    pool: Data<Pool>,
+    query: Query<GetCompanyStudioDetailReq>,
+    req: HttpRequest,
+) -> Result<impl Responder, impl ResponseError> {
+    let mut conn = pool.get_conn().unwrap();
+    let has_per = has_permission(&mut conn, &req);
+    if has_per {
+        let res = company_studio_server::get_company_studio_detail(&mut conn, query.id).await;
+        match res {
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+            Err(e) => Err(e),
+        }
+    } else {
+        Err(MyError::permissions_error())
+    }
+}
