@@ -45,4 +45,5 @@ export interface EditorProps {
   initialValue?: Descendant[];
   children?: React.ReactNode;
   onChange?: ((value: Descendant[]) => void) | undefined;
+  value?: Descendant[];
 }

@@ -1,12 +1,17 @@
 import { ProForm } from '@ant-design/pro-components';
 import type { ProFormItemProps } from '@ant-design/pro-components';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Editor } from '@/components/';
 import type { EditorProps } from '@/components/NewEditor/index.d';
-import { Node } from 'slate';
+import type { Descendant } from 'slate';
 
 interface IProps extends ProFormItemProps {
-  fieldProps?: EditorProps;
+  fieldProps?: FieldProps;
+}
+
+interface FieldProps extends Omit<EditorProps, 'onChange' | 'value'> {
+  onChange?: (value: string) => void;
+  value?: string;
 }
 
 export default function ProFormEditor({ fieldProps, ...props }: IProps) {
@@ -17,32 +22,25 @@ export default function ProFormEditor({ fieldProps, ...props }: IProps) {
   );
 }
 
-const serialize = (value: any) => {
-  return (
-    value
-      // Return the string content of each paragraph in the value's children.
-      .map((n: any) => Node.string(n))
-      // Join them all with line breaks denoting paragraphs.
-      .join('\n')
-  );
-};
+const EditorContainer = ({ children, ...props }: FieldProps) => {
+  const serialize = useCallback((value: Descendant[]) => {
+    return JSON.stringify(value);
+  }, []);
 
-const deserialize = (string: string) => {
-  // Return a value array of children derived by splitting the string.
-  return string.split('\n').map((line) => {
-    return {
-      children: [{ text: line }],
-    };
-  });
-};
+  const deserialize = useCallback((string?: string) => {
+    return string ? JSON.parse(string) : undefined;
+  }, []);
 
-const EditorContainer = ({ children, ...props }: EditorProps) => {
+  const onChange = (value: Descendant[]) => {
+    props.onChange?.(serialize(value));
+  };
+
   return (
     <Editor
       {...props}
-      onChange={(v) => {
-        console.log(v);
-      }}
+      value={deserialize(props.value)}
+      initialValue={undefined}
+      onChange={onChange}
     >
       {children}
     </Editor>

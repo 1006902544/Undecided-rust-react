@@ -5,7 +5,9 @@ import './Popover.scss';
 
 export default function Popover({ children, content }: PopoverProps) {
   const [open, setOpen] = useState(false);
-  const [point, setPoint] = useState<[number, number]>([0, 0]);
+  const [point, setPoint] = useState<[number | string, number | string]>([
+    0, 0,
+  ]);
 
   const onCancel = useCallback(() => {
     setOpen(false);
@@ -24,9 +26,9 @@ export default function Popover({ children, content }: PopoverProps) {
     <span
       onClick={(e) => {
         e.stopPropagation();
-        const parent = e.currentTarget.parentNode as HTMLElement | null;
-        const left = parent?.offsetLeft ?? 0;
-        const top = (parent?.offsetTop ?? 0) + (parent?.offsetHeight ?? 0) + 5;
+        const point = (e.target as HTMLElement).getBoundingClientRect();
+        const left = Math.round(point.left);
+        const top = Math.round(point.bottom + 5);
         setPoint([left, top]);
         setOpen(true);
       }}
@@ -38,8 +40,8 @@ export default function Popover({ children, content }: PopoverProps) {
             <div
               className="popover-content-container p-[5px] rounded-[3px] shadow-lg bg-[white] fixed"
               style={{
-                left: point[0],
-                top: point[1],
+                left: point[0] + 'px',
+                top: point[1] + 'px',
               }}
               onClick={(e) => {
                 e.stopPropagation();

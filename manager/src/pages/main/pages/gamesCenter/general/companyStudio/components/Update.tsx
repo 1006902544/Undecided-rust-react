@@ -82,14 +82,6 @@ export default function Update() {
         </Col>
         <Col span={16} />
 
-        <button
-          onClick={() => {
-            console.log(form.getFieldsValue());
-          }}
-        >
-          xxx
-        </button>
-
         <Col span={16}>
           <ProFormEditor
             name="description"

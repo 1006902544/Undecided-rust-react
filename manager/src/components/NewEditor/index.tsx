@@ -6,7 +6,9 @@ export * from './modules';
 export const Editor = ({ children, ...props }: EditorProps) => {
   return (
     <EditorProvider>
-      <EditorContainer onChange={props.onChange}>{children}</EditorContainer>
+      <EditorContainer onChange={props.onChange} {...props}>
+        {children}
+      </EditorContainer>
     </EditorProvider>
   );
 };

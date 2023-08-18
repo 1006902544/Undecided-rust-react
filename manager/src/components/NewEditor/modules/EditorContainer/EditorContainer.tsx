@@ -23,7 +23,7 @@ export default function EditorContainer({
 
   return (
     <div className="shadow-xl rounded-[5px]">
-      <Slate editor={editor} initialValue={initialValue} {...props}>
+      <Slate editor={editor} initialValue={props.value ?? initial} {...props}>
         {children}
         <Editable />
       </Slate>
