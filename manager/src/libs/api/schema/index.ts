@@ -23,6 +23,7 @@ export * from './companyStudioDetailRes';
 export * from './companyStudioLimitRes';
 export * from './companyStudioRes';
 export * from './deleteCompanyStudioDetailReq';
+export * from './deleteCompanyStudioParams';
 export * from './deleteGameTypeParams';
 export * from './deleteGameTypeReq';
 export * from './deletePermissionParams';

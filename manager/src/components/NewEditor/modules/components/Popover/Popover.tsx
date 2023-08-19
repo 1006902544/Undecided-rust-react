@@ -9,15 +9,15 @@ export default function Popover({ children, content }: PopoverProps) {
     0, 0,
   ]);
 
-  const onCancel = useCallback(() => {
+  const onCancel = useCallback((e: any) => {
     setOpen(false);
   }, []);
 
   useEffect(() => {
     if (open) {
-      document.body.addEventListener('click', onCancel);
+      document.getElementById('root')?.addEventListener('click', onCancel);
     } else {
-      document.body.removeEventListener('click', onCancel);
+      document.getElementById('root')?.removeEventListener('click', onCancel);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
@@ -45,6 +45,12 @@ export default function Popover({ children, content }: PopoverProps) {
               }}
               onClick={(e) => {
                 e.stopPropagation();
+                document
+                  .getElementById('root')
+                  ?.removeEventListener('click', onCancel);
+                document
+                  .getElementById('root')
+                  ?.addEventListener('click', onCancel);
               }}
             >
               {content}

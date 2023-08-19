@@ -19,16 +19,18 @@ pub async fn create_company(
     body: UpdateCompanyStudioReq,
 ) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let sql_str = "insert into company_studios (name,logo_url,description,region,founder,established_time) values(:name,:logo_url,:description,:region,:founder,:established_time)";
+    let sql_str = "insert into company_studios (name,logo_url,description,region,founder,established_time,e_tag,logo_name) values(:name,:logo_url,:description,:region,:founder,:established_time,:e_tag,:logo_name)";
     let res = trans.exec_drop(
         sql_str,
         params! {
-          "name" => body.name,
-          "logo_url" => body.logo_url,
-          "description" => body.description,
-          "region" => body.region,
-          "founder" => body.founder,
-          "established_time" => body.established_time,
+            "name" => body.name,
+            "logo_url" => body.logo_url,
+            "description" => body.description,
+            "region" => body.region,
+            "founder" => body.founder,
+            "established_time" => body.established_time,
+            "e_tag" => body.e_tag,
+            "logo_name" => body.logo_name,
         },
     );
     match after_update(trans, res).await {
@@ -42,17 +44,19 @@ pub async fn edit_company(
     body: UpdateCompanyStudioReq,
 ) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let sql_str = "update company_studios set name=:name logo_url=:logo_url description=:description region=:region founder=:founder established_time=:established_time where id=:id";
+    let sql_str = "update company_studios set name=:name,logo_url=:logo_url,e_tag=:e_tag,logo_name=:logo_name,description=:description,region=:region,founder=:founder,established_time=:established_time where id=:id";
     let res = trans.exec_drop(
         sql_str,
         params! {
-          "name" => body.name,
-          "logo_url" => body.logo_url,
-          "description" => body.description,
-          "region" => body.region,
-          "founder" => body.founder,
-          "established_time" => body.established_time,
-          "id" => body.id
+            "name" => body.name,
+            "logo_url" => body.logo_url,
+            "description" => body.description,
+            "region" => body.region,
+            "founder" => body.founder,
+            "established_time" => body.established_time,
+            "id" => body.id,
+            "e_tag" => body.e_tag,
+            "logo_name" => body.logo_name,
         },
     );
     match after_update(trans, res).await {
@@ -109,5 +113,20 @@ pub async fn get_company_studio_detail(
             None => Err(MyError::not_found()),
         },
         Err(err) => Err(MyError::sql_error(err)),
+    }
+}
+
+pub async fn delete_company_studio(conn: &mut PooledConn, id: u64) -> Result<String, MyError> {
+    let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
+    let sql_str = "delete from company_studios where id=:id";
+    let res = trans.exec_drop(
+        sql_str,
+        params! {
+            "id" => id
+        },
+    );
+    match after_update(trans, res).await {
+        Ok(_) => Ok("Delete Success".to_string()),
+        Err(e) => Err(e),
     }
 }

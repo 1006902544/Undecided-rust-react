@@ -1,12 +1,24 @@
-import { List, Table } from '@/components';
+import { DeleteButton, List, Table } from '@/components';
 import { gameCenterGeneralCompanyResourceName as resource } from './';
 import type { ColumnsType } from 'antd/es/table';
 import type { CompanyStudio } from '@/libs/api/schema';
 import { Button, Image } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
+import qs from 'query-string';
 
 export default function ListContainer() {
   const navigate = useNavigate();
+
+  const goEdit = useCallback(
+    (id: number) => {
+      navigate({
+        pathname: 'edit',
+        search: qs.stringify({ id }),
+      });
+    },
+    [navigate]
+  );
 
   const columns: ColumnsType<CompanyStudio> = [
     {
@@ -53,6 +65,16 @@ export default function ListContainer() {
       title: 'OPTION',
       fixed: 'right',
       align: 'center',
+      render(_, { id }) {
+        return (
+          <div className="flex justify-center">
+            <Button type="link" onClick={() => goEdit(id)}>
+              EDIT
+            </Button>
+            <DeleteButton id={id} />
+          </div>
+        );
+      },
     },
   ];
 
@@ -70,7 +92,7 @@ export default function ListContainer() {
         </Button>,
       ]}
     >
-      <Table columns={columns} />
+      <Table columns={columns} rowKey="id" />
     </List>
   );
 }

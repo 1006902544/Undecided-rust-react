@@ -13,6 +13,10 @@ export interface UploadFile<T = any, F = any> {
   fileRender?: (file: PriFile) => React.ReactNode;
 }
 
+export interface ImageEle {
+  url: string;
+  alt?: string;
+}
 export interface PriFile<T = any> extends File {
   response?: T;
   url?: string;
@@ -21,10 +25,10 @@ export interface PriFile<T = any> extends File {
 export type CustomElement = {
   type: string;
   children: CustomText[];
-
-  url?: string;
+  image?: ImageEle;
   upload?: UploadFile;
 };
+
 export type CustomText = {
   text?: string;
   image?: {

@@ -53,7 +53,14 @@ export const useBaseToggle = () => {
       editor.insertNodes({
         children: [{ text: '' }],
         type: 'image',
-        url,
+        image: {
+          url,
+          alt: url,
+        },
+      });
+      editor.insertNodes({
+        children: [{ text: '' }],
+        type: 'inline',
       });
     },
 

@@ -1,5 +1,5 @@
 import type { Resource } from '@/components';
-import { getCompany } from '@/libs/api';
+import { deleteCompanyStudio, getCompany } from '@/libs/api';
 import type { GetCompanyParams } from '@/libs/api/schema';
 
 export const gameCenterGeneralCompanyResourceName =
@@ -15,5 +15,9 @@ export const gameCenterGeneralCompanyResource: Resource<GetCompanyParams> = {
       total: res.total,
       current: res.current,
     };
+  },
+
+  async delete({ id }) {
+    return await deleteCompanyStudio({ id: id as number });
   },
 };

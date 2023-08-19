@@ -5,8 +5,6 @@ import './style.scss';
 export default function ImageElement(props: RenderElementProps) {
   const [size, setSize] = useState([100, 100]);
 
-  console.log(props.element.upload);
-
   const buttonStyle = useMemo(
     () => ({
       backgroundColor: 'rgba(0,0,0,0.3)',
@@ -21,7 +19,7 @@ export default function ImageElement(props: RenderElementProps) {
   );
 
   const changeSize = useCallback((size: [number, number]) => {
-    setSize([size[0] <= 0 ? 0 : size[0], size[1] <= 0 ? 0 : size[1]]);
+    setSize([size[0] <= 20 ? 20 : size[0], size[1] <= 20 ? 20 : size[1]]);
   }, []);
 
   return (
@@ -61,6 +59,7 @@ export default function ImageElement(props: RenderElementProps) {
               className="editable-image-handle-button"
               style={buttonStyle}
               onClick={() => changeSize([size[0] - 20, size[1] - 20])}
+              type="button"
             >
               -
             </button>
@@ -68,6 +67,7 @@ export default function ImageElement(props: RenderElementProps) {
               className="editable-image-handle-button"
               style={{ ...buttonStyle, marginRight: 0 }}
               onClick={() => changeSize([size[0] + 20, size[1] + 20])}
+              type="button"
             >
               +
             </button>
@@ -75,12 +75,12 @@ export default function ImageElement(props: RenderElementProps) {
         </div>
 
         <img
-          alt=""
-          src={props.element.url}
+          alt={props.element.image?.alt ?? props.element.image?.url}
+          src={props.element.image?.url}
           style={{ objectFit: 'contain', width: '100%', height: '100%' }}
         />
       </div>
-      <span>{props.children}</span>
+      {props.children}
     </div>
   );
 }

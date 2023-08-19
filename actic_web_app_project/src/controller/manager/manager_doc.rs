@@ -50,6 +50,7 @@ use utoipa::OpenApi;
         super::game_center::general::company_studio::company_studio::get_company,
         super::game_center::general::company_studio::company_studio::update_company,
         super::game_center::general::company_studio::company_studio::get_company_detail,
+        super::game_center::general::company_studio::company_studio::delete_company_studio,
     ),
     components(schemas(
         //文件通用

@@ -38,9 +38,9 @@ export default function ProFormDraggerUpload({
       return [
         ...(rulesProp ?? []),
         {
-          validator(_: any, value: UploadFile<ResponseData>[]) {
-            if (value.some((f) => f.status === 'done')) {
-              Promise.resolve();
+          validator(_: any, value: UploadFile<ResponseData>[], callback: any) {
+            if (value?.some((f) => f.status === 'done')) {
+              callback();
             } else {
               Promise.reject('please upload file');
             }

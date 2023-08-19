@@ -32,6 +32,11 @@ module.exports = {
               useQuery: true,
             },
           },
+          getCompanyDetail: {
+            query: {
+              useQuery: true,
+            },
+          },
         },
       },
     },

@@ -1,6 +1,8 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { ToolbarItem } from '../index.d';
-import { getToken } from '@/utils';
+import { Modal } from '../modules/components';
+import { useEditorContext } from './useEditorContext';
+import { useBaseToggle } from './useBaseToggle';
 
 export const useBaseItems = () => {
   const baseItems: ToolbarItem[] = [
@@ -25,33 +27,7 @@ export const useBaseItems = () => {
       options: [
         {
           key: 'image',
-          children: 'image',
-          async toggle(editor, { uploadImage }) {
-            uploadImage(editor, {
-              url:
-                (process.env.REACT_APP_UPLOAD_API_URL ?? '') +
-                '/manager/upload',
-              requests(file) {
-                return file;
-              },
-              headers: {
-                Authorization: getToken(),
-              },
-              fileRender(file) {
-                return (
-                  <img
-                    alt=""
-                    style={{
-                      objectFit: 'contain',
-                      width: '100%',
-                      height: '100%',
-                    }}
-                    src={file.response?.data?.url}
-                  />
-                );
-              },
-            });
-          },
+          children: <InsertImageModalButton />,
         },
       ],
     },
@@ -71,4 +47,51 @@ export const useBaseItems = () => {
 
   // eslint-disable-next-line
   return useMemo(() => baseItems, []);
+};
+
+const InsertImageModalButton = () => {
+  const { editor } = useEditorContext();
+  const baseToggle = useBaseToggle();
+
+  const [open, setOpen] = useState(false);
+  const onOpen = useCallback(() => {
+    setOpen(true);
+  }, []);
+  const onCancel = useCallback(() => {
+    setOpen(false);
+  }, []);
+
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const onOk = () => {
+    if (editor && inputRef.current?.value) {
+      baseToggle.insertImage(editor, inputRef.current?.value);
+      onCancel();
+    }
+  };
+
+  return (
+    <span>
+      <Modal
+        open={open}
+        onCancel={onCancel}
+        footer={
+          <div className="flex justify-end">
+            <button className=" border-1" type="button" onClick={onOk}>
+              ok
+            </button>
+          </div>
+        }
+      >
+        <div className="flex w-[300px]">
+          <label className="block w-[90px]">Image URL</label>
+          <input
+            ref={inputRef}
+            className="flex-1 rounded-[4px] outline-none border-[1px] px-[10px]"
+          />
+        </div>
+      </Modal>
+      <span onClick={onOpen}>insert image</span>
+    </span>
+  );
 };

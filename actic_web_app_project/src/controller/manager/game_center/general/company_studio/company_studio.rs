@@ -1,5 +1,5 @@
 use actix_web::{
-    get, post,
+    delete, get, post,
     web::{Data, Json, Query},
     HttpRequest, Responder, ResponseError,
 };
@@ -85,7 +85,7 @@ pub async fn get_company(
 
 #[utoipa::path(
     get,
-    path = "/manager/gamesCenter/general/companyStudio",
+    path = "/manager/gamesCenter/general/companyStudio/detail",
     params (GetCompanyStudioDetailReq),
     responses (
         (status = 200 ,description = "success" , body = CompanyStudioDetailRes)
@@ -102,6 +102,34 @@ pub async fn get_company_detail(
     let has_per = has_permission(&mut conn, &req);
     if has_per {
         let res = company_studio_server::get_company_studio_detail(&mut conn, query.id).await;
+        match res {
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+            Err(e) => Err(e),
+        }
+    } else {
+        Err(MyError::permissions_error())
+    }
+}
+
+#[utoipa::path(
+    delete,
+    path = "/manager/gamesCenter/general/companyStudio",
+    params (DeleteCompanyStudioDetailReq),
+    responses (
+        (status = 200 ,description = "success" , body = ResPonseString)
+    )
+  )]
+#[delete("")]
+///delete company/studio
+pub async fn delete_company_studio(
+    pool: Data<Pool>,
+    query: Query<DeleteCompanyStudioDetailReq>,
+    req: HttpRequest,
+) -> Result<impl Responder, impl ResponseError> {
+    let mut conn = pool.get_conn().unwrap();
+    let has_per = has_permission(&mut conn, &req);
+    if has_per {
+        let res = company_studio_server::delete_company_studio(&mut conn, query.id).await;
         match res {
             Ok(res) => Ok(ResponseData::new(res).into_json_response()),
             Err(e) => Err(e),

@@ -4,9 +4,8 @@ import type { RenderLeafProps, RenderElementProps } from 'slate-react';
 import './style.scss';
 import { useEditorContext } from '../../';
 import { ImageElement, UploadElement } from './components';
-import type { Descendant } from 'slate';
 
-export default function EditableContainer({ value }: { value?: Descendant[] }) {
+export default function EditableContainer() {
   const { editor } = useEditorContext();
 
   const renderElement = useCallback((props: RenderElementProps) => {

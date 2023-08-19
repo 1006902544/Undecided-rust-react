@@ -91,7 +91,6 @@ export default function UploadElement(props: RenderElementProps) {
           ref={uploadRef}
           style={{ display: 'none' }}
           onChange={(e) => {
-            console.log(e);
             const file = e.target.files?.[0];
             if (file) {
               upload(file);

@@ -22,9 +22,12 @@ import type {
   AdminInfoRes,
   ResPonseString,
   LoginBody,
+  CompanyStudioRes,
+  GetCompanyParams,
+  UpdateCompanyStudioReq,
+  DeleteCompanyStudioParams,
   CompanyStudioDetailRes,
   GetCompanyDetailParams,
-  UpdateCompanyStudioReq,
   GameTagsRes,
   GetTagsLimitParams,
   ResPonseU8,
@@ -220,14 +223,14 @@ export const useSignIn = <TError = ErrorType<unknown>,
     }
     
 /**
- * get company/studio detail
- * @summary get company/studio detail
+ * get company/studio
+ * @summary get company/studio
  */
-export const getCompanyDetail = (
-    params: GetCompanyDetailParams,
+export const getCompany = (
+    params?: GetCompanyParams,
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
 ) => {
-      return custom_instance<CompanyStudioDetailRes>(
+      return custom_instance<CompanyStudioRes>(
       {url: `/manager/gamesCenter/general/companyStudio`, method: 'get',
         params, signal
     },
@@ -235,36 +238,36 @@ export const getCompanyDetail = (
     }
   
 
-export const getGetCompanyDetailQueryKey = (params: GetCompanyDetailParams,) => [`/manager/gamesCenter/general/companyStudio`, ...(params ? [params]: [])] as const;
+export const getGetCompanyQueryKey = (params?: GetCompanyParams,) => [`/manager/gamesCenter/general/companyStudio`, ...(params ? [params]: [])] as const;
   
 
     
-export const getGetCompanyDetailQueryOptions = <TData = Awaited<ReturnType<typeof getCompanyDetail>>, TError = ErrorType<unknown>>(params: GetCompanyDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCompanyDetail>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
-): UseQueryOptions<Awaited<ReturnType<typeof getCompanyDetail>>, TError, TData> & { queryKey: QueryKey } => {
+export const getGetCompanyQueryOptions = <TData = Awaited<ReturnType<typeof getCompany>>, TError = ErrorType<unknown>>(params?: GetCompanyParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCompany>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getCompany>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetCompanyDetailQueryKey(params);
+  const queryKey =  queryOptions?.queryKey ?? getGetCompanyQueryKey(params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCompanyDetail>>> = ({ signal }) => getCompanyDetail(params, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCompany>>> = ({ signal }) => getCompany(params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, ...queryOptions}}
 
-export type GetCompanyDetailQueryResult = NonNullable<Awaited<ReturnType<typeof getCompanyDetail>>>
-export type GetCompanyDetailQueryError = ErrorType<unknown>
+export type GetCompanyQueryResult = NonNullable<Awaited<ReturnType<typeof getCompany>>>
+export type GetCompanyQueryError = ErrorType<unknown>
 
 /**
- * @summary get company/studio detail
+ * @summary get company/studio
  */
-export const useGetCompanyDetail = <TData = Awaited<ReturnType<typeof getCompanyDetail>>, TError = ErrorType<unknown>>(
- params: GetCompanyDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCompanyDetail>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+export const useGetCompany = <TData = Awaited<ReturnType<typeof getCompany>>, TError = ErrorType<unknown>>(
+ params?: GetCompanyParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCompany>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getGetCompanyDetailQueryOptions(params,options)
+  const queryOptions = getGetCompanyQueryOptions(params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -328,6 +331,114 @@ export const useUpdateCompany = <TError = ErrorType<unknown>,
       return useMutation(mutationOptions);
     }
     
+/**
+ * delete company/studio
+ * @summary delete company/studio
+ */
+export const deleteCompanyStudio = (
+    params: DeleteCompanyStudioParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/gamesCenter/general/companyStudio`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteCompanyStudioMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCompanyStudio>>, TError,{params: DeleteCompanyStudioParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteCompanyStudio>>, TError,{params: DeleteCompanyStudioParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteCompanyStudio>>, {params: DeleteCompanyStudioParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteCompanyStudio(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteCompanyStudioMutationResult = NonNullable<Awaited<ReturnType<typeof deleteCompanyStudio>>>
+    
+    export type DeleteCompanyStudioMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete company/studio
+ */
+export const useDeleteCompanyStudio = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCompanyStudio>>, TError,{params: DeleteCompanyStudioParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteCompanyStudioMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * get company/studio detail
+ * @summary get company/studio detail
+ */
+export const getCompanyDetail = (
+    params: GetCompanyDetailParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<CompanyStudioDetailRes>(
+      {url: `/manager/gamesCenter/general/companyStudio/detail`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetCompanyDetailQueryKey = (params: GetCompanyDetailParams,) => [`/manager/gamesCenter/general/companyStudio/detail`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetCompanyDetailQueryOptions = <TData = Awaited<ReturnType<typeof getCompanyDetail>>, TError = ErrorType<unknown>>(params: GetCompanyDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCompanyDetail>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getCompanyDetail>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCompanyDetailQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCompanyDetail>>> = ({ signal }) => getCompanyDetail(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetCompanyDetailQueryResult = NonNullable<Awaited<ReturnType<typeof getCompanyDetail>>>
+export type GetCompanyDetailQueryError = ErrorType<unknown>
+
+/**
+ * @summary get company/studio detail
+ */
+export const useGetCompanyDetail = <TData = Awaited<ReturnType<typeof getCompanyDetail>>, TError = ErrorType<unknown>>(
+ params: GetCompanyDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCompanyDetail>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetCompanyDetailQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
 /**
  * get tags limit
  * @summary get tags limit

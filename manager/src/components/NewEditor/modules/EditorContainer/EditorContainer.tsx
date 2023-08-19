@@ -21,6 +21,8 @@ export default function EditorContainer({
     return <span>no editor context</span>;
   }
 
+  editor.children = props.value ?? initial;
+
   return (
     <div className="shadow-xl rounded-[5px]">
       <Slate editor={editor} initialValue={props.value ?? initial} {...props}>
