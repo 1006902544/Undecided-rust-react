@@ -12,5 +12,5 @@ export {
   ProFormDraggerUpload,
 } from './DraggerUpload';
 // export { default as Editor } from './Editor';
-export * from './NewEditor';
+export * from './Editor';
 export { default as ProFormEditor } from './ProFormEditor';
