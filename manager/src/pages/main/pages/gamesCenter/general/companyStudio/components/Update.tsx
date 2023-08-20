@@ -7,8 +7,8 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Col, Modal, Popover, Row, Spin } from 'antd';
-import React, { useMemo, useState } from 'react';
+import { Button, Col, Row, Spin } from 'antd';
+import React, { useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import qs from 'query-string';
@@ -74,7 +74,9 @@ export default function Update() {
     }
   );
 
-  const [open, setOpen] = useState(false);
+  const goBack = () => {
+    navigate(-1);
+  };
 
   return (
     <Spin spinning={isLoading && !!id}>
@@ -86,6 +88,7 @@ export default function Update() {
           render(_, dom) {
             return (
               <div className="gap-8 flex justify-end flex-shrink-0 border-t-[1px] border-[rgb(255, 255, 255)] pt-[20px]">
+                <Button onClick={goBack}>cancel</Button>
                 {dom[0]}
                 {dom[1]}
               </div>
@@ -170,20 +173,6 @@ export default function Update() {
               />
             </Col>
           </Row>
-        </div>
-
-        <div>
-          <Popover
-            content={
-              <div>
-                <Modal open={open}>scascascascasc</Modal>
-                <span onClick={() => setOpen(true)}>cascacascascasc</span>
-              </div>
-            }
-            trigger="click"
-          >
-            cccc
-          </Popover>
         </div>
       </Container>
     </Spin>

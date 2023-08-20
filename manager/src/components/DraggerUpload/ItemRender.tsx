@@ -35,12 +35,13 @@ export default function ItemRender({ file, actions }: IProps) {
       style={{ borderColor: file.status === 'error' ? 'brown' : undefined }}
     >
       <div
-        className="w-[40px] h-[40px] cursor-pointer rounded-[5px] overflow-hidden flex-shrink-0"
+        className="w-[40px] h-[40px] cursor-pointer rounded-[5px] overflow-hidden flex-shrink-0 flex justify-center items-center"
         onClick={actions.preview}
       >
         <img
           alt={file.response?.data?.fileName}
           src={file.response?.data?.url}
+          className=" object-contain"
         />
       </div>
 

@@ -43,6 +43,52 @@ export const useBaseItems = () => {
         },
       })),
     },
+    {
+      key: 'title',
+      type: 'option',
+      children: <span className="px-[8px] font-bold">Title</span>,
+      options: new Array(7).fill(0).map((_, i) => {
+        let children;
+        switch (i) {
+          case 1:
+            children = <h1>H1</h1>;
+            break;
+          case 2:
+            children = <h2>H2</h2>;
+            break;
+          case 3:
+            children = <h3>H3</h3>;
+            break;
+          case 4:
+            children = <h4>H4</h4>;
+            break;
+          case 5:
+            children = <h5>H5</h5>;
+            break;
+          case 6:
+            children = <h6>H6</h6>;
+            break;
+          default:
+            children = <span>text</span>;
+            break;
+        }
+
+        return {
+          key: `title-${i}`,
+          children,
+          toggle(editor, { setTitle }) {
+            setTitle(editor, i);
+          },
+        };
+      }),
+    },
+    {
+      key: 'list',
+      children: <span className="px-[8px] font-bold">List</span>,
+      toggle(editor, { toggleList }) {
+        toggleList(editor);
+      },
+    },
   ];
 
   // eslint-disable-next-line

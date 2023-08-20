@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Editor, UploadFile } from '../index.d';
+import { CustomElement, Editor, UploadFile } from '../index.d';
 
 export interface BaseToggles {
   isBold: (editor: Editor) => boolean;
@@ -9,6 +9,8 @@ export interface BaseToggles {
   insertImage: (editor: Editor, url: string) => void;
   uploadImage: (editor: Editor, data: UploadFile) => void;
   setFontSize: (editor: Editor, size: number) => void;
+  setTitle: (editor: Editor, size: number) => void;
+  toggleList: (editor: Editor) => void;
 }
 
 export const useBaseToggle = () => {
@@ -78,6 +80,45 @@ export const useBaseToggle = () => {
 
     setFontSize(editor, size) {
       editor.addMark('size', size);
+    },
+
+    setTitle(editor, size) {
+      if (size < 1) {
+        editor.setNodes({
+          type: 'paragraph',
+          children: editor.children,
+        });
+      } else {
+        editor.setNodes({
+          type: 'title',
+          title: {
+            level: size,
+          },
+          children: editor.children,
+        });
+      }
+    },
+
+    toggleList(editor) {
+      const above = editor.above();
+      if (above) {
+        if ((above[0] as CustomElement)?.type === 'list') {
+          editor.setNodes({
+            type: 'paragraph',
+            children: editor.children,
+          });
+        } else {
+          editor.setNodes({
+            type: 'list',
+            children: editor.children,
+          });
+        }
+      } else {
+        editor.insertNode({
+          type: 'list',
+          children: [],
+        });
+      }
     },
   };
 

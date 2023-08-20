@@ -1,11 +1,11 @@
 import React from 'react';
 import { Slate } from 'slate-react';
 import { Editable, useEditorContext } from '../../';
-import { EditorProps } from '../../index.d';
+import { CustomElementType, EditorProps } from '../../index.d';
 
 const initial = [
   {
-    type: 'paragraph',
+    type: 'paragraph' as CustomElementType,
     children: [{ text: '' }],
   },
 ];

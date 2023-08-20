@@ -2,7 +2,7 @@ import { ProForm } from '@ant-design/pro-components';
 import type { ProFormItemProps } from '@ant-design/pro-components';
 import React, { useCallback } from 'react';
 import { Editor } from '@/components/';
-import type { EditorProps } from '@/components/NewEditor/index.d';
+import type { EditorProps } from '@/components/Editor/index.d';
 import type { Descendant } from 'slate';
 
 interface IProps extends ProFormItemProps {

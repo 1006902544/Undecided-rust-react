@@ -22,11 +22,24 @@ export interface PriFile<T = any> extends File {
   url?: string;
 }
 
+export interface PriTitle {
+  level: number;
+}
+
+export type CustomElementType =
+  | 'paragraph'
+  | 'inline'
+  | 'image'
+  | 'title'
+  | 'upload'
+  | 'list';
+
 export type CustomElement = {
-  type: string;
+  type: CustomElementType;
   children: CustomText[];
   image?: ImageEle;
   upload?: UploadFile;
+  title?: PriTitle;
 };
 
 export type CustomText = {

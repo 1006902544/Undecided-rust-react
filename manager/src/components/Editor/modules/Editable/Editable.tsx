@@ -3,7 +3,13 @@ import { Editable } from 'slate-react';
 import type { RenderLeafProps, RenderElementProps } from 'slate-react';
 import './style.scss';
 import { useEditorContext } from '../../';
-import { ImageElement, UploadElement } from './components';
+import {
+  ImageElement,
+  TitleElement,
+  UploadElement,
+  ListElement,
+} from './components';
+import { CustomElement } from '../../index.d';
 
 export default function EditableContainer() {
   const { editor } = useEditorContext();
@@ -14,6 +20,10 @@ export default function EditableContainer() {
         return <ImageElement {...props} />;
       case 'upload':
         return <UploadElement {...props} />;
+      case 'title':
+        return <TitleElement {...props} />;
+      case 'list':
+        return <ListElement {...props} />;
       case 'inline':
         return (
           <p style={{ display: 'inline-block' }} {...props.attributes}>
@@ -28,7 +38,18 @@ export default function EditableContainer() {
   const onKeyDown: KeyboardEventHandler = (e) => {
     if (e.code === 'Enter') {
       e.preventDefault();
-      editor?.insertNode({ children: [{ text: '' }], type: 'paragraph' });
+      const [above] = editor?.above() ?? [];
+      if (above && (above as CustomElement).type === 'list') {
+        if (
+          (above as CustomElement).children.every((c) => c.text?.trim() === '')
+        ) {
+          editor?.setNodes({ children: [{ text: '' }], type: 'paragraph' });
+        } else {
+          editor?.insertNode({ children: [{ text: '' }], type: 'list' });
+        }
+      } else {
+        editor?.insertNode({ children: [{ text: '' }], type: 'paragraph' });
+      }
     }
   };
 
@@ -37,9 +58,9 @@ export default function EditableContainer() {
       return (
         <span
           style={{
-            fontWeight: (leaf as any).bold ? 700 : 500,
+            fontWeight: (leaf as any).bold ? 700 : undefined,
             fontStyle: (leaf as any).italic ? 'italic' : undefined,
-            fontSize: leaf.size ?? 16,
+            fontSize: leaf.size,
           }}
           {...attributes}
         >
