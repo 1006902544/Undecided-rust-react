@@ -6,7 +6,6 @@ import React, {
 } from 'react';
 import { useListContext } from '../hooks';
 import {
-  Spin,
   type ButtonProps,
   type ModalProps,
   Button,
@@ -16,7 +15,6 @@ import {
 import { ProForm, ProFormInstance } from '@ant-design/pro-components';
 import type { ProFormProps } from '@ant-design/pro-components';
 import { Resource } from '../types.d';
-import { useQuery } from '@tanstack/react-query';
 
 interface IProps extends ButtonProps {
   children?: React.ReactNode;

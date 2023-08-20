@@ -81,7 +81,7 @@ export default function ListContainer() {
   return (
     <List
       resource={resource}
-      actions={[
+      actions={
         <Button
           type="primary"
           onClick={() => {
@@ -89,10 +89,10 @@ export default function ListContainer() {
           }}
         >
           Create
-        </Button>,
-      ]}
+        </Button>
+      }
     >
-      <Table columns={columns} rowKey="id" />
+      <Table columns={columns} />
     </List>
   );
 }

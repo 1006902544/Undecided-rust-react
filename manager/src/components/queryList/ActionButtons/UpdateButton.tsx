@@ -118,7 +118,7 @@ const UpdateBody = forwardRef(
     useImperativeHandle(ref, () => form);
 
     //query when setup
-    const { isLoading, data } = useQuery({
+    const { isLoading } = useQuery({
       queryKey: [`${resource.name}-check`],
       queryFn: async () => (await resource.check?.(dataProps)) ?? {},
       onSuccess(data) {

@@ -4,7 +4,6 @@ import { useGetCompanyDetail, updateCompany } from '@/libs/api';
 import {
   ProForm,
   ProFormDatePicker,
-  ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
 import { Button, Col, Row, Spin } from 'antd';
@@ -78,104 +77,102 @@ export default function Update() {
     navigate(-1);
   };
 
-  return (
-    <Spin spinning={isLoading && !!id}>
-      <Container
-        onFinish={onFinish as any}
-        form={form}
-        scrollToFirstError
-        submitter={{
-          render(_, dom) {
-            return (
-              <div className="gap-8 flex justify-end flex-shrink-0 border-t-[1px] border-[rgb(255, 255, 255)] pt-[20px]">
-                <Button onClick={goBack}>cancel</Button>
-                {dom[0]}
-                {dom[1]}
-              </div>
-            );
-          },
-        }}
-        layout="horizontal"
-        labelCol={{ flex: '120px' }}
-      >
-        <div className="flex-1 overflow-y-scroll mb-[16px] pb-[16px] scroll-smooth">
-          <Row>
-            <Col span={8}>
-              <ProFormText
-                name="name"
-                label="Name"
-                rules={[
-                  { required: true, message: 'please input company name' },
-                ]}
-                fieldProps={{
-                  maxLength: 50,
-                  showCount: true,
-                }}
-              />
-            </Col>
-            <Col span={16}></Col>
+  return isLoading && !!id ? (
+    <Spin spinning size="large" />
+  ) : (
+    <Container
+      onFinish={onFinish as any}
+      form={form}
+      scrollToFirstError
+      submitter={{
+        render(_, dom) {
+          return (
+            <div className="gap-8 flex justify-end flex-shrink-0 border-t-[1px] border-[rgb(255, 255, 255)] pt-[20px]">
+              <Button onClick={goBack}>cancel</Button>
+              {dom[0]}
+              {dom[1]}
+            </div>
+          );
+        },
+      }}
+      layout="horizontal"
+      labelCol={{ flex: '120px' }}
+    >
+      <div className="flex-1 overflow-y-scroll mb-[16px] pb-[16px] scroll-smooth ">
+        <Row>
+          <Col span={8}>
+            <ProFormText
+              name="name"
+              label="Name"
+              rules={[{ required: true, message: 'please input company name' }]}
+              fieldProps={{
+                maxLength: 50,
+                showCount: true,
+              }}
+            />
+          </Col>
+          <Col span={16}></Col>
 
-            <Col span={8}>
-              <ProFormDraggerUpload
-                name="logo"
-                label="Logo"
-                required
-                fieldProps={{
-                  maxCount: 1,
-                }}
-              />
-            </Col>
-            <Col span={16} />
+          <Col span={8}>
+            <ProFormDraggerUpload
+              name="logo"
+              label="Logo"
+              required
+              fieldProps={{
+                maxCount: 1,
+              }}
+            />
+          </Col>
+          <Col span={16} />
 
-            <Col span={8}>
-              <ProFormSelect
-                name="region"
-                label="Region"
-                fieldProps={{
-                  maxLength: 200,
-                }}
-              />
-            </Col>
+          <Col span={8}>
+            <ProFormText
+              label="Region"
+              name="region"
+              fieldProps={{
+                maxLength: 200,
+              }}
+            />
+          </Col>
 
-            <Col span={8}>
-              <ProFormText
-                name="founder"
-                label="Founder"
-                fieldProps={{
-                  maxLength: 50,
-                  showCount: true,
-                }}
-              />
-            </Col>
-            <Col span={8}></Col>
+          <Col span={8}>
+            <ProFormText
+              name="founder"
+              label="Founder"
+              fieldProps={{
+                maxLength: 50,
+                showCount: true,
+              }}
+            />
+          </Col>
+          <Col span={8}></Col>
 
-            <Col span={8}>
-              <ProFormDatePicker
-                rules={[
-                  {
-                    required: true,
-                    message: 'please chose established time',
-                  },
-                ]}
-                name="establishedTime"
-                label="EstablishedTime"
-              />
-            </Col>
-            <Col span={16} />
+          <Col span={8}>
+            <ProFormDatePicker
+              rules={[
+                {
+                  required: true,
+                  message: 'please chose established time',
+                },
+              ]}
+              name="establishedTime"
+              label="EstablishedTime"
+            />
+          </Col>
+          <Col span={16} />
 
-            <Col span={16}>
-              <ProFormEditor
-                name="description"
-                label="Description"
-                fieldProps={{
-                  children: <Toolbar />,
-                }}
-              />
-            </Col>
-          </Row>
-        </div>
-      </Container>
-    </Spin>
+          <Col span={16}>
+            <ProFormEditor
+              name="description"
+              label="Description"
+              fieldProps={{
+                children: <Toolbar />,
+              }}
+            />
+          </Col>
+        </Row>
+      </div>
+    </Container>
   );
 }
 
