@@ -17,7 +17,7 @@ pub async fn get_game_types(
     conn: &mut PooledConn,
     req: GameTypeLimitReq,
 ) -> Result<GameTypeLimitRes, MyError> {
-    let sql_str = "select * from game_types where (id=:id or :id is null) and (name=:name or :name is null) order by update_time desc limit :scope,:limit";
+    let sql_str = "select * from types where (id=:id or :id is null) and (name=:name or :name is null) order by update_time desc limit :scope,:limit";
     let limit = handle_limit(&req.limit);
     let page = handle_limit(&req.page);
     let res: Result<Vec<GameType>, mysql::Error> = conn.exec_map(
@@ -50,7 +50,7 @@ pub async fn create_types(
     req: UpdateGameTypeReq,
 ) -> Result<String, MyError> {
     let sql_str =
-        "insert into game_types (name,e_tag,logo_url,filename,description) values(:name,:e_tag,:logo_url,:filename,:description)";
+        "insert into types (name,e_tag,logo_url,filename,description) values(:name,:e_tag,:logo_url,:filename,:description)";
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let res = trans.exec_drop(
         sql_str,
@@ -74,7 +74,7 @@ pub async fn update_types(
     req: UpdateGameTypeReq,
 ) -> Result<String, MyError> {
     let sql_str =
-        "update game_types set name=:name,e_tag=:e_tag,logo_url=:logo_url,filename=:filename,description=:description where id=:id";
+        "update types set name=:name,e_tag=:e_tag,logo_url=:logo_url,filename=:filename,description=:description where id=:id";
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let res = trans.exec_drop(
         sql_str,
@@ -95,7 +95,7 @@ pub async fn update_types(
 
 //delete types
 pub async fn delete_types(conn: &mut PooledConn, id: u64) -> Result<String, MyError> {
-    let sql_str = "delete from game_types where id=:id";
+    let sql_str = "delete from types where id=:id";
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let res = trans.exec_drop(
         sql_str,

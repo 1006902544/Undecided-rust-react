@@ -1,5 +1,4 @@
 use chrono::NaiveDate;
-use mysql_common::prelude::FromRow;
 use serde::{Deserialize, Serialize};
 use utoipa::{IntoParams, ToSchema};
 use validator::Validate;
@@ -9,9 +8,9 @@ pub struct GameSPULimit {
     pub id: u64,
     pub name: String,
     pub company_name: String,
-    pub type_name: String,
+    pub type_names: Vec<String>,
     pub logo_url: String,
-    pub tags: Vec<SpuTag>,
+    pub tag_names: Vec<String>,
     pub price: u64,
     #[schema(value_type = String)]
     pub issue_time: NaiveDate,

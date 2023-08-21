@@ -17,7 +17,7 @@ pub async fn get_tags_limit(
     let limit = handle_limit(&query.limit);
     let page = handle_page(&query.page);
     let sql_str =
-        "select * from games_tags where (id=:id or :id is null) and (name like :name or :name is null) order by update_time desc limit :scope,:limit";
+        "select * from tags where (id=:id or :id is null) and (name like :name or :name is null) order by update_time desc limit :scope,:limit";
     let res = conn.exec_map(
         sql_str,
         params! {
@@ -54,12 +54,12 @@ pub async fn update_tags(conn: &mut PooledConn, data: UpdateTagReq) -> Result<u8
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     match data.id {
         Some(_) => {
-            let sql_str = "update games_tags set name=:name,description=:description,bg_color=:bg_color,border_color=:border_color,text_color=:text_color where id=:id";
+            let sql_str = "update tags set name=:name,description=:description,bg_color=:bg_color,border_color=:border_color,text_color=:text_color where id=:id";
             let res = trans.exec_drop(sql_str, params);
             after_update(trans, res).await
         }
         None => {
-            let sql_str = "insert into games_tags (name,description,bg_color,border_color,text_color) values(:name,:description,:bg_color,:border_color,:text_color)";
+            let sql_str = "insert into tags (name,description,bg_color,border_color,text_color) values(:name,:description,:bg_color,:border_color,:text_color)";
             let res = trans.exec_drop(sql_str, params);
             after_update(trans, res).await
         }
@@ -89,7 +89,7 @@ pub async fn after_update(
 }
 
 pub async fn delete_tags(conn: &mut PooledConn, id: u64) -> Result<u8, MyError> {
-    let sql_str = "delete from games_tags where id=:id";
+    let sql_str = "delete from tags where id=:id";
     let res = conn.exec_drop(
         sql_str,
         params! {

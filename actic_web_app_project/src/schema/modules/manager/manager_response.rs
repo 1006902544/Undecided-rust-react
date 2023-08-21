@@ -3,8 +3,9 @@ use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
 
 use super::{
-    game_center::general::{
-        company_studio::company_studio::*, tags::tags::*, types::types::GameType,
+    game_center::{
+        game_management::spu::spu::*,
+        general::{company_studio::company_studio::*, tags::tags::*, types::types::GameType},
     },
     permission::{associate::auth::*, permission::Permission},
     router::{associate::auth::*, router::*},
@@ -30,7 +31,9 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //游戏类型
     GameTypeRes = ResponseData<GameTypeLimitRes>,
     //公司/工作室
-    CompanyStudioRes = ResponseData<CompanyStudioLimitRes>,CompanyStudioDetailRes = ResponseData<CompanyStudioDetail>
+    CompanyStudioRes = ResponseData<CompanyStudioLimitRes>,CompanyStudioDetailRes = ResponseData<CompanyStudioDetail>,
+    //spu
+    SPURes = ResponseData<SPULimitRes>,SPUDetailRes = ResponseData<GameSPUDetail>
 )]
 pub struct ResponseData<B> {
     pub data: B,
@@ -72,7 +75,9 @@ impl<B> ResponseData<B> {
     //游戏类型
     GameTypeLimitRes = LimitResults<GameType>,
     //公司/工作室
-    CompanyStudioLimitRes = LimitResults<CompanyStudio>
+    CompanyStudioLimitRes = LimitResults<CompanyStudio>,
+    //spu
+    SPULimitRes = LimitResults<GameSPULimit>
 )]
 pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,
