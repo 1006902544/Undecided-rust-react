@@ -37,6 +37,10 @@ import type {
   GetGameTypesParams,
   UpdateGameTypeReq,
   DeleteGameTypeParams,
+  MaterialImageRes,
+  GetImagesParams,
+  UpdateImageObjectReq,
+  DeleteImageParams,
   PermissionLimitRes,
   GetPermissionParams,
   UpdatePermissionBody,
@@ -759,6 +763,168 @@ export const useDeleteGameType = <TError = ErrorType<unknown>,
 ) => {
     
       const mutationOptions = getDeleteGameTypeMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * delete image material
+ * @summary delete image material
+ */
+export const getImages = (
+    params?: GetImagesParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<MaterialImageRes>(
+      {url: `/manager/materialLibrary/image`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetImagesQueryKey = (params?: GetImagesParams,) => [`/manager/materialLibrary/image`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetImagesQueryOptions = <TData = Awaited<ReturnType<typeof getImages>>, TError = ErrorType<unknown>>(params?: GetImagesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getImages>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getImages>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetImagesQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getImages>>> = ({ signal }) => getImages(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetImagesQueryResult = NonNullable<Awaited<ReturnType<typeof getImages>>>
+export type GetImagesQueryError = ErrorType<unknown>
+
+/**
+ * @summary delete image material
+ */
+export const useGetImages = <TData = Awaited<ReturnType<typeof getImages>>, TError = ErrorType<unknown>>(
+ params?: GetImagesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getImages>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetImagesQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * create image material
+ * @summary create image material
+ */
+export const createImage = (
+    updateImageObjectReq: UpdateImageObjectReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/materialLibrary/image`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: updateImageObjectReq
+    },
+      options);
+    }
+  
+
+
+export const getCreateImageMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createImage>>, TError,{data: UpdateImageObjectReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createImage>>, TError,{data: UpdateImageObjectReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createImage>>, {data: UpdateImageObjectReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  createImage(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type CreateImageMutationResult = NonNullable<Awaited<ReturnType<typeof createImage>>>
+    export type CreateImageMutationBody = UpdateImageObjectReq
+    export type CreateImageMutationError = ErrorType<unknown>
+
+    /**
+ * @summary create image material
+ */
+export const useCreateImage = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createImage>>, TError,{data: UpdateImageObjectReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getCreateImageMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * delete image material
+ * @summary delete image material
+ */
+export const deleteImage = (
+    params: DeleteImageParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/materialLibrary/image`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteImageMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteImage>>, TError,{params: DeleteImageParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteImage>>, TError,{params: DeleteImageParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteImage>>, {params: DeleteImageParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteImage(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteImageMutationResult = NonNullable<Awaited<ReturnType<typeof deleteImage>>>
+    
+    export type DeleteImageMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete image material
+ */
+export const useDeleteImage = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteImage>>, TError,{params: DeleteImageParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteImageMutationOptions(options);
      
       return useMutation(mutationOptions);
     }

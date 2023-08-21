@@ -7,6 +7,7 @@ use super::{
         game_management::spu::spu::*,
         general::{company_studio::company_studio::*, tags::tags::*, types::types::GameType},
     },
+    material_library::images::ImagesObject,
     permission::{associate::auth::*, permission::Permission},
     router::{associate::auth::*, router::*},
     upload::*,
@@ -33,7 +34,9 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //公司/工作室
     CompanyStudioRes = ResponseData<CompanyStudioLimitRes>,CompanyStudioDetailRes = ResponseData<CompanyStudioDetail>,
     //spu
-    SPURes = ResponseData<SPULimitRes>,SPUDetailRes = ResponseData<GameSPUDetail>
+    SPURes = ResponseData<SPULimitRes>,SPUDetailRes = ResponseData<GameSPUDetail>,
+    //素材库-图片
+    MaterialImageRes = ResponseData<MaterialImageLimitRes>
 )]
 pub struct ResponseData<B> {
     pub data: B,
@@ -77,7 +80,9 @@ impl<B> ResponseData<B> {
     //公司/工作室
     CompanyStudioLimitRes = LimitResults<CompanyStudio>,
     //spu
-    SPULimitRes = LimitResults<GameSPULimit>
+    SPULimitRes = LimitResults<GameSPULimit>,
+    //素材库-图片
+    MaterialImageLimitRes = LimitResults<ImagesObject>
 )]
 pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,

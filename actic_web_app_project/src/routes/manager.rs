@@ -2,6 +2,7 @@ use crate::controller::manager::{
     auth::auth::*,
     game_center::general::{company_studio::company_studio::*, tags::tags::*, types::types::*},
     manager_doc::ApiDoc,
+    material_library::images::*,
     permission::{
         associate::{associate::*, auth::*},
         permission::*,
@@ -84,6 +85,12 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                         )
                         .service(web::scope("systems")),
                 ),
+            )
+            .service(
+                web::scope("materialLibrary")
+                    .service(create_image)
+                    .service(delete_image)
+                    .service(get_images),
             ),
     );
 }

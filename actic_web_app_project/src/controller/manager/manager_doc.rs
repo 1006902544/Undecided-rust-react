@@ -7,6 +7,7 @@ use crate::schema::modules::{
         },
         manager::*,
         manager_response::*,
+        material_library::images::*,
         permission::{
             associate::{associate::*, auth::*},
             permission::*,
@@ -39,6 +40,10 @@ use utoipa::OpenApi;
         super::permission::associate::auth::get_permission_auth,
         super::permission::associate::associate::associate,
         super::permission::associate::associate::disassociate,
+        //素材库-图片
+        super::material_library::images::create_image,
+        super::material_library::images::delete_image,
+        super::material_library::images::get_images,
         //游戏中心-通用-标签
         super::game_center::general::tags::tags::get_tags_limit,
         super::game_center::general::tags::tags::update_tags,
@@ -90,7 +95,9 @@ use utoipa::OpenApi;
         //公司/工作室
         GetCompanyStudioReq,UpdateCompanyStudioReq,CompanyStudioDetail,CompanyStudio,CompanyStudioRes,CompanyStudioLimitRes,GetCompanyStudioDetailReq,DeleteCompanyStudioDetailReq,
         //spu
-        GameSPULimit,GameSPUDetail,UpdateGameSpu,GetGameDetailReq,DeleteGameDetailReq,GetGameLimitReq,SpuTag,SpuType,SpuCompany,SPULimitRes,SPURes,SPUDetailRes
+        GameSPULimit,GameSPUDetail,UpdateGameSpu,GetGameDetailReq,DeleteGameDetailReq,GetGameLimitReq,SpuTag,SpuType,SpuCompany,SPULimitRes,SPURes,SPUDetailRes,
+        //素材库-图片
+        ImagesObject,UpdateImageObjectReq,DeleteImageObjectReq,MaterialImageLimitReq,MaterialImageRes,MaterialImageLimitRes
     ))
 )]
 pub struct ApiDoc;
