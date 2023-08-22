@@ -768,8 +768,8 @@ export const useDeleteGameType = <TError = ErrorType<unknown>,
     }
     
 /**
- * delete image material
- * @summary delete image material
+ * get images limit
+ * @summary get images limit
  */
 export const getImages = (
     params?: GetImagesParams,
@@ -805,7 +805,7 @@ export type GetImagesQueryResult = NonNullable<Awaited<ReturnType<typeof getImag
 export type GetImagesQueryError = ErrorType<unknown>
 
 /**
- * @summary delete image material
+ * @summary get images limit
  */
 export const useGetImages = <TData = Awaited<ReturnType<typeof getImages>>, TError = ErrorType<unknown>>(
  params?: GetImagesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getImages>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}

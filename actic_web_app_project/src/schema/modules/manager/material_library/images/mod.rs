@@ -1,3 +1,4 @@
+use chrono::NaiveDate;
 use mysql_common::prelude::FromRow;
 use serde::{Deserialize, Serialize};
 use utoipa::{IntoParams, ToSchema};
@@ -7,7 +8,8 @@ pub struct ImagesObject {
     pub e_tag: String,
     pub file_name: String,
     pub file_url: String,
-    pub create_time: String,
+    #[schema(value_type = String)]
+    pub create_time: NaiveDate,
 }
 
 #[derive(Debug, Clone, ToSchema, Deserialize, Serialize)]

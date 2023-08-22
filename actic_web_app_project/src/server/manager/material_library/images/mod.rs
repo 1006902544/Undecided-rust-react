@@ -51,7 +51,7 @@ pub async fn get_images(
     let limit = handle_limit(&query.limit);
     let page = handle_limit(&query.page);
     let res: Result<Vec<ImagesObject>, mysql::Error> = conn.exec_map(
-        "select * from images where e_tag=:e_tag limit :scope,:limit",
+        "select * from images where (e_tag=:e_tag or :e_tag is null) order by create_time limit :scope,:limit",
         params! {
         "e_tag" => query.e_tag,
         "scope" => limit*(page-1),

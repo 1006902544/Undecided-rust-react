@@ -37,6 +37,11 @@ module.exports = {
               useQuery: true,
             },
           },
+          getImages: {
+            query: {
+              useQuery: true,
+            },
+          },
         },
       },
     },

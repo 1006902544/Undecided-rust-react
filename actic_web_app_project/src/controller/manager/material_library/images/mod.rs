@@ -81,7 +81,7 @@ pub async fn delete_image(
     )
     )]
 #[get("/image")]
-///delete image material
+///get images limit
 pub async fn get_images(
     query: Query<MaterialImageLimitReq>,
     pool: Data<Pool>,
@@ -92,7 +92,7 @@ pub async fn get_images(
     if has_per {
         let res = images_server::get_images(&mut conn, query.into_inner()).await;
         match res {
-            Ok(_) => Ok(ResponseData::new("Create success").into_json_response()),
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
             Err(e) => Err(e),
         }
     } else {
