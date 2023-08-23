@@ -46,4 +46,20 @@ module.exports = {
       },
     },
   },
+  bff: {
+    input: {
+      target: 'http://127.0.0.1:8081/openapi/doc',
+    },
+    output: {
+      target: './src/libs/api/bff/index.ts',
+      schemas: './src/libs/api/bff/schema',
+      client: 'react-query',
+      override: {
+        mutator: {
+          path: './src/libs/api/bff/custom_instance.ts',
+          name: 'custom_instance',
+        },
+      },
+    },
+  },
 };

@@ -62,7 +62,7 @@ pub async fn delete_image(
     let mut conn = pool.get_conn().unwrap();
     let has_per = has_permission(&mut conn, &req);
     if has_per {
-        let res = images_server::delete_image(&mut conn, body.e_tag.clone()).await;
+        let res = images_server::delete_image(&mut conn, body.file_name.clone()).await;
         match res {
             Ok(_) => Ok(ResponseData::new("Create success").into_json_response()),
             Err(e) => Err(e),

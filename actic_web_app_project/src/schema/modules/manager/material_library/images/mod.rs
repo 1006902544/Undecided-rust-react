@@ -21,7 +21,7 @@ pub struct UpdateImageObjectReq {
 
 #[derive(Debug, Clone, ToSchema, Deserialize, Serialize, IntoParams)]
 pub struct DeleteImageObjectReq {
-    pub e_tag: String,
+    pub file_name: String,
 }
 
 #[derive(Debug, Clone, ToSchema, Deserialize, Serialize, IntoParams)]

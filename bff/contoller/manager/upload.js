@@ -1,7 +1,6 @@
 const axios = require('axios');
-var Minio = require('minio');
 const nanoid = import('nanoid');
-const { updateMaterialImage } = require('./material');
+const { getOssAccessKey } = require('../../utils/getOssAccessKey.js');
 
 const uploadImage = async (ctx, next) => {
   const file = ctx.file;
@@ -9,21 +8,7 @@ const uploadImage = async (ctx, next) => {
   const fileName = `${id}-${file.originalname}`;
 
   try {
-    const url = `http://${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/manager/upload/accessKey`;
-    const access = await axios({
-      url,
-      method: 'get',
-      headers: ctx.headers,
-    });
-    const endPoint = access.data.data.endpoint;
-    const port = access.data.data.port;
-    const minioClient = new Minio.Client({
-      endPoint,
-      port,
-      useSSL: access.data.data.use_ssl,
-      accessKey: access.data.data.access_key,
-      secretKey: access.data.data.secret_key,
-    });
+    const { minioClient, accessData } = await getOssAccessKey(ctx);
 
     var metaData = {
       'Content-Type': 'application/octet-stream',
@@ -46,7 +31,7 @@ const uploadImage = async (ctx, next) => {
             metaData,
             (err, res) => {
               if (res) {
-                const fileUrl = `http://${endPoint}:${port}/images/${fileName}`;
+                const fileUrl = `http://${accessData.endPoint}:${accessData.port}/images/${fileName}`;
                 resolve({
                   etag: res.etag,
                   fileName: fileName,

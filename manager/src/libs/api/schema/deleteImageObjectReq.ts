@@ -6,5 +6,5 @@
  */
 
 export interface DeleteImageObjectReq {
-  e_tag: string;
+  file_name: string;
 }

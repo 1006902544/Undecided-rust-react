@@ -32,13 +32,13 @@ pub async fn create_image(
     after_update(trans, res).await
 }
 
-pub async fn delete_image(conn: &mut PooledConn, e_tag: String) -> Result<u8, MyError> {
+pub async fn delete_image(conn: &mut PooledConn, file_name: String) -> Result<u8, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let sql_str = "delete from images where e_tag=:e_tag";
+    let sql_str = "delete from images where file_name=:file_name";
     let res = trans.exec_drop(
         sql_str,
         params! {
-            "e_tag" => e_tag,
+            "file_name" => file_name,
         },
     );
     after_update(trans, res).await

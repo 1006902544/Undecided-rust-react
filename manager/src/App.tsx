@@ -14,6 +14,8 @@ import {
 } from '@ant-design/cssinjs';
 import { mainPagesRouter } from './pages/main/pages/router';
 import { resources } from './resources';
+import { ConfigProvider } from 'antd';
+import en_US from 'antd/locale/zh_CN';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -46,14 +48,16 @@ function App() {
   ]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <StyleProvider
-        transformers={[legacyLogicalPropertiesTransformer]}
-        hashPriority="high"
-      >
-        <RouterProvider router={router} />
-      </StyleProvider>
-    </QueryClientProvider>
+    <ConfigProvider locale={en_US}>
+      <QueryClientProvider client={queryClient}>
+        <StyleProvider
+          transformers={[legacyLogicalPropertiesTransformer]}
+          hashPriority="high"
+        >
+          <RouterProvider router={router} />
+        </StyleProvider>
+      </QueryClientProvider>
+    </ConfigProvider>
   );
 }
 
