@@ -69,7 +69,7 @@ pub async fn get_company(
     conn: &mut PooledConn,
     req: GetCompanyStudioReq,
 ) -> Result<CompanyStudioLimitRes, MyError> {
-    let sql_str = "select id,name,logo_url,update_time,create_time,established_time from company_studios where (id=:id or :id is null) and (name=:name or :name is null) and (region=:region or :region is null) and (founder=:founder or :founder is null) order by update_time limit :scope,:limit";
+    let sql_str = "select SQL_CALC_FOUND_ROWS id,name,logo_url,update_time,create_time,established_time from company_studios where (id=:id or :id is null) and (name=:name or :name is null) and (region=:region or :region is null) and (founder=:founder or :founder is null) order by update_time limit :scope,:limit";
     let limit = handle_limit(&req.limit);
     let page = handle_page(&req.page);
     let res = conn.exec_map(

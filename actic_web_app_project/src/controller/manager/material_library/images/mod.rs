@@ -10,7 +10,8 @@ use crate::{
     schema::modules::manager::{
         manager_response::ResponseData,
         material_library::images::{
-            DeleteImageObjectReq, MaterialImageLimitReq, UpdateImageObjectReq,
+            BatchDeleteMaterialImagesReq, DeleteImageObjectReq, MaterialImageLimitReq,
+            UpdateImageObjectReq,
         },
     },
     server::manager::{material_library::images as images_server, permissions::has_permission},
@@ -91,6 +92,34 @@ pub async fn get_images(
     let has_per = has_permission(&mut conn, &req);
     if has_per {
         let res = images_server::get_images(&mut conn, query.into_inner()).await;
+        match res {
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+            Err(e) => Err(e),
+        }
+    } else {
+        Err(MyError::permissions_error())
+    }
+}
+
+#[utoipa::path(
+    get,
+    path = "/manager/materialLibrary/image/batchDelete",
+    request_body = BatchDeleteMaterialImagesReq,
+    responses (
+        (status = 200 , body = ResPonseString , description = "success")
+    )
+    )]
+#[post("/image/batchDelete")]
+///batch delete images
+pub async fn batch_delete_images(
+    data: Json<BatchDeleteMaterialImagesReq>,
+    pool: Data<Pool>,
+    req: HttpRequest,
+) -> Result<impl Responder, impl ResponseError> {
+    let mut conn = pool.get_conn().unwrap();
+    let has_per = has_permission(&mut conn, &req);
+    if has_per {
+        let res = images_server::batch_delete_images(&mut conn, data.into_inner()).await;
         match res {
             Ok(res) => Ok(ResponseData::new(res).into_json_response()),
             Err(e) => Err(e),

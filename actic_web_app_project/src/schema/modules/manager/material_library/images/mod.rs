@@ -30,3 +30,8 @@ pub struct MaterialImageLimitReq {
     pub limit: Option<u64>,
     pub page: Option<u64>,
 }
+
+#[derive(Debug, Clone, ToSchema, Deserialize, Serialize)]
+pub struct BatchDeleteMaterialImagesReq {
+    pub filenames: Vec<String>,
+}

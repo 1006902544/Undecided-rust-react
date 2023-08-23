@@ -17,7 +17,7 @@ pub async fn get_tags_limit(
     let limit = handle_limit(&query.limit);
     let page = handle_page(&query.page);
     let sql_str =
-        "select * from tags where (id=:id or :id is null) and (name like :name or :name is null) order by update_time desc limit :scope,:limit";
+        "select SQL_CALC_FOUND_ROWS * from tags where (id=:id or :id is null) and (name like :name or :name is null) order by update_time desc limit :scope,:limit";
     let res = conn.exec_map(
         sql_str,
         params! {

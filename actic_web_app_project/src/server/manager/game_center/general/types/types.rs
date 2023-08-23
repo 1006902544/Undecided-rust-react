@@ -17,7 +17,7 @@ pub async fn get_game_types(
     conn: &mut PooledConn,
     req: GameTypeLimitReq,
 ) -> Result<GameTypeLimitRes, MyError> {
-    let sql_str = "select * from types where (id=:id or :id is null) and (name=:name or :name is null) order by update_time desc limit :scope,:limit";
+    let sql_str = "select SQL_CALC_FOUND_ROWS * from types where (id=:id or :id is null) and (name=:name or :name is null) order by update_time desc limit :scope,:limit";
     let limit = handle_limit(&req.limit);
     let page = handle_limit(&req.page);
     let res: Result<Vec<GameType>, mysql::Error> = conn.exec_map(

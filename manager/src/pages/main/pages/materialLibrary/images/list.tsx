@@ -1,7 +1,7 @@
 import { useGetImages } from '@/libs/api';
-import { Button, Pagination, Spin } from 'antd';
+import { Pagination } from 'antd';
 import React, { useMemo, useState } from 'react';
-import { ImageCard } from './components';
+import { CreateImageModalButton, ImageCard } from './components';
 import styled from 'styled-components';
 
 export default function ImageList() {
@@ -28,7 +28,7 @@ export default function ImageList() {
     }
   };
 
-  const { data, refetch, isLoading } = useGetImages(polymerization);
+  const { data, refetch } = useGetImages(polymerization);
 
   const pageChange = (page: number, limit: number) => {
     setPagination({ page, limit });
@@ -37,15 +37,13 @@ export default function ImageList() {
   return (
     <Container className="w-full h-full flex flex-col">
       <div className="pb-[20px]">
-        <Button type="primary">Create</Button>
+        <CreateImageModalButton reset={reset} />
       </div>
 
       <div className="flex-1 h-0 flex flex-col flex-wrap content-start overflow-x-scroll">
-        <Spin spinning={isLoading} size="large">
-          {data?.data.results?.map((d) => (
-            <ImageCard {...d} reset={reset} key={d.file_name} />
-          ))}
-        </Spin>
+        {data?.data.results?.map((d) => (
+          <ImageCard {...d} reset={reset} key={d.file_name} />
+        ))}
       </div>
 
       <Pagination
@@ -62,11 +60,6 @@ export default function ImageList() {
 }
 
 const Container = styled.div`
-  .ant-spin-nested-loading {
-    width: 100%;
-    height: 100%;
-  }
-
   .ant-pagination {
     padding-top: 20px;
     display: flex;

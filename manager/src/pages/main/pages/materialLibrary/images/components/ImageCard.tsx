@@ -1,6 +1,5 @@
 import type { ImagesObject } from '@/libs/api/schema';
 import { Button, Modal, Popover, message } from 'antd';
-import React, { useCallback, useState } from 'react';
 import type { MouseEventHandler } from 'react';
 import { deleteManagerMaterialDelete } from '@/libs/api/bff';
 
@@ -15,8 +14,6 @@ export default function ImageCard({
   reset,
 }: IProps) {
   const deleteImage: MouseEventHandler = async (e) => {
-    e.stopPropagation();
-    onCancel();
     Modal.confirm({
       okText: 'ok',
       cancelText: 'cancel',
@@ -31,26 +28,12 @@ export default function ImageCard({
     });
   };
 
-  const [open, setOpen] = useState(false);
-  const onOpen = useCallback<MouseEventHandler>((e) => {
-    e.stopPropagation();
-    document.body.addEventListener('click', onCancel);
-    setOpen(true);
-  }, []);
-  const onCancel = useCallback(() => {
-    document.body.removeEventListener('click', onCancel);
-    setOpen(false);
-  }, []);
-
   return (
     <div
       className="w-[180px] h-[180px] mb-[50px] mr-[50px] p-[10px] shadow-lg hover:shadow-2xl transition-all rounded-[5px] cursor-pointer"
       key={file_name}
-      onClick={onOpen}
     >
       <Popover
-        trigger="click"
-        open={open}
         placement="rightTop"
         content={
           <div className="w-[250px] flex flex-col ">

@@ -44,6 +44,7 @@ use utoipa::OpenApi;
         super::material_library::images::create_image,
         super::material_library::images::delete_image,
         super::material_library::images::get_images,
+        super::material_library::images::batch_delete_images,
         //游戏中心-通用-标签
         super::game_center::general::tags::tags::get_tags_limit,
         super::game_center::general::tags::tags::update_tags,
@@ -97,7 +98,7 @@ use utoipa::OpenApi;
         //spu
         GameSPULimit,GameSPUDetail,UpdateGameSpu,GetGameDetailReq,DeleteGameDetailReq,GetGameLimitReq,SpuTag,SpuType,SpuCompany,SPULimitRes,SPURes,SPUDetailRes,
         //素材库-图片
-        ImagesObject,UpdateImageObjectReq,DeleteImageObjectReq,MaterialImageLimitReq,MaterialImageRes,MaterialImageLimitRes
+        ImagesObject,UpdateImageObjectReq,DeleteImageObjectReq,MaterialImageLimitReq,MaterialImageRes,MaterialImageLimitRes,BatchDeleteMaterialImagesReq
     ))
 )]
 pub struct ApiDoc;

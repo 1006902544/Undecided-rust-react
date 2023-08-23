@@ -51,7 +51,7 @@ pub async fn get_images(
     let limit = handle_limit(&query.limit);
     let page = handle_limit(&query.page);
     let res: Result<Vec<ImagesObject>, mysql::Error> = conn.exec_map(
-        "select * from images where (e_tag=:e_tag or :e_tag is null) order by create_time limit :scope,:limit",
+        "select SQL_CALC_FOUND_ROWS * from images where (e_tag=:e_tag or :e_tag is null) order by create_time desc limit :scope,:limit",
         params! {
         "e_tag" => query.e_tag,
         "scope" => limit*(page-1),
@@ -69,6 +69,23 @@ pub async fn get_images(
                 results: Some(results),
             })
         }
+        Err(e) => Err(MyError::sql_error(e)),
+    }
+}
+
+pub async fn batch_delete_images(
+    conn: &mut PooledConn,
+    query: BatchDeleteMaterialImagesReq,
+) -> Result<String, MyError> {
+    let sql = "delete from images where file_name in :filenames";
+    let res = conn.exec_drop(
+        sql,
+        params! {
+            "filenames" => query.filenames.join(",")
+        },
+    );
+    match res {
+        Ok(_) => Ok("Delete success".to_string()),
         Err(e) => Err(MyError::sql_error(e)),
     }
 }
