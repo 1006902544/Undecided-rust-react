@@ -40,7 +40,33 @@ const deleteMaterialImage = async (ctx) => {
   }
 };
 
+const batchDeleteMaterialImage = async (ctx) => {
+  try {
+    const { value } = materialSchema.BatchDeleteImageReq.validate(
+      ctx.request.body
+    );
+    const filenames = value.filenames;
+    const { minioClient } = await getOssAccessKey(ctx);
+    await materialService.batchDeleteImage(ctx, { minioClient, filenames });
+    ctx.status = 200;
+    ctx.body = {
+      message: 'Delete success',
+      status: 200,
+    };
+  } catch (err) {
+    const message =
+      err.response?.data?.message || err.message || err.toString();
+    const status = err.response?.data?.status || 500;
+    ctx.status = status;
+    ctx.body = {
+      message,
+      status,
+    };
+  }
+};
+
 module.exports = {
   updateMaterialImage,
   deleteMaterialImage,
+  batchDeleteMaterialImage,
 };

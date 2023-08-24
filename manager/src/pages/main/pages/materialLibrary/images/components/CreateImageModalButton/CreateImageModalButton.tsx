@@ -17,8 +17,7 @@ export default function CreateImageModalButton({ reset }: IProps) {
 
   const ensure = useCallback(() => {
     onCancel();
-    reset?.();
-  }, [reset, onCancel]);
+  }, [onCancel]);
 
   return (
     <>
@@ -27,6 +26,7 @@ export default function CreateImageModalButton({ reset }: IProps) {
       </Button>
       <Modal
         onCancel={onCancel}
+        afterClose={reset}
         open={open}
         title="Create Image"
         destroyOnClose

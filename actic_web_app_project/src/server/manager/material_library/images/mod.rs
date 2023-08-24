@@ -77,11 +77,14 @@ pub async fn batch_delete_images(
     conn: &mut PooledConn,
     query: BatchDeleteMaterialImagesReq,
 ) -> Result<String, MyError> {
-    let sql = "delete from images where file_name in :filenames";
+    let sql = "delete from images where FIND_IN_SET(file_name,:filenames)";
     let res = conn.exec_drop(
         sql,
         params! {
-            "filenames" => query.filenames.join(",")
+            "filenames" => {
+                println!("{}",query.filenames.join(","));
+                query.filenames.join(",")
+            }
         },
     );
     match res {

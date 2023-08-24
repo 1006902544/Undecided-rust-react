@@ -102,7 +102,7 @@ pub async fn get_images(
 }
 
 #[utoipa::path(
-    get,
+    post,
     path = "/manager/materialLibrary/image/batchDelete",
     request_body = BatchDeleteMaterialImagesReq,
     responses (

@@ -9,3 +9,5 @@
 export * from './deleteManagerMaterialDelete200';
 export * from './deleteManagerMaterialDeleteBody';
 export * from './deleteManagerMaterialDeleteParams';
+export * from './postManagerMaterialBatchDelete200';
+export * from './postManagerMaterialBatchDeleteBody';

@@ -41,6 +41,7 @@ import type {
   GetImagesParams,
   UpdateImageObjectReq,
   DeleteImageParams,
+  BatchDeleteMaterialImagesReq,
   PermissionLimitRes,
   GetPermissionParams,
   UpdatePermissionBody,
@@ -925,6 +926,60 @@ export const useDeleteImage = <TError = ErrorType<unknown>,
 ) => {
     
       const mutationOptions = getDeleteImageMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * batch delete images
+ * @summary batch delete images
+ */
+export const batchDeleteImages = (
+    batchDeleteMaterialImagesReq: BatchDeleteMaterialImagesReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/materialLibrary/image/batchDelete`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: batchDeleteMaterialImagesReq
+    },
+      options);
+    }
+  
+
+
+export const getBatchDeleteImagesMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof batchDeleteImages>>, TError,{data: BatchDeleteMaterialImagesReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof batchDeleteImages>>, TError,{data: BatchDeleteMaterialImagesReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof batchDeleteImages>>, {data: BatchDeleteMaterialImagesReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  batchDeleteImages(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type BatchDeleteImagesMutationResult = NonNullable<Awaited<ReturnType<typeof batchDeleteImages>>>
+    export type BatchDeleteImagesMutationBody = BatchDeleteMaterialImagesReq
+    export type BatchDeleteImagesMutationError = ErrorType<unknown>
+
+    /**
+ * @summary batch delete images
+ */
+export const useBatchDeleteImages = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof batchDeleteImages>>, TError,{data: BatchDeleteMaterialImagesReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getBatchDeleteImagesMutationOptions(options);
      
       return useMutation(mutationOptions);
     }

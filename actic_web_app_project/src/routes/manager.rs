@@ -90,7 +90,8 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                 web::scope("materialLibrary")
                     .service(create_image)
                     .service(delete_image)
-                    .service(get_images),
+                    .service(get_images)
+                    .service(batch_delete_images),
             ),
     );
 }

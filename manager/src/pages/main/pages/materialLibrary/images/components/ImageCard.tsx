@@ -1,19 +1,38 @@
 import type { ImagesObject } from '@/libs/api/schema';
 import { Button, Modal, Popover, message } from 'antd';
-import type { MouseEventHandler } from 'react';
+import {
+  useState,
+  type MouseEventHandler,
+  useCallback,
+  useEffect,
+} from 'react';
 import { deleteManagerMaterialDelete } from '@/libs/api/bff';
+import styled from 'styled-components';
 
 interface IProps extends ImagesObject {
   reset?: () => void;
+  onCheck?: OnCheckFn;
 }
+
+export type OnCheckFn = (
+  info: {
+    file_name: string;
+    file_url: string;
+    e_tag: string;
+  },
+  opt: {
+    checked: boolean;
+  }
+) => void;
 
 export default function ImageCard({
   file_name,
   file_url,
   e_tag,
   reset,
+  onCheck: onCheckProp,
 }: IProps) {
-  const deleteImage: MouseEventHandler = async (e) => {
+  const deleteImage: MouseEventHandler = async () => {
     Modal.confirm({
       okText: 'ok',
       cancelText: 'cancel',
@@ -28,15 +47,38 @@ export default function ImageCard({
     });
   };
 
+  const [checked, setChecked] = useState(false);
+
+  const onCheck = useCallback(() => {
+    setChecked(!checked);
+  }, [checked]);
+
+  useEffect(() => {
+    onCheckProp?.({ e_tag, file_name, file_url }, { checked });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checked]);
+
   return (
-    <div
-      className="w-[180px] h-[180px] mb-[50px] mr-[50px] p-[10px] shadow-lg hover:shadow-2xl transition-all rounded-[5px] cursor-pointer"
+    <Container
+      className="w-[180px] h-[180px] mb-[50px] mr-[50px] p-[10px] shadow-lg hover:shadow-2xl transition-all rounded-[5px] cursor-pointer relative"
       key={file_name}
+      onClick={onCheck}
     >
+      <div className="w-[30px] h-[30px] absolute border-[3px] bg-[white] border-[#008cff] right-[0px] top-[0px] rounded-[4px] p-[3px]">
+        <i
+          className={`image-card-check-${
+            checked ? 'checked' : 'unchecked'
+          } block w-full h-full bg-[#008cff] rounded-[2px] transition-all`}
+        ></i>
+      </div>
+
       <Popover
         placement="rightTop"
         content={
-          <div className="w-[250px] flex flex-col ">
+          <div
+            className="w-[250px] flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex mb-[10px]">
               <span className="inline-block w-[60px] font-bold">etag:</span>
               <span className="inline-block break-words w-[190px]">
@@ -72,6 +114,12 @@ export default function ImageCard({
           className="w-full h-full object-contain rounded-[5px]"
         />
       </Popover>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  .image-card-check-unchecked {
+    transform: scale(0);
+  }
+`;

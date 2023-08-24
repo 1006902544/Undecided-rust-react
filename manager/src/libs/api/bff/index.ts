@@ -19,7 +19,9 @@ import type {
 } from '@tanstack/react-query'
 import type {
   DeleteManagerMaterialDelete200,
-  DeleteManagerMaterialDeleteParams
+  DeleteManagerMaterialDeleteParams,
+  PostManagerMaterialBatchDelete200,
+  PostManagerMaterialBatchDeleteBody
 } from './schema'
 import { custom_instance } from './custom_instance';
 import type { ErrorType } from './custom_instance';
@@ -177,6 +179,56 @@ export const getDeleteManagerMaterialDeleteMutationOptions = <TError = ErrorType
 ) => {
     
       const mutationOptions = getDeleteManagerMaterialDeleteMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * 批量删除图片
+ */
+export const postManagerMaterialBatchDelete = (
+    postManagerMaterialBatchDeleteBody: PostManagerMaterialBatchDeleteBody,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<PostManagerMaterialBatchDelete200>(
+      {url: `/manager/material/batchDelete`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: postManagerMaterialBatchDeleteBody
+    },
+      options);
+    }
+  
+
+
+export const getPostManagerMaterialBatchDeleteMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postManagerMaterialBatchDelete>>, TError,{data: PostManagerMaterialBatchDeleteBody}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof postManagerMaterialBatchDelete>>, TError,{data: PostManagerMaterialBatchDeleteBody}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof postManagerMaterialBatchDelete>>, {data: PostManagerMaterialBatchDeleteBody}> = (props) => {
+          const {data} = props ?? {};
+
+          return  postManagerMaterialBatchDelete(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type PostManagerMaterialBatchDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof postManagerMaterialBatchDelete>>>
+    export type PostManagerMaterialBatchDeleteMutationBody = PostManagerMaterialBatchDeleteBody
+    export type PostManagerMaterialBatchDeleteMutationError = ErrorType<unknown>
+
+    export const usePostManagerMaterialBatchDelete = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postManagerMaterialBatchDelete>>, TError,{data: PostManagerMaterialBatchDeleteBody}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getPostManagerMaterialBatchDeleteMutationOptions(options);
      
       return useMutation(mutationOptions);
     }
