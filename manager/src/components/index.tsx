@@ -14,3 +14,4 @@ export {
 // export { default as Editor } from './Editor';
 export * from './Editor';
 export { default as ProFormEditor } from './ProFormEditor';
+export { default as Copy } from './Copy';

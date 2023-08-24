@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { deleteManagerMaterialDelete } from '@/libs/api/bff';
 import styled from 'styled-components';
+import { Copy } from '@/components';
 
 interface IProps extends ImagesObject {
   reset?: () => void;
@@ -95,9 +96,11 @@ export default function ImageCard({
 
             <div className="flex">
               <span className="inline-block w-[60px] font-bold">fileUrl:</span>
-              <span className="inline-block break-words w-[190px]">
-                {file_url}
-              </span>
+              <Copy text={file_url}>
+                <span className="inline-block break-words w-[190px]">
+                  {file_url}
+                </span>
+              </Copy>
             </div>
 
             <div className="flex justify-end mt-[5px]">

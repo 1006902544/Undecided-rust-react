@@ -1,5 +1,5 @@
 import { useGetImages } from '@/libs/api';
-import { Button, Modal, Pagination, message } from 'antd';
+import { Button, Modal, Pagination, Spin, message } from 'antd';
 import React, { useCallback, useMemo, useState } from 'react';
 import { CreateImageModalButton, ImageCard, OnCheckFn } from './components';
 import styled from 'styled-components';
@@ -29,7 +29,7 @@ export default function ImageList() {
     }
   };
 
-  const { data, refetch } = useGetImages(polymerization);
+  const { data, refetch, isLoading } = useGetImages(polymerization);
 
   const pageChange = (page: number, limit: number) => {
     setCheckedFileName([]);
@@ -91,10 +91,17 @@ export default function ImageList() {
         </Button>
       </div>
 
-      <div className="flex-1 h-0 flex flex-col flex-wrap content-start overflow-x-scroll">
-        {data?.data.results?.map((d) => (
-          <ImageCard {...d} reset={reset} key={d.file_name} onCheck={onCheck} />
-        ))}
+      <div className="flex-1 h-0">
+        <Spin spinning={isLoading} size="large">
+          {data?.data.results?.map((d) => (
+            <ImageCard
+              {...d}
+              reset={reset}
+              key={d.file_name}
+              onCheck={onCheck}
+            />
+          ))}
+        </Spin>
       </div>
 
       <Pagination
@@ -111,6 +118,30 @@ export default function ImageList() {
 }
 
 const Container = styled.div`
+  .ant-spin-nested-loading {
+    width: 100%;
+    height: 100%;
+
+    > div {
+      width: 100%;
+      height: 100%;
+    }
+
+    .ant-spin-container {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      overflow-x: scroll;
+    }
+  }
+
+  .ant-spin {
+    width: 100%;
+    height: 100%;
+    max-height: 100% !important;
+  }
+
   .ant-pagination {
     padding-top: 20px;
     display: flex;
