@@ -1,6 +1,7 @@
 const router = require('koa-router')();
 router.prefix('/manager');
 const multer = require('@koa/multer');
+
 const upload = multer();
 const {
   upload: { uploadImage },

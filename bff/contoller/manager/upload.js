@@ -5,7 +5,9 @@ const { getOssAccessKey } = require('../../utils/getOssAccessKey.js');
 const uploadImage = async (ctx, next) => {
   const file = ctx.file;
   const id = (await nanoid).nanoid(10);
-  const fileName = `${id}-${file.originalname}`;
+  const fileName = Buffer.from(`${id}-${file.originalname}`, 'latin1').toString(
+    'utf8'
+  );
 
   try {
     const { minioClient, accessData } = await getOssAccessKey(ctx);
