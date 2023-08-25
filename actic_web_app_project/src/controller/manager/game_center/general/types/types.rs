@@ -109,3 +109,28 @@ pub async fn delete_game_type(
         Err(MyError::permissions_error())
     }
 }
+
+#[utoipa::path(
+    get,
+    path = "/manager/gamesCenter/general/types/list",
+    responses (
+    (status = 200 , body = ListRes , description = "success")
+    )
+)]
+#[get("/list")]
+///get types list
+pub async fn get_types_list(
+    pool: Data<Pool>,
+    req: HttpRequest,
+) -> Result<impl Responder, impl ResponseError> {
+    let mut conn = pool.get_conn().unwrap();
+    if has_permission(&mut conn, &req) {
+        let res = game_types_service::get_types_list(&mut conn).await;
+        match res {
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+            Err(e) => Err(e),
+        }
+    } else {
+        Err(MyError::permissions_error())
+    }
+}

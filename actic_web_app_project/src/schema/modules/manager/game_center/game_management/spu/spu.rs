@@ -4,12 +4,12 @@ use utoipa::{IntoParams, ToSchema};
 use validator::Validate;
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
-pub struct GameSPULimit {
+pub struct SpuLimit {
     pub id: u64,
     pub name: String,
-    pub company_name: String,
+    pub company: Option<String>,
     pub type_names: Vec<String>,
-    pub logo_url: String,
+    pub cover: SpuFileObject,
     pub tag_names: Vec<String>,
     pub price: u64,
     #[schema(value_type = String)]
@@ -21,16 +21,19 @@ pub struct GameSPULimit {
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
-pub struct GameSPUDetail {
+pub struct SpuDetail {
     pub id: u64,
     pub name: String,
-    pub company: Option<SpuCompany>,
+    pub company_id: Option<u64>,
     pub price: u64,
-    pub logo_url: String,
-    pub e_tag: String,
-    pub logo_name: String,
-    pub tags: Vec<SpuTag>,
-    pub types: Vec<SpuType>,
+    pub cover: SpuFileObject,
+    pub carousel: Vec<SpuFileObject>,
+    pub tag_ids: Vec<u64>,
+    pub type_ids: Vec<u64>,
+    pub activity: u64,
+    pub views: u64,
+    pub acclaim: u64,
+    pub bad_reviews: u64,
     pub description: Option<String>,
     #[schema(value_type = String)]
     pub issue_time: NaiveDate,
@@ -41,15 +44,14 @@ pub struct GameSPUDetail {
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, Validate)]
-pub struct UpdateGameSpu {
+pub struct UpdateSpuReq {
     pub id: Option<u64>,
     #[validate(length(min = 1, max = 200))]
     pub name: String,
-    pub company_ids: Option<u64>,
+    pub company_id: Option<u64>,
     pub price: u64,
-    pub logo_url: String,
-    pub e_tag: String,
-    pub logo_name: String,
+    pub cover: SpuFileObject,
+    pub carousel: Vec<SpuFileObject>,
     pub tag_ids: Vec<u64>,
     pub type_ids: Vec<u64>,
     pub description: Option<String>,
@@ -58,17 +60,17 @@ pub struct UpdateGameSpu {
 }
 
 #[derive(Debug, IntoParams, ToSchema)]
-pub struct GetGameDetailReq {
+pub struct GetSpuDetailReq {
     pub id: u64,
 }
 
 #[derive(Debug, IntoParams, ToSchema)]
-pub struct DeleteGameDetailReq {
+pub struct DeleteSpuDetailReq {
     pub id: u64,
 }
 
 #[derive(Debug, IntoParams, ToSchema)]
-pub struct GetGameLimitReq {
+pub struct GetSpuLimitReq {
     pub limit: Option<u64>,
     pub page: Option<u64>,
     pub id: Option<u64>,
@@ -83,18 +85,24 @@ pub struct GetGameLimitReq {
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
 pub struct SpuTag {
-    name: String,
-    id: u64,
+    pub name: String,
+    pub id: u64,
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
 pub struct SpuType {
-    name: String,
-    id: String,
+    pub name: String,
+    pub id: String,
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
 pub struct SpuCompany {
-    name: String,
-    id: String,
+    pub name: String,
+    pub id: String,
+}
+
+#[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
+pub struct SpuFileObject {
+    pub url: String,
+    pub name: String,
 }

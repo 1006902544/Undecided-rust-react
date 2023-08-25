@@ -4,10 +4,10 @@
  * actic_web_app_project
  * OpenAPI spec version: 0.1.0
  */
-import type { GameSPULimit } from './gameSPULimit';
+import type { SpuLimit } from './spuLimit';
 
-export interface SPULimitRes {
+export interface SpuLimitRes {
   current: number;
-  results?: GameSPULimit[] | null;
+  results?: SpuLimit[] | null;
   total: number;
 }

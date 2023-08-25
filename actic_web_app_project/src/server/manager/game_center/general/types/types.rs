@@ -7,7 +7,8 @@ use crate::{
     schema::{
         base_struct::handle_limit,
         modules::manager::{
-            game_center::general::types::types::*, manager_response::GameTypeLimitRes,
+            game_center::general::types::types::*,
+            manager_response::{GameTypeLimitRes, List},
         },
     },
 };
@@ -106,5 +107,14 @@ pub async fn delete_types(conn: &mut PooledConn, id: u64) -> Result<String, MyEr
     match after_update(trans, res) {
         Ok(_) => Ok("Delete Success".to_string()),
         Err(e) => Err(e),
+    }
+}
+
+pub async fn get_types_list(conn: &mut PooledConn) -> Result<Vec<List>, MyError> {
+    let sql_str = "select id as value,name as label from types";
+    let res = conn.query::<List, &str>(sql_str);
+    match res {
+        Ok(res) => Ok(res),
+        Err(e) => Err(MyError::sql_error(e)),
     }
 }

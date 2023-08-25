@@ -49,17 +49,20 @@ use utoipa::OpenApi;
         super::game_center::general::tags::tags::get_tags_limit,
         super::game_center::general::tags::tags::update_tags,
         super::game_center::general::tags::tags::delete_tags,
+        super::game_center::general::tags::tags::get_tags_list,
         //upload,accessKey
         super::upload::get_access_key,
         //游戏中心-通用-类型
         super::game_center::general::types::types::get_game_types,
         super::game_center::general::types::types::update_game_type,
         super::game_center::general::types::types::delete_game_type,
+        super::game_center::general::types::types::get_types_list,
         //游戏中心-通用-公司/工作室
         super::game_center::general::company_studio::company_studio::get_company,
         super::game_center::general::company_studio::company_studio::update_company,
         super::game_center::general::company_studio::company_studio::get_company_detail,
         super::game_center::general::company_studio::company_studio::delete_company_studio,
+        super::game_center::general::company_studio::company_studio::get_company_list,
     ),
     components(schemas(
         //文件通用
@@ -85,6 +88,8 @@ use utoipa::OpenApi;
         AssociateAuthLimitReq,
         PermissionAssociateAuthLimitRes,
         UpdateRouteReq,
+        //通用
+        List,
         //用户菜单权限相关
         AssociateRouterAuthLimitReq,AssociateRouterAuthLimit,RouterAssociateAuthRes,RouterAssociateAuthLimitRes,AssociateRouterAuthReq,
         //游戏标签
@@ -96,7 +101,7 @@ use utoipa::OpenApi;
         //公司/工作室
         GetCompanyStudioReq,UpdateCompanyStudioReq,CompanyStudioDetail,CompanyStudio,CompanyStudioRes,CompanyStudioLimitRes,GetCompanyStudioDetailReq,DeleteCompanyStudioDetailReq,
         //spu
-        GameSPULimit,GameSPUDetail,UpdateGameSpu,GetGameDetailReq,DeleteGameDetailReq,GetGameLimitReq,SpuTag,SpuType,SpuCompany,SPULimitRes,SPURes,SPUDetailRes,
+        SpuLimit,SpuDetail,UpdateSpuReq,GetSpuDetailReq,DeleteSpuDetailReq,GetSpuLimitReq,SpuTag,SpuType,SpuCompany, SpuFileObject,SpuRes,SpuLimitRes,SpuDetailRes,SpuDetail,
         //素材库-图片
         ImagesObject,UpdateImageObjectReq,DeleteImageObjectReq,MaterialImageLimitReq,MaterialImageRes,MaterialImageLimitRes,BatchDeleteMaterialImagesReq
     ))

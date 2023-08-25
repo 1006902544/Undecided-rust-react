@@ -1,4 +1,5 @@
 use actix_web::web::Json;
+use mysql_common::prelude::FromRow;
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
 
@@ -25,6 +26,8 @@ use crate::schema::modules::admin::admin::AdminInfo;
     PermissionLimitRes = ResponseData<PermissionRes>,
     PermissionAssociateAuthLimitRes = ResponseData<PermissionAssociateAuthRes>,
     RouterAssociateAuthLimitRes = ResponseData<RouterAssociateAuthRes>,
+    //通用
+    ListRes = ResponseData<Vec<List>>,
     //游戏标签limit
     GameTagsRes = ResponseData<GameTagsLimitRes>,
     //上传，accessKey
@@ -34,7 +37,7 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //公司/工作室
     CompanyStudioRes = ResponseData<CompanyStudioLimitRes>,CompanyStudioDetailRes = ResponseData<CompanyStudioDetail>,
     //spu
-    SPURes = ResponseData<SPULimitRes>,SPUDetailRes = ResponseData<GameSPUDetail>,
+    SpuRes = ResponseData<SpuLimitRes>,SpuDetailRes = ResponseData<SpuDetail>,
     //素材库-图片
     MaterialImageRes = ResponseData<MaterialImageLimitRes>
 )]
@@ -80,7 +83,7 @@ impl<B> ResponseData<B> {
     //公司/工作室
     CompanyStudioLimitRes = LimitResults<CompanyStudio>,
     //spu
-    SPULimitRes = LimitResults<GameSPULimit>,
+    SpuLimitRes = LimitResults<SpuLimit>,
     //素材库-图片
     MaterialImageLimitRes = LimitResults<ImagesObject>
 )]
@@ -88,4 +91,11 @@ pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,
     pub current: u128,
     pub total: u128,
+}
+
+//list（select）通用
+#[derive(Debug, Serialize, Deserialize, ToSchema, Clone, FromRow)]
+pub struct List {
+    pub label: String,
+    pub value: String,
 }

@@ -1,6 +1,7 @@
 use crate::app::error::MyError;
 use actix_web::web::Data;
-use mysql::{prelude::Queryable, Error, Pool, PooledConn, Transaction};
+use mysql::{prelude::Queryable, Error, Params, Pool, PooledConn, Transaction};
+use mysql_common::params;
 
 pub fn get_conn(pool: Data<Pool>) -> Result<PooledConn, MyError> {
     let conn = pool.as_ref().get_conn();
@@ -75,4 +76,59 @@ pub fn after_update<T>(trans: Transaction<'_>, res: Result<T, Error>) -> Result<
             Err(MyError::sql_error(e))
         }
     }
+}
+
+#[derive(Debug, Clone)]
+pub struct BatchHandler<T> {
+    pub items: Vec<T>,
+}
+
+impl<T> BatchHandler<T> {
+    #[allow(unused)]
+    pub fn new(items: Vec<T>) -> Self {
+        BatchHandler { items }
+    }
+
+    #[allow(unused)]
+    pub fn get_params(&self, handler: fn(&T) -> Vec<BatchHandlerObject>) -> Vec<Params> {
+        self.items
+            .iter()
+            .map(|x| {
+                let objs = handler(x);
+                objs.iter()
+                    .map(|obj| {
+                        params! {obj.key.clone() => obj.value.clone()}
+                    })
+                    .collect()
+            })
+            .collect::<Vec<Vec<Params>>>()
+            .concat()
+    }
+
+    #[allow(unused)]
+    pub fn get_sql_str(&self, handler: fn(&T) -> String) -> String {
+        self.items
+            .iter()
+            .map(|x: &T| {
+                let string = handler(x);
+                format!("({})", string)
+            })
+            .collect::<Vec<String>>()
+            .join(",")
+    }
+
+    #[allow(unused)]
+    pub fn custom_handle<F>(&self, handler: fn(&T) -> F) -> Vec<F> {
+        self.items.iter().map(|x| handler(x)).collect::<Vec<F>>()
+    }
+
+    #[allow(unused)]
+    pub fn new_batch_handler_object(key: String, value: String) -> BatchHandlerObject {
+        BatchHandlerObject { key, value }
+    }
+}
+
+pub struct BatchHandlerObject {
+    pub key: String,
+    pub value: String,
 }

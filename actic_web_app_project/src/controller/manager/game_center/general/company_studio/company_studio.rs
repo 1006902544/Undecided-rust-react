@@ -138,3 +138,28 @@ pub async fn delete_company_studio(
         Err(MyError::permissions_error())
     }
 }
+
+#[utoipa::path(
+    get,
+    path = "/manager/gamesCenter/general/companyStudio/list",
+    responses (
+    (status = 200 , body = ListRes , description = "success")
+    )
+)]
+#[get("/list")]
+///get company list
+pub async fn get_company_list(
+    pool: Data<Pool>,
+    req: HttpRequest,
+) -> Result<impl Responder, impl ResponseError> {
+    let mut conn = pool.get_conn().unwrap();
+    if has_permission(&mut conn, &req) {
+        let res = company_studio_server::get_company_list(&mut conn).await;
+        match res {
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+            Err(e) => Err(e),
+        }
+    } else {
+        Err(MyError::permissions_error())
+    }
+}

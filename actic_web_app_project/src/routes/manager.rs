@@ -68,20 +68,23 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                             web::scope("tags")
                                 .service(get_tags_limit)
                                 .service(update_tags)
-                                .service(delete_tags),
+                                .service(delete_tags)
+                                .service(get_tags_list),
                         )
                         .service(
                             web::scope("types")
                                 .service(get_game_types)
                                 .service(update_game_type)
-                                .service(delete_game_type),
+                                .service(delete_game_type)
+                                .service(get_types_list),
                         )
                         .service(
                             web::scope("companyStudio")
                                 .service(get_company)
                                 .service(update_company)
                                 .service(get_company_detail)
-                                .service(delete_company_studio),
+                                .service(delete_company_studio)
+                                .service(get_company_list),
                         )
                         .service(web::scope("systems")),
                 ),

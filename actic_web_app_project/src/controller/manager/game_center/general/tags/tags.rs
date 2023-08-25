@@ -110,3 +110,28 @@ pub async fn delete_tags(
         Err(MyError::permissions_error())
     }
 }
+
+#[utoipa::path(
+    get,
+    path = "/manager/gamesCenter/general/tags/list",
+    responses (
+    (status = 200 , body = ListRes , description = "success")
+    )
+)]
+#[get("/list")]
+///get tags list
+pub async fn get_tags_list(
+    pool: Data<Pool>,
+    req: HttpRequest,
+) -> Result<impl Responder, impl ResponseError> {
+    let mut conn = pool.get_conn().unwrap();
+    if has_permission(&mut conn, &req) {
+        let res = tags_server::get_tags_list(&mut conn).await;
+        match res {
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+            Err(e) => Err(e),
+        }
+    } else {
+        Err(MyError::permissions_error())
+    }
+}

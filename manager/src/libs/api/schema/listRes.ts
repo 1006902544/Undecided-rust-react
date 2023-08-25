@@ -4,10 +4,10 @@
  * actic_web_app_project
  * OpenAPI spec version: 0.1.0
  */
-import type { SpuDetail } from './spuDetail';
+import type { List } from './list';
 
-export interface SpuDetailRes {
-  data: SpuDetail;
+export interface ListRes {
+  data: List[];
   message: string;
   status: number;
 }

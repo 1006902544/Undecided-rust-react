@@ -28,6 +28,7 @@ import type {
   DeleteCompanyStudioParams,
   CompanyStudioDetailRes,
   GetCompanyDetailParams,
+  ListRes,
   GameTagsRes,
   GetTagsLimitParams,
   ResPonseU8,
@@ -445,6 +446,60 @@ export const useGetCompanyDetail = <TData = Awaited<ReturnType<typeof getCompany
 
 
 /**
+ * get company list
+ * @summary get company list
+ */
+export const getCompanyList = (
+    
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<ListRes>(
+      {url: `/manager/gamesCenter/general/companyStudio/list`, method: 'get', signal
+    },
+      options);
+    }
+  
+
+export const getGetCompanyListQueryKey = () => [`/manager/gamesCenter/general/companyStudio/list`] as const;
+  
+
+    
+export const getGetCompanyListQueryOptions = <TData = Awaited<ReturnType<typeof getCompanyList>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCompanyList>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getCompanyList>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCompanyListQueryKey();
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCompanyList>>> = ({ signal }) => getCompanyList(requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetCompanyListQueryResult = NonNullable<Awaited<ReturnType<typeof getCompanyList>>>
+export type GetCompanyListQueryError = ErrorType<unknown>
+
+/**
+ * @summary get company list
+ */
+export const useGetCompanyList = <TData = Awaited<ReturnType<typeof getCompanyList>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCompanyList>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetCompanyListQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
  * get tags limit
  * @summary get tags limit
  */
@@ -607,6 +662,60 @@ export const useDeleteTags = <TError = ErrorType<unknown>,
     }
     
 /**
+ * get tags list
+ * @summary get tags list
+ */
+export const getTagsList = (
+    
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<ListRes>(
+      {url: `/manager/gamesCenter/general/tags/list`, method: 'get', signal
+    },
+      options);
+    }
+  
+
+export const getGetTagsListQueryKey = () => [`/manager/gamesCenter/general/tags/list`] as const;
+  
+
+    
+export const getGetTagsListQueryOptions = <TData = Awaited<ReturnType<typeof getTagsList>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getTagsList>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getTagsList>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetTagsListQueryKey();
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTagsList>>> = ({ signal }) => getTagsList(requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetTagsListQueryResult = NonNullable<Awaited<ReturnType<typeof getTagsList>>>
+export type GetTagsListQueryError = ErrorType<unknown>
+
+/**
+ * @summary get tags list
+ */
+export const useGetTagsList = <TData = Awaited<ReturnType<typeof getTagsList>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getTagsList>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetTagsListQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
  * get game types limit
  * @summary get game types limit
  */
@@ -768,6 +877,60 @@ export const useDeleteGameType = <TError = ErrorType<unknown>,
       return useMutation(mutationOptions);
     }
     
+/**
+ * get types list
+ * @summary get types list
+ */
+export const getTypesList = (
+    
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<ListRes>(
+      {url: `/manager/gamesCenter/general/types/list`, method: 'get', signal
+    },
+      options);
+    }
+  
+
+export const getGetTypesListQueryKey = () => [`/manager/gamesCenter/general/types/list`] as const;
+  
+
+    
+export const getGetTypesListQueryOptions = <TData = Awaited<ReturnType<typeof getTypesList>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getTypesList>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getTypesList>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetTypesListQueryKey();
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTypesList>>> = ({ signal }) => getTypesList(requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetTypesListQueryResult = NonNullable<Awaited<ReturnType<typeof getTypesList>>>
+export type GetTypesListQueryError = ErrorType<unknown>
+
+/**
+ * @summary get types list
+ */
+export const useGetTypesList = <TData = Awaited<ReturnType<typeof getTypesList>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getTypesList>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetTypesListQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
 /**
  * get images limit
  * @summary get images limit

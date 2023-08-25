@@ -108,3 +108,12 @@ pub async fn delete_tags(conn: &mut PooledConn, id: u64) -> Result<u8, MyError> 
         Err(e) => Err(MyError::sql_error(e)),
     }
 }
+
+pub async fn get_tags_list(conn: &mut PooledConn) -> Result<Vec<List>, MyError> {
+    let sql_str = "select id as value,name as label from tags";
+    let res = conn.query::<List, &str>(sql_str);
+    match res {
+        Ok(res) => Ok(res),
+        Err(e) => Err(MyError::sql_error(e)),
+    }
+}

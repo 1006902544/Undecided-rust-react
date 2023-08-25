@@ -8,7 +8,7 @@ use crate::{
         base_struct::{handle_limit, handle_page},
         modules::manager::{
             game_center::general::company_studio::company_studio::*,
-            manager_response::CompanyStudioLimitRes,
+            manager_response::{CompanyStudioLimitRes, List},
         },
     },
     server::manager::game_center::general::tags::tags::after_update,
@@ -128,5 +128,14 @@ pub async fn delete_company_studio(conn: &mut PooledConn, id: u64) -> Result<Str
     match after_update(trans, res).await {
         Ok(_) => Ok("Delete Success".to_string()),
         Err(e) => Err(e),
+    }
+}
+
+pub async fn get_company_list(conn: &mut PooledConn) -> Result<Vec<List>, MyError> {
+    let sql_str = "select id as value,name as label from company_studios";
+    let res = conn.query::<List, &str>(sql_str);
+    match res {
+        Ok(res) => Ok(res),
+        Err(e) => Err(MyError::sql_error(e)),
     }
 }

@@ -4,10 +4,10 @@
  * actic_web_app_project
  * OpenAPI spec version: 0.1.0
  */
-import type { SPULimitRes } from './sPULimitRes';
+import type { SpuLimitRes } from './spuLimitRes';
 
-export interface SPURes {
-  data: SPULimitRes;
+export interface SpuRes {
+  data: SpuLimitRes;
   message: string;
   status: number;
 }
