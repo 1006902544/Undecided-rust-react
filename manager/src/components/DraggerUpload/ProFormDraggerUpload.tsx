@@ -42,7 +42,7 @@ export default function ProFormDraggerUpload({
             if (value?.some((f) => f.status === 'done')) {
               callback();
             } else {
-              Promise.reject('please upload file');
+              return Promise.reject('please upload file');
             }
           },
           message: 'please upload file',

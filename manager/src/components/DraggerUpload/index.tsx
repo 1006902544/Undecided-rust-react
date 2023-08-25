@@ -1,18 +1,37 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Upload } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { getToken } from '@/utils';
 import styled from 'styled-components';
 import { DraggerProps } from 'antd/es/upload';
 import ItemRender from './ItemRender';
+import type { RcFile } from 'antd/lib/upload';
 const { Dragger } = Upload;
 export { default as ProFormDraggerUpload } from './ProFormDraggerUpload';
 
-interface IProps extends DraggerProps {}
+const baseAllowTypes = ['image/jpeg', 'image/png'];
 
-export default function DraggerUpload(props: IProps) {
+interface IProps extends DraggerProps {
+  allowTypes?: string[];
+}
+
+export default function DraggerUpload({
+  allowTypes = baseAllowTypes,
+  ...props
+}: IProps) {
+  const beforeUpload = useCallback(
+    (file: RcFile) => {
+      if (!allowTypes.some((t) => t === file.type)) {
+        return false;
+      }
+      return file;
+    },
+    [allowTypes]
+  );
+
   return (
     <UploadContainer
+      beforeUpload={beforeUpload}
       action={`${process.env.REACT_APP_UPLOAD_API_URL}/manager/upload`}
       headers={{
         Authorization: getToken() ?? '',
@@ -26,6 +45,7 @@ export default function DraggerUpload(props: IProps) {
           actions={actions}
         />
       )}
+      accept={allowTypes.join(',')}
       {...props}
     >
       <p className="ant-upload-drag-icon">

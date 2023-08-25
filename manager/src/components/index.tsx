@@ -15,3 +15,5 @@ export {
 export * from './Editor';
 export { default as ProFormEditor } from './ProFormEditor';
 export { default as Copy } from './Copy';
+export { default as ProFormSelectList } from './ProFormSelectList';
+export { default as ProFormTextNumber } from './ProFormTextNumber';

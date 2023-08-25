@@ -1,5 +1,7 @@
-import { Button, type UploadFile } from 'antd';
+import { Button, Image, type UploadFile } from 'antd';
 import React, { useMemo } from 'react';
+import styled from 'styled-components';
+import defaultImage from '@/assets/images/default.png';
 
 interface IProps {
   originNode: React.ReactElement;
@@ -25,23 +27,28 @@ export default function ItemRender({ file, actions }: IProps) {
         </div>
       );
     } else {
-      return <span>{file.response?.data?.fileName}</span>;
+      return <span>{file.response?.data?.fileName || file.name}</span>;
     }
   }, [file]);
 
+  const isError = useMemo(() => {
+    return file.status === 'error' || !file.status;
+  }, [file.status]);
+
   return (
-    <div
+    <Container
       className="w-full flex items-center p-[5px] border-[1px] rounded-[5px] mt-[8px]"
-      style={{ borderColor: file.status === 'error' ? 'brown' : undefined }}
+      style={{
+        borderColor: isError ? 'brown' : undefined,
+      }}
     >
       <div
         className="w-[40px] h-[40px] cursor-pointer rounded-[5px] overflow-hidden flex-shrink-0 flex justify-center items-center"
         onClick={actions.preview}
       >
-        <img
-          alt={file.response?.data?.fileName}
-          src={file.response?.data?.url}
-          className=" object-contain"
+        <Image
+          src={isError ? defaultImage : file.response?.data?.url}
+          alt={file.response?.data?.fileName || file.name}
         />
       </div>
 
@@ -52,6 +59,8 @@ export default function ItemRender({ file, actions }: IProps) {
           delete
         </Button>
       </div>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div``;
