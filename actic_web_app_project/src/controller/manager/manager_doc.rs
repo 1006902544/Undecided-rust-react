@@ -101,7 +101,7 @@ use utoipa::OpenApi;
         //公司/工作室
         GetCompanyStudioReq,UpdateCompanyStudioReq,CompanyStudioDetail,CompanyStudio,CompanyStudioRes,CompanyStudioLimitRes,GetCompanyStudioDetailReq,DeleteCompanyStudioDetailReq,
         //spu
-        SpuLimit,SpuDetail,UpdateSpuReq,GetSpuDetailReq,DeleteSpuDetailReq,GetSpuLimitReq,SpuTag,SpuType,SpuCompany, SpuFileObject,SpuRes,SpuLimitRes,SpuDetailRes,SpuDetail,
+        SpuLimit,SpuDetail,UpdateSpuReq,GetSpuDetailReq,DeleteSpuDetailReq,GetSpuLimitReq,SpuTag,SpuType,SpuCompany, SpuFileObject,SpuRes,SpuLimitRes,SpuDetailRes,
         //素材库-图片
         ImagesObject,UpdateImageObjectReq,DeleteImageObjectReq,MaterialImageLimitReq,MaterialImageRes,MaterialImageLimitRes,BatchDeleteMaterialImagesReq
     ))
