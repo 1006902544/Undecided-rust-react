@@ -90,35 +90,34 @@ impl<T> BatchHandler<T> {
     }
 
     #[allow(unused)]
-    pub fn get_params(&self, handler: fn(&T) -> Vec<BatchHandlerObject>) -> Vec<Params> {
-        self.items
-            .iter()
-            .map(|x| {
-                let objs = handler(x);
-                objs.iter()
-                    .map(|obj| {
-                        params! {obj.key.clone() => obj.value.clone()}
-                    })
-                    .collect()
-            })
-            .collect::<Vec<Vec<Params>>>()
-            .concat()
+    pub fn get_params(
+        &self,
+        handler: impl Fn(&T, usize) -> Vec<BatchHandlerObject>,
+    ) -> Vec<Params> {
+        let mut params: Vec<Vec<Params>> = vec![];
+        for (i, v) in self.items.iter().enumerate() {
+            let objs = handler(v, i);
+            let iter = objs
+                .iter()
+                .map(|obj| (params! {obj.key.clone() => obj.value.clone()}))
+                .collect();
+            params.push(iter);
+        }
+        params.concat()
     }
 
     #[allow(unused)]
-    pub fn get_sql_str(&self, handler: fn(&T) -> String) -> String {
-        self.items
-            .iter()
-            .map(|x: &T| {
-                let string = handler(x);
-                format!("({})", string)
-            })
-            .collect::<Vec<String>>()
-            .join(",")
+    pub fn get_sql_str(&self, handler: impl Fn(&T, usize) -> String) -> String {
+        let mut strs = vec![];
+        for (i, v) in self.items.iter().enumerate() {
+            let string = handler(v, i);
+            strs.push(string);
+        }
+        strs.join(",")
     }
 
     #[allow(unused)]
-    pub fn custom_handle<F>(&self, handler: fn(&T) -> F) -> Vec<F> {
+    pub fn custom_handle<F>(&self, handler: impl Fn(&T) -> F) -> Vec<F> {
         self.items.iter().map(|x| handler(x)).collect::<Vec<F>>()
     }
 

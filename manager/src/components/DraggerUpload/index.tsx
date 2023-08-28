@@ -3,11 +3,14 @@ import { Upload } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { getToken } from '@/utils';
 import styled from 'styled-components';
-import { DraggerProps } from 'antd/es/upload';
+import type { DraggerProps, UploadFile } from 'antd/es/upload';
 import ItemRender from './ItemRender';
 import type { RcFile } from 'antd/lib/upload';
 const { Dragger } = Upload;
 export { default as ProFormDraggerUpload } from './ProFormDraggerUpload';
+export type PriFile = UploadFile<{
+  data: { etag: string; fileName: string; url: string };
+}>;
 
 const baseAllowTypes = ['image/jpeg', 'image/png'];
 

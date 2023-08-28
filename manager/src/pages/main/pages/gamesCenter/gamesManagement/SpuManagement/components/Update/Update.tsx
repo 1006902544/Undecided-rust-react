@@ -10,24 +10,68 @@ import {
   ProFormDatePicker,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Col, Row } from 'antd';
-import React from 'react';
+import { Button, Col, Row, message } from 'antd';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
+import { useMutation } from '@tanstack/react-query';
+import { updateSpu } from '@/libs/api';
+import type { UpdateSpuReq } from '@/libs/api/schema';
+import type { FormFinish } from './Update.d';
+import { useNavigate } from 'react-router-dom';
 
 export default function Update() {
-  const [form] = ProForm.useForm();
+  const [form] = ProForm.useForm<FormFinish>();
+  const navigate = useNavigate();
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (data: UpdateSpuReq) => {
+      return updateSpu(data);
+    },
+    onSuccess(res) {
+      message.success(res.message);
+      navigate(-1);
+    },
+  });
+
+  const onFinish = useCallback(async (formData: FormFinish) => {
+    const cover = {
+      name: formData.cover[0].response?.data.fileName!,
+      url: formData.cover[0].response?.data.url!,
+    };
+    const curParams: UpdateSpuReq = {
+      name: formData.name,
+      price: formData.price,
+      cover,
+      issue_time: formData.issueTime,
+      company_id: formData.companyId,
+      type_ids: formData.typeIds,
+      tag_ids: formData.tagIds,
+      carousel: formData.carousel.map((item) => ({
+        name: item.response?.data.fileName!,
+        url: item.response?.data.url!,
+      })),
+      description: formData.description,
+    };
+    mutate(curParams);
+  }, []);
 
   return (
     <Container
       form={form}
+      onFinish={onFinish as any}
       layout="horizontal"
       labelCol={{ flex: '120px' }}
       submitter={{
         render(_, dom) {
           return (
             <div className="border-t-[1px] border-t-[#f0f0f0] flex justify-end pt-[20px] space-x-[32px]">
-              {dom[0]}
-              {dom[1]}
+              <Button loading={isLoading}>Cancel</Button>
+              <Button htmlType="reset" loading={isLoading}>
+                Reset
+              </Button>
+              <Button type="primary" htmlType="submit" loading={isLoading}>
+                Submit
+              </Button>
             </div>
           );
         },
@@ -118,7 +162,7 @@ export default function Update() {
         <Col span={8}>
           <ProFormSelectList
             keyCode="tag"
-            name="TagIds"
+            name="tagIds"
             label="Tags"
             mode="multiple"
             rules={[

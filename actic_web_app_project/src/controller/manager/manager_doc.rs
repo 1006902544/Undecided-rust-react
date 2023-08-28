@@ -63,6 +63,11 @@ use utoipa::OpenApi;
         super::game_center::general::company_studio::company_studio::get_company_detail,
         super::game_center::general::company_studio::company_studio::delete_company_studio,
         super::game_center::general::company_studio::company_studio::get_company_list,
+        //游戏中心-游戏管理-SPU
+        super::game_center::game_management::spu::spu::update_spu,
+        super::game_center::game_management::spu::spu::get_spu_detail,
+        super::game_center::game_management::spu::spu::get_spu_limit,
+        super::game_center::game_management::spu::spu::delete_spu,
     ),
     components(schemas(
         //文件通用
@@ -101,7 +106,7 @@ use utoipa::OpenApi;
         //公司/工作室
         GetCompanyStudioReq,UpdateCompanyStudioReq,CompanyStudioDetail,CompanyStudio,CompanyStudioRes,CompanyStudioLimitRes,GetCompanyStudioDetailReq,DeleteCompanyStudioDetailReq,
         //spu
-        SpuLimit,SpuDetail,UpdateSpuReq,GetSpuDetailReq,DeleteSpuDetailReq,GetSpuLimitReq,SpuTag,SpuType,SpuCompany, SpuFileObject,SpuRes,SpuLimitRes,SpuDetailRes,
+        SpuLimit,SpuDetail,UpdateSpuReq,GetSpuDetailReq,DeleteSpuDetailReq,GetSpuLimitReq, SpuFileObject,SpuRes,SpuLimitRes,SpuDetailRes,
         //素材库-图片
         ImagesObject,UpdateImageObjectReq,DeleteImageObjectReq,MaterialImageLimitReq,MaterialImageRes,MaterialImageLimitRes,BatchDeleteMaterialImagesReq
     ))

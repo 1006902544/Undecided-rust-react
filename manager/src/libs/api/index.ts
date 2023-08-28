@@ -22,6 +22,12 @@ import type {
   AdminInfoRes,
   ResPonseString,
   LoginBody,
+  SpuRes,
+  GetSpuLimitParams,
+  UpdateSpuReq,
+  DeleteSpuParams,
+  SpuDetailRes,
+  GetSpuDetailParams,
   CompanyStudioRes,
   GetCompanyParams,
   UpdateCompanyStudioReq,
@@ -228,6 +234,223 @@ export const useSignIn = <TError = ErrorType<unknown>,
       return useMutation(mutationOptions);
     }
     
+/**
+ * get SPU limit
+ * @summary get SPU limit
+ */
+export const getSpuLimit = (
+    params?: GetSpuLimitParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<SpuRes>(
+      {url: `/manager/gamesCenter/gamesManagement/spu`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetSpuLimitQueryKey = (params?: GetSpuLimitParams,) => [`/manager/gamesCenter/gamesManagement/spu`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetSpuLimitQueryOptions = <TData = Awaited<ReturnType<typeof getSpuLimit>>, TError = ErrorType<unknown>>(params?: GetSpuLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSpuLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getSpuLimit>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetSpuLimitQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSpuLimit>>> = ({ signal }) => getSpuLimit(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetSpuLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getSpuLimit>>>
+export type GetSpuLimitQueryError = ErrorType<unknown>
+
+/**
+ * @summary get SPU limit
+ */
+export const useGetSpuLimit = <TData = Awaited<ReturnType<typeof getSpuLimit>>, TError = ErrorType<unknown>>(
+ params?: GetSpuLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSpuLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetSpuLimitQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * update SPU
+ * @summary update SPU
+ */
+export const updateSpu = (
+    updateSpuReq: UpdateSpuReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/gamesCenter/gamesManagement/spu`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: updateSpuReq
+    },
+      options);
+    }
+  
+
+
+export const getUpdateSpuMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSpu>>, TError,{data: UpdateSpuReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateSpu>>, TError,{data: UpdateSpuReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateSpu>>, {data: UpdateSpuReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateSpu(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateSpuMutationResult = NonNullable<Awaited<ReturnType<typeof updateSpu>>>
+    export type UpdateSpuMutationBody = UpdateSpuReq
+    export type UpdateSpuMutationError = ErrorType<unknown>
+
+    /**
+ * @summary update SPU
+ */
+export const useUpdateSpu = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSpu>>, TError,{data: UpdateSpuReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getUpdateSpuMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * delete SPU
+ * @summary delete SPU
+ */
+export const deleteSpu = (
+    params: DeleteSpuParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/gamesCenter/gamesManagement/spu`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteSpuMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSpu>>, TError,{params: DeleteSpuParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteSpu>>, TError,{params: DeleteSpuParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteSpu>>, {params: DeleteSpuParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteSpu(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteSpuMutationResult = NonNullable<Awaited<ReturnType<typeof deleteSpu>>>
+    
+    export type DeleteSpuMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete SPU
+ */
+export const useDeleteSpu = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSpu>>, TError,{params: DeleteSpuParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteSpuMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * get SPU detail
+ * @summary get SPU detail
+ */
+export const getSpuDetail = (
+    params: GetSpuDetailParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<SpuDetailRes>(
+      {url: `/manager/gamesCenter/gamesManagement/spu/detail`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetSpuDetailQueryKey = (params: GetSpuDetailParams,) => [`/manager/gamesCenter/gamesManagement/spu/detail`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetSpuDetailQueryOptions = <TData = Awaited<ReturnType<typeof getSpuDetail>>, TError = ErrorType<unknown>>(params: GetSpuDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSpuDetail>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getSpuDetail>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetSpuDetailQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSpuDetail>>> = ({ signal }) => getSpuDetail(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetSpuDetailQueryResult = NonNullable<Awaited<ReturnType<typeof getSpuDetail>>>
+export type GetSpuDetailQueryError = ErrorType<unknown>
+
+/**
+ * @summary get SPU detail
+ */
+export const useGetSpuDetail = <TData = Awaited<ReturnType<typeof getSpuDetail>>, TError = ErrorType<unknown>>(
+ params: GetSpuDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSpuDetail>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetSpuDetailQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
 /**
  * get company/studio
  * @summary get company/studio

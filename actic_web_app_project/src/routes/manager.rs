@@ -1,6 +1,9 @@
 use crate::controller::manager::{
     auth::auth::*,
-    game_center::general::{company_studio::company_studio::*, tags::tags::*, types::types::*},
+    game_center::{
+        game_management::spu::spu::*,
+        general::{company_studio::company_studio::*, tags::tags::*, types::types::*},
+    },
     manager_doc::ApiDoc,
     material_library::images::*,
     permission::{
@@ -62,32 +65,40 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                     ),
             )
             .service(
-                web::scope("gamesCenter").service(
-                    web::scope("general")
-                        .service(
-                            web::scope("tags")
-                                .service(get_tags_limit)
-                                .service(update_tags)
-                                .service(delete_tags)
-                                .service(get_tags_list),
-                        )
-                        .service(
-                            web::scope("types")
-                                .service(get_game_types)
-                                .service(update_game_type)
-                                .service(delete_game_type)
-                                .service(get_types_list),
-                        )
-                        .service(
-                            web::scope("companyStudio")
-                                .service(get_company)
-                                .service(update_company)
-                                .service(get_company_detail)
-                                .service(delete_company_studio)
-                                .service(get_company_list),
-                        )
-                        .service(web::scope("systems")),
-                ),
+                web::scope("gamesCenter")
+                    .service(
+                        web::scope("general")
+                            .service(
+                                web::scope("tags")
+                                    .service(get_tags_limit)
+                                    .service(update_tags)
+                                    .service(delete_tags)
+                                    .service(get_tags_list),
+                            )
+                            .service(
+                                web::scope("types")
+                                    .service(get_game_types)
+                                    .service(update_game_type)
+                                    .service(delete_game_type)
+                                    .service(get_types_list),
+                            )
+                            .service(
+                                web::scope("companyStudio")
+                                    .service(get_company)
+                                    .service(update_company)
+                                    .service(get_company_detail)
+                                    .service(delete_company_studio)
+                                    .service(get_company_list),
+                            )
+                            .service(web::scope("systems")),
+                    )
+                    .service(
+                        web::scope("gamesManagement").service(
+                            web::scope("spu")
+                                .service(update_spu)
+                                .service(get_spu_detail),
+                        ),
+                    ),
             )
             .service(
                 web::scope("materialLibrary")

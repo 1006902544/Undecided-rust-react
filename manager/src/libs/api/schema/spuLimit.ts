@@ -7,14 +7,14 @@
 import type { SpuFileObject } from './spuFileObject';
 
 export interface SpuLimit {
-  company?: string | null;
+  company_name?: string | null;
   cover: SpuFileObject;
   create_time: string;
   id: number;
   issue_time: string;
   name: string;
   price: number;
-  tag_names: string[];
-  type_names: string[];
+  tags: string[];
+  types: string[];
   update_time: string;
 }

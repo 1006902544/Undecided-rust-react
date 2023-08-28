@@ -15,6 +15,6 @@ export interface UpdateSpuReq {
   issue_time: string;
   name: string;
   price: number;
-  tag_ids: number[];
-  type_ids: number[];
+  tag_ids: string;
+  type_ids: string;
 }

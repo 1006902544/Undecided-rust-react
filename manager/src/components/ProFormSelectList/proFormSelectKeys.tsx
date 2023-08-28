@@ -5,7 +5,7 @@ export type Keys = 'tag' | 'type' | 'company';
 type Fn = () => Promise<ListRes>;
 
 export const proFormSelectKeys: Record<Keys, Fn> = {
-  tag: getTypesList,
-  type: getTagsList,
+  tag: getTagsList,
+  type: getTypesList,
   company: getCompanyList,
 };
