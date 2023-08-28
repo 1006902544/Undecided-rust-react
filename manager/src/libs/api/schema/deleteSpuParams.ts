@@ -6,5 +6,5 @@
  */
 
 export type DeleteSpuParams = {
-id: number;
+id: string;
 };

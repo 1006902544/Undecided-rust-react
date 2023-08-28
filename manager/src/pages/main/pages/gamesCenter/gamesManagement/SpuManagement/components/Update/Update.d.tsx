@@ -5,9 +5,9 @@ export interface FormFinish {
   price: number;
   cover: PriFile[];
   issueTime: string;
-  companyId?: number;
-  typeIds: number[];
-  tagIds: number[];
+  companyId?: string;
+  typeIds: string[];
+  tagIds: string[];
   carousel: PriFile[];
   description?: string;
 }

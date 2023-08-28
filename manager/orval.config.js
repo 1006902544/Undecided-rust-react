@@ -42,6 +42,11 @@ module.exports = {
               useQuery: true,
             },
           },
+          getSpuDetail: {
+            query: {
+              useQuery: true,
+            },
+          },
         },
       },
     },

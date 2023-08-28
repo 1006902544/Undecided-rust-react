@@ -6,5 +6,5 @@
  */
 
 export type GetSpuDetailParams = {
-id: number;
+id: string;
 };

@@ -83,7 +83,7 @@ export default function ImageList() {
   }, [checkedFileName, refetch]);
 
   return (
-    <Container className="w-full h-full flex flex-col">
+    <Container className="w-full h-full flex flex-col overflow-hidden">
       <div className="pb-[20px] space-x-[20px]">
         <CreateImageModalButton reset={reset} />
         <Button disabled={!checkedFileName.length} onClick={batchDelete}>

@@ -8,13 +8,13 @@ import type { SpuFileObject } from './spuFileObject';
 
 export interface UpdateSpuReq {
   carousel: SpuFileObject[];
-  company_id?: number | null;
+  company_id?: string | null;
   cover: SpuFileObject;
   description?: string | null;
-  id?: number | null;
+  id?: string | null;
   issue_time: string;
   name: string;
   price: number;
-  tag_ids: string;
-  type_ids: string;
+  tag_ids: string[];
+  type_ids: string[];
 }

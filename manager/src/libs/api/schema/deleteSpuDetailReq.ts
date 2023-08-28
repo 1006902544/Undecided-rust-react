@@ -6,5 +6,5 @@
  */
 
 export interface DeleteSpuDetailReq {
-  id: number;
+  id: string;
 }

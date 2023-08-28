@@ -6,5 +6,5 @@
  */
 
 export interface GetSpuDetailReq {
-  id: number;
+  id: string;
 }

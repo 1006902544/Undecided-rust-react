@@ -33,7 +33,10 @@ pub async fn update_spu(
     let mut conn = pool.get_conn().unwrap();
     let has_per = has_permission(&mut conn, &req);
     if has_per {
-        let res = spuServer::create_spu(&mut conn, data.into_inner()).await;
+        let res = match data.id {
+            Some(_) => spuServer::edit_spu(&mut conn, data.into_inner()).await,
+            None => spuServer::create_spu(&mut conn, data.into_inner()).await,
+        };
         match res {
             Ok(res) => Ok(ResponseData::new(res).into_json_response()),
             Err(e) => Err(e),
@@ -89,7 +92,7 @@ pub async fn get_spu_detail(
     let mut conn = pool.get_conn().unwrap();
     let has_per = has_permission(&mut conn, &req);
     if has_per {
-        let res = spuServer::get_spu_detail(&mut conn, data.id).await;
+        let res = spuServer::get_spu_detail(&mut conn, data.id.clone()).await;
         match res {
             Ok(res) => Ok(ResponseData::new(res).into_json_response()),
             Err(e) => Err(e),
@@ -117,7 +120,7 @@ pub async fn delete_spu(
     let mut conn = pool.get_conn().unwrap();
     let has_per = has_permission(&mut conn, &req);
     if has_per {
-        let res = spuServer::delete_spu(&mut conn, data.id).await;
+        let res = spuServer::delete_spu(&mut conn, data.id.clone()).await;
         match res {
             Ok(res) => Ok(ResponseData::new(res).into_json_response()),
             Err(e) => Err(e),

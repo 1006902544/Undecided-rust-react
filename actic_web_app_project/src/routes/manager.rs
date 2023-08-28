@@ -96,7 +96,9 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                         web::scope("gamesManagement").service(
                             web::scope("spu")
                                 .service(update_spu)
-                                .service(get_spu_detail),
+                                .service(get_spu_detail)
+                                .service(get_spu_limit)
+                                .service(delete_spu),
                         ),
                     ),
             )

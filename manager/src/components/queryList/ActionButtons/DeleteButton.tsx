@@ -41,7 +41,7 @@ export default function DeleteButton({
       {...btnProps}
       onClick={onDelete}
     >
-      DELETE
+      Delete
     </Button>
   );
 }

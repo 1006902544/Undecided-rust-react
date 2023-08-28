@@ -9,7 +9,7 @@ import type { RcFile } from 'antd/lib/upload';
 const { Dragger } = Upload;
 export { default as ProFormDraggerUpload } from './ProFormDraggerUpload';
 export type PriFile = UploadFile<{
-  data: { etag: string; fileName: string; url: string };
+  data: { etag?: string; fileName: string; url: string };
 }>;
 
 const baseAllowTypes = ['image/jpeg', 'image/png'];

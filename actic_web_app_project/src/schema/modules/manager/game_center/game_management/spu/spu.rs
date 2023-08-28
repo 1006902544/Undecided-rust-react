@@ -25,12 +25,12 @@ pub struct SpuLimit {
 pub struct SpuDetail {
     pub id: u64,
     pub name: String,
-    pub company_id: Option<u64>,
+    pub company_id: Option<String>,
     pub price: f64,
     pub cover: SpuFileObject,
     pub carousel: Vec<SpuFileObject>,
-    pub tag_ids: Vec<u64>,
-    pub type_ids: Vec<u64>,
+    pub tag_ids: Vec<String>,
+    pub type_ids: Vec<String>,
     pub activity: u64,
     pub views: u64,
     pub acclaim: u64,
@@ -48,7 +48,7 @@ pub struct SpuDetail {
 pub struct SpuSqlDetail {
     pub id: u64,
     pub name: String,
-    pub company_id: Option<u64>,
+    pub company_id: Option<String>,
     pub price: f64,
     pub cover_url: String,
     pub cover_name: String,
@@ -70,16 +70,14 @@ pub struct SpuSqlDetail {
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, Validate)]
 pub struct UpdateSpuReq {
-    pub id: Option<u64>,
+    pub id: Option<String>,
     #[validate(length(min = 1, max = 200))]
     pub name: String,
-    pub company_id: Option<u64>,
+    pub company_id: Option<String>,
     pub price: u64,
     pub cover: SpuFileObject,
     pub carousel: Vec<SpuFileObject>,
-    #[schema(value_type = String)]
     pub tag_ids: Vec<String>,
-    #[schema(value_type = String)]
     pub type_ids: Vec<String>,
     pub description: Option<String>,
     #[schema(value_type = String)]
@@ -88,12 +86,12 @@ pub struct UpdateSpuReq {
 
 #[derive(Debug, IntoParams, ToSchema, Deserialize, Serialize)]
 pub struct GetSpuDetailReq {
-    pub id: u64,
+    pub id: String,
 }
 
 #[derive(Debug, IntoParams, ToSchema, Deserialize, Serialize)]
 pub struct DeleteSpuDetailReq {
-    pub id: u64,
+    pub id: String,
 }
 
 #[derive(Debug, IntoParams, ToSchema, Serialize, Deserialize)]

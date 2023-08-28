@@ -128,35 +128,47 @@ pub async fn edit_spu(conn: &mut PooledConn, params: UpdateSpuReq) -> Result<Str
             "price" => params.price,
             "description" => params.description,
             "issue_time" => params.issue_time,
-            "id" => params.id
+            "id" => params.id.clone()
         },
     );
     match insert_spu_res {
         Ok(()) => {
             //---存储插入结果，有一个错误就抛出并rollback
             let mut res_arr = vec![];
+            //---删除
+            let deletes = vec![
+                "delete from spu_cover where spu_id = :spu_id;",
+                "delete from spu_carousel where spu_id = :spu_id;",
+                "delete from spu_tag where spu_id = :spu_id;",
+                "delete from spu_type where spu_id=:spu_id;",
+            ];
+            deletes.iter().for_each(|str| {
+                let res = trans.exec_drop(
+                    str,
+                    params! {
+                        "spu_id" => params.id.clone(),
+                    },
+                );
+                res_arr.push(res)
+            });
             //---插入封面
-            let insert_cover = "
-            delete from spu_cover where spu_id=:spu_id;
-            insert into spu_cover (spu_id,cover_url,cover_name) values (:spu_id,:cover_url,:cover_name)";
+            let insert_cover = "insert into spu_cover (spu_id,cover_url,cover_name) values (:spu_id,:cover_url,:cover_name)";
             let insert_cover_res = trans.exec_drop(
                 insert_cover,
                 params! {
                     "cover_url" => params.cover.url,
                     "cover_name" => params.cover.name,
-                    "spu_id" => params.id,
+                    "spu_id" => params.id.clone(),
                 },
             );
             res_arr.push(insert_cover_res);
             //---插入轮播
-            let insert_carousel ="
-            delete from spu_carousel where spu_id=:spu_id;
-            insert ignore into spu_carousel (spu_id,carousel_url,carousel_name) values (:spu_id,:carousel_url,:carousel_name)";
+            let insert_carousel ="insert ignore into spu_carousel (spu_id,carousel_url,carousel_name) values (:spu_id,:carousel_url,:carousel_name);";
             let insert_carousel_res = trans.exec_batch(
                 insert_carousel,
                 params.carousel.iter().map(|c| {
                     params! {
-                        "spu_id" => params.id,
+                        "spu_id" => params.id.clone(),
                         "carousel_url" => c.url.clone(),
                         "carousel_name" => c.name.clone()
                     }
@@ -164,33 +176,30 @@ pub async fn edit_spu(conn: &mut PooledConn, params: UpdateSpuReq) -> Result<Str
             );
             res_arr.push(insert_carousel_res);
             //---插入tags
-            let insert_tags = "
-            delete from spu_tag where spu_id=:spu_id;
-            insert ignore into spu_tag (spu_id,tag_id,tag_name) values (:spu_id,:tag_id,(SELECT name FROM tags where tags.id=:tag_id limit 1))";
+            let insert_tags = "insert ignore into spu_tag (spu_id,tag_id,tag_name) values (:spu_id,:tag_id,(SELECT name FROM tags where tags.id=:tag_id limit 1))";
             let insert_tags_res = trans.exec_batch(
                 insert_tags,
                 params.tag_ids.iter().map(|tag_id| {
                     params! {
-                        "tag_id" => tag_id,
-                        "spu_id" => params.id
+                        "tag_id" => tag_id.clone(),
+                        "spu_id" => params.id.clone()
                     }
                 }),
             );
             res_arr.push(insert_tags_res);
             //---插入types
-            let insert_types = "
-            delete from spu_type where spu_id=:spu_id;
-            insert ignore into spu_type (spu_id,type_id,type_name) values (:spu_id,:type_id,(SELECT name FROM types where types.id=:type_id limit 1))";
+            let insert_types = "insert ignore into spu_type (spu_id,type_id,type_name) values (:spu_id,:type_id,(SELECT name FROM types where types.id=:type_id limit 1))";
             let insert_types_res = trans.exec_batch(
                 insert_types,
                 params.type_ids.iter().map(|type_id| {
                     params! {
                         "type_id" => type_id,
-                        "spu_id" => params.id
+                        "spu_id" => params.id.clone()
                     }
                 }),
             );
             res_arr.push(insert_types_res);
+            println!("{:#?}", res_arr);
             //---判断结果
             let mut err = None;
             res_arr.into_iter().position(|r| match r {
@@ -227,9 +236,9 @@ pub async fn get_spu_limit(
     left join spu_cover as cv on cv.spu_id=s.id
     left join spu_type as type on type.spu_id=s.id
     left join spu_tag as tag on tag.spu_id=s.id
+    where (s.id=:id or :id is null) and (s.name=:name or :name is null)
     group by s.id
     order by s.update_time desc
-    where (s.id=:id or :id is null) and (s.name=:name or :name is null)
     limit :scope,:limit
     ";
     let res = conn.exec_map::<(
@@ -296,8 +305,8 @@ pub async fn get_spu_limit(
     }
 }
 
-pub async fn get_spu_detail(conn: &mut PooledConn, id: u64) -> Result<SpuDetail, MyError> {
-    let sql_str = "select s.*,cv.cover_name as cover_name,cv.cover_url as cover_url,concat('[',group_concat(json_object('name', cs.carousel_name,'url', cs.carousel_url)),']') as carousel,group_concat(type.type_id separator ',') as type_ids,group_concat(tag.tag_id separator ',') as tag_ids
+pub async fn get_spu_detail(conn: &mut PooledConn, id: String) -> Result<SpuDetail, MyError> {
+    let sql_str = "select s.*,cv.cover_name as cover_name,cv.cover_url as cover_url,concat('[',group_concat(distinct json_object('name', cs.carousel_name,'url', cs.carousel_url)),']') as carousel,group_concat(distinct type.type_id separator ',') as type_ids,group_concat(distinct tag.tag_id separator ',') as tag_ids
     from spus as s
     left join spu_cover as cv on cv.spu_id=s.id
     left join spu_carousel as cs on cs.spu_id=s.id
@@ -324,12 +333,12 @@ pub async fn get_spu_detail(conn: &mut PooledConn, id: u64) -> Result<SpuDetail,
                     tag_ids: res
                         .tag_ids
                         .split(",")
-                        .map(|tag| tag.parse::<u64>().unwrap())
+                        .map(|tag| tag.parse::<String>().unwrap())
                         .collect(),
                     type_ids: res
                         .type_ids
                         .split(",")
-                        .map(|tag| tag.parse::<u64>().unwrap())
+                        .map(|tag| tag.parse::<String>().unwrap())
                         .collect(),
                     activity: res.activity,
                     views: res.views,
@@ -348,7 +357,7 @@ pub async fn get_spu_detail(conn: &mut PooledConn, id: u64) -> Result<SpuDetail,
     }
 }
 
-pub async fn delete_spu(conn: &mut PooledConn, id: u64) -> Result<String, MyError> {
+pub async fn delete_spu(conn: &mut PooledConn, id: String) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let sql_str = "delete from spus where id=:id";
     let res = trans.exec_drop(

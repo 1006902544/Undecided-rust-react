@@ -10,19 +10,71 @@ import {
   ProFormDatePicker,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Button, Col, Row, message } from 'antd';
-import React, { useCallback } from 'react';
+import { Button, Col, Row, Spin, message } from 'antd';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { useMutation } from '@tanstack/react-query';
-import { updateSpu } from '@/libs/api';
+import { useGetSpuDetail, updateSpu } from '@/libs/api';
 import type { UpdateSpuReq } from '@/libs/api/schema';
 import type { FormFinish } from './Update.d';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import qs from 'query-string';
 
 export default function Update() {
   const [form] = ProForm.useForm<FormFinish>();
   const navigate = useNavigate();
+  const { search } = useLocation();
+  const { id }: { id?: string } = qs.parse(search);
 
+  //init
+  const { data: initial, isLoading: initialLoading } = useGetSpuDetail(
+    { id: id as string },
+    { query: { enabled: !!id } }
+  );
+
+  const initialValues = useMemo(() => {
+    if (!initial || !id) {
+      return {};
+    }
+    const { data } = initial;
+
+    const res = {
+      ...data,
+      companyId: data.company_id,
+      cover: [
+        {
+          url: data.cover.url,
+          name: data.cover.name,
+          status: 'done',
+          uid: data.cover.name + data.id,
+          response: {
+            data: {
+              url: data.cover.url,
+              fileName: data.cover.name,
+            },
+          },
+        },
+      ],
+      carousel: data.carousel.map(({ url, name }) => ({
+        url,
+        name,
+        uid: name + data.id,
+        response: { data: { url, fileName: name } },
+        status: 'done',
+      })),
+      typeIds: data.type_ids,
+      tagIds: data.tag_ids,
+      issueTime: data.issue_time,
+    };
+    return res;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initial, id]);
+
+  useEffect(() => {
+    form.resetFields();
+  }, [initial, id]);
+
+  //update
   const { mutate, isLoading } = useMutation({
     mutationFn: (data: UpdateSpuReq) => {
       return updateSpu(data);
@@ -33,31 +85,36 @@ export default function Update() {
     },
   });
 
-  const onFinish = useCallback(async (formData: FormFinish) => {
-    const cover = {
-      name: formData.cover[0].response?.data.fileName!,
-      url: formData.cover[0].response?.data.url!,
-    };
-    const curParams: UpdateSpuReq = {
-      name: formData.name,
-      price: formData.price,
-      cover,
-      issue_time: formData.issueTime,
-      company_id: formData.companyId,
-      type_ids: formData.typeIds,
-      tag_ids: formData.tagIds,
-      carousel: formData.carousel.map((item) => ({
-        name: item.response?.data.fileName!,
-        url: item.response?.data.url!,
-      })),
-      description: formData.description,
-    };
-    mutate(curParams);
-  }, []);
+  const onFinish = useCallback(
+    async (formData: FormFinish) => {
+      const cover = {
+        name: formData.cover[0].response?.data.fileName!,
+        url: formData.cover[0].response?.data.url!,
+      };
+      const curParams: UpdateSpuReq = {
+        id,
+        name: formData.name,
+        price: formData.price,
+        cover,
+        issue_time: formData.issueTime,
+        company_id: formData.companyId,
+        type_ids: formData.typeIds,
+        tag_ids: formData.tagIds,
+        carousel: formData.carousel.map((item) => ({
+          name: item.response?.data.fileName!,
+          url: item.response?.data.url!,
+        })),
+        description: formData.description,
+      };
+      mutate(curParams);
+    },
+    [id, mutate]
+  );
 
   return (
     <Container
       form={form}
+      initialValues={initialValues}
       onFinish={onFinish as any}
       layout="horizontal"
       labelCol={{ flex: '120px' }}
@@ -77,124 +134,126 @@ export default function Update() {
         },
       }}
     >
-      <Row>
-        <Col span={24}>
-          <h1 className="mb-[40px] text-center">Update SPU</h1>
-        </Col>
+      <Spin spinning={initialLoading && !!id} size="large">
+        <Row>
+          <Col span={24}>
+            <h1 className="mb-[40px] text-center">Update SPU</h1>
+          </Col>
 
-        <Col span={8}>
-          <ProFormText
-            label="Name"
-            name="name"
-            fieldProps={{ showCount: true, minLength: 1, maxLength: 50 }}
-            rules={[
-              {
-                required: true,
-                message: 'please input name',
-              },
-            ]}
-          />
-        </Col>
-        <Col span={16} />
+          <Col span={8}>
+            <ProFormText
+              label="Name"
+              name="name"
+              fieldProps={{ showCount: true, minLength: 1, maxLength: 50 }}
+              rules={[
+                {
+                  required: true,
+                  message: 'please input name',
+                },
+              ]}
+            />
+          </Col>
+          <Col span={16} />
 
-        <Col span={8}>
-          <ProFormTextNumber
-            label="Price"
-            name="price"
-            fieldProps={{
-              addonAfter: '$',
-              precision: 2,
-              max: 99999,
-              min: 0,
-            }}
-          />
-        </Col>
-        <Col span={16} />
+          <Col span={8}>
+            <ProFormTextNumber
+              label="Price"
+              name="price"
+              fieldProps={{
+                addonAfter: '$',
+                precision: 2,
+                max: 99999,
+                min: 0,
+              }}
+            />
+          </Col>
+          <Col span={16} />
 
-        <Col span={8}>
-          <ProFormDraggerUpload
-            required
-            name="cover"
-            label="Cover"
-            fieldProps={{ maxCount: 1 }}
-          />
-        </Col>
-        <Col span={16} />
+          <Col span={8}>
+            <ProFormDraggerUpload
+              required
+              name="cover"
+              label="Cover"
+              fieldProps={{ maxCount: 1 }}
+            />
+          </Col>
+          <Col span={16} />
 
-        <Col span={8}>
-          <ProFormDatePicker
-            label="IssueTime"
-            name="issueTime"
-            rules={[
-              {
-                required: true,
-                message: 'please chose issueTime',
-              },
-            ]}
-          />
-        </Col>
-        <Col span={16} />
+          <Col span={8}>
+            <ProFormDatePicker
+              label="IssueTime"
+              name="issueTime"
+              rules={[
+                {
+                  required: true,
+                  message: 'please chose issueTime',
+                },
+              ]}
+            />
+          </Col>
+          <Col span={16} />
 
-        <Col span={8}>
-          <ProFormSelectList
-            keyCode="company"
-            name="companyId"
-            label="Company/Studio"
-          />
-        </Col>
-        <Col span={16} />
+          <Col span={8}>
+            <ProFormSelectList
+              keyCode="company"
+              name="companyId"
+              label="Company/Studio"
+            />
+          </Col>
+          <Col span={16} />
 
-        <Col span={8}>
-          <ProFormSelectList
-            keyCode="type"
-            name="typeIds"
-            label="Types"
-            mode="multiple"
-            rules={[
-              {
-                required: true,
-                message: 'please chose types for spu',
-              },
-            ]}
-          />
-        </Col>
+          <Col span={8}>
+            <ProFormSelectList
+              keyCode="type"
+              name="typeIds"
+              label="Types"
+              mode="multiple"
+              rules={[
+                {
+                  required: true,
+                  message: 'please chose types for spu',
+                },
+              ]}
+            />
+          </Col>
 
-        <Col span={8}>
-          <ProFormSelectList
-            keyCode="tag"
-            name="tagIds"
-            label="Tags"
-            mode="multiple"
-            rules={[
-              {
-                required: true,
-                message: 'please chose tags for spu',
-              },
-            ]}
-          />
-        </Col>
-        <Col span={8} />
+          <Col span={8}>
+            <ProFormSelectList
+              keyCode="tag"
+              name="tagIds"
+              label="Tags"
+              mode="multiple"
+              rules={[
+                {
+                  required: true,
+                  message: 'please chose tags for spu',
+                },
+              ]}
+            />
+          </Col>
+          <Col span={8} />
 
-        <Col span={8}>
-          <ProFormDraggerUpload
-            required
-            name="carousel"
-            label="Carousel"
-            fieldProps={{ maxCount: 9 }}
-          />
-        </Col>
-        <Col span={16} />
+          <Col span={8}>
+            <ProFormDraggerUpload
+              required
+              name="carousel"
+              label="Carousel"
+              fieldProps={{ maxCount: 9 }}
+            />
+          </Col>
+          <Col span={16} />
 
-        <Col span={16}>
-          <ProFormEditor
-            name="description"
-            label="Description"
-            fieldProps={{
-              children: <Toolbar />,
-            }}
-          />
-        </Col>
-      </Row>
+          <Col span={16}>
+            <ProFormEditor
+              name="description"
+              label="Description"
+              fieldProps={{
+                children: <Toolbar />,
+              }}
+            />
+          </Col>
+        </Row>
+      </Spin>
     </Container>
   );
 }
@@ -204,6 +263,12 @@ const Container = styled(ProForm)`
   height: 100%;
   display: flex;
   flex-direction: column;
+
+  .ant-spin-nested-loading {
+    flex: 1 1 0%;
+    height: 0;
+    overflow-y: scroll;
+  }
 
   > .ant-row {
     flex: 1 1 0%;
