@@ -1,7 +1,7 @@
 use crate::controller::manager::{
     auth::auth::*,
     game_center::{
-        game_management::spu::spu::*,
+        game_management::spu::{notice::*, spu::*, update_record::*},
         general::{company_studio::company_studio::*, tags::tags::*, types::types::*},
     },
     manager_doc::ApiDoc,
@@ -98,7 +98,19 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                                 .service(update_spu)
                                 .service(get_spu_detail)
                                 .service(get_spu_limit)
-                                .service(delete_spu),
+                                .service(delete_spu)
+                                .service(
+                                    web::scope("updateRecord")
+                                        .service(get_spu_update_record)
+                                        .service(delete_spu_update_record)
+                                        .service(update_spu_update_record),
+                                )
+                                .service(
+                                    web::scope("notice")
+                                        .service(get_spu_notice)
+                                        .service(delete_spu_notice)
+                                        .service(update_spu_notice),
+                                ),
                         ),
                     ),
             )

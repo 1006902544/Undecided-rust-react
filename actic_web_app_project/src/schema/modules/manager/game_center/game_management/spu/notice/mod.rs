@@ -45,5 +45,5 @@ pub struct SpuNoticeUpdateReq {
 
 #[derive(Debug, Clone, Serialize, Deserialize, ToSchema, IntoParams)]
 pub struct SpuNoticeDeleteReq {
-    id: String,
+    pub id: String,
 }

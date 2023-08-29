@@ -32,6 +32,14 @@ import type {
   DeleteSpuParams,
   SpuDetailRes,
   GetSpuDetailParams,
+  SpuNoticeRes,
+  GetSpuNoticeParams,
+  SpuNoticeUpdateReq,
+  DeleteSpuNoticeParams,
+  SpuUpdateRecordRes,
+  GetSpuUpdateRecordParams,
+  UpdateSpuUpdateRecord,
+  DeleteSpuUpdateRecordParams,
   CompanyStudioRes,
   GetCompanyParams,
   UpdateCompanyStudioReq,
@@ -597,6 +605,323 @@ export const useGetSpuDetail = <TData = Awaited<ReturnType<typeof getSpuDetail>>
 }
 
 
+/**
+ * get spu notice limit
+ * @summary get spu notice limit
+ */
+export const getSpuNotice = (
+    params?: GetSpuNoticeParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<SpuNoticeRes>(
+      {url: `/manager/gamesCenter/gamesManagement/spu/notice`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetSpuNoticeQueryKey = (params?: GetSpuNoticeParams,) => [`/manager/gamesCenter/gamesManagement/spu/notice`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetSpuNoticeQueryOptions = <TData = Awaited<ReturnType<typeof getSpuNotice>>, TError = ErrorType<unknown>>(params?: GetSpuNoticeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSpuNotice>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getSpuNotice>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetSpuNoticeQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSpuNotice>>> = ({ signal }) => getSpuNotice(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetSpuNoticeQueryResult = NonNullable<Awaited<ReturnType<typeof getSpuNotice>>>
+export type GetSpuNoticeQueryError = ErrorType<unknown>
+
+/**
+ * @summary get spu notice limit
+ */
+export const useGetSpuNotice = <TData = Awaited<ReturnType<typeof getSpuNotice>>, TError = ErrorType<unknown>>(
+ params?: GetSpuNoticeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSpuNotice>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetSpuNoticeQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+export const updateSpuNotice = (
+    spuNoticeUpdateReq: SpuNoticeUpdateReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/gamesCenter/gamesManagement/spu/notice`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: spuNoticeUpdateReq
+    },
+      options);
+    }
+  
+
+
+export const getUpdateSpuNoticeMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSpuNotice>>, TError,{data: SpuNoticeUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateSpuNotice>>, TError,{data: SpuNoticeUpdateReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateSpuNotice>>, {data: SpuNoticeUpdateReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateSpuNotice(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateSpuNoticeMutationResult = NonNullable<Awaited<ReturnType<typeof updateSpuNotice>>>
+    export type UpdateSpuNoticeMutationBody = SpuNoticeUpdateReq
+    export type UpdateSpuNoticeMutationError = ErrorType<unknown>
+
+    export const useUpdateSpuNotice = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSpuNotice>>, TError,{data: SpuNoticeUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getUpdateSpuNoticeMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * delete spu notice
+ * @summary delete spu notice
+ */
+export const deleteSpuNotice = (
+    params: DeleteSpuNoticeParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/gamesCenter/gamesManagement/spu/notice`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteSpuNoticeMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSpuNotice>>, TError,{params: DeleteSpuNoticeParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteSpuNotice>>, TError,{params: DeleteSpuNoticeParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteSpuNotice>>, {params: DeleteSpuNoticeParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteSpuNotice(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteSpuNoticeMutationResult = NonNullable<Awaited<ReturnType<typeof deleteSpuNotice>>>
+    
+    export type DeleteSpuNoticeMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete spu notice
+ */
+export const useDeleteSpuNotice = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSpuNotice>>, TError,{params: DeleteSpuNoticeParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteSpuNoticeMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * get spu update record limit
+ * @summary get spu update record limit
+ */
+export const getSpuUpdateRecord = (
+    params?: GetSpuUpdateRecordParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<SpuUpdateRecordRes>(
+      {url: `/manager/gamesCenter/gamesManagement/spu/updateRecord`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetSpuUpdateRecordQueryKey = (params?: GetSpuUpdateRecordParams,) => [`/manager/gamesCenter/gamesManagement/spu/updateRecord`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetSpuUpdateRecordQueryOptions = <TData = Awaited<ReturnType<typeof getSpuUpdateRecord>>, TError = ErrorType<unknown>>(params?: GetSpuUpdateRecordParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSpuUpdateRecord>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getSpuUpdateRecord>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetSpuUpdateRecordQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSpuUpdateRecord>>> = ({ signal }) => getSpuUpdateRecord(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetSpuUpdateRecordQueryResult = NonNullable<Awaited<ReturnType<typeof getSpuUpdateRecord>>>
+export type GetSpuUpdateRecordQueryError = ErrorType<unknown>
+
+/**
+ * @summary get spu update record limit
+ */
+export const useGetSpuUpdateRecord = <TData = Awaited<ReturnType<typeof getSpuUpdateRecord>>, TError = ErrorType<unknown>>(
+ params?: GetSpuUpdateRecordParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSpuUpdateRecord>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetSpuUpdateRecordQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * update spu update record
+ * @summary update spu update record
+ */
+export const updateSpuUpdateRecord = (
+    updateSpuUpdateRecord: UpdateSpuUpdateRecord,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/gamesCenter/gamesManagement/spu/updateRecord`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: updateSpuUpdateRecord
+    },
+      options);
+    }
+  
+
+
+export const getUpdateSpuUpdateRecordMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSpuUpdateRecord>>, TError,{data: UpdateSpuUpdateRecord}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateSpuUpdateRecord>>, TError,{data: UpdateSpuUpdateRecord}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateSpuUpdateRecord>>, {data: UpdateSpuUpdateRecord}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateSpuUpdateRecord(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateSpuUpdateRecordMutationResult = NonNullable<Awaited<ReturnType<typeof updateSpuUpdateRecord>>>
+    export type UpdateSpuUpdateRecordMutationBody = UpdateSpuUpdateRecord
+    export type UpdateSpuUpdateRecordMutationError = ErrorType<unknown>
+
+    /**
+ * @summary update spu update record
+ */
+export const useUpdateSpuUpdateRecord = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSpuUpdateRecord>>, TError,{data: UpdateSpuUpdateRecord}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getUpdateSpuUpdateRecordMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * delete spu update record
+ * @summary delete spu update record
+ */
+export const deleteSpuUpdateRecord = (
+    params: DeleteSpuUpdateRecordParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/gamesCenter/gamesManagement/spu/updateRecord`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteSpuUpdateRecordMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSpuUpdateRecord>>, TError,{params: DeleteSpuUpdateRecordParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteSpuUpdateRecord>>, TError,{params: DeleteSpuUpdateRecordParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteSpuUpdateRecord>>, {params: DeleteSpuUpdateRecordParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteSpuUpdateRecord(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteSpuUpdateRecordMutationResult = NonNullable<Awaited<ReturnType<typeof deleteSpuUpdateRecord>>>
+    
+    export type DeleteSpuUpdateRecordMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete spu update record
+ */
+export const useDeleteSpuUpdateRecord = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSpuUpdateRecord>>, TError,{params: DeleteSpuUpdateRecordParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteSpuUpdateRecordMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
 /**
  * get company/studio
  * @summary get company/studio

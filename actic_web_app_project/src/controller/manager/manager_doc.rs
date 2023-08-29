@@ -2,7 +2,10 @@ use crate::schema::modules::{
     admin::admin::*,
     manager::{
         game_center::{
-            game_management::{sku::sku::*, spu::spu::*},
+            game_management::{
+                sku::sku::*,
+                spu::{notice::*, spu::*, update_record::*},
+            },
             general::{company_studio::company_studio::*, tags::tags::*, types::types::*},
         },
         manager::*,
@@ -63,11 +66,19 @@ use utoipa::OpenApi;
         super::game_center::general::company_studio::company_studio::get_company_detail,
         super::game_center::general::company_studio::company_studio::delete_company_studio,
         super::game_center::general::company_studio::company_studio::get_company_list,
-        //游戏中心-游戏管理-SPU
+        //游戏中心-游戏管理-SPU-SPU管理
         super::game_center::game_management::spu::spu::update_spu,
         super::game_center::game_management::spu::spu::get_spu_detail,
         super::game_center::game_management::spu::spu::get_spu_limit,
         super::game_center::game_management::spu::spu::delete_spu,
+        //游戏中心-游戏管理-SPU-更新记录
+        super::game_center::game_management::spu::update_record::get_spu_update_record,
+        super::game_center::game_management::spu::update_record::delete_spu_update_record,
+        super::game_center::game_management::spu::update_record::update_spu_update_record,
+        //游戏中心-游戏管理-SPU-公告
+        super::game_center::game_management::spu::notice::get_spu_notice,
+        super::game_center::game_management::spu::notice::update_spu_notice,
+        super::game_center::game_management::spu::notice::delete_spu_notice,
         //游戏中心-游戏管理-SKU
         super::game_center::game_management::sku::sku::get_sku_limit,
         super::game_center::game_management::sku::sku::update_sku,
@@ -111,6 +122,10 @@ use utoipa::OpenApi;
         GetCompanyStudioReq,UpdateCompanyStudioReq,CompanyStudioDetail,CompanyStudio,CompanyStudioRes,CompanyStudioLimitRes,GetCompanyStudioDetailReq,DeleteCompanyStudioDetailReq,
         //spu
         SpuLimit,SpuDetail,UpdateSpuReq,GetSpuDetailReq,DeleteSpuDetailReq,GetSpuLimitReq, SpuFileObject,SpuRes,SpuLimitRes,SpuDetailRes,
+        //spu更新记录
+        SpuUpdateRecord,UpdateSpuUpdateRecord,SpuUpdateRecordLimitReq,SpuUpdateRecordDeleteReq,SpuUpdateRecordRes,SpuUpdateRecordLimitRes,
+        //spu公告
+        SpuNotice,SpuNoticeLimitReq,SpuNoticeUpdateReq,SpuNoticeDeleteReq,SpuNoticeRes,SpuNoticeLimitRes,
         //sku
         SkuDeleteReq,Sku,SkuUpdateReq,SkuLimitReq,SkuRes,SkuLimitRes,
         //素材库-图片

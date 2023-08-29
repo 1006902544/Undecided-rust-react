@@ -35,7 +35,7 @@ pub struct SpuUpdateRecordLimitReq {
     pub page: Option<u64>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, ToSchema, Validate)]
+#[derive(Debug, Clone, Serialize, Deserialize, ToSchema, IntoParams)]
 pub struct SpuUpdateRecordDeleteReq {
     pub id: String,
 }

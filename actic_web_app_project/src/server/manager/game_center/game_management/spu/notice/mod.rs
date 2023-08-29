@@ -62,7 +62,7 @@ pub async fn edit_notice(
     }
 }
 
-pub async fn delete_update_record(conn: &mut PooledConn, id: u64) -> Result<String, MyError> {
+pub async fn delete_notice(conn: &mut PooledConn, id: String) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let sql_str = "delete from spu_notice from where id=:id";
     let res = trans.exec_drop(
@@ -77,7 +77,7 @@ pub async fn delete_update_record(conn: &mut PooledConn, id: u64) -> Result<Stri
     }
 }
 
-pub async fn get_update_record_limit(
+pub async fn get_notice_limit(
     conn: &mut PooledConn,
     data: SpuNoticeLimitReq,
 ) -> Result<SpuNoticeLimitRes, MyError> {

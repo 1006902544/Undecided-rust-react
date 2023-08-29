@@ -56,7 +56,7 @@ pub async fn edit_update_record(
     }
 }
 
-pub async fn delete_update_record(conn: &mut PooledConn, id: u64) -> Result<String, MyError> {
+pub async fn delete_update_record(conn: &mut PooledConn, id: String) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let sql_str = "delete from spu_update_record from where id=:id";
     let res = trans.exec_drop(
