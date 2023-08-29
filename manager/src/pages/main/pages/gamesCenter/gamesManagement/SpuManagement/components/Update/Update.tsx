@@ -72,7 +72,7 @@ export default function Update() {
 
   useEffect(() => {
     form.resetFields();
-  }, [initial, id]);
+  }, [initial, id, form]);
 
   //update
   const { mutate, isLoading } = useMutation({

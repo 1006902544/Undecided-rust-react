@@ -1,0 +1,93 @@
+use mysql::{prelude::Queryable, PooledConn, TxOpts};
+use mysql_common::params;
+
+use crate::{
+    app::error::MyError,
+    nako::connection::{after_update, get_current, get_total},
+    schema::{
+        base_struct::{handle_limit, handle_page},
+        modules::manager::{
+            game_center::game_management::sku::sku::*, manager_response::SkuLimitRes,
+        },
+    },
+};
+
+pub async fn create_sku(conn: &mut PooledConn, data: SkuUpdateReq) -> Result<String, MyError> {
+    let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
+    let sql_str = "insert into skus (spu_id,name,description,cover_url,cover_name,price,issue_time) values (:spu_id,:name,:description,:cover_url,:cover_name,:price,:issue_time)";
+    let res = trans.exec_drop(
+        sql_str,
+        params! {
+          "spu_id" => data.spu_id,
+          "name" => data.name,
+          "description" => data.description,
+          "cover_url" => data.cover_url,
+          "cover_name" => data.cover_name,
+          "price" => data.price,
+          "issue_time" => data.issue_time,
+        },
+    );
+    match after_update(trans, res) {
+        Ok(_) => Ok("Create success".to_string()),
+        Err(e) => Err(e),
+    }
+}
+
+pub async fn edit_sku(conn: &mut PooledConn, data: SkuUpdateReq) -> Result<String, MyError> {
+    let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
+    let sql_str = "update skus set spu_id=:spu_id,name=:name,description=:description,cover_url=:cover_url,cover_name=:cover_name,price=:price,issue_time=:issue_time where id=:id";
+    let res = trans.exec_drop(
+        sql_str,
+        params! {
+          "id" => data.id,
+          "spu_id" => data.spu_id,
+          "name" => data.name,
+          "description" => data.description,
+          "cover_url" => data.cover_url,
+          "cover_name" => data.cover_name,
+          "price" => data.price,
+          "issue_time" => data.issue_time,
+        },
+    );
+    match after_update(trans, res) {
+        Ok(_) => Ok("Edit success".to_string()),
+        Err(e) => Err(e),
+    }
+}
+
+pub async fn get_sku_limit(
+    conn: &mut PooledConn,
+    data: SkuLimitReq,
+) -> Result<SkuLimitRes, MyError> {
+    let limit = handle_limit(&data.limit);
+    let page = handle_page(&data.limit);
+    let sql_str = "select * from skus where (id=:id or :id is null) and (name=:name or :name is null) limit :scope,:limit";
+    let res: Result<Vec<Sku>, mysql::Error> = conn.query(sql_str);
+    match res {
+        Ok(res) => {
+            let total = get_total(conn);
+            let current = get_current(total, page, limit);
+            Ok(SkuLimitRes {
+                results: Some(res),
+                total,
+                current,
+            })
+        }
+        Err(e) => Err(MyError::sql_error(e)),
+    }
+}
+
+pub async fn delete_sku(conn: &mut PooledConn, id: String) -> Result<String, MyError> {
+    let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
+    let sql_str = "delete from skus where id=:id";
+    let res = trans.exec_drop(
+        sql_str,
+        params! {
+          "id" => id
+        },
+    );
+    match after_update(trans, res) {
+        Ok(_) => Ok("Delete success".to_string()),
+        Err(e) => Err(e),
+    }
+}

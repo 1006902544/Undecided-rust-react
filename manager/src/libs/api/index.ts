@@ -22,6 +22,10 @@ import type {
   AdminInfoRes,
   ResPonseString,
   LoginBody,
+  SkuRes,
+  GetSkuLimitParams,
+  SkuUpdateReq,
+  SkuDeleteReq,
   SpuRes,
   GetSpuLimitParams,
   UpdateSpuReq,
@@ -230,6 +234,148 @@ export const useSignIn = <TError = ErrorType<unknown>,
 ) => {
     
       const mutationOptions = getSignInMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+export const getSkuLimit = (
+    params?: GetSkuLimitParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<SkuRes>(
+      {url: `/manager/gamesCenter/gamesManagement/sku`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetSkuLimitQueryKey = (params?: GetSkuLimitParams,) => [`/manager/gamesCenter/gamesManagement/sku`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetSkuLimitQueryOptions = <TData = Awaited<ReturnType<typeof getSkuLimit>>, TError = ErrorType<unknown>>(params?: GetSkuLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSkuLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getSkuLimit>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetSkuLimitQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSkuLimit>>> = ({ signal }) => getSkuLimit(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetSkuLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getSkuLimit>>>
+export type GetSkuLimitQueryError = ErrorType<unknown>
+
+export const useGetSkuLimit = <TData = Awaited<ReturnType<typeof getSkuLimit>>, TError = ErrorType<unknown>>(
+ params?: GetSkuLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSkuLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetSkuLimitQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+export const updateSku = (
+    skuUpdateReq: SkuUpdateReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/gamesCenter/gamesManagement/sku`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: skuUpdateReq
+    },
+      options);
+    }
+  
+
+
+export const getUpdateSkuMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSku>>, TError,{data: SkuUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateSku>>, TError,{data: SkuUpdateReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateSku>>, {data: SkuUpdateReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateSku(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateSkuMutationResult = NonNullable<Awaited<ReturnType<typeof updateSku>>>
+    export type UpdateSkuMutationBody = SkuUpdateReq
+    export type UpdateSkuMutationError = ErrorType<unknown>
+
+    export const useUpdateSku = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSku>>, TError,{data: SkuUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getUpdateSkuMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+export const deleteSku = (
+    skuDeleteReq: SkuDeleteReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/gamesCenter/gamesManagement/sku`, method: 'delete',
+      headers: {'Content-Type': 'application/json', },
+      data: skuDeleteReq
+    },
+      options);
+    }
+  
+
+
+export const getDeleteSkuMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSku>>, TError,{data: SkuDeleteReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteSku>>, TError,{data: SkuDeleteReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteSku>>, {data: SkuDeleteReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  deleteSku(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteSkuMutationResult = NonNullable<Awaited<ReturnType<typeof deleteSku>>>
+    export type DeleteSkuMutationBody = SkuDeleteReq
+    export type DeleteSkuMutationError = ErrorType<unknown>
+
+    export const useDeleteSku = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSku>>, TError,{data: SkuDeleteReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteSkuMutationOptions(options);
      
       return useMutation(mutationOptions);
     }

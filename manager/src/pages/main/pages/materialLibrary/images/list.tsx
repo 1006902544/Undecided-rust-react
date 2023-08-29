@@ -8,7 +8,7 @@ import { postManagerMaterialBatchDelete } from '@/libs/api/bff';
 export default function ImageList() {
   const [pagination, setPagination] = useState({
     page: 1,
-    limit: 10,
+    limit: 50,
   });
 
   const [params] = useState({});
@@ -24,7 +24,7 @@ export default function ImageList() {
     } else {
       setPagination({
         page: 1,
-        limit: 10,
+        limit: 50,
       });
     }
   };

@@ -35,6 +35,10 @@ export default function ItemRender({ file, actions }: IProps) {
     return file.status === 'error' || !file.status;
   }, [file.status]);
 
+  const isLoading = useMemo(() => {
+    return file.status !== 'done';
+  }, [file.status]);
+
   return (
     <Container
       className="w-full flex items-center p-[5px] border-[1px] rounded-[5px] mt-[8px]"
@@ -47,7 +51,7 @@ export default function ItemRender({ file, actions }: IProps) {
         onClick={actions.preview}
       >
         <Image
-          src={isError ? defaultImage : file.response?.data?.url}
+          src={isError || isLoading ? defaultImage : file.response?.data?.url}
           alt={file.response?.data?.fileName || file.name}
         />
       </div>

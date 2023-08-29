@@ -1,7 +1,6 @@
 use chrono::NaiveDate;
-use mysql::{from_row, prelude::Queryable, PooledConn, TxOpts};
+use mysql::{prelude::Queryable, PooledConn, TxOpts};
 use mysql_common::params;
-use serde_json::json;
 
 use crate::{
     app::error::MyError,

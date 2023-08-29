@@ -129,7 +129,7 @@ export default function ListContainer() {
         },
       },
     ],
-    []
+    [goEdit]
   );
 
   return (
