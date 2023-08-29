@@ -198,7 +198,6 @@ pub async fn edit_spu(conn: &mut PooledConn, params: UpdateSpuReq) -> Result<Str
                 }),
             );
             res_arr.push(insert_types_res);
-            println!("{:#?}", res_arr);
             //---判断结果
             let mut err = None;
             res_arr.into_iter().position(|r| match r {
@@ -230,7 +229,7 @@ pub async fn get_spu_limit(
     let limit = handle_limit(&params.limit);
     let page = handle_page(&params.page);
     let sql_str = "
-    select sql_calc_found_rows s.id,s.name,s.price,s.issue_time,s.create_time,s.update_time,c.name as company_name,cv.cover_url as cover_url,cv.cover_name as cover_name,group_concat(type.type_name separator ',') as types,group_concat(tag.tag_name separator ',') as tags from spus as s
+    select sql_calc_found_rows s.id,s.name,s.price,s.issue_time,s.create_time,s.update_time,c.name as company_name,cv.cover_url as cover_url,cv.cover_name as cover_name,group_concat(distinct type.type_name separator ',') as types,group_concat(distinct tag.tag_name separator ',') as tags from spus as s
     left join company_studios as c on c.id=s.company_id
     left join spu_cover as cv on cv.spu_id=s.id
     left join spu_type as type on type.spu_id=s.id

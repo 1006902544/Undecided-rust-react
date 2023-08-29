@@ -10,8 +10,8 @@ import {
   ProFormDatePicker,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Button, Col, Row, Spin, message } from 'antd';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import { Button, Col, Modal, Row, Spin, message } from 'antd';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useMutation } from '@tanstack/react-query';
 import { useGetSpuDetail, updateSpu } from '@/libs/api';
@@ -19,12 +19,17 @@ import type { UpdateSpuReq } from '@/libs/api/schema';
 import type { FormFinish } from './Update.d';
 import { useLocation, useNavigate } from 'react-router-dom';
 import qs from 'query-string';
+import { UpdateRecordModal } from './components';
 
 export default function Update() {
   const [form] = ProForm.useForm<FormFinish>();
   const navigate = useNavigate();
   const { search } = useLocation();
   const { id }: { id?: string } = qs.parse(search);
+
+  const back = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
 
   //init
   const { data: initial, isLoading: initialLoading } = useGetSpuDetail(
@@ -81,7 +86,22 @@ export default function Update() {
     },
     onSuccess(res) {
       message.success(res.message);
-      navigate(-1);
+      if (id) {
+        Modal.confirm({
+          onOk() {
+            setOpen(true);
+          },
+          onCancel() {
+            back();
+          },
+          okText: 'Ok',
+          cancelText: 'Cancel',
+          title: 'UpdateRecord',
+          content: 'Do you what to create an UpdateRecord ?',
+        });
+      } else {
+        back();
+      }
     },
   });
 
@@ -111,6 +131,9 @@ export default function Update() {
     [id, mutate]
   );
 
+  //after update
+  const [open, setOpen] = useState(false);
+
   return (
     <Container
       form={form}
@@ -119,10 +142,12 @@ export default function Update() {
       layout="horizontal"
       labelCol={{ flex: '120px' }}
       submitter={{
-        render(_, dom) {
+        render() {
           return (
             <div className="border-t-[1px] border-t-[#f0f0f0] flex justify-end pt-[20px] space-x-[32px]">
-              <Button loading={isLoading}>Cancel</Button>
+              <Button loading={isLoading} onClick={back}>
+                Cancel
+              </Button>
               <Button htmlType="reset" loading={isLoading}>
                 Reset
               </Button>
@@ -254,6 +279,14 @@ export default function Update() {
           </Col>
         </Row>
       </Spin>
+
+      <UpdateRecordModal
+        open={open}
+        setOpen={setOpen}
+        spuId={id}
+        onCancel={back}
+        onOk={back}
+      />
     </Container>
   );
 }

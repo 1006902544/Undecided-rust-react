@@ -58,7 +58,7 @@ pub async fn edit_update_record(
 
 pub async fn delete_update_record(conn: &mut PooledConn, id: String) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let sql_str = "delete from spu_update_record from where id=:id";
+    let sql_str = "delete from spu_update_record where id=:id";
     let res = trans.exec_drop(
         sql_str,
         params! {
@@ -77,7 +77,7 @@ pub async fn get_update_record_limit(
 ) -> Result<SpuUpdateRecordLimitRes, MyError> {
     let limit = handle_limit(&data.limit);
     let page = handle_limit(&data.page);
-    let sql_str = "select SQL_CALC_FOUND_ROWS * from spu_update_record from where (spu_id=:spu_id or :spu_id is null) and (id=:id or :id is null) and (title=:title or :title is null) order by update_time desc limit :scope,:limit";
+    let sql_str = "select SQL_CALC_FOUND_ROWS * from spu_update_record where (spu_id=:spu_id or :spu_id is null) and (id=:id or :id is null) and (title=:title or :title is null) order by update_time desc limit :scope,:limit";
     let res = conn.exec::<SpuUpdateRecord, &str, _>(
         sql_str,
         params! {

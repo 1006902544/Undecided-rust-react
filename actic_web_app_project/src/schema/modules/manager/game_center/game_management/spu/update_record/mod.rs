@@ -6,14 +6,14 @@ use validator::Validate;
 
 #[derive(Debug, Clone, Serialize, Deserialize, ToSchema, FromRow)]
 pub struct SpuUpdateRecord {
-    pub id: String,
-    pub spu_id: String,
+    pub id: u64,
+    pub spu_id: u64,
     pub title: String,
     pub content: Option<String>,
     #[schema(value_type = String)]
     pub create_time: NaiveDateTime,
     #[schema(value_type = String)]
-    pub update_time: String,
+    pub update_time: NaiveDateTime,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, ToSchema, Validate)]
