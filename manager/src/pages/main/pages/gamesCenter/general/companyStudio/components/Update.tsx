@@ -4,6 +4,7 @@ import { useGetCompanyDetail, updateCompany } from '@/libs/api';
 import {
   ProForm,
   ProFormDatePicker,
+  ProFormDateTimePicker,
   ProFormText,
 } from '@ant-design/pro-components';
 import { Button, Col, Row, Spin } from 'antd';
@@ -148,7 +149,7 @@ export default function Update() {
           <Col span={8}></Col>
 
           <Col span={8}>
-            <ProFormDatePicker
+            <ProFormDateTimePicker
               rules={[
                 {
                   required: true,

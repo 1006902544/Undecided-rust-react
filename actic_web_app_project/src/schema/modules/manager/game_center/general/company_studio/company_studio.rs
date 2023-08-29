@@ -1,4 +1,4 @@
-use chrono::NaiveDate;
+use chrono::NaiveDateTime;
 use mysql_common::prelude::FromRow;
 use serde::{Deserialize, Serialize};
 use utoipa::{IntoParams, ToSchema};
@@ -10,11 +10,11 @@ pub struct CompanyStudio {
     pub name: String,
     pub logo_url: String,
     #[schema(value_type = String)]
-    pub update_time: NaiveDate,
+    pub update_time: NaiveDateTime,
     #[schema(value_type = String)]
-    pub create_time: NaiveDate,
+    pub create_time: NaiveDateTime,
     #[schema(value_type = String)]
-    pub established_time: NaiveDate,
+    pub established_time: NaiveDateTime,
 }
 
 #[derive(Debug, ToSchema, FromRow, Validate, Deserialize, Serialize)]
@@ -30,11 +30,11 @@ pub struct CompanyStudioDetail {
     #[validate(length(min = 0, max = 50), required)]
     pub founder: Option<String>,
     #[schema(value_type = String)]
-    pub update_time: NaiveDate,
+    pub update_time: NaiveDateTime,
     #[schema(value_type = String)]
-    pub create_time: NaiveDate,
+    pub create_time: NaiveDateTime,
     #[schema(value_type = String)]
-    pub established_time: NaiveDate,
+    pub established_time: String,
 }
 
 #[derive(Debug, ToSchema, FromRow, Validate, Deserialize, Serialize)]
@@ -49,8 +49,7 @@ pub struct UpdateCompanyStudioReq {
     pub region: Option<String>,
     #[validate(length(min = 0, max = 50), required)]
     pub founder: Option<String>,
-    #[schema(value_type = String)]
-    pub established_time: NaiveDate,
+    pub established_time: String,
 }
 
 #[derive(Debug, ToSchema, FromRow, Validate, Deserialize, Serialize, IntoParams)]

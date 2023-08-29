@@ -1,4 +1,4 @@
-use chrono::NaiveDate;
+use chrono::NaiveDateTime;
 use mysql_common::prelude::FromRow;
 use serde::{Deserialize, Serialize};
 use utoipa::{IntoParams, ToSchema};
@@ -13,11 +13,11 @@ pub struct Sku {
     pub cover_name: String,
     pub price: f64,
     #[schema(value_type = String)]
-    pub create_time: NaiveDate,
+    pub create_time: NaiveDateTime,
     #[schema(value_type = String)]
-    pub update_time: NaiveDate,
+    pub update_time: NaiveDateTime,
     #[schema(value_type = String)]
-    pub issue_time: NaiveDate,
+    pub issue_time: NaiveDateTime,
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
@@ -30,7 +30,7 @@ pub struct SkuUpdateReq {
     pub cover_name: String,
     pub price: f64,
     #[schema(value_type = String)]
-    pub issue_time: NaiveDate,
+    pub issue_time: NaiveDateTime,
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, IntoParams)]

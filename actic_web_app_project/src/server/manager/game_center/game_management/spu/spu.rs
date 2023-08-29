@@ -1,4 +1,4 @@
-use chrono::NaiveDate;
+use chrono::NaiveDateTime;
 use mysql::{prelude::Queryable, PooledConn, TxOpts};
 use mysql_common::params;
 
@@ -244,9 +244,9 @@ pub async fn get_spu_limit(
         u64,
         String,
         f64,
-        NaiveDate,
-        NaiveDate,
-        NaiveDate,
+        NaiveDateTime,
+        NaiveDateTime,
+        NaiveDateTime,
         Option<String>,
         String,
         String,

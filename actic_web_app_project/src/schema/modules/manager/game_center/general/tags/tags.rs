@@ -1,4 +1,4 @@
-use chrono::NaiveDate;
+use chrono::NaiveDateTime;
 use mysql_common::prelude::FromRow;
 use serde::{Deserialize, Serialize};
 use utoipa::{IntoParams, ToSchema};
@@ -12,9 +12,9 @@ pub struct Tag {
     pub border_color: String,
     pub text_color: String,
     #[schema(value_type = String)]
-    pub update_time: NaiveDate,
+    pub update_time: NaiveDateTime,
     #[schema(value_type = String)]
-    pub create_time: NaiveDate,
+    pub create_time: NaiveDateTime,
 }
 
 #[derive(Debug, ToSchema, Serialize, Deserialize)]

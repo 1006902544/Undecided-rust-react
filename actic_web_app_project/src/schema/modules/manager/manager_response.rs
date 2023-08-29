@@ -5,7 +5,10 @@ use utoipa::ToSchema;
 
 use super::{
     game_center::{
-        game_management::{sku::sku::Sku, spu::spu::*},
+        game_management::{
+            sku::sku::Sku,
+            spu::{notice::SpuNotice, spu::*, update_record::SpuUpdateRecord},
+        },
         general::{company_studio::company_studio::*, tags::tags::*, types::types::GameType},
     },
     material_library::images::ImagesObject,
@@ -38,6 +41,10 @@ use crate::schema::modules::admin::admin::AdminInfo;
     CompanyStudioRes = ResponseData<CompanyStudioLimitRes>,CompanyStudioDetailRes = ResponseData<CompanyStudioDetail>,
     //spu
     SpuRes = ResponseData<SpuLimitRes>,SpuDetailRes = ResponseData<SpuDetail>,
+    //spu-更新记录
+    SpuUpdateRecordRes = ResponseData<SpuUpdateRecordLimitRes>,
+    //spu-公告
+    SpuNoticeRes = ResponseData<SpuNoticeLimitRes>,
     //sku,
     SkuRes = ResponseData<SkuLimitRes>,
     //素材库-图片
@@ -86,6 +93,10 @@ impl<B> ResponseData<B> {
     CompanyStudioLimitRes = LimitResults<CompanyStudio>,
     //spu
     SpuLimitRes = LimitResults<SpuLimit>,
+    //spu更新记录
+    SpuUpdateRecordLimitRes = LimitResults<SpuUpdateRecord>,
+    //spu公告
+    SpuNoticeLimitRes = LimitResults<SpuNotice>,
     //sku
     SkuLimitRes = LimitResults<Sku>,
     //素材库-图片

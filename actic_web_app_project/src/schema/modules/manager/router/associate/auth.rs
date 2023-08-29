@@ -1,4 +1,4 @@
-use chrono::NaiveDate;
+use chrono::NaiveDateTime;
 use mysql::prelude::*;
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
@@ -19,8 +19,8 @@ pub struct AssociateRouterAuthLimit {
     pub username: String,
     pub age: u128,
     #[schema(value_type = String)]
-    pub create_time: NaiveDate,
+    pub create_time: NaiveDateTime,
     #[schema(value_type = String)]
-    pub update_time: NaiveDate,
+    pub update_time: NaiveDateTime,
     pub associated: u8,
 }

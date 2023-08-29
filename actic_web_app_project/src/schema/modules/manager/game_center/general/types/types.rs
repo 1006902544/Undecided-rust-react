@@ -1,5 +1,5 @@
 use crate::schema::modules::manager::manager::FileObject;
-use chrono::NaiveDate;
+use chrono::NaiveDateTime;
 use mysql_common::prelude::FromRow;
 use serde::{Deserialize, Serialize};
 use utoipa::{IntoParams, ToSchema};
@@ -16,9 +16,9 @@ pub struct GameType {
     #[validate(length(min = 0, max = 200), required)]
     pub description: Option<String>,
     #[schema(value_type = String)]
-    pub update_time: NaiveDate,
+    pub update_time: NaiveDateTime,
     #[schema(value_type = String)]
-    pub create_time: NaiveDate,
+    pub create_time: NaiveDateTime,
 }
 
 #[derive(Debug, Serialize, Deserialize, ToSchema, IntoParams)]
