@@ -1,1 +1,1 @@
-export { gameCenterSpuManagementResource } from './SpuManagement';
+export * from './Spu/resource';

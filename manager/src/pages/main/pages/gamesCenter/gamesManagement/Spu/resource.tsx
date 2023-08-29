@@ -1,0 +1,1 @@
+export { gameCenterSpuManagementResource } from './SpuManagement';

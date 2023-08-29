@@ -3,7 +3,6 @@ import type { UpdateCompanyStudioReq } from '@/libs/api/schema';
 import { useGetCompanyDetail, updateCompany } from '@/libs/api';
 import {
   ProForm,
-  ProFormDatePicker,
   ProFormDateTimePicker,
   ProFormText,
 } from '@ant-design/pro-components';
