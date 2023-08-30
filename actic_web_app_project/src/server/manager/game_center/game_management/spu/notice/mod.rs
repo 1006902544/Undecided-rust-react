@@ -89,7 +89,7 @@ pub async fn get_notice_limit(
 ) -> Result<SpuNoticeLimitRes, MyError> {
     let limit = handle_limit(&data.limit);
     let page = handle_limit(&data.page);
-    let sql_str = "select SQL_CALC_FOUND_ROWS * from spu_notation where (spu_id=:spu_id or :spu_id is null) and (spu_name=:spu_name or :spu_name is null) and (id=:id or :id is null) and (title=:title or :title is null) and (publish_type=:publish_type or :publish_type is null) and (published=:published or :published is null) order by update_time desc limit :scope,:limit";
+    let sql_str = "select SQL_CALC_FOUND_ROWS * from spu_notice where (spu_id=:spu_id or :spu_id is null) and (spu_name=:spu_name or :spu_name is null) and (id=:id or :id is null) and (title=:title or :title is null) and (publish_type=:publish_type or :publish_type is null) and (published=:published or :published is null) order by update_time desc limit :scope,:limit";
     let res = conn.exec::<SpuNotice, &str, _>(
         sql_str,
         params! {

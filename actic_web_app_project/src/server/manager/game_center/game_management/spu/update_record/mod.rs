@@ -83,14 +83,14 @@ pub async fn get_update_record_limit(
 ) -> Result<SpuUpdateRecordLimitRes, MyError> {
     let limit = handle_limit(&data.limit);
     let page = handle_limit(&data.page);
-    let sql_str = "select SQL_CALC_FOUND_ROWS * from spu_update_record where (spu_id=:spu_id or :spu_id is null) and (spu_tittle=:spu_tittle or :spu_tittle is null) and (id=:id or :id is null) and (title=:title or :title is null) order by update_time desc limit :scope,:limit";
+    let sql_str = "select SQL_CALC_FOUND_ROWS * from spu_update_record where (spu_id=:spu_id or :spu_id is null) and (spu_name=:spu_name or :spu_name is null) and (id=:id or :id is null) and (title=:title or :title is null) order by update_time desc limit :scope,:limit";
     let res = conn.exec::<SpuUpdateRecord, &str, _>(
         sql_str,
         params! {
             "spu_id" => data.spu_id,
             "id" => data.id,
             "title" => data.title,
-            "spu_tittle" => data.spu_name,
+            "spu_name" => data.spu_name,
             "scope" => limit*(page-1),
             "limit" => limit
         },

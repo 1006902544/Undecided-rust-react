@@ -5,6 +5,7 @@ const SpuUpdate = lazy(
   () => import('./SpuManagement/components/Update/Update')
 );
 const SpuUpdateRecord = lazy(() => import('./UploadRecord/list'));
+const Notice = lazy(() => import('./Notice/list'));
 
 export const spuRouter = {
   path: 'spus',
@@ -38,6 +39,14 @@ export const spuRouter = {
       element: (
         <Suspense fallback={'...loading'}>
           <SpuUpdateRecord />
+        </Suspense>
+      ),
+    },
+    {
+      path: 'notice',
+      element: (
+        <Suspense fallback={'...loading'}>
+          <Notice />
         </Suspense>
       ),
     },

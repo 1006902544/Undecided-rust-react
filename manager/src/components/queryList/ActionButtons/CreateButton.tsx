@@ -21,7 +21,6 @@ interface IProps extends ButtonProps {
   modalProps?: ModalProps;
   formProps?: ProFormProps;
   label?: string;
-  data?: Record<string, any>;
   meta?: Record<string, any>;
 }
 
@@ -29,7 +28,6 @@ export default function CreateButton({
   children,
   modalProps,
   label,
-  data,
   meta,
   formProps,
   ...btnProps
@@ -69,7 +67,7 @@ export default function CreateButton({
           containerRef?.current
             ?.validateFields()
             .then((res) => {
-              resource?.create?.({ ...res, ...meta }).then(() => {
+              resource?.create?.({ ...meta, ...res }).then(() => {
                 onCancel();
                 message.success('create success');
                 listContext?.refetch();
@@ -86,7 +84,7 @@ export default function CreateButton({
         {...modalProps}
       >
         <UpdateBody
-          data={data}
+          meta={meta}
           formProps={formProps}
           resource={resource}
           ref={containerRef}
@@ -102,11 +100,11 @@ interface UpdateBodyProps {
   resource: Resource<Record<string, any>, any>;
   formProps?: ProFormProps;
   children?: React.ReactNode;
-  data?: Record<string, any>;
+  meta?: Record<string, any>;
 }
 
 const UpdateBody = forwardRef(
-  ({ children, formProps }: UpdateBodyProps, ref) => {
+  ({ children, formProps, meta }: UpdateBodyProps, ref) => {
     const [form] = ProForm.useForm();
 
     //share form with modal for submitting
@@ -115,7 +113,12 @@ const UpdateBody = forwardRef(
     //query when setup
 
     return (
-      <ProForm form={form} submitter={false} {...formProps}>
+      <ProForm
+        form={form}
+        submitter={false}
+        initialValues={meta}
+        {...formProps}
+      >
         {children}
       </ProForm>
     );

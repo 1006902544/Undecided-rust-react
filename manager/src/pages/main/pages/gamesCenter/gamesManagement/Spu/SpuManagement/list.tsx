@@ -1,11 +1,12 @@
 import React, { useCallback, useMemo } from 'react';
-import { DeleteButton, Filter, List, Table } from '@/components';
+import { CreateButton, DeleteButton, Filter, List, Table } from '@/components';
 import { name as resource } from './';
 import { useNavigate } from 'react-router-dom';
 import { Button, Image } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import type { SpuLimit } from '@/libs/api/schema';
 import { ProFormText } from '@ant-design/pro-components';
+import { CreateNotation } from './components';
 
 export default function ListContainer() {
   const navigate = useNavigate();
@@ -116,9 +117,19 @@ export default function ListContainer() {
         align: 'center',
         fixed: 'right',
         title: 'OPTION',
-        render(_, { id }) {
+        render(_, { id, name }) {
           return (
             <div className="flex justify-center">
+              <CreateButton
+                meta={{
+                  spuId: id,
+                  spuName: name,
+                }}
+                label="CreateNotice"
+              >
+                <CreateNotation />
+              </CreateButton>
+
               <Button type="link" onClick={() => goEdit(id.toString())}>
                 Edit
               </Button>
