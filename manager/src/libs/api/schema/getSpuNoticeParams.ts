@@ -13,4 +13,5 @@ publish_type?: string | null;
 published?: number | null;
 spu_id?: string | null;
 title?: string | null;
+spu_name?: string | null;
 };

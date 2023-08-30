@@ -7,8 +7,9 @@
 
 export type GetSpuUpdateRecordParams = {
 id?: string | null;
-spu_id?: string | null;
 title?: string | null;
+spu_id?: string | null;
+spu_name?: string | null;
 limit?: number | null;
 page?: number | null;
 };

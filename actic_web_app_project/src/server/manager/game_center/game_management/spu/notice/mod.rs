@@ -21,7 +21,7 @@ pub async fn create_notice(
 ) -> Result<SpuNoticeUpdateRes, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let sql_str =
-        "insert into spu_notice (spu_id,title,content,publish_type,publish_time) values (:spu_id,:title,:content,:publish_type,:publish_time)";
+        "insert into spu_notice (spu_id,title,spu_name,content,publish_type,publish_time) values (:spu_id,:title,:spu_name,:content,:publish_type,:publish_time)";
     let res = trans.exec_drop(
         sql_str,
         params! {
@@ -30,6 +30,7 @@ pub async fn create_notice(
             "content" => data.content,
             "publish_type" => data.publish_type,
             "publish_time" => data.publish_time,
+            "spu_name" => data.spu_name,
         },
     );
     match after_update(trans, res) {
@@ -47,11 +48,10 @@ pub async fn edit_notice(
 ) -> Result<SpuNoticeUpdateRes, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let sql_str =
-        "update spu_notice set spu_id=:spu_id,title=:title,content=:content,publish_type=:publish_type,publish_time=:publish_time where id=:id and update_time>=current_timestamp or id=:id and update_type='manual'";
+        "update spu_notice set title=:title,content=:content,publish_type=:publish_type,publish_time=:publish_time where id=:id and update_time>=current_timestamp or id=:id and update_type='manual'";
     let res = trans.exec_drop(
         sql_str,
         params! {
-            "spu_id" => data.spu_id,
             "title" => data.title.clone(),
             "content" => data.content,
             "publish_type" => data.publish_type,
@@ -89,7 +89,7 @@ pub async fn get_notice_limit(
 ) -> Result<SpuNoticeLimitRes, MyError> {
     let limit = handle_limit(&data.limit);
     let page = handle_limit(&data.page);
-    let sql_str = "select SQL_CALC_FOUND_ROWS * from spu_notation where (spu_id=:spu_id or :spu_id is null) and (id=:id or :id is null) and (title=:title or :title is null) and (publish_type=:publish_type or :publish_type is null) and (published=:published or :published is null) order by update_time desc limit :scope,:limit";
+    let sql_str = "select SQL_CALC_FOUND_ROWS * from spu_notation where (spu_id=:spu_id or :spu_id is null) and (spu_name=:spu_name or :spu_name is null) and (id=:id or :id is null) and (title=:title or :title is null) and (publish_type=:publish_type or :publish_type is null) and (published=:published or :published is null) order by update_time desc limit :scope,:limit";
     let res = conn.exec::<SpuNotice, &str, _>(
         sql_str,
         params! {
@@ -98,6 +98,7 @@ pub async fn get_notice_limit(
             "title" => data.title,
             "publish_type" => data.publish_type,
             "published" => data.published,
+            "spu_name" => data.spu_name,
             "scope" => limit*(page-1),
             "limit" => limit,
         },

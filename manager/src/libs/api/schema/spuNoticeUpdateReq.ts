@@ -6,10 +6,11 @@
  */
 
 export interface SpuNoticeUpdateReq {
-  content: string;
+  content?: string | null;
   id?: string | null;
   publish_time?: string | null;
   publish_type: string;
-  spu_id: string;
+  spu_id?: string | null;
+  spu_name?: string | null;
   title: string;
 }

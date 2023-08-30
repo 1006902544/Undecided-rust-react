@@ -8,6 +8,7 @@
 export interface UpdateSpuUpdateRecord {
   content?: string | null;
   id?: string | null;
-  spu_id: string;
+  spu_id?: string | null;
+  spu_name?: string | null;
   title: string;
 }

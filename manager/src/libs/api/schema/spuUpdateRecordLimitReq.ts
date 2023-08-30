@@ -10,5 +10,6 @@ export interface SpuUpdateRecordLimitReq {
   limit?: number | null;
   page?: number | null;
   spu_id?: string | null;
+  spu_name?: string | null;
   title?: string | null;
 }

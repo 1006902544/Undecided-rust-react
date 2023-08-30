@@ -8,6 +8,7 @@ use validator::Validate;
 pub struct SpuUpdateRecord {
     pub id: u64,
     pub spu_id: u64,
+    pub spu_title: String,
     pub title: String,
     pub content: Option<String>,
     #[schema(value_type = String)]
@@ -19,18 +20,22 @@ pub struct SpuUpdateRecord {
 #[derive(Debug, Clone, Serialize, Deserialize, ToSchema, Validate)]
 pub struct UpdateSpuUpdateRecord {
     pub id: Option<String>,
-    pub spu_id: String,
     #[validate(length(min = 1, max = 50))]
     pub title: String,
+    pub spu_id: Option<String>,
+    #[validate(length(min = 1, max = 50))]
+    pub spu_name: Option<String>,
     pub content: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, ToSchema, Validate, IntoParams)]
 pub struct SpuUpdateRecordLimitReq {
     pub id: Option<String>,
-    pub spu_id: Option<String>,
     #[validate(length(min = 1, max = 50))]
     pub title: Option<String>,
+    pub spu_id: Option<String>,
+    #[validate(length(min = 1, max = 50))]
+    pub spu_name: Option<String>,
     pub limit: Option<u64>,
     pub page: Option<u64>,
 }

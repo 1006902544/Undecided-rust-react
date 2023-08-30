@@ -10,6 +10,7 @@ export interface SpuUpdateRecord {
   create_time: string;
   id: number;
   spu_id: number;
+  spu_title: string;
   title: string;
   update_time: string;
 }

@@ -12,5 +12,6 @@ export interface SpuNoticeLimitReq {
   publish_type?: string | null;
   published?: number | null;
   spu_id?: string | null;
+  spu_name?: string | null;
   title?: string | null;
 }

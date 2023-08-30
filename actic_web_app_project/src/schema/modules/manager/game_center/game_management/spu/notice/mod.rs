@@ -6,9 +6,10 @@ use validator::Validate;
 
 #[derive(Debug, Clone, Serialize, Deserialize, ToSchema, FromRow)]
 pub struct SpuNotice {
-    pub id: String,
-    pub spu_id: String,
+    pub id: u64,
+    pub spu_id: u64,
     pub title: String,
+    pub spu_name: String,
     pub content: String,
     pub publish_type: String,
     pub published: bool,
@@ -29,15 +30,18 @@ pub struct SpuNoticeLimitReq {
     pub published: Option<u8>,
     pub spu_id: Option<String>,
     pub title: Option<String>,
+    pub spu_name: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, ToSchema, Validate)]
 pub struct SpuNoticeUpdateReq {
     pub id: Option<String>,
-    pub spu_id: String,
+    pub spu_id: Option<String>,
     #[validate(length(min = 1, max = 100))]
     pub title: String,
-    pub content: String,
+    #[validate(length(min = 1, max = 100), required)]
+    pub spu_name: Option<String>,
+    pub content: Option<String>,
     pub publish_type: String,
     #[schema(value_type = Option<String>)]
     pub publish_time: Option<String>,

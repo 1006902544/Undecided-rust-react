@@ -8,11 +8,12 @@
 export interface SpuNotice {
   content: string;
   create_time: string;
-  id: string;
+  id: number;
   publish_time?: string | null;
   publish_type: string;
   published: boolean;
-  spu_id: string;
+  spu_id: number;
+  spu_name: string;
   title: string;
   update_time: string;
 }
