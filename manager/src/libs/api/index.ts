@@ -28,16 +28,19 @@ import type {
   SkuDeleteReq,
   SpuRes,
   GetSpuLimitParams,
+  SpuUpdateResData,
   UpdateSpuReq,
   DeleteSpuParams,
   SpuDetailRes,
   GetSpuDetailParams,
   SpuNoticeRes,
   GetSpuNoticeParams,
+  SpuNoticeUpdateResData,
   SpuNoticeUpdateReq,
   DeleteSpuNoticeParams,
   SpuUpdateRecordRes,
   GetSpuUpdateRecordParams,
+  UpdateSpuUpdateRecordRes,
   UpdateSpuUpdateRecord,
   DeleteSpuUpdateRecordParams,
   CompanyStudioRes,
@@ -450,7 +453,7 @@ export const useGetSpuLimit = <TData = Awaited<ReturnType<typeof getSpuLimit>>, 
 export const updateSpu = (
     updateSpuReq: UpdateSpuReq,
  options?: SecondParameter<typeof custom_instance>,) => {
-      return custom_instance<ResPonseString>(
+      return custom_instance<SpuUpdateResData>(
       {url: `/manager/gamesCenter/gamesManagement/spu`, method: 'post',
       headers: {'Content-Type': 'application/json', },
       data: updateSpuReq
@@ -663,7 +666,7 @@ export const useGetSpuNotice = <TData = Awaited<ReturnType<typeof getSpuNotice>>
 export const updateSpuNotice = (
     spuNoticeUpdateReq: SpuNoticeUpdateReq,
  options?: SecondParameter<typeof custom_instance>,) => {
-      return custom_instance<ResPonseString>(
+      return custom_instance<SpuNoticeUpdateResData>(
       {url: `/manager/gamesCenter/gamesManagement/spu/notice`, method: 'post',
       headers: {'Content-Type': 'application/json', },
       data: spuNoticeUpdateReq
@@ -822,7 +825,7 @@ export const useGetSpuUpdateRecord = <TData = Awaited<ReturnType<typeof getSpuUp
 export const updateSpuUpdateRecord = (
     updateSpuUpdateRecord: UpdateSpuUpdateRecord,
  options?: SecondParameter<typeof custom_instance>,) => {
-      return custom_instance<ResPonseString>(
+      return custom_instance<UpdateSpuUpdateRecordRes>(
       {url: `/manager/gamesCenter/gamesManagement/spu/updateRecord`, method: 'post',
       headers: {'Content-Type': 'application/json', },
       data: updateSpuUpdateRecord

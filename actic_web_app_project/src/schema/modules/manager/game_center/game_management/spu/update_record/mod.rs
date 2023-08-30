@@ -39,3 +39,9 @@ pub struct SpuUpdateRecordLimitReq {
 pub struct SpuUpdateRecordDeleteReq {
     pub id: String,
 }
+
+#[derive(Debug, Clone, Serialize, Deserialize, ToSchema)]
+pub struct UpdateSpuUpdateRecordRes {
+    pub id: Option<String>,
+    pub title: Option<String>,
+}

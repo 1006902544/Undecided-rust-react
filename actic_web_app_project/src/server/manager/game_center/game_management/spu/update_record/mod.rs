@@ -16,20 +16,23 @@ use crate::{
 pub async fn create_update_record(
     conn: &mut PooledConn,
     data: UpdateSpuUpdateRecord,
-) -> Result<String, MyError> {
+) -> Result<UpdateSpuUpdateRecordRes, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let sql_str =
         "insert into spu_update_record (spu_id,title,content) values (:spu_id,:title,:content)";
     let res = trans.exec_drop(
         sql_str,
         params! {
-          "spu_id" => data.spu_id,
-          "title" => data.title,
-          "content" => data.content,
+            "spu_id" => data.spu_id,
+            "title" => data.title.clone(),
+            "content" => data.content,
         },
     );
     match after_update(trans, res) {
-        Ok(_) => Ok(String::from("Create success")),
+        Ok(id) => Ok(UpdateSpuUpdateRecordRes {
+            id,
+            title: Some(data.title),
+        }),
         Err(e) => Err(e),
     }
 }
@@ -37,21 +40,24 @@ pub async fn create_update_record(
 pub async fn edit_update_record(
     conn: &mut PooledConn,
     data: UpdateSpuUpdateRecord,
-) -> Result<String, MyError> {
+) -> Result<UpdateSpuUpdateRecordRes, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let sql_str =
         "update spu_update_record set spu_id=:spu_id,title=:title,content=:content where id=:id";
     let res = trans.exec_drop(
         sql_str,
         params! {
-          "spu_id" => data.spu_id,
-          "title" => data.title,
-          "content" => data.content,
-          "id" => data.id,
+            "spu_id" => data.spu_id,
+            "title" => data.title.clone(),
+            "content" => data.content,
+            "id" => data.id,
         },
     );
     match after_update(trans, res) {
-        Ok(_) => Ok(String::from("Edit success")),
+        Ok(id) => Ok(UpdateSpuUpdateRecordRes {
+            id,
+            title: Some(data.title),
+        }),
         Err(e) => Err(e),
     }
 }
@@ -62,7 +68,7 @@ pub async fn delete_update_record(conn: &mut PooledConn, id: String) -> Result<S
     let res = trans.exec_drop(
         sql_str,
         params! {
-          "id" => id
+            "id" => id
         },
     );
     match after_update(trans, res) {
@@ -81,11 +87,11 @@ pub async fn get_update_record_limit(
     let res = conn.exec::<SpuUpdateRecord, &str, _>(
         sql_str,
         params! {
-          "spu_id" => data.spu_id,
-          "id" => data.id,
-          "title" => data.title,
-          "scope" => limit*(page-1),
-          "limit" => limit
+            "spu_id" => data.spu_id,
+            "id" => data.id,
+            "title" => data.title,
+            "scope" => limit*(page-1),
+            "limit" => limit
         },
     );
     match res {

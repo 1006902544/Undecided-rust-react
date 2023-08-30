@@ -81,7 +81,7 @@ pub struct UpdateSpuReq {
     pub type_ids: Vec<String>,
     pub description: Option<String>,
     #[schema(value_type = String)]
-    pub issue_time: String,
+    pub issue_time: NaiveDateTime,
 }
 
 #[derive(Debug, IntoParams, ToSchema, Deserialize, Serialize)]
@@ -112,4 +112,10 @@ pub struct GetSpuLimitReq {
 pub struct SpuFileObject {
     pub url: String,
     pub name: String,
+}
+
+#[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
+pub struct SpuUpdateRes {
+    pub id: Option<String>,
+    pub name: Option<String>,
 }

@@ -17,16 +17,16 @@ use crate::{
 };
 
 #[utoipa::path(
-  get,
-  path = "/manager/gamesCenter/gamesManagement/spu/updateRecord",
-  params (SpuUpdateRecordLimitReq),
-  responses (
+    get,
+    path = "/manager/gamesCenter/gamesManagement/spu/updateRecord",
+    params (SpuUpdateRecordLimitReq),
+    responses (
     (
-      status = 200,
-      description = "success",
-      body = SpuUpdateRecordRes
+        status = 200,
+        description = "success",
+        body = SpuUpdateRecordRes
     )
-  )
+    )
 )]
 #[get("")]
 ///get spu update record limit
@@ -50,16 +50,16 @@ pub async fn get_spu_update_record(
 }
 
 #[utoipa::path(
-  post,
-  path = "/manager/gamesCenter/gamesManagement/spu/updateRecord",
-  request_body = UpdateSpuUpdateRecord,
-  responses (
+    post,
+    path = "/manager/gamesCenter/gamesManagement/spu/updateRecord",
+    request_body = UpdateSpuUpdateRecord,
+    responses (
     (
-      status = 200,
-      description = "success",
-      body = ResPonseString
+        status = 200,
+        description = "success",
+        body = UpdateSpuUpdateRecordRes
     )
-  )
+    )
 )]
 #[post("")]
 ///update spu update record
@@ -89,16 +89,16 @@ pub async fn update_spu_update_record(
 }
 
 #[utoipa::path(
-  delete,
-  path = "/manager/gamesCenter/gamesManagement/spu/updateRecord",
-  params (SpuUpdateRecordDeleteReq),
-  responses (
+    delete,
+    path = "/manager/gamesCenter/gamesManagement/spu/updateRecord",
+    params (SpuUpdateRecordDeleteReq),
+    responses (
     (
-      status = 200,
-      description = "success",
-      body = ResPonseString
+        status = 200,
+        description = "success",
+        body = ResPonseString
     )
-  )
+    )
 )]
 #[delete("")]
 ///delete spu update record

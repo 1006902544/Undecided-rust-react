@@ -7,7 +7,7 @@ use super::{
     game_center::{
         game_management::{
             sku::sku::Sku,
-            spu::{notice::SpuNotice, spu::*, update_record::SpuUpdateRecord},
+            spu::{notice::*, spu::*, update_record::*},
         },
         general::{company_studio::company_studio::*, tags::tags::*, types::types::GameType},
     },
@@ -40,11 +40,11 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //公司/工作室
     CompanyStudioRes = ResponseData<CompanyStudioLimitRes>,CompanyStudioDetailRes = ResponseData<CompanyStudioDetail>,
     //spu
-    SpuRes = ResponseData<SpuLimitRes>,SpuDetailRes = ResponseData<SpuDetail>,
+    SpuRes = ResponseData<SpuLimitRes>,SpuDetailRes = ResponseData<SpuDetail>,SpuUpdateResData = ResponseData<SpuUpdateRes>,
     //spu-更新记录
-    SpuUpdateRecordRes = ResponseData<SpuUpdateRecordLimitRes>,
+    SpuUpdateRecordRes = ResponseData<SpuUpdateRecordLimitRes>,UpdateSpuUpdateRecordResData=ResponseData<UpdateSpuUpdateRecordRes>,
     //spu-公告
-    SpuNoticeRes = ResponseData<SpuNoticeLimitRes>,
+    SpuNoticeRes = ResponseData<SpuNoticeLimitRes>,SpuNoticeUpdateResData = ResponseData<SpuNoticeUpdateRes>,
     //sku,
     SkuRes = ResponseData<SkuLimitRes>,
     //素材库-图片

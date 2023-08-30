@@ -8,9 +8,9 @@ use crate::{
         base_struct::handle_limit,
         modules::manager::{
             game_center::game_management::spu::notice::{
-                SpuNotice, SpuNoticeLimitReq, SpuNoticeUpdateReq,
+                SpuNotice, SpuNoticeLimitReq, SpuNoticeUpdateReq, SpuNoticeUpdateRes,
             },
-            manager_response::{SpuNoticeLimitRes, SpuUpdateRecordLimitRes},
+            manager_response::SpuNoticeLimitRes,
         },
     },
 };
@@ -18,7 +18,7 @@ use crate::{
 pub async fn create_notice(
     conn: &mut PooledConn,
     data: SpuNoticeUpdateReq,
-) -> Result<String, MyError> {
+) -> Result<SpuNoticeUpdateRes, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let sql_str =
         "insert into spu_notice (spu_id,title,content,publish_type,publish_time) values (:spu_id,:title,:content,:publish_type,:publish_time)";
@@ -26,14 +26,17 @@ pub async fn create_notice(
         sql_str,
         params! {
             "spu_id" => data.spu_id,
-            "title" => data.title,
+            "title" => data.title.clone(),
             "content" => data.content,
             "publish_type" => data.publish_type,
             "publish_time" => data.publish_time,
         },
     );
     match after_update(trans, res) {
-        Ok(_) => Ok(String::from("Create success")),
+        Ok(id) => Ok(SpuNoticeUpdateRes {
+            id,
+            title: Some(data.title),
+        }),
         Err(e) => Err(e),
     }
 }
@@ -41,7 +44,7 @@ pub async fn create_notice(
 pub async fn edit_notice(
     conn: &mut PooledConn,
     data: SpuNoticeUpdateReq,
-) -> Result<String, MyError> {
+) -> Result<SpuNoticeUpdateRes, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let sql_str =
         "update spu_notice set spu_id=:spu_id,title=:title,content=:content,publish_type=:publish_type,publish_time=:publish_time where id=:id and update_time>=current_timestamp or id=:id and update_type='manual'";
@@ -49,7 +52,7 @@ pub async fn edit_notice(
         sql_str,
         params! {
             "spu_id" => data.spu_id,
-            "title" => data.title,
+            "title" => data.title.clone(),
             "content" => data.content,
             "publish_type" => data.publish_type,
             "publish_time" => data.publish_time,
@@ -57,7 +60,10 @@ pub async fn edit_notice(
         },
     );
     match after_update(trans, res) {
-        Ok(_) => Ok(String::from("Edit success")),
+        Ok(id) => Ok(SpuNoticeUpdateRes {
+            id,
+            title: Some(data.title),
+        }),
         Err(e) => Err(e),
     }
 }

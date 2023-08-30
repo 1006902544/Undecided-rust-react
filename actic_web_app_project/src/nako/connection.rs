@@ -59,13 +59,20 @@ pub fn get_current(total: u128, page: u128, limit: u128) -> u128 {
     }
 }
 
-pub fn after_update<T>(trans: Transaction<'_>, res: Result<T, Error>) -> Result<T, MyError> {
+pub fn after_update<T>(
+    trans: Transaction<'_>,
+    res: Result<T, Error>,
+) -> Result<Option<String>, MyError> {
     match res {
-        Ok(res) => {
+        Ok(_) => {
             let row = trans.affected_rows();
             if row > 0 {
+                let id = trans.last_insert_id();
                 trans.commit().unwrap();
-                Ok(res)
+                Ok(match id {
+                    Some(id) => Some(id.to_string()),
+                    None => None,
+                })
             } else {
                 trans.rollback().unwrap();
                 Err(MyError::no_changes_happen())

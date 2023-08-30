@@ -7,7 +7,7 @@ import {
 } from '@/components';
 import {
   ProForm,
-  ProFormDatePicker,
+  ProFormDateTimePicker,
   ProFormText,
 } from '@ant-design/pro-components';
 import { Button, Col, Modal, Row, Spin, message } from 'antd';
@@ -205,7 +205,7 @@ export default function Update() {
           <Col span={16} />
 
           <Col span={8}>
-            <ProFormDatePicker
+            <ProFormDateTimePicker
               label="IssueTime"
               name="issueTime"
               rules={[

@@ -14,13 +14,16 @@ use crate::{
     },
 };
 
-pub async fn create_spu(conn: &mut PooledConn, params: UpdateSpuReq) -> Result<String, MyError> {
+pub async fn create_spu(
+    conn: &mut PooledConn,
+    params: UpdateSpuReq,
+) -> Result<SpuUpdateRes, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let insert_spu = "insert into spus (name,company_id,price,description,issue_time) values (:name,:company_id,:price,:description,:issue_time)";
     let insert_spu_res = trans.exec_drop(
         insert_spu,
         params! {
-            "name" => params.name,
+            "name" => params.name.clone(),
             "company_id" => params.company_id,
             "price" => params.price,
             "description" => params.description,
@@ -101,8 +104,15 @@ pub async fn create_spu(conn: &mut PooledConn, params: UpdateSpuReq) -> Result<S
                             Err(MyError::sql_error(err))
                         }
                         None => {
+                            let id = match trans.last_insert_id() {
+                                Some(id) => Some(id.to_string()),
+                                None => None,
+                            };
                             trans.commit().unwrap();
-                            Ok("Create success".to_string())
+                            Ok(SpuUpdateRes {
+                                id,
+                                name: Some(params.name.clone()),
+                            })
                         }
                     }
                 }
@@ -116,13 +126,16 @@ pub async fn create_spu(conn: &mut PooledConn, params: UpdateSpuReq) -> Result<S
     }
 }
 
-pub async fn edit_spu(conn: &mut PooledConn, params: UpdateSpuReq) -> Result<String, MyError> {
+pub async fn edit_spu(
+    conn: &mut PooledConn,
+    params: UpdateSpuReq,
+) -> Result<SpuUpdateRes, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let insert_spu = "update spus set name=:name,company_id=:company_id,price=:price,description=:description,issue_time=:issue_time where id=:id";
     let insert_spu_res = trans.exec_drop(
         insert_spu,
         params! {
-            "name" => params.name,
+            "name" => params.name.clone(),
             "company_id" => params.company_id,
             "price" => params.price,
             "description" => params.description,
@@ -214,7 +227,10 @@ pub async fn edit_spu(conn: &mut PooledConn, params: UpdateSpuReq) -> Result<Str
                 }
                 None => {
                     trans.commit().unwrap();
-                    Ok("Create success".to_string())
+                    Ok(SpuUpdateRes {
+                        id: params.id.clone(),
+                        name: Some(params.name.clone()),
+                    })
                 }
             }
         }

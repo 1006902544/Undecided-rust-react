@@ -8,8 +8,8 @@
 export interface SpuUpdateRecord {
   content?: string | null;
   create_time: string;
-  id: string;
-  spu_id: string;
+  id: number;
+  spu_id: number;
   title: string;
   update_time: string;
 }

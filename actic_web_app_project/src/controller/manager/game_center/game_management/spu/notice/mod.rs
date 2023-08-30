@@ -55,7 +55,7 @@ pub async fn get_spu_notice(
     (
       status = 200,
       description = "success",
-      body = ResPonseString
+      body = SpuNoticeUpdateResData
     )
   )
 )]

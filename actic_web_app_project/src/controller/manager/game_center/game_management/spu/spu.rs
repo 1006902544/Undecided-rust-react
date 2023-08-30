@@ -20,7 +20,7 @@ use crate::{
   path = "/manager/gamesCenter/gamesManagement/spu",
   request_body = UpdateSpuReq,
   responses (
-    (status = 200 , body = ResPonseString , description = "success")
+    (status = 200 , body = SpuUpdateResData , description = "success")
     )
 )]
 #[post("")]
