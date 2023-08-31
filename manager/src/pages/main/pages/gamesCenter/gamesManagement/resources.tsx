@@ -1,1 +1,1 @@
-export * from './Spu/resource';
+export * from './spu/resource';

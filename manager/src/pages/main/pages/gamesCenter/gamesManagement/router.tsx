@@ -1,5 +1,5 @@
-import { spuRouter } from './Spu/router';
-import { skuRouter } from './Sku/router';
+import { spuRouter } from './spu/router';
+import { skuRouter } from './sku/router';
 
 export const gameManagementRouter = {
   path: 'gamesManagement',
