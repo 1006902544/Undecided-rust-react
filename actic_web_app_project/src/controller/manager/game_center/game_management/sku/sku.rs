@@ -28,6 +28,7 @@ use crate::{
     )
 )]
 #[get("")]
+///get sku limit
 pub async fn get_sku_limit(
     pool: Data<Pool>,
     req: HttpRequest,
@@ -58,6 +59,7 @@ pub async fn get_sku_limit(
   )
 )]
 #[post("")]
+///update SKU
 pub async fn update_sku(
     pool: Data<Pool>,
     req: HttpRequest,
@@ -92,6 +94,7 @@ pub async fn update_sku(
   )
 )]
 #[delete("")]
+///delete sku
 pub async fn delete_sku(
     pool: Data<Pool>,
     req: HttpRequest,

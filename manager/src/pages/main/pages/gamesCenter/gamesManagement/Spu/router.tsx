@@ -1,11 +1,11 @@
 import { Suspense, lazy } from 'react';
 
-const SpuManagement = lazy(() => import('./SpuManagement/list'));
+const SpuManagement = lazy(() => import('./spuManagement/list'));
 const SpuUpdate = lazy(
-  () => import('./SpuManagement/components/Update/Update')
+  () => import('./spuManagement/components/Update/Update')
 );
-const SpuUpdateRecord = lazy(() => import('./UploadRecord/list'));
-const Notice = lazy(() => import('./Notice/list'));
+const SpuUpdateRecord = lazy(() => import('./uploadRecord/list'));
+const Notice = lazy(() => import('./notice/list'));
 
 export const spuRouter = {
   path: 'spus',

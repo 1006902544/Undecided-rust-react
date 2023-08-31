@@ -71,7 +71,7 @@ pub async fn edit_company(
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let res = batch_exec(&mut trans,vec![
         BatchExec {
-            stmt:"update company_studios set name=:name,logo_url=:logo_url,e_tag=:e_tag,logo_name=:logo_name,description=:description,region=:region,founder=:founder",
+            stmt:"update company_studios set name=:name,logo_url=:logo_url,e_tag=:e_tag,logo_name=:logo_name,description=:description,region=:region,founder=:founder where id=:id",
             params:  params! {
                 "name" => body.name,
                 "logo_url" => body.logo_url,
@@ -94,9 +94,15 @@ pub async fn edit_company(
             },
         }
     ]);
-    match after_update(trans, res).await {
-        Ok(_) => Ok("Edit Success".to_string()),
-        Err(e) => Err(e),
+    match res {
+        Ok(_) => {
+            trans.commit().unwrap();
+            Ok("Edit Success".to_string())
+        }
+        Err(e) => {
+            trans.rollback().unwrap();
+            Err(MyError::sql_error(e))
+        }
     }
 }
 

@@ -145,7 +145,7 @@ pub fn batch_exec<T: ToString>(
     opts: Vec<BatchExec<T>>,
 ) -> Result<(), mysql::Error> {
     let mut err_info = None;
-    let is_ok =
+    let all_ok =
         opts.iter().all(
             |opt| match trans.exec_drop(opt.stmt.to_string(), opt.params.clone()) {
                 Ok(_) => true,
@@ -155,7 +155,7 @@ pub fn batch_exec<T: ToString>(
                 }
             },
         );
-    if is_ok {
+    if all_ok {
         Ok(())
     } else {
         match err_info {

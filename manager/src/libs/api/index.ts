@@ -249,6 +249,10 @@ export const useSignIn = <TError = ErrorType<unknown>,
       return useMutation(mutationOptions);
     }
     
+/**
+ * get sku limit
+ * @summary get sku limit
+ */
 export const getSkuLimit = (
     params?: GetSkuLimitParams,
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
@@ -282,6 +286,9 @@ const {query: queryOptions, request: requestOptions} = options ?? {};
 export type GetSkuLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getSkuLimit>>>
 export type GetSkuLimitQueryError = ErrorType<unknown>
 
+/**
+ * @summary get sku limit
+ */
 export const useGetSkuLimit = <TData = Awaited<ReturnType<typeof getSkuLimit>>, TError = ErrorType<unknown>>(
  params?: GetSkuLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSkuLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 
@@ -297,6 +304,10 @@ export const useGetSkuLimit = <TData = Awaited<ReturnType<typeof getSkuLimit>>, 
 }
 
 
+/**
+ * update SKU
+ * @summary update SKU
+ */
 export const updateSku = (
     skuUpdateReq: SkuUpdateReq,
  options?: SecondParameter<typeof custom_instance>,) => {
@@ -334,7 +345,10 @@ export const getUpdateSkuMutationOptions = <TError = ErrorType<unknown>,
     export type UpdateSkuMutationBody = SkuUpdateReq
     export type UpdateSkuMutationError = ErrorType<unknown>
 
-    export const useUpdateSku = <TError = ErrorType<unknown>,
+    /**
+ * @summary update SKU
+ */
+export const useUpdateSku = <TError = ErrorType<unknown>,
     
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSku>>, TError,{data: SkuUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
@@ -344,6 +358,10 @@ export const getUpdateSkuMutationOptions = <TError = ErrorType<unknown>,
       return useMutation(mutationOptions);
     }
     
+/**
+ * delete sku
+ * @summary delete sku
+ */
 export const deleteSku = (
     skuDeleteReq: SkuDeleteReq,
  options?: SecondParameter<typeof custom_instance>,) => {
@@ -381,7 +399,10 @@ export const getDeleteSkuMutationOptions = <TError = ErrorType<unknown>,
     export type DeleteSkuMutationBody = SkuDeleteReq
     export type DeleteSkuMutationError = ErrorType<unknown>
 
-    export const useDeleteSku = <TError = ErrorType<unknown>,
+    /**
+ * @summary delete sku
+ */
+export const useDeleteSku = <TError = ErrorType<unknown>,
     
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSku>>, TError,{data: SkuDeleteReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {

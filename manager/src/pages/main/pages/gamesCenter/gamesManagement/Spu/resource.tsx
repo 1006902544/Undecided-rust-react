@@ -1,3 +1,3 @@
-export { gameCenterSpuManagementResource } from './SpuManagement';
-export { gamesManagementSpuUploadRecordResource } from './UploadRecord';
-export { gamesCenterManagementSpuNoticeResource } from './Notice';
+export { gameCenterSpuManagementResource } from './spuManagement';
+export { gamesManagementSpuUploadRecordResource } from './uploadRecord';
+export { gamesCenterManagementSpuNoticeResource } from './notice';
