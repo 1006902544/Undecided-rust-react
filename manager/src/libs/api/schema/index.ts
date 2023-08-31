@@ -19,6 +19,7 @@ export * from './authLimitRes';
 export * from './authRes';
 export * from './batchDeleteMaterialImagesReq';
 export * from './companyLocation';
+export * from './companyLocationRes';
 export * from './companyStudio';
 export * from './companyStudioDetail';
 export * from './companyStudioDetailRes';

@@ -15,5 +15,6 @@ export interface Sku {
   name: string;
   price: number;
   spu_id: string;
+  spu_name: string;
   update_time: string;
 }

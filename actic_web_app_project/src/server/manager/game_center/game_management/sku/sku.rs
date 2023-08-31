@@ -14,17 +14,17 @@ use crate::{
 
 pub async fn create_sku(conn: &mut PooledConn, data: SkuUpdateReq) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let sql_str = "insert into skus (spu_id,name,description,cover_url,cover_name,price,issue_time) values (:spu_id,:name,:description,:cover_url,:cover_name,:price,:issue_time)";
+    let sql_str = "insert into skus (spu_id,name,description,cover_url,cover_name,price,issue_time,spu_name) values (:spu_id,:name,:description,:cover_url,:cover_name,:price,:issue_time,(select first(spus.name) from spus where spus.id=:spu_id))";
     let res = trans.exec_drop(
         sql_str,
         params! {
-          "spu_id" => data.spu_id,
-          "name" => data.name,
-          "description" => data.description,
-          "cover_url" => data.cover_url,
-          "cover_name" => data.cover_name,
-          "price" => data.price,
-          "issue_time" => data.issue_time,
+            "spu_id" => data.spu_id,
+            "name" => data.name,
+            "description" => data.description,
+            "cover_url" => data.cover_url,
+            "cover_name" => data.cover_name,
+            "price" => data.price,
+            "issue_time" => data.issue_time,
         },
     );
     match after_update(trans, res) {
@@ -35,18 +35,18 @@ pub async fn create_sku(conn: &mut PooledConn, data: SkuUpdateReq) -> Result<Str
 
 pub async fn edit_sku(conn: &mut PooledConn, data: SkuUpdateReq) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let sql_str = "update skus set spu_id=:spu_id,name=:name,description=:description,cover_url=:cover_url,cover_name=:cover_name,price=:price,issue_time=:issue_time where id=:id";
+    let sql_str = "update skus set name=:name,description=:description,cover_url=:cover_url,cover_name=:cover_name,price=:price,issue_time=:issue_time,spu_name=(select first(spus.name) from spus where spus.id=:spu_id) where id=:id";
     let res = trans.exec_drop(
         sql_str,
         params! {
-          "id" => data.id,
-          "spu_id" => data.spu_id,
-          "name" => data.name,
-          "description" => data.description,
-          "cover_url" => data.cover_url,
-          "cover_name" => data.cover_name,
-          "price" => data.price,
-          "issue_time" => data.issue_time,
+            "id" => data.id,
+            "spu_id" => data.spu_id,
+            "name" => data.name,
+            "description" => data.description,
+            "cover_url" => data.cover_url,
+            "cover_name" => data.cover_name,
+            "price" => data.price,
+            "issue_time" => data.issue_time,
         },
     );
     match after_update(trans, res) {
@@ -61,8 +61,16 @@ pub async fn get_sku_limit(
 ) -> Result<SkuLimitRes, MyError> {
     let limit = handle_limit(&data.limit);
     let page = handle_page(&data.limit);
-    let sql_str = "select * from skus where (id=:id or :id is null) and (name=:name or :name is null) limit :scope,:limit";
-    let res: Result<Vec<Sku>, mysql::Error> = conn.query(sql_str);
+    let sql_str = "select * from skus where (spu_id=:spu_id or :spu_id is null) and (spu_name=:spu_name or :spu_name is null) and (id=:id or :id is null) and (name=:name or :name is null) limit :scope,:limit";
+    let res: Result<Vec<Sku>, mysql::Error> = conn.exec(
+        sql_str,
+        params! {
+            "id" => data.id,
+            "name" => data.name,
+            "spu_id" => data.spu_id,
+            "spu_name" => data.spu_name,
+        },
+    );
     match res {
         Ok(res) => {
             let total = get_total(conn);
@@ -83,7 +91,7 @@ pub async fn delete_sku(conn: &mut PooledConn, id: String) -> Result<String, MyE
     let res = trans.exec_drop(
         sql_str,
         params! {
-          "id" => id
+            "id" => id
         },
     );
     match after_update(trans, res) {

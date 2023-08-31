@@ -4,6 +4,7 @@
  * actic_web_app_project
  * OpenAPI spec version: 0.1.0
  */
+import type { CompanyLocationRes } from './companyLocationRes';
 
 export interface CompanyStudioDetail {
   create_time: string;
@@ -12,6 +13,7 @@ export interface CompanyStudioDetail {
   established_time: string;
   founder?: string | null;
   id: number;
+  location: CompanyLocationRes;
   logo_name: string;
   logo_url: string;
   name: string;

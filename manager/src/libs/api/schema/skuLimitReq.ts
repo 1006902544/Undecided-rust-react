@@ -11,4 +11,5 @@ export interface SkuLimitReq {
   name?: string | null;
   page?: number | null;
   spu_id?: string | null;
+  spu_name?: string | null;
 }

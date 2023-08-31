@@ -6,8 +6,9 @@
  */
 
 export type GetSkuLimitParams = {
-id?: string | null;
 spu_id?: string | null;
+spu_name?: string | null;
+id?: string | null;
 name?: string | null;
 limit?: number | null;
 page?: number | null;
