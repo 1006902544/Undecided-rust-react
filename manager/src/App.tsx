@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import SignIn from './pages/sign/signIn';
 import {
@@ -16,6 +16,8 @@ import { mainPagesRouter } from './pages/main/pages/router';
 import { resources } from './resources';
 import { ConfigProvider } from 'antd';
 import en_US from 'antd/locale/zh_CN';
+import { OpenApiProvider } from './components/OpenApiList';
+import axios from 'axios';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,15 +49,23 @@ function App() {
     },
   ]);
 
+  const getOpenApi = useCallback(async () => {
+    return await axios.get(
+      `${process.env.REACT_APP_BASE_API_URL}/manager/api-docs/openapi.json`
+    );
+  }, []);
+
   return (
     <ConfigProvider locale={en_US}>
       <QueryClientProvider client={queryClient}>
-        <StyleProvider
-          transformers={[legacyLogicalPropertiesTransformer]}
-          hashPriority="high"
-        >
-          <RouterProvider router={router} />
-        </StyleProvider>
+        <OpenApiProvider getOpenApi={getOpenApi}>
+          <StyleProvider
+            transformers={[legacyLogicalPropertiesTransformer]}
+            hashPriority="high"
+          >
+            <RouterProvider router={router} />
+          </StyleProvider>
+        </OpenApiProvider>
       </QueryClientProvider>
     </ConfigProvider>
   );

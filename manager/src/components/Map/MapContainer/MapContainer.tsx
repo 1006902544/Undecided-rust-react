@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import { Controller, Marker } from '../';
 import type { MapContainerInterface, MapNodeInterface } from './MapContainer.d';
-import type { LatLng } from 'leaflet';
+import { setOptions, type LatLng } from 'leaflet';
 import { MapContextInterface } from '../index.d';
 import styled from 'styled-components';
 
@@ -74,7 +74,16 @@ const MapNode = ({ onPositionChange, value }: MapNodeInterface) => {
         animate: true,
       });
     }
-  }, [onPositionChange, position, map]);
+  }, [onPositionChange, position, map, value]);
+
+  useEffect(() => {
+    if (value) {
+      if (value?.alt !== position?.alt || value?.lng !== position?.alt) {
+        setPosition(value);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   return (
     <MapContext.Provider value={{ map, position, setPosition }}>
