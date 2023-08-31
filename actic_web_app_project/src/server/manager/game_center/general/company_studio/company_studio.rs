@@ -3,7 +3,7 @@ use mysql_common::params;
 
 use crate::{
     app::error::MyError,
-    nako::connection::{get_current, get_total},
+    nako::connection::{batch_exec, get_current, get_total, BatchExec},
     schema::{
         base_struct::{handle_limit, handle_page},
         modules::manager::{
@@ -19,7 +19,9 @@ pub async fn create_company(
     body: UpdateCompanyStudioReq,
 ) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let sql_str = "insert into company_studios (name,logo_url,description,region,founder,established_time,e_tag,logo_name) values(:name,:logo_url,:description,:region,:founder,:established_time,:e_tag,:logo_name)";
+    let sql_str: &str = "insert into company_studios (name,logo_url,description,region,founder,established_time,e_tag,logo_name) values (:name,:logo_url,:description,:region,:founder,:established_time,:e_tag,:logo_name);
+    ";
+
     let res = trans.exec_drop(
         sql_str,
         params! {
@@ -33,9 +35,32 @@ pub async fn create_company(
             "logo_name" => body.logo_name,
         },
     );
-    match after_update(trans, res).await {
-        Ok(_) => Ok("Create Success".to_string()),
-        Err(e) => Err(e),
+    match res {
+        Ok(_) => {
+            let id = trans.last_insert_id();
+            match id {
+                Some(company_id) => {
+                    let res = trans.exec_drop("insert into company_location (company_id,latitude,longitude,detail) values (:company_id,:latitude,:longitude,:detail)", params!{
+                "company_id" => company_id,
+                "latitude" => body.location.latitude,
+                "longitude" => body.location.longitude,
+                "detail" => "",
+                });
+                    match after_update(trans, res).await {
+                        Ok(_) => Ok("Create Success".to_string()),
+                        Err(e) => Err(e),
+                    }
+                }
+                None => {
+                    trans.rollback().unwrap();
+                    Err(MyError::no_changes_happen())
+                }
+            }
+        }
+        Err(e) => {
+            trans.rollback().unwrap();
+            Err(MyError::sql_error(e))
+        }
     }
 }
 
@@ -44,21 +69,31 @@ pub async fn edit_company(
     body: UpdateCompanyStudioReq,
 ) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let sql_str = "update company_studios set name=:name,logo_url=:logo_url,e_tag=:e_tag,logo_name=:logo_name,description=:description,region=:region,founder=:founder,established_time=:established_time where id=:id";
-    let res = trans.exec_drop(
-        sql_str,
-        params! {
-            "name" => body.name,
-            "logo_url" => body.logo_url,
-            "description" => body.description,
-            "region" => body.region,
-            "founder" => body.founder,
-            "established_time" => body.established_time,
-            "id" => body.id,
-            "e_tag" => body.e_tag,
-            "logo_name" => body.logo_name,
+    let res = batch_exec(&mut trans,vec![
+        BatchExec {
+            stmt:"update company_studios set name=:name,logo_url=:logo_url,e_tag=:e_tag,logo_name=:logo_name,description=:description,region=:region,founder=:founder",
+            params:  params! {
+                "name" => body.name,
+                "logo_url" => body.logo_url,
+                "description" => body.description,
+                "region" => body.region,
+                "founder" => body.founder,
+                "established_time" => body.established_time,
+                "id" => body.id,
+                "e_tag" => body.e_tag,
+                "logo_name" => body.logo_name,
+            },
         },
-    );
+        BatchExec {
+            stmt:"update company_location set latitude=:latitude,longitude=:longitude,detail=:detail where company_id=:company_id;",
+            params:  params! {
+                "latitude" => body.location.latitude,
+                "longitude" => body.location.longitude,
+                "detail" => "unknown",
+                "company_id" => body.id,
+            },
+        }
+    ]);
     match after_update(trans, res).await {
         Ok(_) => Ok("Edit Success".to_string()),
         Err(e) => Err(e),
@@ -100,8 +135,8 @@ pub async fn get_company_studio_detail(
     conn: &mut PooledConn,
     id: u64,
 ) -> Result<CompanyStudioDetail, MyError> {
-    let sql_str = "select * from company_studios where id=:id";
-    let res = conn.exec_first::<CompanyStudioDetail, &str, Params>(
+    let sql_str = "select cs.*,cl.latitude as latitude,cl.longitude as longitude,cl.detail as location_detail from company_studios as cs left join company_location as cl on cl.company_id=cs.id where cs.id=:id";
+    let res = conn.exec_first::<CompanyStudioDetailSql, &str, Params>(
         sql_str,
         params! {
             "id" => id
@@ -109,7 +144,24 @@ pub async fn get_company_studio_detail(
     );
     match res {
         Ok(res) => match res {
-            Some(res) => Ok(res),
+            Some(res) => Ok(CompanyStudioDetail {
+                id: res.id,
+                name: res.name,
+                e_tag: res.e_tag,
+                logo_name: res.logo_name,
+                logo_url: res.logo_url,
+                description: res.description,
+                region: res.region,
+                founder: res.founder,
+                update_time: res.update_time,
+                create_time: res.create_time,
+                established_time: res.established_time,
+                location: CompanyLocationRes {
+                    latitude: res.latitude,
+                    longitude: res.longitude,
+                    detail: res.location_detail,
+                },
+            }),
             None => Err(MyError::not_found()),
         },
         Err(err) => Err(MyError::sql_error(err)),

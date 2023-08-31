@@ -4,6 +4,7 @@
  * actic_web_app_project
  * OpenAPI spec version: 0.1.0
  */
+import type { CompanyLocation } from './companyLocation';
 
 export interface UpdateCompanyStudioReq {
   description?: string | null;
@@ -11,6 +12,7 @@ export interface UpdateCompanyStudioReq {
   established_time: string;
   founder?: string | null;
   id?: number | null;
+  location: CompanyLocation;
   logo_name: string;
   logo_url: string;
   name: string;

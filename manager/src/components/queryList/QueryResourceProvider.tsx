@@ -1,7 +1,7 @@
 import { Resource } from './types.d';
-import { createContext } from 'react';
+import { createContext, useMemo } from 'react';
 
-export const ResourceContext = createContext<Array<Resource>>([]);
+export const ResourceContext = createContext<Record<string, Resource>>({});
 
 export const QueryResourceProvider = ({
   children,
@@ -10,8 +10,16 @@ export const QueryResourceProvider = ({
   children: React.ReactNode;
   resources: Array<Resource>;
 }) => {
+  const resourceValue = useMemo(() => {
+    let resourceValue: Record<string, Resource> = {};
+    resources.forEach((resource) => {
+      resourceValue[resource.name] = resource;
+    });
+    return resourceValue;
+  }, [resources]);
+
   return (
-    <ResourceContext.Provider value={resources}>
+    <ResourceContext.Provider value={resourceValue}>
       {children}
     </ResourceContext.Provider>
   );

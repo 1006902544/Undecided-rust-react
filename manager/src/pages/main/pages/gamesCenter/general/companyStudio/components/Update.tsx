@@ -1,4 +1,9 @@
-import { ProFormDraggerUpload, ProFormEditor, Toolbar } from '@/components';
+import {
+  ProFormDraggerUpload,
+  ProFormEditor,
+  ProFormMap,
+  Toolbar,
+} from '@/components';
 import type { UpdateCompanyStudioReq } from '@/libs/api/schema';
 import { useGetCompanyDetail, updateCompany } from '@/libs/api';
 import {
@@ -12,11 +17,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import qs from 'query-string';
 
-interface FinishParams extends UpdateCompanyStudioReq {
+interface FinishParams extends Omit<UpdateCompanyStudioReq, 'location'> {
   logo: (File & {
     response: { data: { etag: string; fileName: string; url: string } };
   })[];
   establishedTime?: string;
+  location: {
+    lat: number;
+    lng: number;
+  };
 }
 
 export default function Update() {
@@ -30,6 +39,10 @@ export default function Update() {
       logo_name: v.logo[0]?.response.data.fileName,
       e_tag: v.logo[0]?.response.data.etag,
       established_time: v.establishedTime as string,
+      location: {
+        latitude: v.location.lat.toFixed(4),
+        longitude: v.location.lng.toFixed(4),
+      },
     };
     delete (params as any).logo;
     delete params.establishedTime;
@@ -67,6 +80,12 @@ export default function Update() {
             },
           ];
           params.establishedTime = params.established_time;
+          params.location = params.location
+            ? {
+                lat: params.location?.latitude,
+                lng: params.location?.longitude,
+              }
+            : null;
           form.setFieldsValue(params);
         },
       },
@@ -125,15 +144,16 @@ export default function Update() {
           </Col>
           <Col span={16} />
 
-          <Col span={8}>
-            <ProFormText
-              label="Region"
-              name="region"
-              fieldProps={{
-                maxLength: 200,
-              }}
+          <Col span={16}>
+            <ProFormMap
+              name="location"
+              fieldProps={{ height: '400px' }}
+              label="Location"
+              rules={[{ required: true, message: 'please input location' }]}
             />
           </Col>
+
+          <Col span={8} />
 
           <Col span={8}>
             <ProFormText
@@ -145,7 +165,7 @@ export default function Update() {
               }}
             />
           </Col>
-          <Col span={8}></Col>
+          <Col span={16}></Col>
 
           <Col span={8}>
             <ProFormDateTimePicker

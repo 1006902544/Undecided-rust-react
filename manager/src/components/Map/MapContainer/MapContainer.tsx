@@ -1,4 +1,4 @@
-import React, { useState, createContext, useEffect, useCallback } from 'react';
+import React, { useState, createContext, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import { Controller, Marker } from '../';
@@ -54,13 +54,6 @@ export default function Map({
 }
 
 const MapNode = ({ onPositionChange, value }: MapNodeInterface) => {
-  //position
-  const [position, setPosition] = useState<LatLng | null>(value || null);
-
-  useEffect(() => {
-    onPositionChange(position);
-  }, [onPositionChange, position]);
-
   //map
   const map = useMapEvents({
     click(e) {
@@ -70,6 +63,18 @@ const MapNode = ({ onPositionChange, value }: MapNodeInterface) => {
       setPosition(e.latlng);
     },
   });
+
+  //position
+  const [position, setPosition] = useState<LatLng | null>(value || null);
+
+  useEffect(() => {
+    onPositionChange(position);
+    if (position) {
+      map.setView(position, map.getZoom(), {
+        animate: true,
+      });
+    }
+  }, [onPositionChange, position, map]);
 
   return (
     <MapContext.Provider value={{ map, position, setPosition }}>

@@ -17,7 +17,7 @@ pub struct CompanyStudio {
     pub established_time: NaiveDateTime,
 }
 
-#[derive(Debug, ToSchema, FromRow, Validate, Deserialize, Serialize)]
+#[derive(Debug, ToSchema, Validate, Deserialize, Serialize)]
 pub struct CompanyStudioDetail {
     pub id: u64,
     pub name: String,
@@ -34,10 +34,29 @@ pub struct CompanyStudioDetail {
     #[schema(value_type = String)]
     pub create_time: NaiveDateTime,
     #[schema(value_type = String)]
-    pub established_time: String,
+    pub established_time: NaiveDateTime,
+    pub location: CompanyLocationRes,
 }
 
-#[derive(Debug, ToSchema, FromRow, Validate, Deserialize, Serialize)]
+#[derive(Debug, FromRow, Deserialize, Serialize)]
+pub struct CompanyStudioDetailSql {
+    pub id: u64,
+    pub name: String,
+    pub e_tag: String,
+    pub logo_name: String,
+    pub logo_url: String,
+    pub description: Option<String>,
+    pub region: Option<String>,
+    pub founder: Option<String>,
+    pub update_time: NaiveDateTime,
+    pub create_time: NaiveDateTime,
+    pub established_time: NaiveDateTime,
+    pub latitude: f64,
+    pub longitude: f64,
+    pub location_detail: Option<String>,
+}
+
+#[derive(Debug, ToSchema, Validate, Deserialize, Serialize)]
 pub struct UpdateCompanyStudioReq {
     pub id: Option<u64>,
     pub name: String,
@@ -45,11 +64,26 @@ pub struct UpdateCompanyStudioReq {
     pub e_tag: String,
     pub logo_name: String,
     pub description: Option<String>,
+    pub location: CompanyLocation,
     #[validate(length(min = 0, max = 200), required)]
     pub region: Option<String>,
     #[validate(length(min = 0, max = 50), required)]
     pub founder: Option<String>,
     pub established_time: String,
+}
+
+#[derive(Debug, ToSchema, Validate, Deserialize, Serialize)]
+pub struct CompanyLocation {
+    pub latitude: String,
+    pub longitude: String,
+    pub detail: Option<String>,
+}
+
+#[derive(Debug, ToSchema, Validate, Deserialize, Serialize)]
+pub struct CompanyLocationRes {
+    pub latitude: f64,
+    pub longitude: f64,
+    pub detail: Option<String>,
 }
 
 #[derive(Debug, ToSchema, FromRow, Validate, Deserialize, Serialize, IntoParams)]

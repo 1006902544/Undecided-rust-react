@@ -119,7 +119,7 @@ use utoipa::OpenApi;
         //游戏类型
         GameType,UpdateGameTypeReq,DeleteGameTypeReq,GameTypeRes,GameTypeLimitRes,GameTypeLimitReq,
         //公司/工作室
-        GetCompanyStudioReq,UpdateCompanyStudioReq,CompanyStudioDetail,CompanyStudio,CompanyStudioRes,CompanyStudioLimitRes,GetCompanyStudioDetailReq,DeleteCompanyStudioDetailReq,
+        GetCompanyStudioReq,UpdateCompanyStudioReq,CompanyStudioDetail,CompanyStudio,CompanyStudioRes,CompanyStudioLimitRes,GetCompanyStudioDetailReq,DeleteCompanyStudioDetailReq,CompanyLocation,CompanyLocationRes,
         //spu
         SpuLimit,SpuDetail,UpdateSpuReq,GetSpuDetailReq,DeleteSpuDetailReq,GetSpuLimitReq, SpuFileObject,SpuRes,SpuLimitRes,SpuDetailRes,SpuUpdateRes,SpuUpdateResData,
         //spu更新记录

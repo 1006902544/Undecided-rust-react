@@ -2,25 +2,23 @@ import React, { createContext, useContext, useMemo, useState } from 'react';
 import type { ListContextProps, ListProps } from './';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ResourceContext } from '../';
-import type { Resource } from '../';
 import { message } from 'antd';
 
 export const ListContext = createContext<ListContextProps | undefined>(
   undefined
 );
 
-export default function List<Res = any>({
+export default function List({
   resource: resourceName,
   children,
   filters,
   actions,
   filterValue,
 }: ListProps) {
-  const resources: Resource<Record<string, any>, Res>[] =
-    useContext(ResourceContext);
+  const resources = useContext(ResourceContext);
 
   const resource = useMemo(() => {
-    return resources.find((res) => res.name === resourceName);
+    return resources[resourceName];
   }, [resources, resourceName]);
 
   //pagination info

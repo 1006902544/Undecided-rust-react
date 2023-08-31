@@ -1,3 +1,3 @@
 export default function List() {
-  return <div></div>;
+  return <div className=""></div>;
 }

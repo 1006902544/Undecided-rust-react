@@ -138,3 +138,37 @@ pub struct BatchHandlerObject {
     pub key: String,
     pub value: String,
 }
+
+#[allow(unused)]
+pub fn batch_exec<T: ToString>(
+    trans: &mut Transaction<'_>,
+    opts: Vec<BatchExec<T>>,
+) -> Result<(), mysql::Error> {
+    let mut err_info = None;
+    let is_ok =
+        opts.iter().all(
+            |opt| match trans.exec_drop(opt.stmt.to_string(), opt.params.clone()) {
+                Ok(_) => true,
+                Err(e) => {
+                    err_info = Some(e);
+                    false
+                }
+            },
+        );
+    if is_ok {
+        Ok(())
+    } else {
+        match err_info {
+            Some(e) => Err(e),
+            None => Ok(()),
+        }
+    }
+}
+
+pub struct BatchExec<T>
+where
+    T: ToString,
+{
+    pub stmt: T,
+    pub params: Params,
+}
