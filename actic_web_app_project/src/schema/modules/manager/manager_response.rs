@@ -6,7 +6,7 @@ use utoipa::ToSchema;
 use super::{
     game_center::{
         game_management::{
-            sku::sku::Sku,
+            sku::{notice::*, sku::Sku},
             spu::{notice::*, spu::*, update_record::*},
         },
         general::{company_studio::company_studio::*, tags::tags::*, types::types::GameType},
@@ -47,6 +47,8 @@ use crate::schema::modules::admin::admin::AdminInfo;
     SpuNoticeRes = ResponseData<SpuNoticeLimitRes>,SpuNoticeUpdateResData = ResponseData<SpuNoticeUpdateRes>,
     //sku,
     SkuRes = ResponseData<SkuLimitRes>,
+    //sku-公告
+    SkuNoticeRes = ResponseData<SkuNoticeLimitRes>,SkuNoticeUpdateResData= ResponseData<SkuNoticeUpdateRes>,
     //素材库-图片
     MaterialImageRes = ResponseData<MaterialImageLimitRes>
 )]
@@ -99,6 +101,8 @@ impl<B> ResponseData<B> {
     SpuNoticeLimitRes = LimitResults<SpuNotice>,
     //sku
     SkuLimitRes = LimitResults<Sku>,
+    //sku公告
+    SkuNoticeLimitRes = LimitResults<SkuNotice>,
     //素材库-图片
     MaterialImageLimitRes = LimitResults<ImagesObject>
 )]

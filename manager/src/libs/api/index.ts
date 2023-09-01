@@ -26,6 +26,11 @@ import type {
   GetSkuLimitParams,
   SkuUpdateReq,
   SkuDeleteReq,
+  SkuNoticeRes,
+  GetSkuNoticeParams,
+  SkuNoticeUpdateResData,
+  SkuNoticeUpdateReq,
+  DeleteSkuNoticeParams,
   SpuRes,
   GetSpuLimitParams,
   SpuUpdateResData,
@@ -408,6 +413,161 @@ export const useDeleteSku = <TError = ErrorType<unknown>,
 ) => {
     
       const mutationOptions = getDeleteSkuMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * get sku notice limit
+ * @summary get sku notice limit
+ */
+export const getSkuNotice = (
+    params?: GetSkuNoticeParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<SkuNoticeRes>(
+      {url: `/manager/gamesCenter/gamesManagement/sku/notice`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetSkuNoticeQueryKey = (params?: GetSkuNoticeParams,) => [`/manager/gamesCenter/gamesManagement/sku/notice`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetSkuNoticeQueryOptions = <TData = Awaited<ReturnType<typeof getSkuNotice>>, TError = ErrorType<unknown>>(params?: GetSkuNoticeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSkuNotice>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getSkuNotice>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetSkuNoticeQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSkuNotice>>> = ({ signal }) => getSkuNotice(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetSkuNoticeQueryResult = NonNullable<Awaited<ReturnType<typeof getSkuNotice>>>
+export type GetSkuNoticeQueryError = ErrorType<unknown>
+
+/**
+ * @summary get sku notice limit
+ */
+export const useGetSkuNotice = <TData = Awaited<ReturnType<typeof getSkuNotice>>, TError = ErrorType<unknown>>(
+ params?: GetSkuNoticeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSkuNotice>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetSkuNoticeQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+export const updateSkuNotice = (
+    skuNoticeUpdateReq: SkuNoticeUpdateReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<SkuNoticeUpdateResData>(
+      {url: `/manager/gamesCenter/gamesManagement/sku/notice`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: skuNoticeUpdateReq
+    },
+      options);
+    }
+  
+
+
+export const getUpdateSkuNoticeMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSkuNotice>>, TError,{data: SkuNoticeUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateSkuNotice>>, TError,{data: SkuNoticeUpdateReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateSkuNotice>>, {data: SkuNoticeUpdateReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateSkuNotice(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateSkuNoticeMutationResult = NonNullable<Awaited<ReturnType<typeof updateSkuNotice>>>
+    export type UpdateSkuNoticeMutationBody = SkuNoticeUpdateReq
+    export type UpdateSkuNoticeMutationError = ErrorType<unknown>
+
+    export const useUpdateSkuNotice = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSkuNotice>>, TError,{data: SkuNoticeUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getUpdateSkuNoticeMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * delete sku notice
+ * @summary delete sku notice
+ */
+export const deleteSkuNotice = (
+    params: DeleteSkuNoticeParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/gamesCenter/gamesManagement/sku/notice`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteSkuNoticeMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSkuNotice>>, TError,{params: DeleteSkuNoticeParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteSkuNotice>>, TError,{params: DeleteSkuNoticeParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteSkuNotice>>, {params: DeleteSkuNoticeParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteSkuNotice(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteSkuNoticeMutationResult = NonNullable<Awaited<ReturnType<typeof deleteSkuNotice>>>
+    
+    export type DeleteSkuNoticeMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete sku notice
+ */
+export const useDeleteSkuNotice = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSkuNotice>>, TError,{params: DeleteSkuNoticeParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteSkuNoticeMutationOptions(options);
      
       return useMutation(mutationOptions);
     }

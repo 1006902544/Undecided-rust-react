@@ -5,12 +5,15 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface SpuUpdateRecord {
-  content?: string | null;
+export interface SkuNotice {
+  content: string;
   create_time: string;
   id: number;
-  spu_id: number;
-  spu_name: string;
+  publish_time?: string | null;
+  publish_type: string;
+  published: boolean;
+  sku_id: number;
+  sku_name: string;
   title: string;
   update_time: string;
 }

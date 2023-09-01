@@ -11,7 +11,7 @@ export interface SpuDetail {
   activity: number;
   bad_reviews: number;
   carousel: SpuFileObject[];
-  company_id?: string | null;
+  company_id?: number | null;
   cover: SpuFileObject;
   create_time: string;
   description?: string | null;

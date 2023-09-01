@@ -2,7 +2,10 @@ use crate::controller::manager::{
     auth::auth::*,
     game_center::{
         game_management::{
-            sku::sku::{delete_sku, get_sku_limit, update_sku},
+            sku::{
+                notice::*,
+                sku::{delete_sku, get_sku_limit, update_sku},
+            },
             spu::{notice::*, spu::*, update_record::*},
         },
         general::{company_studio::company_studio::*, tags::tags::*, types::types::*},
@@ -120,7 +123,13 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                                 web::scope("sku")
                                     .service(update_sku)
                                     .service(get_sku_limit)
-                                    .service(delete_sku),
+                                    .service(delete_sku)
+                                    .service(
+                                        web::scope("notice")
+                                            .service(get_sku_notice)
+                                            .service(delete_sku_notice)
+                                            .service(update_sku_notice),
+                                    ),
                             ),
                     ),
             )

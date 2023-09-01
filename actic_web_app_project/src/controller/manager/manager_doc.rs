@@ -3,7 +3,7 @@ use crate::schema::modules::{
     manager::{
         game_center::{
             game_management::{
-                sku::sku::*,
+                sku::{notice::*, sku::*},
                 spu::{notice::*, spu::*, update_record::*},
             },
             general::{company_studio::company_studio::*, tags::tags::*, types::types::*},
@@ -83,6 +83,10 @@ use utoipa::OpenApi;
         super::game_center::game_management::sku::sku::get_sku_limit,
         super::game_center::game_management::sku::sku::update_sku,
         super::game_center::game_management::sku::sku::delete_sku,
+        //游戏中心-游戏管理-SKU-公告
+        super::game_center::game_management::sku::notice::get_sku_notice,
+        super::game_center::game_management::sku::notice::update_sku_notice,
+        super::game_center::game_management::sku::notice::delete_sku_notice,
     ),
     components(schemas(
         //文件通用
@@ -128,6 +132,8 @@ use utoipa::OpenApi;
         SpuNotice,SpuNoticeLimitReq,SpuNoticeUpdateReq,SpuNoticeDeleteReq,SpuNoticeRes,SpuNoticeLimitRes,SpuNoticeUpdateRes,SpuNoticeUpdateResData,
         //sku
         SkuDeleteReq,Sku,SkuUpdateReq,SkuLimitReq,SkuRes,SkuLimitRes,
+        //sku公告
+        SkuNotice,SkuNoticeLimitReq,SkuNoticeUpdateReq,SkuNoticeDeleteReq,SkuNoticeRes,SkuNoticeLimitRes,SkuNoticeUpdateRes,SkuNoticeUpdateResData,
         //素材库-图片
         ImagesObject,UpdateImageObjectReq,DeleteImageObjectReq,MaterialImageLimitReq,MaterialImageRes,MaterialImageLimitRes,BatchDeleteMaterialImagesReq
     ))
