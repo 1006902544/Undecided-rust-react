@@ -15,7 +15,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useMutation } from '@tanstack/react-query';
 import { useGetSpuDetail, updateSpu } from '@/libs/api';
-import type { UpdateSpuReq } from '@/libs/api/schema';
+import type { SpuUpdateRes, UpdateSpuReq } from '@/libs/api/schema';
 import type { FormFinish } from './Update.d';
 import { useLocation, useNavigate } from 'react-router-dom';
 import qs from 'query-string';
@@ -87,6 +87,7 @@ export default function Update() {
     onSuccess(res) {
       message.success(res.message);
       if (id) {
+        setEditRes(res.data);
         Modal.confirm({
           onOk() {
             setOpen(true);
@@ -117,7 +118,7 @@ export default function Update() {
         price: formData.price,
         cover,
         issue_time: formData.issueTime,
-        company_id: formData.companyId,
+        company_id: formData.companyId?.toString(),
         type_ids: formData.typeIds,
         tag_ids: formData.tagIds,
         carousel: formData.carousel.map((item) => ({
@@ -133,6 +134,7 @@ export default function Update() {
 
   //after update
   const [open, setOpen] = useState(false);
+  const [editRes, setEditRes] = useState<SpuUpdateRes>({});
 
   return (
     <Container
@@ -283,7 +285,8 @@ export default function Update() {
       <UpdateRecordModal
         open={open}
         setOpen={setOpen}
-        spuId={id}
+        spuId={editRes.id!}
+        spuName={editRes.name!}
         onCancel={back}
         onOk={back}
       />

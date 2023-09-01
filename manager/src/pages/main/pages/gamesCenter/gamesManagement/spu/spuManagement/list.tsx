@@ -117,6 +117,7 @@ export default function ListContainer() {
         align: 'center',
         fixed: 'right',
         title: 'OPTION',
+        width: 240,
         render(_, { id, name }) {
           return (
             <div className="flex justify-center">
@@ -126,6 +127,14 @@ export default function ListContainer() {
                   spuName: name,
                 }}
                 label="CreateNotice"
+                type="link"
+                formProps={{
+                  labelCol: { flex: '120px' },
+                  layout: 'horizontal',
+                }}
+                modalProps={{
+                  width: 800,
+                }}
               >
                 <CreateNotation />
               </CreateButton>

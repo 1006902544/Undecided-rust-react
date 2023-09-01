@@ -1,10 +1,18 @@
 import React, { useMemo, useState } from 'react';
-import { List, Table, Filter, DeleteButton } from '@/components';
+import {
+  List,
+  Table,
+  Filter,
+  DeleteButton,
+  StatusButton,
+  UpdateButton,
+} from '@/components';
 import { name as resource } from './';
 import { ProFormText } from '@ant-design/pro-components';
 import type { ColumnsType } from 'antd/es/table';
 import type { SpuNotice } from '@/libs/api/schema';
 import { Radio } from 'antd';
+import { UpdateNotation } from './components';
 
 export default function ListContainer() {
   const columns = useMemo<ColumnsType<SpuNotice>>(
@@ -48,9 +56,39 @@ export default function ListContainer() {
         title: 'OPTION',
         fixed: 'right',
         align: 'center',
-        render(_, { id }) {
+        width: 240,
+        render(
+          _,
+          { id, published, title, content, publish_type, spu_id, spu_name }
+        ) {
           return (
             <div className="flex justify-center">
+              {!published && publish_type === 'manual' ? (
+                <StatusButton>Publish</StatusButton>
+              ) : null}
+
+              {!published ? (
+                <UpdateButton
+                  data={{
+                    spuId: spu_id,
+                    spuName: spu_name,
+                    id: id,
+                    title: title,
+                    content: content,
+                    publishType: publish_type,
+                  }}
+                  formProps={{
+                    layout: 'horizontal',
+                    labelCol: { flex: '120px' },
+                  }}
+                  modalProps={{
+                    width: 800,
+                  }}
+                >
+                  <UpdateNotation />
+                </UpdateButton>
+              ) : null}
+
               <DeleteButton id={id} />
             </div>
           );

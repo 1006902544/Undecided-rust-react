@@ -8,6 +8,7 @@ import {
   gameCenterSpuManagementResource,
   gamesManagementSpuUploadRecordResource,
   gamesCenterManagementSpuNoticeResource,
+  gamesCenterSkuManagementResource,
 } from './pages/main/resources';
 
 export const resources = [
@@ -20,4 +21,5 @@ export const resources = [
   gameCenterSpuManagementResource,
   gamesManagementSpuUploadRecordResource,
   gamesCenterManagementSpuNoticeResource,
+  gamesCenterSkuManagementResource,
 ];

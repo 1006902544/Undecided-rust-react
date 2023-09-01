@@ -13,4 +13,8 @@ export const gamesCenterManagementSpuNoticeResource: Resource = {
       total: res?.total,
     };
   },
+
+  async check(data) {
+    return data;
+  },
 };

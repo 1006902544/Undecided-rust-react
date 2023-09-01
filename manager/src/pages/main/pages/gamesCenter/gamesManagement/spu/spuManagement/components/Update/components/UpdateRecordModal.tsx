@@ -14,6 +14,7 @@ import React, {
 interface IProps {
   open: boolean;
   spuId?: string;
+  spuName: string;
   onCancel: () => void;
   onOk: () => void;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,6 +24,7 @@ export default function UpdateRecord({
   open,
   spuId,
   setOpen,
+  spuName,
   onCancel,
 }: IProps) {
   const formRef = useRef<undefined | FormInstance>();
@@ -37,9 +39,9 @@ export default function UpdateRecord({
 
   const onOk = useCallback(() => {
     formRef?.current?.validateFields().then((res) => {
-      mutate({ spu_id: spuId, ...res });
+      mutate({ spu_id: spuId, spu_name: spuName, ...res });
     });
-  }, [mutate, spuId]);
+  }, [mutate, spuId, spuName]);
 
   return (
     <Modal

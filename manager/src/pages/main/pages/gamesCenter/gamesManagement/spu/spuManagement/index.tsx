@@ -1,5 +1,5 @@
 import type { Resource } from '@/components';
-import { deleteSpu, getSpuLimit } from '@/libs/api';
+import { deleteSpu, getSpuLimit, updateSpuNotice } from '@/libs/api';
 
 export const name = 'gameCenterSpuManagementResourceName';
 
@@ -16,5 +16,20 @@ export const gameCenterSpuManagementResource: Resource = {
 
   async delete({ id }) {
     return await deleteSpu({ id: id?.toString() ?? '' });
+  },
+
+  async create(data) {
+    const params = {
+      title: data.title,
+      content: data.content,
+      publish_type: data.publishType,
+      publish_time:
+        data.publishType === 'auto'
+          ? data.publishTime?.format('YYYY-MM-DD HH:mm:ss')
+          : undefined,
+      spu_id: data.spuId.toString(),
+      spu_name: data.spuName,
+    };
+    return await updateSpuNotice(params);
   },
 };

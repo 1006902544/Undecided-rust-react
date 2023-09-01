@@ -25,7 +25,7 @@ pub struct SpuLimit {
 pub struct SpuDetail {
     pub id: u64,
     pub name: String,
-    pub company_id: Option<String>,
+    pub company_id: Option<u64>,
     pub price: f64,
     pub cover: SpuFileObject,
     pub carousel: Vec<SpuFileObject>,
@@ -48,7 +48,7 @@ pub struct SpuDetail {
 pub struct SpuSqlDetail {
     pub id: u64,
     pub name: String,
-    pub company_id: Option<String>,
+    pub company_id: Option<u64>,
     pub price: f64,
     pub cover_url: String,
     pub cover_name: String,
@@ -80,8 +80,7 @@ pub struct UpdateSpuReq {
     pub tag_ids: Vec<String>,
     pub type_ids: Vec<String>,
     pub description: Option<String>,
-    #[schema(value_type = String)]
-    pub issue_time: NaiveDateTime,
+    pub issue_time: String,
 }
 
 #[derive(Debug, IntoParams, ToSchema, Deserialize, Serialize)]

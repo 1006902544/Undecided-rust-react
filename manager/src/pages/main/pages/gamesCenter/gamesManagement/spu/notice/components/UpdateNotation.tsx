@@ -7,7 +7,7 @@ import {
 } from '@ant-design/pro-components';
 import React from 'react';
 
-export default function CreateNotation() {
+export default function UpdateNotation() {
   return (
     <div>
       <ProFormText label="SpuId" name="spuId" readonly />

@@ -69,6 +69,8 @@ pub async fn get_sku_limit(
             "name" => data.name,
             "spu_id" => data.spu_id,
             "spu_name" => data.spu_name,
+            "scope" => limit*(page-1),
+            "limit" => limit
         },
     );
     match res {

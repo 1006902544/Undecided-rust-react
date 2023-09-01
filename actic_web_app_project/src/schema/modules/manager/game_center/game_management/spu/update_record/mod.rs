@@ -8,7 +8,7 @@ use validator::Validate;
 pub struct SpuUpdateRecord {
     pub id: u64,
     pub spu_id: u64,
-    pub spu_title: String,
+    pub spu_name: String,
     pub title: String,
     pub content: Option<String>,
     #[schema(value_type = String)]

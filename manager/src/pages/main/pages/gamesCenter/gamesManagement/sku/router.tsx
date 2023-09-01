@@ -1,6 +1,6 @@
 import { Suspense, lazy } from 'react';
 
-const SkuManagement = lazy(() => import('./SkuManagement/list'));
+const SkuManagement = lazy(() => import('./skuManagement/list'));
 
 export const skuRouter = {
   path: 'skus',
