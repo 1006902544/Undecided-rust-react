@@ -6,7 +6,7 @@ import { Button, Image } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import type { SpuLimit } from '@/libs/api/schema';
 import { ProFormText } from '@ant-design/pro-components';
-import { CreateNotation } from './components';
+import { CheckSkuModalButton, CreateNotation } from './components';
 
 export default function ListContainer() {
   const navigate = useNavigate();
@@ -117,10 +117,12 @@ export default function ListContainer() {
         align: 'center',
         fixed: 'right',
         title: 'OPTION',
-        width: 240,
+        width: 340,
         render(_, { id, name }) {
           return (
             <div className="flex justify-center">
+              <CheckSkuModalButton spu_id={id} spu_name={name} />
+
               <CreateButton
                 meta={{
                   spuId: id,

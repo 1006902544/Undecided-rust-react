@@ -5,9 +5,9 @@ use utoipa::{IntoParams, ToSchema};
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, FromRow)]
 pub struct Sku {
-    pub id: String,
+    pub id: u64,
     pub name: String,
-    pub spu_id: String,
+    pub spu_id: u64,
     pub spu_name: String,
     pub description: Option<String>,
     pub cover_url: String,
@@ -24,14 +24,14 @@ pub struct Sku {
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
 pub struct SkuUpdateReq {
     pub spu_id: String,
+    pub spu_name: String,
     pub id: Option<String>,
     pub name: String,
     pub description: Option<String>,
     pub cover_url: String,
     pub cover_name: String,
-    pub price: f64,
-    #[schema(value_type = String)]
-    pub issue_time: NaiveDateTime,
+    pub price: String,
+    pub issue_time: String,
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, IntoParams)]

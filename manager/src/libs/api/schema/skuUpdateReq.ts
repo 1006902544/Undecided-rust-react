@@ -12,6 +12,7 @@ export interface SkuUpdateReq {
   id?: string | null;
   issue_time: string;
   name: string;
-  price: number;
+  price: string;
   spu_id: string;
+  spu_name: string;
 }
