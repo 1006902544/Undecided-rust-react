@@ -10,11 +10,11 @@ export interface Sku {
   cover_url: string;
   create_time: string;
   description?: string | null;
-  id: string;
+  id: number;
   issue_time: string;
   name: string;
   price: number;
-  spu_id: string;
+  spu_id: number;
   spu_name: string;
   update_time: string;
 }

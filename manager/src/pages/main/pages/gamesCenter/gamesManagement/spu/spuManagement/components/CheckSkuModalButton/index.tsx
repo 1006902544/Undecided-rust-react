@@ -1,5 +1,5 @@
 import type { Resource } from '@/components';
-import { getSkuLimit, updateSku } from '@/libs/api';
+import { deleteSku, getSkuLimit, updateSku } from '@/libs/api';
 export { default as CheckSkuModalButton } from './CheckSkuModalButton';
 
 export const name = 'gamesManagementSpuCheckSkuResource';
@@ -17,8 +17,6 @@ export const gamesManagementSpuCheckSkuResource: Resource = {
   },
 
   async create(data) {
-    console.log(data);
-
     const params = {
       ...data,
       issue_time: data.issue_time.format('YYYY-MM-DD HH:mm:ss'),
@@ -29,5 +27,11 @@ export const gamesManagementSpuCheckSkuResource: Resource = {
     };
     delete params.cover;
     return await updateSku(params);
+  },
+
+  async delete({ id }) {
+    if (id) {
+      return await deleteSku({ id: id as string });
+    }
   },
 };

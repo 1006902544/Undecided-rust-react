@@ -1,5 +1,5 @@
 import type { Resource } from '@/components';
-import { getSkuNotice } from '@/libs/api';
+import { deleteSkuNotice, getSkuNotice } from '@/libs/api';
 
 export const name = 'gamesCenterManagementSkuNoticeResource';
 
@@ -13,5 +13,11 @@ export const gamesCenterManagementSkuNoticeResource: Resource = {
       current: res.current,
       total: res.total,
     };
+  },
+
+  async delete({ id }) {
+    if (id) {
+      return await deleteSkuNotice({ id: id as string });
+    }
   },
 };

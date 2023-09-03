@@ -35,6 +35,7 @@ export * from './deletePermissionParams';
 export * from './deletePermissionQuery';
 export * from './deleteRouterParams';
 export * from './deleteSkuNoticeParams';
+export * from './deleteSkuParams';
 export * from './deleteSpuDetailReq';
 export * from './deleteSpuNoticeParams';
 export * from './deleteSpuParams';

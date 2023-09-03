@@ -1,5 +1,5 @@
 import type { Resource } from '@/components';
-import { getSkuLimit } from '@/libs/api';
+import { getSkuLimit, updateSkuNotice } from '@/libs/api';
 
 export const name = 'gamesCenterSkuManagementResource';
 
@@ -13,5 +13,13 @@ export const gamesCenterSkuManagementResource: Resource = {
       current: res.current,
       total: res.total,
     };
+  },
+
+  async create(data) {
+    return await updateSkuNotice({
+      ...data,
+      publish_time: data.publish_time?.format('YYYY-MM-DD HH:mm:ss'),
+      sku_id: data.sku_id.toString(),
+    });
   },
 };

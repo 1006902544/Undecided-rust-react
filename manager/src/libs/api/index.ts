@@ -25,7 +25,7 @@ import type {
   SkuRes,
   GetSkuLimitParams,
   SkuUpdateReq,
-  SkuDeleteReq,
+  DeleteSkuParams,
   SkuNoticeRes,
   GetSkuNoticeParams,
   SkuNoticeUpdateResData,
@@ -368,12 +368,11 @@ export const useUpdateSku = <TError = ErrorType<unknown>,
  * @summary delete sku
  */
 export const deleteSku = (
-    skuDeleteReq: SkuDeleteReq,
+    params: DeleteSkuParams,
  options?: SecondParameter<typeof custom_instance>,) => {
       return custom_instance<ResPonseString>(
       {url: `/manager/gamesCenter/gamesManagement/sku`, method: 'delete',
-      headers: {'Content-Type': 'application/json', },
-      data: skuDeleteReq
+        params
     },
       options);
     }
@@ -382,17 +381,17 @@ export const deleteSku = (
 
 export const getDeleteSkuMutationOptions = <TError = ErrorType<unknown>,
     
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSku>>, TError,{data: SkuDeleteReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
-): UseMutationOptions<Awaited<ReturnType<typeof deleteSku>>, TError,{data: SkuDeleteReq}, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSku>>, TError,{params: DeleteSkuParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteSku>>, TError,{params: DeleteSkuParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteSku>>, {data: SkuDeleteReq}> = (props) => {
-          const {data} = props ?? {};
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteSku>>, {params: DeleteSkuParams}> = (props) => {
+          const {params} = props ?? {};
 
-          return  deleteSku(data,requestOptions)
+          return  deleteSku(params,requestOptions)
         }
 
         
@@ -401,7 +400,7 @@ export const getDeleteSkuMutationOptions = <TError = ErrorType<unknown>,
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteSkuMutationResult = NonNullable<Awaited<ReturnType<typeof deleteSku>>>
-    export type DeleteSkuMutationBody = SkuDeleteReq
+    
     export type DeleteSkuMutationError = ErrorType<unknown>
 
     /**
@@ -409,7 +408,7 @@ export const getDeleteSkuMutationOptions = <TError = ErrorType<unknown>,
  */
 export const useDeleteSku = <TError = ErrorType<unknown>,
     
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSku>>, TError,{data: SkuDeleteReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSku>>, TError,{params: DeleteSkuParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
     
       const mutationOptions = getDeleteSkuMutationOptions(options);

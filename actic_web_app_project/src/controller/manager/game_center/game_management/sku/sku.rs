@@ -84,7 +84,7 @@ pub async fn update_sku(
 #[utoipa::path(
   delete,
   path = "/manager/gamesCenter/gamesManagement/sku",
-  request_body = SkuDeleteReq,
+  params (SkuDeleteReq),
   responses(
     (
       status = 200,
