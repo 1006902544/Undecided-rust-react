@@ -20,6 +20,7 @@ use crate::schema::modules::{
             router::*,
         },
         upload::*,
+        user::email::*,
     },
 };
 use utoipa::OpenApi;
@@ -87,6 +88,9 @@ use utoipa::OpenApi;
         super::game_center::game_management::sku::notice::get_sku_notice,
         super::game_center::game_management::sku::notice::update_sku_notice,
         super::game_center::game_management::sku::notice::delete_sku_notice,
+        //用户-验证码
+        super::user::email::send_email,
+        super::user::email::verify_email,
     ),
     components(schemas(
         //文件通用
@@ -135,7 +139,9 @@ use utoipa::OpenApi;
         //sku公告
         SkuNotice,SkuNoticeLimitReq,SkuNoticeUpdateReq,SkuNoticeDeleteReq,SkuNoticeRes,SkuNoticeLimitRes,SkuNoticeUpdateRes,SkuNoticeUpdateResData,
         //素材库-图片
-        ImagesObject,UpdateImageObjectReq,DeleteImageObjectReq,MaterialImageLimitReq,MaterialImageRes,MaterialImageLimitRes,BatchDeleteMaterialImagesReq
+        ImagesObject,UpdateImageObjectReq,DeleteImageObjectReq,MaterialImageLimitReq,MaterialImageRes,MaterialImageLimitRes,BatchDeleteMaterialImagesReq,
+        //用户-发送验证码
+        SendEmailReq,EmailRow
     ))
 )]
 pub struct ApiDoc;

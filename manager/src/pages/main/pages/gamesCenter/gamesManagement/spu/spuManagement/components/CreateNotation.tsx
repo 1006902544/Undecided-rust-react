@@ -31,10 +31,12 @@ export default function CreateNotation() {
         fieldProps={{ children: <Toolbar /> }}
         label="Content"
         name="content"
+        rules={[{ required: true, message: 'please input notice content' }]}
       />
       <ProFormSelect
         label="PublishType"
         name="publishType"
+        rules={[{ required: true, message: 'please input publish type' }]}
         options={[
           { label: 'manual', value: 'manual' },
           { label: 'auto', value: 'auto' },
@@ -47,7 +49,13 @@ export default function CreateNotation() {
       >
         {({ getFieldValue }) =>
           getFieldValue('publishType') === 'auto' ? (
-            <ProFormDateTimePicker name="publishTime" label="PublishTime" />
+            <ProFormDateTimePicker
+              name="publishTime"
+              label="PublishTime"
+              rules={[
+                { required: true, message: 'please chose notice publish time' },
+              ]}
+            />
           ) : null
         }
       </ProForm.Item>

@@ -118,6 +118,7 @@ pub fn get_unless_tree() -> Vec<UnlessTree> {
                     Some(r"^/manager/upload/static/"),
                     None,
                 ),
+                UnlessTree::new("/user/email", Some("POST"), Some(r"^/user/email"), None),
             ]),
         ),
     ]

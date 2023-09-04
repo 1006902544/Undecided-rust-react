@@ -5,3 +5,4 @@ pub mod material_library;
 pub mod permission;
 pub mod router;
 pub mod upload;
+pub mod user;
