@@ -83,7 +83,13 @@ import type {
   AssociateRouterAuthReq,
   RouterAssociateAuthLimitRes,
   GetAuthWithRouterParams,
-  AccessKeyRes
+  AccessKeyRes,
+  UserRes,
+  GetUserLimitParams,
+  BannedUser,
+  UnblockUserParams,
+  SendEmailReq,
+  EmailRow
 } from './schema'
 import { custom_instance } from './custom_instance';
 import type { ErrorType } from './custom_instance';
@@ -2719,3 +2725,252 @@ export const useGetAccessKey = <TData = Awaited<ReturnType<typeof getAccessKey>>
 }
 
 
+export const getUserLimit = (
+    params?: GetUserLimitParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<UserRes>(
+      {url: `/manager/user`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetUserLimitQueryKey = (params?: GetUserLimitParams,) => [`/manager/user`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetUserLimitQueryOptions = <TData = Awaited<ReturnType<typeof getUserLimit>>, TError = ErrorType<unknown>>(params?: GetUserLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getUserLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getUserLimit>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetUserLimitQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserLimit>>> = ({ signal }) => getUserLimit(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetUserLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getUserLimit>>>
+export type GetUserLimitQueryError = ErrorType<unknown>
+
+export const useGetUserLimit = <TData = Awaited<ReturnType<typeof getUserLimit>>, TError = ErrorType<unknown>>(
+ params?: GetUserLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getUserLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetUserLimitQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+export const bannedUser = (
+    bannedUser: BannedUser,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/user/banned`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: bannedUser
+    },
+      options);
+    }
+  
+
+
+export const getBannedUserMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bannedUser>>, TError,{data: BannedUser}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof bannedUser>>, TError,{data: BannedUser}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof bannedUser>>, {data: BannedUser}> = (props) => {
+          const {data} = props ?? {};
+
+          return  bannedUser(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type BannedUserMutationResult = NonNullable<Awaited<ReturnType<typeof bannedUser>>>
+    export type BannedUserMutationBody = BannedUser
+    export type BannedUserMutationError = ErrorType<unknown>
+
+    export const useBannedUser = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bannedUser>>, TError,{data: BannedUser}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getBannedUserMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+export const unblockUser = (
+    params: UnblockUserParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/user/banned`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getUnblockUserMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof unblockUser>>, TError,{params: UnblockUserParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof unblockUser>>, TError,{params: UnblockUserParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof unblockUser>>, {params: UnblockUserParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  unblockUser(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UnblockUserMutationResult = NonNullable<Awaited<ReturnType<typeof unblockUser>>>
+    
+    export type UnblockUserMutationError = ErrorType<unknown>
+
+    export const useUnblockUser = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof unblockUser>>, TError,{params: UnblockUserParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getUnblockUserMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * send email
+ * @summary send email
+ */
+export const sendEmail = (
+    sendEmailReq: SendEmailReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/user/email/send`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: sendEmailReq
+    },
+      options);
+    }
+  
+
+
+export const getSendEmailMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof sendEmail>>, TError,{data: SendEmailReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof sendEmail>>, TError,{data: SendEmailReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof sendEmail>>, {data: SendEmailReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  sendEmail(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type SendEmailMutationResult = NonNullable<Awaited<ReturnType<typeof sendEmail>>>
+    export type SendEmailMutationBody = SendEmailReq
+    export type SendEmailMutationError = ErrorType<unknown>
+
+    /**
+ * @summary send email
+ */
+export const useSendEmail = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof sendEmail>>, TError,{data: SendEmailReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getSendEmailMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * verify email
+ * @summary verify email
+ */
+export const verifyEmail = (
+    emailRow: EmailRow,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/user/email/verify`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: emailRow
+    },
+      options);
+    }
+  
+
+
+export const getVerifyEmailMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof verifyEmail>>, TError,{data: EmailRow}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof verifyEmail>>, TError,{data: EmailRow}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof verifyEmail>>, {data: EmailRow}> = (props) => {
+          const {data} = props ?? {};
+
+          return  verifyEmail(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type VerifyEmailMutationResult = NonNullable<Awaited<ReturnType<typeof verifyEmail>>>
+    export type VerifyEmailMutationBody = EmailRow
+    export type VerifyEmailMutationError = ErrorType<unknown>
+
+    /**
+ * @summary verify email
+ */
+export const useVerifyEmail = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof verifyEmail>>, TError,{data: EmailRow}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getVerifyEmailMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    

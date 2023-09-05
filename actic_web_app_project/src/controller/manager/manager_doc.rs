@@ -20,7 +20,7 @@ use crate::schema::modules::{
             router::*,
         },
         upload::*,
-        user::email::*,
+        user::{email::*, user::*},
     },
 };
 use utoipa::OpenApi;
@@ -91,6 +91,11 @@ use utoipa::OpenApi;
         //用户-验证码
         super::user::email::send_email,
         super::user::email::verify_email,
+        //用户管理
+        super::user::user::get_user_limit,
+        super::user::user::banned_user,
+        super::user::user::unblock_user,
+
     ),
     components(schemas(
         //文件通用
@@ -141,7 +146,9 @@ use utoipa::OpenApi;
         //素材库-图片
         ImagesObject,UpdateImageObjectReq,DeleteImageObjectReq,MaterialImageLimitReq,MaterialImageRes,MaterialImageLimitRes,BatchDeleteMaterialImagesReq,
         //用户-发送验证码
-        SendEmailReq,EmailRow
+        SendEmailReq,EmailRow,
+        //用户管理
+        User,UserDetail,BannedUser,UnblockUser,GetUserLimitReq,UserLimitRes,UserRes
     ))
 )]
 pub struct ApiDoc;

@@ -21,7 +21,10 @@ use crate::controller::manager::{
         router::*,
     },
     upload::{get_access_key, get_static_image, upload_image},
-    user::email::{send_email, verify_email},
+    user::{
+        email::{send_email, verify_email},
+        user::*,
+    },
 };
 use actix_web::{web, web::ServiceConfig};
 use utoipa::OpenApi;
@@ -142,11 +145,15 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                     .service(batch_delete_images),
             )
             .service(
-                web::scope("user").service(
-                    web::scope("email")
-                        .service(send_email)
-                        .service(verify_email),
-                ),
+                web::scope("user")
+                    .service(get_user_limit)
+                    .service(unblock_user)
+                    .service(banned_user)
+                    .service(
+                        web::scope("email")
+                            .service(send_email)
+                            .service(verify_email),
+                    ),
             ),
     );
 }

@@ -15,6 +15,7 @@ use super::{
     permission::{associate::auth::*, permission::Permission},
     router::{associate::auth::*, router::*},
     upload::*,
+    user::user::User,
 };
 use crate::schema::modules::admin::admin::AdminInfo;
 
@@ -50,7 +51,9 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //sku-公告
     SkuNoticeRes = ResponseData<SkuNoticeLimitRes>,SkuNoticeUpdateResData= ResponseData<SkuNoticeUpdateRes>,
     //素材库-图片
-    MaterialImageRes = ResponseData<MaterialImageLimitRes>
+    MaterialImageRes = ResponseData<MaterialImageLimitRes>,
+    //用户管理
+    UserRes = ResponseData<UserLimitRes>
 )]
 pub struct ResponseData<B> {
     pub data: B,
@@ -104,7 +107,9 @@ impl<B> ResponseData<B> {
     //sku公告
     SkuNoticeLimitRes = LimitResults<SkuNotice>,
     //素材库-图片
-    MaterialImageLimitRes = LimitResults<ImagesObject>
+    MaterialImageLimitRes = LimitResults<ImagesObject>,
+    //用户管理
+    UserLimitRes = LimitResults<User>
 )]
 pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,
