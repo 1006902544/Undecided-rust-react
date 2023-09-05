@@ -2,6 +2,7 @@ import { Menu, MenuProps } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MenuContext } from '@/components';
+import styled from 'styled-components';
 
 export default function Sider() {
   const navigate = useNavigate();
@@ -31,15 +32,28 @@ export default function Sider() {
   }, [curPathname, res?.data]);
 
   return (
-    <aside className="h-full w-[260px]">
+    <Container className="h-full w-[260px]">
       <Menu
-        className="h-full"
+        className="h-full overflow-y-scroll"
         style={{ width: '100%' }}
         mode="inline"
         items={items as any}
         onSelect={onSelect}
         selectedKeys={selectedKey}
       />
-    </aside>
+    </Container>
   );
 }
+
+const Container = styled.aside`
+  .ant-menu {
+    &::-webkit-scrollbar {
+      background-color: rgba(0, 0, 0, 0);
+      width: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(25, 28, 214, 0.3);
+      border-radius: 5px;
+    }
+  }
+`;

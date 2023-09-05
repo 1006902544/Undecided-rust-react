@@ -149,6 +149,7 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                     .service(get_user_limit)
                     .service(unblock_user)
                     .service(banned_user)
+                    .service(get_user_detail)
                     .service(
                         web::scope("email")
                             .service(send_email)

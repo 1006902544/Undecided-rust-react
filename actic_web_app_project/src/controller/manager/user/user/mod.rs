@@ -24,6 +24,7 @@ use crate::{
   )
 )]
 #[get("")]
+///get custom user limit
 pub async fn get_user_limit(
     pool: Data<Pool>,
     data: Query<GetUserLimitReq>,
@@ -33,6 +34,37 @@ pub async fn get_user_limit(
     let has_per = has_permission(&mut conn, &req);
     if has_per {
         match user_server::get_user_limit(&mut conn, data.into_inner()).await {
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+            Err(e) => Err(e),
+        }
+    } else {
+        Err(MyError::permissions_error())
+    }
+}
+
+#[utoipa::path(
+  get,
+  path = "/manager/user/detail",
+  params (GetUserDetailReq),
+  responses (
+    (
+      status = 200,
+      description = "success",
+      body = UserDetailRes
+    )
+  )
+)]
+#[get("/detail")]
+///get custom user limit
+pub async fn get_user_detail(
+    pool: Data<Pool>,
+    data: Query<GetUserDetailReq>,
+    req: HttpRequest,
+) -> Result<impl Responder, impl ResponseError> {
+    let mut conn = pool.get_conn().unwrap();
+    let has_per = has_permission(&mut conn, &req);
+    if has_per {
+        match user_server::get_user_detail(&mut conn, data.id).await {
             Ok(res) => Ok(ResponseData::new(res).into_json_response()),
             Err(e) => Err(e),
         }
@@ -54,6 +86,7 @@ pub async fn get_user_limit(
   )
 )]
 #[post("/banned")]
+///banned custom user
 pub async fn banned_user(
     pool: Data<Pool>,
     data: Json<BannedUser>,
@@ -84,6 +117,7 @@ pub async fn banned_user(
   )
 )]
 #[delete("/banned")]
+///unblock custom user
 pub async fn unblock_user(
     pool: Data<Pool>,
     data: Query<UnblockUser>,

@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import { Controller, Marker } from '../';
 import type { MapContainerInterface, MapNodeInterface } from './MapContainer.d';
-import { setOptions, type LatLng } from 'leaflet';
+import { type LatLng } from 'leaflet';
 import { MapContextInterface } from '../index.d';
 import styled from 'styled-components';
 

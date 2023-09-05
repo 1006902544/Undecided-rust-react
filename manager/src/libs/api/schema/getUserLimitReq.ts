@@ -8,7 +8,6 @@
 export interface GetUserLimitReq {
   gender?: number | null;
   id?: string | null;
-  is_banned?: number | null;
   limit?: number | null;
   nickname?: string | null;
   page?: number | null;

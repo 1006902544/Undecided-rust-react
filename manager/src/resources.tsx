@@ -11,6 +11,7 @@ import {
   gamesCenterSkuManagementResource,
   gamesCenterManagementSkuNoticeResource,
   gamesManagementSpuCheckSkuResource,
+  customUserManagementResource,
 } from './pages/main/resources';
 
 export const resources = [
@@ -26,4 +27,5 @@ export const resources = [
   gamesCenterSkuManagementResource,
   gamesCenterManagementSkuNoticeResource,
   gamesManagementSpuCheckSkuResource,
+  customUserManagementResource,
 ];

@@ -47,6 +47,12 @@ module.exports = {
               useQuery: true,
             },
           },
+          //获取c端用户详情
+          getUserDetail: {
+            query: {
+              useQuery: true,
+            },
+          },
         },
       },
     },

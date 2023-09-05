@@ -1,0 +1,1 @@
+export { customUserManagementResource } from './userManagement';

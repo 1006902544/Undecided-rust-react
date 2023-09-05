@@ -10,7 +10,6 @@ id?: string | null;
 username?: string | null;
 nickname?: string | null;
 gender?: number | null;
-is_banned?: number | null;
 limit?: number | null;
 page?: number | null;
 };

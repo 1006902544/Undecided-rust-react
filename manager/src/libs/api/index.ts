@@ -88,6 +88,8 @@ import type {
   GetUserLimitParams,
   BannedUser,
   UnblockUserParams,
+  UserDetailRes,
+  GetUserDetailParams,
   SendEmailReq,
   EmailRow
 } from './schema'
@@ -2725,6 +2727,10 @@ export const useGetAccessKey = <TData = Awaited<ReturnType<typeof getAccessKey>>
 }
 
 
+/**
+ * get custom user limit
+ * @summary get custom user limit
+ */
 export const getUserLimit = (
     params?: GetUserLimitParams,
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
@@ -2758,6 +2764,9 @@ const {query: queryOptions, request: requestOptions} = options ?? {};
 export type GetUserLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getUserLimit>>>
 export type GetUserLimitQueryError = ErrorType<unknown>
 
+/**
+ * @summary get custom user limit
+ */
 export const useGetUserLimit = <TData = Awaited<ReturnType<typeof getUserLimit>>, TError = ErrorType<unknown>>(
  params?: GetUserLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getUserLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 
@@ -2773,6 +2782,10 @@ export const useGetUserLimit = <TData = Awaited<ReturnType<typeof getUserLimit>>
 }
 
 
+/**
+ * banned custom user
+ * @summary banned custom user
+ */
 export const bannedUser = (
     bannedUser: BannedUser,
  options?: SecondParameter<typeof custom_instance>,) => {
@@ -2810,7 +2823,10 @@ export const getBannedUserMutationOptions = <TError = ErrorType<unknown>,
     export type BannedUserMutationBody = BannedUser
     export type BannedUserMutationError = ErrorType<unknown>
 
-    export const useBannedUser = <TError = ErrorType<unknown>,
+    /**
+ * @summary banned custom user
+ */
+export const useBannedUser = <TError = ErrorType<unknown>,
     
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bannedUser>>, TError,{data: BannedUser}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
@@ -2820,6 +2836,10 @@ export const getBannedUserMutationOptions = <TError = ErrorType<unknown>,
       return useMutation(mutationOptions);
     }
     
+/**
+ * unblock custom user
+ * @summary unblock custom user
+ */
 export const unblockUser = (
     params: UnblockUserParams,
  options?: SecondParameter<typeof custom_instance>,) => {
@@ -2856,7 +2876,10 @@ export const getUnblockUserMutationOptions = <TError = ErrorType<unknown>,
     
     export type UnblockUserMutationError = ErrorType<unknown>
 
-    export const useUnblockUser = <TError = ErrorType<unknown>,
+    /**
+ * @summary unblock custom user
+ */
+export const useUnblockUser = <TError = ErrorType<unknown>,
     
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof unblockUser>>, TError,{params: UnblockUserParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
@@ -2866,6 +2889,61 @@ export const getUnblockUserMutationOptions = <TError = ErrorType<unknown>,
       return useMutation(mutationOptions);
     }
     
+/**
+ * get custom user limit
+ * @summary get custom user limit
+ */
+export const getUserDetail = (
+    params: GetUserDetailParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<UserDetailRes>(
+      {url: `/manager/user/detail`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetUserDetailQueryKey = (params: GetUserDetailParams,) => [`/manager/user/detail`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetUserDetailQueryOptions = <TData = Awaited<ReturnType<typeof getUserDetail>>, TError = ErrorType<unknown>>(params: GetUserDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getUserDetail>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getUserDetail>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetUserDetailQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserDetail>>> = ({ signal }) => getUserDetail(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetUserDetailQueryResult = NonNullable<Awaited<ReturnType<typeof getUserDetail>>>
+export type GetUserDetailQueryError = ErrorType<unknown>
+
+/**
+ * @summary get custom user limit
+ */
+export const useGetUserDetail = <TData = Awaited<ReturnType<typeof getUserDetail>>, TError = ErrorType<unknown>>(
+ params: GetUserDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getUserDetail>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetUserDetailQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
 /**
  * send email
  * @summary send email

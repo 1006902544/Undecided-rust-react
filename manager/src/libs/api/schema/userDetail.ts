@@ -7,6 +7,9 @@
 
 export interface UserDetail {
   avatar_url: string;
+  banned_date?: number | null;
+  banned_reason?: string | null;
+  banned_start_time: string;
   birthday: string;
   create_time: string;
   email: string;

@@ -93,6 +93,7 @@ use utoipa::OpenApi;
         super::user::email::verify_email,
         //用户管理
         super::user::user::get_user_limit,
+        super::user::user::get_user_detail,
         super::user::user::banned_user,
         super::user::user::unblock_user,
 
@@ -148,7 +149,7 @@ use utoipa::OpenApi;
         //用户-发送验证码
         SendEmailReq,EmailRow,
         //用户管理
-        User,UserDetail,BannedUser,UnblockUser,GetUserLimitReq,UserLimitRes,UserRes
+        User,UserDetail,BannedUser,UnblockUser,GetUserLimitReq,UserLimitRes,UserRes,GetUserDetailReq
     ))
 )]
 pub struct ApiDoc;

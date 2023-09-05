@@ -15,7 +15,7 @@ use super::{
     permission::{associate::auth::*, permission::Permission},
     router::{associate::auth::*, router::*},
     upload::*,
-    user::user::User,
+    user::user::*,
 };
 use crate::schema::modules::admin::admin::AdminInfo;
 
@@ -53,7 +53,7 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //素材库-图片
     MaterialImageRes = ResponseData<MaterialImageLimitRes>,
     //用户管理
-    UserRes = ResponseData<UserLimitRes>
+    UserRes = ResponseData<UserLimitRes>,UserDetailRes = ResponseData<UserDetail>
 )]
 pub struct ResponseData<B> {
     pub data: B,

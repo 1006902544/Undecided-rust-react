@@ -5,8 +5,6 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface BannedUser {
-  date: number;
+export interface GetUserDetailReq {
   id: number;
-  reason?: string | null;
 }
