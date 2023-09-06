@@ -60,6 +60,7 @@ declare module 'slate' {
 }
 
 export interface EditorProps {
+  readOnly?: boolean;
   initialValue?: Descendant[];
   children?: React.ReactNode;
   onChange?: ((value: Descendant[]) => void) | undefined;

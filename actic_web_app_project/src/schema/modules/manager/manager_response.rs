@@ -5,6 +5,7 @@ use utoipa::ToSchema;
 
 use super::{
     game_center::{
+        comments::comments::*,
         game_management::{
             sku::{notice::*, sku::Sku},
             spu::{notice::*, spu::*, update_record::*},
@@ -53,7 +54,10 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //素材库-图片
     MaterialImageRes = ResponseData<MaterialImageLimitRes>,
     //用户管理
-    UserRes = ResponseData<UserLimitRes>,UserDetailRes = ResponseData<UserDetail>
+    UserRes = ResponseData<UserLimitRes>,UserDetailRes = ResponseData<UserDetail>,
+    //游戏中心-评论
+    CommentRes = ResponseData<CommentLimitRes>
+
 )]
 pub struct ResponseData<B> {
     pub data: B,
@@ -109,7 +113,9 @@ impl<B> ResponseData<B> {
     //素材库-图片
     MaterialImageLimitRes = LimitResults<ImagesObject>,
     //用户管理
-    UserLimitRes = LimitResults<User>
+    UserLimitRes = LimitResults<User>,
+    //游戏中心
+    CommentLimitRes = LimitResults<Comment>,
 )]
 pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,

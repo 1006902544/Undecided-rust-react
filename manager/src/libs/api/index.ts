@@ -22,6 +22,10 @@ import type {
   AdminInfoRes,
   ResPonseString,
   LoginBody,
+  CommentRes,
+  GetCommentLimitParams,
+  RecoverCommentReq,
+  DeleteCommentParams,
   SkuRes,
   GetSkuLimitParams,
   SkuUpdateReq,
@@ -258,6 +262,168 @@ export const useSignIn = <TError = ErrorType<unknown>,
 ) => {
     
       const mutationOptions = getSignInMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * get comment limit
+ * @summary get comment limit
+ */
+export const getCommentLimit = (
+    params: GetCommentLimitParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<CommentRes>(
+      {url: `/manager/gamesCenter/comments`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetCommentLimitQueryKey = (params: GetCommentLimitParams,) => [`/manager/gamesCenter/comments`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetCommentLimitQueryOptions = <TData = Awaited<ReturnType<typeof getCommentLimit>>, TError = ErrorType<unknown>>(params: GetCommentLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCommentLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getCommentLimit>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCommentLimitQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCommentLimit>>> = ({ signal }) => getCommentLimit(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetCommentLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getCommentLimit>>>
+export type GetCommentLimitQueryError = ErrorType<unknown>
+
+/**
+ * @summary get comment limit
+ */
+export const useGetCommentLimit = <TData = Awaited<ReturnType<typeof getCommentLimit>>, TError = ErrorType<unknown>>(
+ params: GetCommentLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCommentLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetCommentLimitQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * delete comments physic/logic
+ * @summary delete comments physic/logic
+ */
+export const recoverComment = (
+    recoverCommentReq: RecoverCommentReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/gamesCenter/comments`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: recoverCommentReq
+    },
+      options);
+    }
+  
+
+
+export const getRecoverCommentMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof recoverComment>>, TError,{data: RecoverCommentReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof recoverComment>>, TError,{data: RecoverCommentReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof recoverComment>>, {data: RecoverCommentReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  recoverComment(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type RecoverCommentMutationResult = NonNullable<Awaited<ReturnType<typeof recoverComment>>>
+    export type RecoverCommentMutationBody = RecoverCommentReq
+    export type RecoverCommentMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete comments physic/logic
+ */
+export const useRecoverComment = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof recoverComment>>, TError,{data: RecoverCommentReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getRecoverCommentMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * delete comments physic/logic
+ * @summary delete comments physic/logic
+ */
+export const deleteComment = (
+    params: DeleteCommentParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/gamesCenter/comments`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteCommentMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteComment>>, TError,{params: DeleteCommentParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteComment>>, TError,{params: DeleteCommentParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteComment>>, {params: DeleteCommentParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteComment(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteCommentMutationResult = NonNullable<Awaited<ReturnType<typeof deleteComment>>>
+    
+    export type DeleteCommentMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete comments physic/logic
+ */
+export const useDeleteComment = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteComment>>, TError,{params: DeleteCommentParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteCommentMutationOptions(options);
      
       return useMutation(mutationOptions);
     }

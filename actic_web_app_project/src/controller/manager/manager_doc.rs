@@ -2,6 +2,7 @@ use crate::schema::modules::{
     admin::admin::*,
     manager::{
         game_center::{
+            comments::comments::*,
             game_management::{
                 sku::{notice::*, sku::*},
                 spu::{notice::*, spu::*, update_record::*},
@@ -96,6 +97,10 @@ use utoipa::OpenApi;
         super::user::user::get_user_detail,
         super::user::user::banned_user,
         super::user::user::unblock_user,
+        //游戏中心-评论管理
+        super::game_center::comments::comments::get_comment_limit,
+        super::game_center::comments::comments::delete_comment,
+        super::game_center::comments::comments::recover_comment,
 
     ),
     components(schemas(
@@ -149,7 +154,9 @@ use utoipa::OpenApi;
         //用户-发送验证码
         SendEmailReq,EmailRow,
         //用户管理
-        User,UserDetail,BannedUser,UnblockUser,GetUserLimitReq,UserLimitRes,UserRes,GetUserDetailReq
+        User,UserDetail,BannedUser,UnblockUser,GetUserLimitReq,UserLimitRes,UserRes,GetUserDetailReq,
+        //评论管理
+        Comment,DeleteCommentReq,CommentLimitReq,CommentRes,CommentLimitRes,RecoverCommentReq
     ))
 )]
 pub struct ApiDoc;

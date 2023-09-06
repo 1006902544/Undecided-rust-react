@@ -5,7 +5,11 @@ export {
   MenuContext,
   useMenuContext,
 } from './MenuProvider';
-export { default as ModalButton } from './ModalButton';
+export {
+  default as ModalButton,
+  useModalButtonContext,
+  ModalButtonContext,
+} from './ModalButton';
 export { default as ProFormHexColorPicker } from './ProFormHexColorPicker';
 export {
   default as DraggerUpload,

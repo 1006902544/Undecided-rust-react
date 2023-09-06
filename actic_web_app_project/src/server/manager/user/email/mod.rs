@@ -2,10 +2,7 @@ use actix_web::http::StatusCode;
 use mysql::{prelude::Queryable, PooledConn};
 use mysql_common::params;
 
-use crate::{
-    app::error::MyError,
-    schema::modules::manager::user::email::{EmailRow, SendEmailReq},
-};
+use crate::{app::error::MyError, schema::modules::manager::user::email::EmailRow};
 
 pub async fn insert_email_if_none(
     conn: &mut PooledConn,
@@ -54,7 +51,7 @@ pub async fn verify_email(conn: &mut PooledConn, data: EmailRow) -> Result<Strin
     );
     match res {
         Ok(res) => match res {
-            Some(res) => Ok("verify success".to_string()),
+            Some(_) => Ok("verify success".to_string()),
             None => Err(MyError {
                 name: "the captcha is wrong or expires".to_string(),
                 status: Some(StatusCode::FORBIDDEN),

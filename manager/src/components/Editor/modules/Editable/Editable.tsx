@@ -11,7 +11,11 @@ import {
 } from './components';
 import { CustomElement } from '../../index.d';
 
-export default function EditableContainer() {
+export default function EditableContainer({
+  readOnly,
+}: {
+  readOnly?: boolean;
+}) {
   const { editor } = useEditorContext();
 
   const renderElement = useCallback((props: RenderElementProps) => {
@@ -77,6 +81,7 @@ export default function EditableContainer() {
       renderElement={renderElement}
       renderLeaf={renderLeaf}
       onKeyDown={onKeyDown}
+      readOnly={readOnly}
     />
   );
 }

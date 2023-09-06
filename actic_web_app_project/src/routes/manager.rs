@@ -1,6 +1,7 @@
 use crate::controller::manager::{
     auth::auth::*,
     game_center::{
+        comments::comments::*,
         game_management::{
             sku::{
                 notice::*,
@@ -135,6 +136,12 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                                             .service(update_sku_notice),
                                     ),
                             ),
+                    )
+                    .service(
+                        web::scope("comments")
+                            .service(get_comment_limit)
+                            .service(delete_comment)
+                            .service(recover_comment),
                     ),
             )
             .service(

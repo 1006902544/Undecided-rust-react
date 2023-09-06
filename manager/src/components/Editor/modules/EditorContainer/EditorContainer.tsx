@@ -13,6 +13,7 @@ const initial = [
 export default function EditorContainer({
   children,
   initialValue = initial,
+  readOnly,
   ...props
 }: EditorProps) {
   const { editor } = useEditorContext();
@@ -27,7 +28,7 @@ export default function EditorContainer({
     <div className="shadow-xl rounded-[5px]">
       <Slate editor={editor} initialValue={props.value ?? initial} {...props}>
         {children}
-        <Editable />
+        <Editable readOnly={readOnly} />
       </Slate>
     </div>
   );
