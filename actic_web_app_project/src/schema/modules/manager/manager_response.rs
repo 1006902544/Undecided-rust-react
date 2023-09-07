@@ -12,6 +12,7 @@ use super::{
         },
         general::{company_studio::company_studio::*, tags::tags::*, types::types::GameType},
     },
+    market::activity::*,
     material_library::images::ImagesObject,
     permission::{associate::auth::*, permission::Permission},
     router::{associate::auth::*, router::*},
@@ -56,7 +57,9 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //用户管理
     UserRes = ResponseData<UserLimitRes>,UserDetailRes = ResponseData<UserDetail>,
     //游戏中心-评论
-    CommentRes = ResponseData<CommentLimitRes>
+    CommentRes = ResponseData<CommentLimitRes>,
+    //商城管理-活动管理
+    ActivityRes= ResponseData<ActivityLimitRes>,ActivityGoodsRes = ResponseData<ActivityGoodsLimitRes>,ActivityDetailRes=ResponseData<ActivityDetail>,
 
 )]
 pub struct ResponseData<B> {
@@ -116,6 +119,8 @@ impl<B> ResponseData<B> {
     UserLimitRes = LimitResults<User>,
     //游戏中心
     CommentLimitRes = LimitResults<Comment>,
+    //商城管理-活动管理
+    ActivityLimitRes = LimitResults<Activity>,ActivityGoodsLimitRes = LimitResults<ActivityGoods>
 )]
 pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,

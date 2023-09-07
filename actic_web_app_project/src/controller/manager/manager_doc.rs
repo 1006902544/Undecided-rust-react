@@ -11,6 +11,7 @@ use crate::schema::modules::{
         },
         manager::*,
         manager_response::*,
+        market::activity::*,
         material_library::images::*,
         permission::{
             associate::{associate::*, auth::*},
@@ -156,7 +157,9 @@ use utoipa::OpenApi;
         //用户管理
         User,UserDetail,BannedUser,UnblockUser,GetUserLimitReq,UserLimitRes,UserRes,GetUserDetailReq,
         //评论管理
-        Comment,DeleteCommentReq,CommentLimitReq,CommentRes,CommentLimitRes,RecoverCommentReq
+        Comment,DeleteCommentReq,CommentLimitReq,CommentRes,CommentLimitRes,RecoverCommentReq,
+        //商城管理-活动管理
+        ActivityUpdateStepOneReq,ActivityUpdateStepTwoReq,ActivityBundleInsertGoodsReq,ActivityBundleDeleteGoodsReq,ActivityPromotionUpdateGoodsReq,ActivityPromotionDeleteGoodsReq,ActivityBaseDetail,ActivityInfoDetail,ActivityDetail,ActivityGoods,ActivityGoodsLimitReq,Activity,ActivityLimitReq,ActivityRes,ActivityGoodsRes,ActivityDetailRes,ActivityLimitRes,ActivityGoodsLimitRes
     ))
 )]
 pub struct ApiDoc;
