@@ -1,5 +1,4 @@
 use actix_web::http::StatusCode;
-use futures_util::future::ok;
 use mysql::{prelude::Queryable, PooledConn, TxOpts};
 use mysql_common::params;
 
@@ -348,5 +347,16 @@ pub async fn get_activity_limit(
             })
         }
         Err(e) => Err(MyError::sql_error(e)),
+    }
+}
+
+//delete activity
+pub async fn delete_activity(conn: &mut PooledConn, id: u64) -> Result<String, MyError> {
+    let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
+    let stmt = "delete from activity_base where id=:id";
+    let res = trans.exec_drop(stmt, params! {"id" => id});
+    match after_update(trans, res).await {
+        Ok(_) => Ok("Delete activity success".to_string()),
+        Err(e) => Err(e),
     }
 }

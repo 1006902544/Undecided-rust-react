@@ -68,6 +68,19 @@ import type {
   GetGameTypesParams,
   UpdateGameTypeReq,
   DeleteGameTypeParams,
+  ActivityRes,
+  GetActivityLimitParams,
+  DeleteActivityParams,
+  ActivityUpdateStepOneReq,
+  ActivityDetailRes,
+  GetActivityDetailParams,
+  ActivityGoodsRes,
+  GetActivityGoodsLimitParams,
+  ActivityBundleInsertGoodsReq,
+  DeleteActivityGoodsBundleParams,
+  ActivityPromotionUpdateGoodsReq,
+  DeleteActivityGoodsPromotionParams,
+  ActivityUpdateStepTwoReq,
   MaterialImageRes,
   GetImagesParams,
   UpdateImageObjectReq,
@@ -1982,6 +1995,532 @@ export const useGetTypesList = <TData = Awaited<ReturnType<typeof getTypesList>>
 }
 
 
+/**
+ * get activity limit
+ * @summary get activity limit
+ */
+export const getActivityLimit = (
+    params?: GetActivityLimitParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<ActivityRes>(
+      {url: `/manager/market/activity`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetActivityLimitQueryKey = (params?: GetActivityLimitParams,) => [`/manager/market/activity`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetActivityLimitQueryOptions = <TData = Awaited<ReturnType<typeof getActivityLimit>>, TError = ErrorType<unknown>>(params?: GetActivityLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getActivityLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getActivityLimit>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetActivityLimitQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getActivityLimit>>> = ({ signal }) => getActivityLimit(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetActivityLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getActivityLimit>>>
+export type GetActivityLimitQueryError = ErrorType<unknown>
+
+/**
+ * @summary get activity limit
+ */
+export const useGetActivityLimit = <TData = Awaited<ReturnType<typeof getActivityLimit>>, TError = ErrorType<unknown>>(
+ params?: GetActivityLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getActivityLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetActivityLimitQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * delete activity
+ * @summary delete activity
+ */
+export const deleteActivity = (
+    params: DeleteActivityParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/market/activity`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteActivityMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteActivity>>, TError,{params: DeleteActivityParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteActivity>>, TError,{params: DeleteActivityParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteActivity>>, {params: DeleteActivityParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteActivity(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteActivityMutationResult = NonNullable<Awaited<ReturnType<typeof deleteActivity>>>
+    
+    export type DeleteActivityMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete activity
+ */
+export const useDeleteActivity = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteActivity>>, TError,{params: DeleteActivityParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteActivityMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * update activity base (step1)
+ * @summary update activity base (step1)
+ */
+export const updateActivityBase = (
+    activityUpdateStepOneReq: ActivityUpdateStepOneReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/market/activity/base`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: activityUpdateStepOneReq
+    },
+      options);
+    }
+  
+
+
+export const getUpdateActivityBaseMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityBase>>, TError,{data: ActivityUpdateStepOneReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateActivityBase>>, TError,{data: ActivityUpdateStepOneReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateActivityBase>>, {data: ActivityUpdateStepOneReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateActivityBase(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateActivityBaseMutationResult = NonNullable<Awaited<ReturnType<typeof updateActivityBase>>>
+    export type UpdateActivityBaseMutationBody = ActivityUpdateStepOneReq
+    export type UpdateActivityBaseMutationError = ErrorType<unknown>
+
+    /**
+ * @summary update activity base (step1)
+ */
+export const useUpdateActivityBase = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityBase>>, TError,{data: ActivityUpdateStepOneReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getUpdateActivityBaseMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * get activity detail
+ * @summary get activity detail
+ */
+export const getActivityDetail = (
+    params: GetActivityDetailParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<ActivityDetailRes>(
+      {url: `/manager/market/activity/detail`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetActivityDetailQueryKey = (params: GetActivityDetailParams,) => [`/manager/market/activity/detail`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetActivityDetailQueryOptions = <TData = Awaited<ReturnType<typeof getActivityDetail>>, TError = ErrorType<unknown>>(params: GetActivityDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getActivityDetail>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getActivityDetail>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetActivityDetailQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getActivityDetail>>> = ({ signal }) => getActivityDetail(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetActivityDetailQueryResult = NonNullable<Awaited<ReturnType<typeof getActivityDetail>>>
+export type GetActivityDetailQueryError = ErrorType<unknown>
+
+/**
+ * @summary get activity detail
+ */
+export const useGetActivityDetail = <TData = Awaited<ReturnType<typeof getActivityDetail>>, TError = ErrorType<unknown>>(
+ params: GetActivityDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getActivityDetail>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetActivityDetailQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+export const getActivityGoodsLimit = (
+    params: GetActivityGoodsLimitParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<ActivityGoodsRes>(
+      {url: `/manager/market/activity/goods`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetActivityGoodsLimitQueryKey = (params: GetActivityGoodsLimitParams,) => [`/manager/market/activity/goods`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetActivityGoodsLimitQueryOptions = <TData = Awaited<ReturnType<typeof getActivityGoodsLimit>>, TError = ErrorType<unknown>>(params: GetActivityGoodsLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getActivityGoodsLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getActivityGoodsLimit>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetActivityGoodsLimitQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getActivityGoodsLimit>>> = ({ signal }) => getActivityGoodsLimit(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetActivityGoodsLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getActivityGoodsLimit>>>
+export type GetActivityGoodsLimitQueryError = ErrorType<unknown>
+
+export const useGetActivityGoodsLimit = <TData = Awaited<ReturnType<typeof getActivityGoodsLimit>>, TError = ErrorType<unknown>>(
+ params: GetActivityGoodsLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getActivityGoodsLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetActivityGoodsLimitQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * update activity bundle goods
+ * @summary update activity bundle goods
+ */
+export const updateActivityBundleGoods = (
+    activityBundleInsertGoodsReq: ActivityBundleInsertGoodsReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/market/activity/goods/bundle`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: activityBundleInsertGoodsReq
+    },
+      options);
+    }
+  
+
+
+export const getUpdateActivityBundleGoodsMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityBundleGoods>>, TError,{data: ActivityBundleInsertGoodsReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateActivityBundleGoods>>, TError,{data: ActivityBundleInsertGoodsReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateActivityBundleGoods>>, {data: ActivityBundleInsertGoodsReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateActivityBundleGoods(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateActivityBundleGoodsMutationResult = NonNullable<Awaited<ReturnType<typeof updateActivityBundleGoods>>>
+    export type UpdateActivityBundleGoodsMutationBody = ActivityBundleInsertGoodsReq
+    export type UpdateActivityBundleGoodsMutationError = ErrorType<unknown>
+
+    /**
+ * @summary update activity bundle goods
+ */
+export const useUpdateActivityBundleGoods = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityBundleGoods>>, TError,{data: ActivityBundleInsertGoodsReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getUpdateActivityBundleGoodsMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * delete activity goods bundle
+ * @summary delete activity goods bundle
+ */
+export const deleteActivityGoodsBundle = (
+    params: DeleteActivityGoodsBundleParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/market/activity/goods/bundle`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteActivityGoodsBundleMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteActivityGoodsBundle>>, TError,{params: DeleteActivityGoodsBundleParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteActivityGoodsBundle>>, TError,{params: DeleteActivityGoodsBundleParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteActivityGoodsBundle>>, {params: DeleteActivityGoodsBundleParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteActivityGoodsBundle(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteActivityGoodsBundleMutationResult = NonNullable<Awaited<ReturnType<typeof deleteActivityGoodsBundle>>>
+    
+    export type DeleteActivityGoodsBundleMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete activity goods bundle
+ */
+export const useDeleteActivityGoodsBundle = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteActivityGoodsBundle>>, TError,{params: DeleteActivityGoodsBundleParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteActivityGoodsBundleMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * update activity promotion goods
+ * @summary update activity promotion goods
+ */
+export const updateActivityPromotionGoods = (
+    activityPromotionUpdateGoodsReq: ActivityPromotionUpdateGoodsReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/market/activity/goods/promotion`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: activityPromotionUpdateGoodsReq
+    },
+      options);
+    }
+  
+
+
+export const getUpdateActivityPromotionGoodsMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityPromotionGoods>>, TError,{data: ActivityPromotionUpdateGoodsReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateActivityPromotionGoods>>, TError,{data: ActivityPromotionUpdateGoodsReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateActivityPromotionGoods>>, {data: ActivityPromotionUpdateGoodsReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateActivityPromotionGoods(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateActivityPromotionGoodsMutationResult = NonNullable<Awaited<ReturnType<typeof updateActivityPromotionGoods>>>
+    export type UpdateActivityPromotionGoodsMutationBody = ActivityPromotionUpdateGoodsReq
+    export type UpdateActivityPromotionGoodsMutationError = ErrorType<unknown>
+
+    /**
+ * @summary update activity promotion goods
+ */
+export const useUpdateActivityPromotionGoods = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityPromotionGoods>>, TError,{data: ActivityPromotionUpdateGoodsReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getUpdateActivityPromotionGoodsMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+export const deleteActivityGoodsPromotion = (
+    params: DeleteActivityGoodsPromotionParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/market/activity/goods/promotion`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteActivityGoodsPromotionMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteActivityGoodsPromotion>>, TError,{params: DeleteActivityGoodsPromotionParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteActivityGoodsPromotion>>, TError,{params: DeleteActivityGoodsPromotionParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteActivityGoodsPromotion>>, {params: DeleteActivityGoodsPromotionParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteActivityGoodsPromotion(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteActivityGoodsPromotionMutationResult = NonNullable<Awaited<ReturnType<typeof deleteActivityGoodsPromotion>>>
+    
+    export type DeleteActivityGoodsPromotionMutationError = ErrorType<unknown>
+
+    export const useDeleteActivityGoodsPromotion = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteActivityGoodsPromotion>>, TError,{params: DeleteActivityGoodsPromotionParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteActivityGoodsPromotionMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * update activity info (step2)
+ * @summary update activity info (step2)
+ */
+export const updateActivityInfo = (
+    activityUpdateStepTwoReq: ActivityUpdateStepTwoReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/market/activity/info`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: activityUpdateStepTwoReq
+    },
+      options);
+    }
+  
+
+
+export const getUpdateActivityInfoMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityInfo>>, TError,{data: ActivityUpdateStepTwoReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateActivityInfo>>, TError,{data: ActivityUpdateStepTwoReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateActivityInfo>>, {data: ActivityUpdateStepTwoReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateActivityInfo(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateActivityInfoMutationResult = NonNullable<Awaited<ReturnType<typeof updateActivityInfo>>>
+    export type UpdateActivityInfoMutationBody = ActivityUpdateStepTwoReq
+    export type UpdateActivityInfoMutationError = ErrorType<unknown>
+
+    /**
+ * @summary update activity info (step2)
+ */
+export const useUpdateActivityInfo = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityInfo>>, TError,{data: ActivityUpdateStepTwoReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getUpdateActivityInfoMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
 /**
  * get images limit
  * @summary get images limit

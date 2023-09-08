@@ -102,6 +102,17 @@ use utoipa::OpenApi;
         super::game_center::comments::comments::get_comment_limit,
         super::game_center::comments::comments::delete_comment,
         super::game_center::comments::comments::recover_comment,
+        //商城管理-活动管理
+        super::market::activity::get_activity_limit,
+        super::market::activity::get_activity_detail,
+        super::market::activity::update_activity_base,
+        super::market::activity::update_activity_info,
+        super::market::activity::delete_activity,
+        super::market::activity::get_activity_goods_limit,
+        super::market::activity::update_activity_promotion_goods,
+        super::market::activity::update_activity_bundle_goods,
+        super::market::activity::delete_activity_goods_bundle,
+        super::market::activity::delete_activity_goods_promotion
 
     ),
     components(schemas(
@@ -159,7 +170,7 @@ use utoipa::OpenApi;
         //评论管理
         Comment,DeleteCommentReq,CommentLimitReq,CommentRes,CommentLimitRes,RecoverCommentReq,
         //商城管理-活动管理
-        ActivityUpdateStepOneReq,ActivityUpdateStepTwoReq,ActivityBundleInsertGoodsReq,ActivityBundleDeleteGoodsReq,ActivityPromotionUpdateGoodsReq,ActivityPromotionDeleteGoodsReq,ActivityBaseDetail,ActivityInfoDetail,ActivityDetail,ActivityGoods,ActivityGoodsLimitReq,Activity,ActivityLimitReq,ActivityRes,ActivityGoodsRes,ActivityDetailRes,ActivityLimitRes,ActivityGoodsLimitRes
+        ActivityUpdateStepOneReq,ActivityUpdateStepTwoReq,ActivityBundleInsertGoodsReq,ActivityBundleDeleteGoodsReq,ActivityPromotionUpdateGoodsReq,ActivityPromotionDeleteGoodsReq,ActivityBaseDetail,ActivityInfoDetail,ActivityDetail,ActivityGoods,ActivityGoodsLimitReq,Activity,ActivityLimitReq,ActivityRes,ActivityGoodsRes,ActivityDetailRes,ActivityLimitRes,ActivityGoodsLimitRes,ActivityDetailReq,DeleteActivityReq
     ))
 )]
 pub struct ApiDoc;

@@ -36,7 +36,7 @@ pub struct ActivityBundleInsertGoodsReq {
     pub sku_name: Option<String>,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, ToSchema)]
+#[derive(Debug, Clone, Deserialize, Serialize, ToSchema, IntoParams)]
 pub struct ActivityBundleDeleteGoodsReq {
     pub id: u64,
     pub spu_id: u64,
@@ -53,7 +53,7 @@ pub struct ActivityPromotionUpdateGoodsReq {
     pub discount: Option<f32>,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, ToSchema)]
+#[derive(Debug, Clone, Deserialize, Serialize, ToSchema, IntoParams)]
 pub struct ActivityPromotionDeleteGoodsReq {
     pub id: u64,
     pub spu_id: u64,
@@ -61,6 +61,11 @@ pub struct ActivityPromotionDeleteGoodsReq {
 }
 
 //activity detail
+#[derive(Debug, Clone, Deserialize, Serialize, ToSchema, IntoParams)]
+pub struct ActivityDetailReq {
+    pub id: u64,
+}
+
 #[derive(Debug, Clone, Deserialize, Serialize, ToSchema, FromRow)]
 pub struct ActivityBaseDetail {
     pub id: u64,
@@ -107,13 +112,18 @@ pub struct ActivityGoods {
 #[derive(Debug, Clone, Deserialize, Serialize, ToSchema, IntoParams)]
 pub struct ActivityGoodsLimitReq {
     pub id: u64,
+    pub goods_type: String,
     pub spu_name: Option<String>,
     pub sku_name: Option<String>,
     pub limit: Option<u64>,
     pub page: Option<u64>,
 }
 
-//limit
+#[derive(Debug, Clone, Deserialize, Serialize, ToSchema, IntoParams)]
+pub struct DeleteActivityReq {
+    pub id: u64,
+}
+
 #[derive(Debug, Clone, Deserialize, Serialize, ToSchema, FromRow)]
 pub struct Activity {
     pub id: u64,
@@ -122,6 +132,7 @@ pub struct Activity {
     pub cover_url: String,
     pub activity_type: String,
     pub publish_type: Option<String>,
+    #[schema(value_type = Option<String>)]
     pub publish_time: Option<NaiveDateTime>,
     #[schema(value_type = Option<String>)]
     pub start_time: Option<NaiveDateTime>,

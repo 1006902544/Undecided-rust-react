@@ -12,6 +12,7 @@ use crate::controller::manager::{
         general::{company_studio::company_studio::*, tags::tags::*, types::types::*},
     },
     manager_doc::ApiDoc,
+    market::activity::*,
     material_library::images::*,
     permission::{
         associate::{associate::*, auth::*},
@@ -162,6 +163,22 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                             .service(send_email)
                             .service(verify_email),
                     ),
+            )
+            .service(
+                web::scope("market").service(
+                    web::scope("activity")
+                        .service(get_activity_limit)
+                        .service(get_activity_detail)
+                        .service(update_activity_base)
+                        .service(update_activity_info)
+                        .service(delete_activity)
+                        .service(get_activity_goods_limit)
+                        .service(update_activity_base)
+                        .service(update_activity_promotion_goods)
+                        .service(update_activity_bundle_goods)
+                        .service(delete_activity_goods_bundle)
+                        .service(delete_activity_goods_promotion),
+                ),
             ),
     );
 }
