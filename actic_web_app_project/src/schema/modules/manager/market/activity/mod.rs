@@ -3,7 +3,7 @@ use mysql_common::prelude::FromRow;
 use serde::{Deserialize, Serialize};
 use utoipa::{IntoParams, ToSchema};
 
-#[derive(Debug, Clone, Deserialize, Serialize, ToSchema)]
+#[derive(Debug, Clone, Deserialize, Serialize, ToSchema, IntoParams)]
 pub struct ActivityUpdateStepOneReq {
     pub id: Option<u64>,
     pub title: String,
@@ -17,7 +17,6 @@ pub struct ActivityUpdateStepOneReq {
 #[derive(Debug, Clone, Deserialize, Serialize, ToSchema)]
 pub struct ActivityUpdateStepTwoReq {
     pub id: u64,
-    pub activity_type: String,
     pub price: Option<f64>,
     pub discount: Option<f64>,
     pub publish_type: String,

@@ -81,7 +81,7 @@ pub async fn get_activity_detail(
     (
       status = 200,
       description = "success",
-      body = ResPonseString
+      body = ResponseU64
     )
   )
 )]

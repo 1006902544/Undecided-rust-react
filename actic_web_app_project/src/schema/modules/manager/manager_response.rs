@@ -26,6 +26,7 @@ use crate::schema::modules::admin::admin::AdminInfo;
     RoutesVecRes = ResponseData<Vec<Route>>,
     ResPonseU8 = ResponseData<u8>,
     ResPonseString = ResponseData<String>,
+    ResponseU64 = ResponseData<u64>,
     AdminInfoRes = ResponseData<AdminInfo>,
     AdminInfoListRes = ResponseData<Vec<AdminInfo>>,
     AuthLimitRes = ResponseData<AuthRes>,

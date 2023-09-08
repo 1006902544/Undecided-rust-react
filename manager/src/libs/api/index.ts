@@ -71,6 +71,7 @@ import type {
   ActivityRes,
   GetActivityLimitParams,
   DeleteActivityParams,
+  ResponseU64,
   ActivityUpdateStepOneReq,
   ActivityDetailRes,
   GetActivityDetailParams,
@@ -2110,7 +2111,7 @@ export const useDeleteActivity = <TError = ErrorType<unknown>,
 export const updateActivityBase = (
     activityUpdateStepOneReq: ActivityUpdateStepOneReq,
  options?: SecondParameter<typeof custom_instance>,) => {
-      return custom_instance<ResPonseString>(
+      return custom_instance<ResponseU64>(
       {url: `/manager/market/activity/base`, method: 'post',
       headers: {'Content-Type': 'application/json', },
       data: activityUpdateStepOneReq

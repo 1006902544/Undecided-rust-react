@@ -127,6 +127,7 @@ export * from './permissionRes';
 export * from './recoverCommentReq';
 export * from './resPonseString';
 export * from './resPonseU8';
+export * from './responseU64';
 export * from './route';
 export * from './routerAssociateAuthLimitRes';
 export * from './routerAssociateAuthRes';

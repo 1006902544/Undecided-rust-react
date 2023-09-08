@@ -16,9 +16,9 @@ use crate::{
 pub async fn update_activity_base(
     conn: &mut PooledConn,
     data: ActivityUpdateStepOneReq,
-) -> Result<String, MyError> {
+) -> Result<u64, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let stmt = "insert into activity_base (title,subtitle,content,cover_url,cover_name,activity_type) values (:title,:subtitle,:content,:cover_url,:cover_name,:bundle) ON DUPLICATE KEY UPDATE id=:id,title=:title,subtitle:=subtitle,content=:content,cover_url=:cover_url,cover_name=:cover_name";
+    let stmt = "insert into activity_base (id,title,subtitle,content,cover_url,cover_name,activity_type) values (:id,:title,:subtitle,:content,:cover_url,:cover_name,:activity_type) ON DUPLICATE KEY UPDATE title=:title,subtitle=:subtitle,content=:content,cover_url=:cover_url,cover_name=:cover_name";
     let res = trans.exec_drop(
         stmt,
         params! {
@@ -31,9 +31,30 @@ pub async fn update_activity_base(
           "activity_type" => data.activity_type,
         },
     );
-    match after_update(trans, res).await {
-        Ok(_) => Ok("Update success".to_string()),
-        Err(e) => Err(e),
+    match res {
+        Ok(_) => match data.id {
+            Some(id) => {
+                trans.commit().unwrap();
+                Ok(id)
+            }
+            None => {
+                let id = trans.last_insert_id();
+                match id {
+                    Some(id) => {
+                        trans.commit().unwrap();
+                        Ok(id)
+                    }
+                    None => {
+                        trans.rollback().unwrap();
+                        Err(MyError::not_found())
+                    }
+                }
+            }
+        },
+        Err(e) => {
+            trans.rollback().unwrap();
+            Err(MyError::sql_error(e))
+        }
     }
 }
 
@@ -85,8 +106,8 @@ pub async fn update_activity_info(
                 };
                 match info_res {
                     Ok(_) => {
-                        let stmt = "insert into activity_publish (publish_type,publish_time,start_time,end_time) values (:publish_type,:publish_time,:start_time,:end_time)
-                      on duplicate key update id=:id,publish_type=:publish_type,publish_time=:publish_time,start_time=:start_time,end_time:=end_time";
+                        let stmt = "insert into activity_publish (id,publish_type,publish_time,start_time,end_time) values (:id,:publish_type,:publish_time,:start_time,:end_time)
+                      on duplicate key update publish_type=:publish_type,publish_time=:publish_time,start_time=:start_time,end_time:=end_time";
                         let publish_res = trans.exec_drop(
                             stmt,
                             params! {
@@ -174,7 +195,7 @@ pub async fn get_bundle_goods(
 ) -> Result<ActivityGoodsLimitRes, MyError> {
     let limit = handle_limit(&data.limit);
     let page = handle_page(&data.page);
-    let stmt = "select * from activity_bundle_goods where id=:id and (spu_name=:spu_name or :spu_name is null) and (sku_name=:sku_name or :sku_name is null) limit :scope,:limit";
+    let stmt = "select sql_calc_found_rows *,null as discount from activity_bundle_goods where id=:id and (spu_name=:spu_name or :spu_name is null) and (sku_name=:sku_name or :sku_name is null) limit :scope,:limit";
     let res = conn.exec(
         stmt,
         params! {
@@ -249,7 +270,7 @@ pub async fn get_promotion_goods(
 ) -> Result<ActivityGoodsLimitRes, MyError> {
     let limit = handle_limit(&data.limit);
     let page = handle_page(&data.page);
-    let stmt = "select * from activity_promotion_goods where id=:id and (spu_name=:spu_name or :spu_name is null) and (sku_name=:sku_name or :sku_name is null) limit :scope,:limit";
+    let stmt = "select sql_calc_found_rows * from activity_promotion_goods where id=:id and (spu_name=:spu_name or :spu_name is null) and (sku_name=:sku_name or :sku_name is null) limit :scope,:limit";
     let res = conn.exec(
         stmt,
         params! {
@@ -279,7 +300,7 @@ pub async fn get_activity_detail(
     conn: &mut PooledConn,
     id: u64,
 ) -> Result<ActivityDetail, MyError> {
-    let stmt_base = "select first(*) from activity_base";
+    let stmt_base = "select * from activity_base where id=:id";
     let base_res: Result<Option<ActivityBaseDetail>, mysql::Error> = conn.exec_first(
         stmt_base,
         params! {
@@ -289,18 +310,12 @@ pub async fn get_activity_detail(
     match base_res {
         Ok(base_res) => match base_res {
             Some(base_res) => {
-                let info_res: Result<Option<ActivityInfoDetail>, mysql::Error> = if base_res
-                    .activity_type
-                    == "bundle"
-                {
-                    let info_stmt = "select first(ab.price,ap.publish_type,ap.publish_time,ap.start_time,ap.end_time) from activity_bundle as ab
-                    left join activity_publish as ap on ap.id=ab.id where id=:id";
-                    conn.exec_first(info_stmt, params! {"id" => id})
-                } else {
-                    let info_stmt = "select first(apt.discount,ap.publish_type,ap.publish_time,ap.start_time,ap.end_time) from activity_promotion as apt
-                  left join activity_publish as ap on ap.id=apt.id where id=:id";
-                    conn.exec_first(info_stmt, params! {"id" => id})
-                };
+                let info_stmt = "select publish_type,publish_time,start_time,end_time,apt.discount,ab.price from activity_publish as ap
+                left join activity_bundle as ab on ab.id=ap.id
+                left join activity_promotion as apt on apt.id=ap.id
+                where ap.id=:id";
+                let info_res = conn.exec_first(info_stmt, params! {"id" => id});
+
                 match info_res {
                     Ok(info_res) => Ok(ActivityDetail {
                         base: base_res,
@@ -322,9 +337,9 @@ pub async fn get_activity_limit(
 ) -> Result<ActivityLimitRes, MyError> {
     let limit = handle_limit(&data.limit);
     let page = handle_page(&data.page);
-    let stmt = "select first(ab.id,title,subtitle,cover_url,activity_type,create_time,ap.publish_type,ap.publish_time,ap.start_time,ap.end_time) from activity_base as ab
+    let stmt = "select sql_calc_found_rows ab.id,title,subtitle,cover_url,activity_type,create_time,ap.publish_type,ap.publish_time,ap.start_time,ap.end_time from activity_base as ab
   left join activity_publish as ap on ap.id=ab.id
-  where (ab.id=:id or :id is null) and (title=:title or :title is null) and (activity_type=:activity_type or :activity is null)
+  where (ab.id=:id or :id is null) and (title=:title or :title is null) and (activity_type=:activity_type or :activity_type is null)
   limit :scope,:limit";
     let res: Result<Vec<Activity>, mysql::Error> = conn.exec(
         stmt,

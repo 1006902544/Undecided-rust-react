@@ -14,6 +14,8 @@ import {
   customUserManagementResource,
   gamesCenterCommentListResource,
   gamesCenterCommentRecycleBinResource,
+  marketActivityResource,
+  marketActivityUpdateGoodsResource,
 } from './pages/main/resources';
 
 export const resources = [
@@ -32,4 +34,6 @@ export const resources = [
   customUserManagementResource,
   gamesCenterCommentListResource,
   gamesCenterCommentRecycleBinResource,
+  marketActivityResource,
+  marketActivityUpdateGoodsResource,
 ];

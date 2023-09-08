@@ -53,6 +53,12 @@ module.exports = {
               useQuery: true,
             },
           },
+          //获取活动详情
+          getActivityDetail: {
+            query: {
+              useQuery: true,
+            },
+          },
         },
       },
     },
