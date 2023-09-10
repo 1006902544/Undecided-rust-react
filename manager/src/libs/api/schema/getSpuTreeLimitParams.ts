@@ -5,9 +5,9 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export type GetActivityGoodsLimitParams = {
-id: number;
-goods_type: string;
+export type GetSpuTreeLimitParams = {
+spu_id?: number | null;
 spu_name?: string | null;
-sku_name?: string | null;
+limit?: number | null;
+page?: number | null;
 };

@@ -44,7 +44,7 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //公司/工作室
     CompanyStudioRes = ResponseData<CompanyStudioLimitRes>,CompanyStudioDetailRes = ResponseData<CompanyStudioDetail>,
     //spu
-    SpuRes = ResponseData<SpuLimitRes>,SpuDetailRes = ResponseData<SpuDetail>,SpuUpdateResData = ResponseData<SpuUpdateRes>,
+    SpuRes = ResponseData<SpuLimitRes>,SpuDetailRes = ResponseData<SpuDetail>,SpuUpdateResData = ResponseData<SpuUpdateRes>,SpuSkuTreeRes = ResponseData<SpuSkuTreeLimitRes>,
     //spu-更新记录
     SpuUpdateRecordRes = ResponseData<SpuUpdateRecordLimitRes>,UpdateSpuUpdateRecordResData=ResponseData<UpdateSpuUpdateRecordRes>,
     //spu-公告
@@ -105,7 +105,7 @@ impl<B> ResponseData<B> {
     //公司/工作室
     CompanyStudioLimitRes = LimitResults<CompanyStudio>,
     //spu
-    SpuLimitRes = LimitResults<SpuLimit>,
+    SpuLimitRes = LimitResults<SpuLimit>,SpuSkuTreeLimitRes = LimitResults<SpuSkuTree>,
     //spu更新记录
     SpuUpdateRecordLimitRes = LimitResults<SpuUpdateRecord>,
     //spu公告

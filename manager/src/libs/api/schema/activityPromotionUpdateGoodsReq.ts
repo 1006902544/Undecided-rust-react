@@ -4,12 +4,9 @@
  * actic_web_app_project
  * OpenAPI spec version: 0.1.0
  */
+import type { ActivityPromotionUpdateGoods } from './activityPromotionUpdateGoods';
 
 export interface ActivityPromotionUpdateGoodsReq {
-  discount?: number | null;
+  goods: ActivityPromotionUpdateGoods[];
   id: number;
-  sku_id?: number | null;
-  sku_name?: string | null;
-  spu_id: number;
-  spu_name: string;
 }

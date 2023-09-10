@@ -1,8 +1,10 @@
+import { useMenuContext } from '@/components';
 import { useAuthStore } from '@/libs/store';
 import { removeToken } from '@/utils';
-import { Dropdown } from 'antd';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { LeftOutlined } from '@ant-design/icons';
+import { Button, Dropdown } from 'antd';
+import React, { useCallback, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function Header() {
   const { auth, clear_auth } = useAuthStore(({ auth, clear_auth }) => ({
@@ -17,8 +19,26 @@ export default function Header() {
     navigate('/signIn');
   };
 
+  const { pathname } = useLocation();
+  const menuContext = useMenuContext();
+  const currentLabel = useMemo(() => {
+    return menuContext?.data?.data.find((item) => item.path === pathname)
+      ?.label;
+  }, [menuContext, pathname]);
+
+  const goPrev = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
+
   return (
     <header className="w-full h-[60px] flex justify-start border-b-[1px] border-[#e5e7eb] bg-[white] flex-shrink-0">
+      <div className="ml-[100px] space-x-4">
+        <Button onClick={goPrev}>
+          <LeftOutlined />
+        </Button>
+        <span>{currentLabel}</span>
+      </div>
+
       <div className=" ml-[100px] h-full min-w-[100px] px-[20px] flex justify-start items-center">
         <Dropdown
           menu={{

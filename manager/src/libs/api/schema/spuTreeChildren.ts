@@ -5,9 +5,11 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface ActivityGoodsLimitReq {
-  goods_type: string;
-  id: number;
+export interface SpuTreeChildren {
+  cover_url: string;
+  price: number;
+  sku_id?: number | null;
   sku_name?: string | null;
-  spu_name?: string | null;
+  spu_id: number;
+  spu_name: string;
 }

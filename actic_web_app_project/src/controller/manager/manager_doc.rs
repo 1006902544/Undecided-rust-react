@@ -74,6 +74,7 @@ use utoipa::OpenApi;
         super::game_center::game_management::spu::spu::get_spu_detail,
         super::game_center::game_management::spu::spu::get_spu_limit,
         super::game_center::game_management::spu::spu::delete_spu,
+        super::game_center::game_management::spu::spu::get_spu_tree_limit,
         //游戏中心-游戏管理-SPU-更新记录
         super::game_center::game_management::spu::update_record::get_spu_update_record,
         super::game_center::game_management::spu::update_record::delete_spu_update_record,
@@ -152,7 +153,8 @@ use utoipa::OpenApi;
         //公司/工作室
         GetCompanyStudioReq,UpdateCompanyStudioReq,CompanyStudioDetail,CompanyStudio,CompanyStudioRes,CompanyStudioLimitRes,GetCompanyStudioDetailReq,DeleteCompanyStudioDetailReq,CompanyLocation,CompanyLocationRes,
         //spu
-        SpuLimit,SpuDetail,UpdateSpuReq,GetSpuDetailReq,DeleteSpuDetailReq,GetSpuLimitReq, SpuFileObject,SpuRes,SpuLimitRes,SpuDetailRes,SpuUpdateRes,SpuUpdateResData,
+        SpuLimit,SpuDetail,UpdateSpuReq,GetSpuDetailReq,DeleteSpuDetailReq,GetSpuLimitReq, SpuFileObject,SpuRes,SpuLimitRes,SpuDetailRes,SpuUpdateRes,SpuUpdateResData,SpuSkuTreeRes
+        ,SpuSkuTreeLimitRes,SpuSkuTree,SpuTreeChildren,GetSpuTreeReq,
         //spu更新记录
         SpuUpdateRecord,UpdateSpuUpdateRecord,SpuUpdateRecordLimitReq,SpuUpdateRecordDeleteReq,SpuUpdateRecordRes,SpuUpdateRecordLimitRes,UpdateSpuUpdateRecordResData,UpdateSpuUpdateRecordRes,
         //spu公告
@@ -170,7 +172,7 @@ use utoipa::OpenApi;
         //评论管理
         Comment,DeleteCommentReq,CommentLimitReq,CommentRes,CommentLimitRes,RecoverCommentReq,
         //商城管理-活动管理
-        ActivityUpdateStepOneReq,ActivityUpdateStepTwoReq,ActivityBundleInsertGoodsReq,ActivityBundleDeleteGoodsReq,ActivityPromotionUpdateGoodsReq,ActivityPromotionDeleteGoodsReq,ActivityBaseDetail,ActivityInfoDetail,ActivityDetail,ActivityGoods,ActivityGoodsLimitReq,Activity,ActivityLimitReq,ActivityRes,ActivityGoodsRes,ActivityDetailRes,ActivityLimitRes,ActivityGoodsLimitRes,ActivityDetailReq,DeleteActivityReq
+        ActivityUpdateStepOneReq,ActivityUpdateStepTwoReq,ActivityBundleInsertGoodsReq,ActivityBundleDeleteGoodsReq,ActivityPromotionUpdateGoodsReq,ActivityPromotionDeleteGoodsReq,ActivityBaseDetail,ActivityInfoDetail,ActivityDetail,ActivityGoods,ActivityGoodsLimitReq,Activity,ActivityLimitReq,ActivityRes,ActivityGoodsRes,ActivityDetailRes,ActivityLimitRes,ActivityGoodsLimitRes,ActivityDetailReq,DeleteActivityReq,ActivityBundleInsertGoods,ActivityPromotionUpdateGoods
     ))
 )]
 pub struct ApiDoc;

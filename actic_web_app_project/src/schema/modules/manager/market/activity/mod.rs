@@ -29,6 +29,11 @@ pub struct ActivityUpdateStepTwoReq {
 #[derive(Debug, Clone, Deserialize, Serialize, ToSchema)]
 pub struct ActivityBundleInsertGoodsReq {
     pub id: u64,
+    pub goods: Vec<ActivityBundleInsertGoods>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, ToSchema)]
+pub struct ActivityBundleInsertGoods {
     pub spu_id: u64,
     pub spu_name: String,
     pub sku_id: Option<u64>,
@@ -45,6 +50,11 @@ pub struct ActivityBundleDeleteGoodsReq {
 #[derive(Debug, Clone, Deserialize, Serialize, ToSchema)]
 pub struct ActivityPromotionUpdateGoodsReq {
     pub id: u64,
+    pub goods: Vec<ActivityPromotionUpdateGoods>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, ToSchema)]
+pub struct ActivityPromotionUpdateGoods {
     pub spu_id: u64,
     pub spu_name: String,
     pub sku_id: Option<u64>,
@@ -114,8 +124,6 @@ pub struct ActivityGoodsLimitReq {
     pub goods_type: String,
     pub spu_name: Option<String>,
     pub sku_name: Option<String>,
-    pub limit: Option<u64>,
-    pub page: Option<u64>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize, ToSchema, IntoParams)]

@@ -4,11 +4,9 @@
  * actic_web_app_project
  * OpenAPI spec version: 0.1.0
  */
+import type { ActivityBundleInsertGoods } from './activityBundleInsertGoods';
 
 export interface ActivityBundleInsertGoodsReq {
+  goods: ActivityBundleInsertGoods[];
   id: number;
-  sku_id?: number | null;
-  sku_name?: string | null;
-  spu_id: number;
-  spu_name: string;
 }

@@ -6,7 +6,6 @@
  */
 
 export interface ActivityUpdateStepTwoReq {
-  activity_type: string;
   discount?: number | null;
   end_time?: string | null;
   id: number;

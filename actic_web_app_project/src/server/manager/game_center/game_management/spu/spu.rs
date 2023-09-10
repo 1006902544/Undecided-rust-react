@@ -9,7 +9,7 @@ use crate::{
         base_struct::{handle_limit, handle_page},
         modules::manager::{
             game_center::game_management::spu::spu::*,
-            manager_response::{LimitResults, SpuLimitRes},
+            manager_response::{LimitResults, SpuLimitRes, SpuSkuTreeLimitRes},
         },
     },
 };
@@ -384,5 +384,55 @@ pub async fn delete_spu(conn: &mut PooledConn, id: String) -> Result<String, MyE
     match res {
         Ok(_) => Ok("Delete success".to_string()),
         Err(e) => Err(e),
+    }
+}
+
+pub async fn get_spu_tree_limit(
+    conn: &mut PooledConn,
+    data: GetSpuTreeReq,
+) -> Result<SpuSkuTreeLimitRes, MyError> {
+    let limit = handle_limit(&data.limit);
+    let page = handle_limit(&data.page);
+    let stmt = "select sql_calc_found_rows sp.id as spu_id,sp.name as spu_name,sp.price,sc.cover_url,
+        concat('[',group_concat(distinct json_object('spu_id',sk.spu_id,'spu_name',sk.spu_name,'sku_id',sk.id,'sku_name',sk.name,'cover_url',sk.cover_url,'price',sk.price)),']') as children
+        from spus as sp
+        left join spu_cover as sc on sc.spu_id=sp.id
+        left join skus as sk on sk.spu_id=sp.id
+        where (sp.id=:spu_id or :spu_id is null) and (sp.name=:spu_name or :spu_name is null)
+        group by sp.id
+        order by sp.update_time desc
+        limit :scope,:limit";
+    let res = conn.exec_map::<(u64, String, f64, String, serde_json::Value), _, _, _, _>(
+        stmt,
+        params! {
+            "scope" => limit*(page-1),
+            "limit" => limit,
+            "spu_name" => data.spu_name,
+            "spu_id" => data.spu_id,
+        },
+        |(spu_id, spu_name, price, cover_url, children)| {
+            let children = serde_json::from_value::<Vec<SpuTreeChildren>>(children).unwrap();
+            SpuSkuTree {
+                spu_id,
+                spu_name,
+                sku_id: None,
+                sku_name: None,
+                price,
+                cover_url,
+                children,
+            }
+        },
+    );
+    match res {
+        Ok(res) => {
+            let total = get_total(conn);
+            let current = get_current(total, page, limit);
+            Ok(SpuSkuTreeLimitRes {
+                results: Some(res),
+                total,
+                current,
+            })
+        }
+        Err(e) => Err(MyError::sql_error(e)),
     }
 }

@@ -153,20 +153,43 @@ pub async fn insert_bundle_goods(
     data: ActivityBundleInsertGoodsReq,
 ) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let stmt = "insert into activity_bundle_goods (id,spu_id,spu_name,sku_id,sku_name) values (:id,:spu_id,:spu_name,:sku_id,:sku_name)";
-    let res = trans.exec_drop(
-        stmt,
+    let delete_stmt = "delete from activity_bundle_goods where id=:id";
+    let delete_res = trans.exec_drop(
+        delete_stmt,
         params! {
-          "id" => data.id,
-          "spu_id" => data.spu_id,
-          "spu_name" => data.spu_name,
-          "sku_id" => data.sku_id,
-          "sku_name" => data.sku_name,
+            "id" => data.id
         },
     );
-    match after_update(trans, res).await {
-        Ok(_) => Ok("Insert goods success".to_string()),
-        Err(e) => Err(e),
+    match delete_res {
+        Ok(_) => {
+            let stmt = "insert into activity_bundle_goods (id,spu_id,spu_name,sku_id,sku_name) values (:id,:spu_id,:spu_name,:sku_id,:sku_name)";
+            let res = trans.exec_batch(
+                stmt,
+                data.goods.into_iter().map(|item| {
+                    params! {
+                        "id" => data.id,
+                        "spu_id" => item.spu_id,
+                        "spu_name" => item.spu_name,
+                        "sku_id" => item.sku_id,
+                        "sku_name" => item.sku_name,
+                    }
+                }),
+            );
+            match res {
+                Ok(_) => {
+                    trans.commit().unwrap();
+                    Ok("Insert goods success".to_string())
+                }
+                Err(e) => {
+                    trans.rollback().unwrap();
+                    Err(MyError::sql_error(e))
+                }
+            }
+        }
+        Err(e) => {
+            trans.rollback().unwrap();
+            Err(MyError::sql_error(e))
+        }
     }
 }
 
@@ -193,23 +216,19 @@ pub async fn get_bundle_goods(
     conn: &mut PooledConn,
     data: ActivityGoodsLimitReq,
 ) -> Result<ActivityGoodsLimitRes, MyError> {
-    let limit = handle_limit(&data.limit);
-    let page = handle_page(&data.page);
-    let stmt = "select sql_calc_found_rows *,null as discount from activity_bundle_goods where id=:id and (spu_name=:spu_name or :spu_name is null) and (sku_name=:sku_name or :sku_name is null) limit :scope,:limit";
+    let stmt = "select sql_calc_found_rows *,null as discount from activity_bundle_goods where id=:id and (spu_name=:spu_name or :spu_name is null) and (sku_name=:sku_name or :sku_name is null)";
     let res = conn.exec(
         stmt,
         params! {
-          "id" => data.id,
-          "spu_name" => data.spu_name,
-          "sku_name" => data.sku_name,
-          "scope" => limit*(page-1),
-          "limit" => limit,
+            "id" => data.id,
+            "spu_name" => data.spu_name,
+            "sku_name" => data.sku_name,
         },
     );
     match res {
         Ok(res) => {
             let total = get_total(conn);
-            let current = get_current(total, page, limit);
+            let current = 1;
             Ok(LimitResults {
                 total,
                 current,
@@ -226,22 +245,32 @@ pub async fn update_promotion_goods(
     data: ActivityPromotionUpdateGoodsReq,
 ) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let stmt = "insert into activity_promotion_goods (id,spu_id,spu_name,sku_id,sku_name,discount) values (:id,:spu_id,:spu_name,:sku_id,:sku_name,:discount)
-    on duplicate key update id=:id,spu_id=:spu_id,sku_id=:sku_id,discount=:discount";
-    let res = trans.exec_drop(
-        stmt,
-        params! {
-          "id" => data.id,
-          "spu_id" => data.spu_id,
-          "spu_name" => data.spu_name,
-          "sku_id" => data.sku_id,
-          "sku_name" => data.sku_name,
-          "discount" => data.discount,
-        },
-    );
-    match after_update(trans, res).await {
-        Ok(_) => Ok("Insert goods success".to_string()),
-        Err(e) => Err(e),
+    let delete_stmt = "delete from activity_promotion_goods where id=:id";
+    match trans.exec_drop(delete_stmt, params! {"id" => data.id}) {
+        Ok(_) => {
+            let stmt = "insert into activity_promotion_goods (id,spu_id,spu_name,sku_id,sku_name,discount) values (:id,:spu_id,:spu_name,:sku_id,:sku_name,:discount)";
+            let res = trans.exec_batch(
+                stmt,
+                data.goods.into_iter().map(|item| {
+                    params! {
+                        "id" => data.id,
+                        "spu_id" => item.spu_id,
+                        "spu_name" => item.spu_name,
+                        "sku_id" => item.sku_id,
+                        "sku_name" => item.sku_name,
+                        "discount" => item.discount,
+                    }
+                }),
+            );
+            match after_update(trans, res).await {
+                Ok(_) => Ok("Insert goods success".to_string()),
+                Err(e) => Err(e),
+            }
+        }
+        Err(e) => {
+            trans.rollback().unwrap();
+            Err(MyError::sql_error(e))
+        }
     }
 }
 
@@ -268,23 +297,19 @@ pub async fn get_promotion_goods(
     conn: &mut PooledConn,
     data: ActivityGoodsLimitReq,
 ) -> Result<ActivityGoodsLimitRes, MyError> {
-    let limit = handle_limit(&data.limit);
-    let page = handle_page(&data.page);
-    let stmt = "select sql_calc_found_rows * from activity_promotion_goods where id=:id and (spu_name=:spu_name or :spu_name is null) and (sku_name=:sku_name or :sku_name is null) limit :scope,:limit";
+    let stmt = "select sql_calc_found_rows * from activity_promotion_goods where id=:id and (spu_name=:spu_name or :spu_name is null) and (sku_name=:sku_name or :sku_name is null)";
     let res = conn.exec(
         stmt,
         params! {
-          "id" => data.id,
-          "spu_name" => data.spu_name,
-          "sku_name" => data.sku_name,
-          "scope" => limit*(page-1),
-          "limit" => limit,
+            "id" => data.id,
+            "spu_name" => data.spu_name,
+            "sku_name" => data.sku_name,
         },
     );
     match res {
         Ok(res) => {
             let total = get_total(conn);
-            let current = get_current(total, page, limit);
+            let current = 1;
             Ok(LimitResults {
                 total,
                 current,

@@ -47,6 +47,8 @@ import type {
   SpuNoticeUpdateResData,
   SpuNoticeUpdateReq,
   DeleteSpuNoticeParams,
+  SpuSkuTreeRes,
+  GetSpuTreeLimitParams,
   SpuUpdateRecordRes,
   GetSpuUpdateRecordParams,
   UpdateSpuUpdateRecordRes,
@@ -1131,6 +1133,61 @@ export const useDeleteSpuNotice = <TError = ErrorType<unknown>,
       return useMutation(mutationOptions);
     }
     
+/**
+ * get SPU tree limit
+ * @summary get SPU tree limit
+ */
+export const getSpuTreeLimit = (
+    params?: GetSpuTreeLimitParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<SpuSkuTreeRes>(
+      {url: `/manager/gamesCenter/gamesManagement/spu/tree`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetSpuTreeLimitQueryKey = (params?: GetSpuTreeLimitParams,) => [`/manager/gamesCenter/gamesManagement/spu/tree`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetSpuTreeLimitQueryOptions = <TData = Awaited<ReturnType<typeof getSpuTreeLimit>>, TError = ErrorType<unknown>>(params?: GetSpuTreeLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSpuTreeLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getSpuTreeLimit>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetSpuTreeLimitQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSpuTreeLimit>>> = ({ signal }) => getSpuTreeLimit(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetSpuTreeLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getSpuTreeLimit>>>
+export type GetSpuTreeLimitQueryError = ErrorType<unknown>
+
+/**
+ * @summary get SPU tree limit
+ */
+export const useGetSpuTreeLimit = <TData = Awaited<ReturnType<typeof getSpuTreeLimit>>, TError = ErrorType<unknown>>(
+ params?: GetSpuTreeLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSpuTreeLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetSpuTreeLimitQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
 /**
  * get spu update record limit
  * @summary get spu update record limit

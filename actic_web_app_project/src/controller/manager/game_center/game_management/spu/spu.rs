@@ -129,3 +129,31 @@ pub async fn delete_spu(
         Err(MyError::permissions_error())
     }
 }
+
+#[utoipa::path(
+    get,
+    path = "/manager/gamesCenter/gamesManagement/spu/tree",
+    params (GetSpuTreeReq),
+    responses (
+        (status = 200 , body = SpuSkuTreeRes , description = "success")
+        )
+    )]
+#[get("/tree")]
+///get SPU tree limit
+pub async fn get_spu_tree_limit(
+    pool: Data<Pool>,
+    data: Query<GetSpuTreeReq>,
+    req: HttpRequest,
+) -> Result<impl Responder, impl ResponseError> {
+    let mut conn = pool.get_conn().unwrap();
+    let has_per = has_permission(&mut conn, &req);
+    if has_per {
+        let res = spuServer::get_spu_tree_limit(&mut conn, data.into_inner()).await;
+        match res {
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+            Err(e) => Err(e),
+        }
+    } else {
+        Err(MyError::permissions_error())
+    }
+}

@@ -59,6 +59,12 @@ module.exports = {
               useQuery: true,
             },
           },
+          //获取活动商品
+          getActivityGoodsLimit: {
+            query: {
+              useQuery: true,
+            },
+          },
         },
       },
     },

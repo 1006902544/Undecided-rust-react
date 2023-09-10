@@ -6,7 +6,7 @@ import { UpdateContext, useUpdateContext } from '..';
 import ActivityBase from '../ActivityBase';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import ActivityInfo from '../ActivityInfo';
-import ActivityGoods from '../ActivityGoods/list';
+import ActivityGoods from '../ActivityGoods';
 
 export default function Update() {
   return (

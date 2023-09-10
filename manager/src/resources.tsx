@@ -15,7 +15,7 @@ import {
   gamesCenterCommentListResource,
   gamesCenterCommentRecycleBinResource,
   marketActivityResource,
-  marketActivityUpdateGoodsResource,
+  marketActivityGoodsModalButtonResource,
 } from './pages/main/resources';
 
 export const resources = [
@@ -35,5 +35,5 @@ export const resources = [
   gamesCenterCommentListResource,
   gamesCenterCommentRecycleBinResource,
   marketActivityResource,
-  marketActivityUpdateGoodsResource,
+  marketActivityGoodsModalButtonResource,
 ];

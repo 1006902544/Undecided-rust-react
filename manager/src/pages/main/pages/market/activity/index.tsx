@@ -1,6 +1,6 @@
 import type { Resource } from '@/components';
 import { getActivityLimit } from '@/libs/api';
-export { marketActivityUpdateGoodsResource } from './components/ActivityGoods';
+export { marketActivityGoodsModalButtonResource } from './components/ActivityGoodsModalButton';
 
 export const name = 'marketActivityResource';
 

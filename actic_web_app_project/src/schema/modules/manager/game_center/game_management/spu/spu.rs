@@ -118,3 +118,32 @@ pub struct SpuUpdateRes {
     pub id: Option<String>,
     pub name: Option<String>,
 }
+
+#[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
+pub struct SpuSkuTree {
+    pub spu_id: u64,
+    pub spu_name: String,
+    pub sku_id: Option<u64>,
+    pub sku_name: Option<String>,
+    pub price: f64,
+    pub cover_url: String,
+    pub children: Vec<SpuTreeChildren>,
+}
+
+#[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
+pub struct SpuTreeChildren {
+    pub spu_id: u64,
+    pub spu_name: String,
+    pub sku_id: Option<u64>,
+    pub sku_name: Option<String>,
+    pub price: f64,
+    pub cover_url: String,
+}
+
+#[derive(Debug, Clone, ToSchema, Serialize, Deserialize, IntoParams)]
+pub struct GetSpuTreeReq {
+    pub spu_id: Option<u64>,
+    pub spu_name: Option<String>,
+    pub limit: Option<u64>,
+    pub page: Option<u64>,
+}

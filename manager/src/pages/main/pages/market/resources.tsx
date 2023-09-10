@@ -1,4 +1,4 @@
 export {
   marketActivityResource,
-  marketActivityUpdateGoodsResource,
+  marketActivityGoodsModalButtonResource,
 } from './activity';
