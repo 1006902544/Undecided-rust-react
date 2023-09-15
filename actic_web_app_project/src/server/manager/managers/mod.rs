@@ -49,7 +49,7 @@ pub async fn manager_signup(
     data: ManagerSignupAccount,
 ) -> Result<String, MyError> {
     let email_verify: Result<Option<String>, mysql::Error> = conn.exec_first(
-        "select email from email_verify where email=:email and captcha=:captcha",
+        "select email from manager_email where email=:email and captcha=:captcha",
         params! {
           "email" => data.email,
           "captcha" => data.captcha,

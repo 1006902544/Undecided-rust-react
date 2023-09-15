@@ -20,6 +20,7 @@ use crate::{
   )
 )]
 #[get("")]
+///get managers limit
 pub async fn get_managers_limit(
     pool: Data<Pool>,
     req: HttpRequest,
@@ -47,6 +48,7 @@ pub async fn get_managers_limit(
   )
 )]
 #[post("")]
+///manager account signup
 pub async fn manager_signup(
     pool: Data<Pool>,
     req: HttpRequest,
@@ -73,6 +75,7 @@ pub async fn manager_signup(
   )
 )]
 #[post("/info")]
+///update manager info
 pub async fn update_manager_info(
     pool: Data<Pool>,
     req: HttpRequest,

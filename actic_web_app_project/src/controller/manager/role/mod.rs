@@ -15,6 +15,7 @@ use crate::{
   status = 200,description = "success",body = ManagerRoleRes
 )))]
 #[get("")]
+///get manager roles limit
 pub async fn get_manager_role_limit(
     pool: Data<Pool>,
     data: Query<ManagerRoleReq>,
@@ -37,6 +38,7 @@ pub async fn get_manager_role_limit(
   status = 200,description = "success",body = ResPonseString
 )))]
 #[post("")]
+///update manager role
 pub async fn update_manager_role(
     pool: Data<Pool>,
     data: Json<ManagerRoleUpdateReq>,
@@ -59,6 +61,7 @@ pub async fn update_manager_role(
   status = 200,description = "success",body = ResPonseString
 )))]
 #[delete("")]
+///delete manager roles
 pub async fn delete_manager_role(
     pool: Data<Pool>,
     data: Query<ManagerRoleDeleteReq>,

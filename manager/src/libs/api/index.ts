@@ -70,6 +70,8 @@ import type {
   GetGameTypesParams,
   UpdateGameTypeReq,
   DeleteGameTypeParams,
+  ManagerSignupAccount,
+  ManagerInfoUpdate,
   ActivityRes,
   GetActivityLimitParams,
   DeleteActivityParams,
@@ -97,6 +99,10 @@ import type {
   DisassociateParams,
   PermissionAssociateAuthLimitRes,
   GetPermissionAuthParams,
+  ManagerRoleRes,
+  GetManagerRoleLimitParams,
+  ManagerRoleUpdateReq,
+  DeleteManagerRoleParams,
   RoutesVecRes,
   UpdateRouteReq,
   DeleteRouterParams,
@@ -2054,6 +2060,116 @@ export const useGetTypesList = <TData = Awaited<ReturnType<typeof getTypesList>>
 
 
 /**
+ * manager account signup
+ * @summary manager account signup
+ */
+export const managerSignup = (
+    managerSignupAccount: ManagerSignupAccount,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/managers`, method: 'get',
+      headers: {'Content-Type': 'application/json', }, signal
+    },
+      options);
+    }
+  
+
+export const getManagerSignupQueryKey = (managerSignupAccount: ManagerSignupAccount,) => [`/manager/managers`, managerSignupAccount] as const;
+  
+
+    
+export const getManagerSignupQueryOptions = <TData = Awaited<ReturnType<typeof managerSignup>>, TError = ErrorType<unknown>>(managerSignupAccount: ManagerSignupAccount, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof managerSignup>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof managerSignup>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getManagerSignupQueryKey(managerSignupAccount);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof managerSignup>>> = ({ signal }) => managerSignup(managerSignupAccount, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type ManagerSignupQueryResult = NonNullable<Awaited<ReturnType<typeof managerSignup>>>
+export type ManagerSignupQueryError = ErrorType<unknown>
+
+/**
+ * @summary manager account signup
+ */
+export const useManagerSignup = <TData = Awaited<ReturnType<typeof managerSignup>>, TError = ErrorType<unknown>>(
+ managerSignupAccount: ManagerSignupAccount, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof managerSignup>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getManagerSignupQueryOptions(managerSignupAccount,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * update manager info
+ * @summary update manager info
+ */
+export const updateManagerInfo = (
+    managerInfoUpdate: ManagerInfoUpdate,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/managers/info`, method: 'get',
+      headers: {'Content-Type': 'application/json', }, signal
+    },
+      options);
+    }
+  
+
+export const getUpdateManagerInfoQueryKey = (managerInfoUpdate: ManagerInfoUpdate,) => [`/manager/managers/info`, managerInfoUpdate] as const;
+  
+
+    
+export const getUpdateManagerInfoQueryOptions = <TData = Awaited<ReturnType<typeof updateManagerInfo>>, TError = ErrorType<unknown>>(managerInfoUpdate: ManagerInfoUpdate, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof updateManagerInfo>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof updateManagerInfo>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getUpdateManagerInfoQueryKey(managerInfoUpdate);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof updateManagerInfo>>> = ({ signal }) => updateManagerInfo(managerInfoUpdate, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type UpdateManagerInfoQueryResult = NonNullable<Awaited<ReturnType<typeof updateManagerInfo>>>
+export type UpdateManagerInfoQueryError = ErrorType<unknown>
+
+/**
+ * @summary update manager info
+ */
+export const useUpdateManagerInfo = <TData = Awaited<ReturnType<typeof updateManagerInfo>>, TError = ErrorType<unknown>>(
+ managerInfoUpdate: ManagerInfoUpdate, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof updateManagerInfo>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getUpdateManagerInfoQueryOptions(managerInfoUpdate,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
  * get activity limit
  * @summary get activity limit
  */
@@ -3119,6 +3235,168 @@ export const useGetPermissionAuth = <TData = Awaited<ReturnType<typeof getPermis
 }
 
 
+/**
+ * get manager roles limit
+ * @summary get manager roles limit
+ */
+export const getManagerRoleLimit = (
+    params?: GetManagerRoleLimitParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<ManagerRoleRes>(
+      {url: `/manager/role`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetManagerRoleLimitQueryKey = (params?: GetManagerRoleLimitParams,) => [`/manager/role`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetManagerRoleLimitQueryOptions = <TData = Awaited<ReturnType<typeof getManagerRoleLimit>>, TError = ErrorType<unknown>>(params?: GetManagerRoleLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getManagerRoleLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getManagerRoleLimit>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetManagerRoleLimitQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getManagerRoleLimit>>> = ({ signal }) => getManagerRoleLimit(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetManagerRoleLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getManagerRoleLimit>>>
+export type GetManagerRoleLimitQueryError = ErrorType<unknown>
+
+/**
+ * @summary get manager roles limit
+ */
+export const useGetManagerRoleLimit = <TData = Awaited<ReturnType<typeof getManagerRoleLimit>>, TError = ErrorType<unknown>>(
+ params?: GetManagerRoleLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getManagerRoleLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetManagerRoleLimitQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * update manager role
+ * @summary update manager role
+ */
+export const updateManagerRole = (
+    managerRoleUpdateReq: ManagerRoleUpdateReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/role`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: managerRoleUpdateReq
+    },
+      options);
+    }
+  
+
+
+export const getUpdateManagerRoleMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateManagerRole>>, TError,{data: ManagerRoleUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateManagerRole>>, TError,{data: ManagerRoleUpdateReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateManagerRole>>, {data: ManagerRoleUpdateReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateManagerRole(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateManagerRoleMutationResult = NonNullable<Awaited<ReturnType<typeof updateManagerRole>>>
+    export type UpdateManagerRoleMutationBody = ManagerRoleUpdateReq
+    export type UpdateManagerRoleMutationError = ErrorType<unknown>
+
+    /**
+ * @summary update manager role
+ */
+export const useUpdateManagerRole = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateManagerRole>>, TError,{data: ManagerRoleUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getUpdateManagerRoleMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * delete manager roles
+ * @summary delete manager roles
+ */
+export const deleteManagerRole = (
+    params: DeleteManagerRoleParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/role`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteManagerRoleMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteManagerRole>>, TError,{params: DeleteManagerRoleParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteManagerRole>>, TError,{params: DeleteManagerRoleParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteManagerRole>>, {params: DeleteManagerRoleParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteManagerRole(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteManagerRoleMutationResult = NonNullable<Awaited<ReturnType<typeof deleteManagerRole>>>
+    
+    export type DeleteManagerRoleMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete manager roles
+ */
+export const useDeleteManagerRole = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteManagerRole>>, TError,{params: DeleteManagerRoleParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteManagerRoleMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
 /**
  * get routes array
  * @summary get routes array
