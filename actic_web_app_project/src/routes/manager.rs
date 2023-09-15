@@ -185,7 +185,7 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
             )
             .service(
                 web::scope("role")
-                    .service(get_manager_role_limit)
+                    .service(get_manager_roles)
                     .service(update_manager_role)
                     .service(delete_manager_role),
             )
@@ -195,6 +195,7 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                     .service(manager_signup)
                     .service(update_manager_info)
                     .service(managers_sign_in)
+                    .service(get_manager_info_by_token)
                     .service(
                         web::scope("captcha")
                             .service(send_manager_email)

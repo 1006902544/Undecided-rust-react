@@ -7,6 +7,7 @@
 
 export interface ManagerRoleReq {
   id?: number | null;
+  is_page?: number | null;
   limit?: number | null;
   name?: string | null;
   page?: number | null;

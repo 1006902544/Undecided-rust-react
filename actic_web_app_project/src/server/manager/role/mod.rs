@@ -16,23 +16,48 @@ pub async fn get_manager_roles(
 ) -> Result<ManagerRoleLimitRes, MyError> {
     let limit = handle_limit(&data.limit);
     let page = handle_page(&data.page);
-    let res = conn.exec("select SQL_CALC_FOUND_ROWS * from roles where (id=:id or :id is null) and (name=:name or :name is null) limit :scope,:limit", params! {
-      "id" => data.id,
-      "name" => data.name,
-      "scope" => limit*(page-1),
-      "limit" => limit,
-    });
-    match res {
-        Ok(res) => {
-            let total = get_total(conn);
-            let current = get_current(total, page, limit);
-            Ok(ManagerRoleLimitRes {
-                total,
-                current,
-                results: Some(res),
-            })
+    let is_page = match data.is_page {
+        Some(is_page) => {
+            if is_page != 0 {
+                true
+            } else {
+                false
+            }
         }
-        Err(e) => Err(MyError::sql_error(e)),
+        None => true,
+    };
+    if is_page {
+        let res = conn.exec("select SQL_CALC_FOUND_ROWS * from roles where (id=:id or :id is null) and (name=:name or :name is null) limit :scope,:limit", params! {
+            "id" => data.id,
+            "name" => data.name,
+            "scope" => limit*(page-1),
+            "limit" => limit,
+          });
+        match res {
+            Ok(res) => {
+                let total = get_total(conn);
+                let current = get_current(total, page, limit);
+                Ok(ManagerRoleLimitRes {
+                    total,
+                    current,
+                    results: Some(res),
+                })
+            }
+            Err(e) => Err(MyError::sql_error(e)),
+        }
+    } else {
+        let res = conn.exec("select SQL_CALC_FOUND_ROWS * from roles where (id=:id or :id is null) and (name=:name or :name is null)", params! {
+            "id" => data.id,
+            "name" => data.name,
+            });
+        match res {
+            Ok(res) => Ok(ManagerRoleLimitRes {
+                total: TryInto::<u128>::try_into(res.len()).unwrap(),
+                current: 1,
+                results: Some(res),
+            }),
+            Err(e) => Err(MyError::sql_error(e)),
+        }
     }
 }
 

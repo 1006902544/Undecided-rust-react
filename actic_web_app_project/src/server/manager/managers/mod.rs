@@ -89,29 +89,33 @@ pub async fn manager_signup(
 pub async fn update_manager_info(
     conn: &mut PooledConn,
     data: ManagerInfoUpdate,
-) -> Result<String, MyError> {
+    id: u64,
+) -> Result<u64, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let stmt = "insert into manager_info (id,name,avatar,gender,age,mobile,role_id,role_name) values (:id,:name,:avatar,:gender,:age,:mobile,:role_id,:role_name)
-    on duplicate key update name=:name,avatar=:avatar,gender=:gender,age=:age,mobile=:mobile,role_id=:role_id,role_name=:role_name";
+    let stmt = "insert into manager_info (id,name,avatar,gender,age,mobile,username,email) values (:id,:name,:avatar,:gender,:age,:mobile,:username,:email)
+    on duplicate key update name=:name,avatar=:avatar,gender=:gender,age=:age,mobile=:mobile,username=:username,email=:email";
     let res = trans.exec_drop(
         stmt,
         params! {
-            "id" => data.id,
+            "id" => id,
             "name" => data.name,
             "avatar" => data.avatar,
             "gender" => data.gender,
             "age" => data.age,
             "mobile" => data.mobile,
-            "role_id" => data.role_id,
-            "role_name" => data.role_name,
+            "username" => data.username,
+            "email" => data.email,
         },
     );
-    match after_update(trans, res) {
-        Ok(id) => match id {
-            Some(id) => Ok(id),
-            None => Err(MyError::not_found()),
-        },
-        Err(e) => Err(e),
+    match res {
+        Ok(_) => {
+            trans.commit().unwrap();
+            Ok(id)
+        }
+        Err(e) => {
+            trans.rollback().unwrap();
+            Err(MyError::sql_error(e))
+        }
     }
 }
 

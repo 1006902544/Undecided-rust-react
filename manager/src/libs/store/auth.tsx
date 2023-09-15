@@ -1,11 +1,13 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
-import { AdminInfo } from '../api/schema';
+import type { ManagerInfo } from '../api/schema';
+import { getManagerInfoByToken } from '../api';
 
 interface AuthStore {
-  auth?: AdminInfo | null;
-  set_auth: (auth: AdminInfo) => void;
+  auth?: ManagerInfo | null;
+  set_auth: (auth: ManagerInfo) => void;
   clear_auth: () => void;
+  getAuth: () => Promise<any>;
 }
 
 export const useAuthStore = create<AuthStore>()(
@@ -23,6 +25,11 @@ export const useAuthStore = create<AuthStore>()(
           set(() => ({
             auth: null,
           })),
+
+        getAuth: async () => {
+          const res = await getManagerInfoByToken();
+          return set(() => ({ auth: res.data }));
+        },
       }),
       {
         name: 'auth_store',

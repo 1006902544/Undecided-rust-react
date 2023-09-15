@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Header as H, Sider as S } from './components';
+import { Header as H, Sider as S, SignUpInfoRoleModal } from './components';
 import { Layout } from 'antd';
 const { Header, Content, Sider } = Layout;
 
@@ -32,6 +32,8 @@ export default function Main() {
           </div>
         </Content>
       </Content>
+
+      <SignUpInfoRoleModal />
     </Layout>
   );
 }

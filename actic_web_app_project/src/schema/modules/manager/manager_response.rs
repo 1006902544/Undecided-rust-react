@@ -66,7 +66,7 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //管理端角色
     ManagerRoleRes = ResponseData<ManagerRoleLimitRes>,
     //管理端用户
-    ManagerInfoRes = ResponseData<ManagerInfoLimitRes>,
+    ManagerInfoRes = ResponseData<ManagerInfoLimitRes>,ManagerInfoDetailData = ResponseData<ManagerInfo>,
     //管理端用户验证码
     SendManagerEmailResData = ResponseData<SendManagerEmailRes>
 

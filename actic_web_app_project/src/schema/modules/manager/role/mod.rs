@@ -29,6 +29,7 @@ pub struct ManagerRoleReq {
     pub name: Option<String>,
     pub limit: Option<u64>,
     pub page: Option<u64>,
+    pub is_page: Option<u8>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, ToSchema, IntoParams)]

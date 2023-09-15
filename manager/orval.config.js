@@ -15,7 +15,7 @@ module.exports = {
 
         operations: {
           //获取用户信息
-          getAdminInfo: {
+          getManagerInfoByToken: {
             query: {
               useQuery: true,
             },
@@ -61,6 +61,12 @@ module.exports = {
           },
           //获取活动商品
           getActivityGoodsLimit: {
+            query: {
+              useQuery: true,
+            },
+          },
+          //管理端角色分页
+          getManagerRoles: {
             query: {
               useQuery: true,
             },

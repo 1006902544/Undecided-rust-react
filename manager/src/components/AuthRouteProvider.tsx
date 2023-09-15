@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getToken } from '../utils';
 import { useAuthStore } from '@/libs/store';
-import { useGetAdminInfo } from '@/libs/api';
+import { useGetManagerInfoByToken } from '@/libs/api';
 import { message } from 'antd';
 
 interface IProps {
@@ -15,12 +15,12 @@ export default function AuthRouteProvider({ children, unless }: IProps) {
   const navigate = useNavigate();
   const set_auth = useAuthStore(({ set_auth }) => set_auth);
 
-  useGetAdminInfo({
+  useGetManagerInfoByToken({
     query: {
       enabled: !!getToken(),
       onSuccess({ data }) {
         set_auth(data);
-        message.success(`welcome ${data.name}!`);
+        message.success(`welcome ${data.name || ''} !`);
       },
     },
   });

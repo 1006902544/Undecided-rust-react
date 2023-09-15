@@ -42,7 +42,6 @@ pub struct ManagerSignupAccount {
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, Validate)]
 pub struct ManagerInfoUpdate {
-    pub id: Option<u64>,
     pub name: String,
     #[validate(url)]
     pub avatar: Option<String>,
@@ -50,8 +49,8 @@ pub struct ManagerInfoUpdate {
     pub age: Option<u8>,
     #[validate(length(equal = 11), required)]
     pub mobile: Option<String>,
-    pub role_id: u64,
-    pub role_name: String,
+    pub username: String,
+    pub email: String,
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, Validate)]

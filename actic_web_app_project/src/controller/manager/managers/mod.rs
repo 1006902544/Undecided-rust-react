@@ -8,7 +8,7 @@ pub mod captcha;
 
 use crate::{
     app::error::MyError,
-    nako::auth::encode_default,
+    nako::auth::{encode_default, get_info_by_token, get_uid_by_token},
     schema::modules::manager::{manager_response::ResponseData, managers::*},
     server::manager::{managers as manager_service, permissions::has_permission},
 };
@@ -76,22 +76,45 @@ pub async fn manager_signup(
 pub async fn update_manager_info(
     pool: Data<Pool>,
     data: Json<ManagerInfoUpdate>,
+    req: HttpRequest,
 ) -> Result<impl Responder, impl ResponseError> {
     let mut conn = pool.get_conn().unwrap();
-
-    match manager_service::update_manager_info(&mut conn, data.into_inner()).await {
-        Ok(res) => {
-            let info =
-                manager_service::get_manager_by_id(&mut conn, res.parse::<u64>().unwrap()).await;
-            match info {
-                Ok(info) => match encode_default(info) {
-                    Ok(code) => Ok(ResponseData::new(code).into_json_response()),
-                    Err(e) => Err(MyError::encode_error(e)),
-                },
-                Err(err) => Err(err),
+    let id = get_uid_by_token(&req);
+    match id {
+        Some(id) => {
+            match manager_service::update_manager_info(&mut conn, data.into_inner(), id).await {
+                Ok(res) => {
+                    let info = manager_service::get_manager_by_id(&mut conn, res).await;
+                    match info {
+                        Ok(info) => match encode_default(info) {
+                            Ok(code) => Ok(ResponseData::new(code).into_json_response()),
+                            Err(e) => Err(MyError::encode_error(e)),
+                        },
+                        Err(err) => Err(err),
+                    }
+                }
+                Err(e) => Err(e),
             }
         }
-        Err(e) => Err(e),
+        None => Err(MyError::not_found()),
+    }
+}
+
+#[utoipa::path(
+    get,
+    path="/manager/managers/info",
+    responses (
+        (status=200,description="success",body=ManagerInfoDetailData)
+    )
+  )]
+#[get("/info")]
+///get manager info by token
+pub async fn get_manager_info_by_token(
+    req: HttpRequest,
+) -> Result<impl Responder, impl ResponseError> {
+    match get_info_by_token(&req) {
+        Some(res) => Ok(ResponseData::new(res).into_json_response()),
+        None => Err(MyError::auth_error()),
     }
 }
 

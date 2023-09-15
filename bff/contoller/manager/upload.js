@@ -71,9 +71,9 @@ const uploadImage = async (ctx, next) => {
       status: 200,
     };
   } catch (err) {
-    ctx.status = 500;
+    ctx.status = err.response?.data?.status || 500;
     ctx.body = {
-      msg: err.message,
+      msg: err.response?.data?.message || err.message,
     };
   }
 };

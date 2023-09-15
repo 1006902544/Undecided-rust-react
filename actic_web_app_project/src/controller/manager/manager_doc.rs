@@ -117,7 +117,7 @@ use utoipa::OpenApi;
         super::market::activity::delete_activity_goods_bundle,
         super::market::activity::delete_activity_goods_promotion,
         //管理端角色
-        super::role::get_manager_role_limit,
+        super::role::get_manager_roles,
         super::role::update_manager_role,
         super::role::delete_manager_role,
         //管理端用户
@@ -125,6 +125,7 @@ use utoipa::OpenApi;
         super::managers::manager_signup,
         super::managers::update_manager_info,
         super::managers::managers_sign_in,
+        super::managers::get_manager_info_by_token,
         //管理端用户-email验证码
         super::managers::captcha::send_manager_email,
         super::managers::captcha::verify_manager_email,
@@ -190,7 +191,7 @@ use utoipa::OpenApi;
         //管理端角色
         ManagerRole,ManagerRoleUpdateReq,ManagerRoleReq,ManagerRoleDeleteReq,ManagerRoleList,ManagerRoleRes,ManagerRoleLimitRes,
         //管理端用户
-        ManagerInfoRes,ManagerInfoLimitRes,ManagerInfo,GetManagerInfoReq,ManagerSignupAccount,ManagerInfoUpdate,ManagerSignIn,ManagerInfoLimitReq,DeleteManager,
+        ManagerInfoRes,ManagerInfoLimitRes,ManagerInfo,GetManagerInfoReq,ManagerSignupAccount,ManagerInfoUpdate,ManagerSignIn,ManagerInfoLimitReq,DeleteManager,ManagerInfoDetailData,
           //管理端用户email验证码
         SendManagerEmailResData,SendManagerEmailReq,SendManagerEmailRes,ManagerEmailRow,
     ))
