@@ -1,9 +1,6 @@
 use crate::{
     app::error::MyError,
-    nako::{
-        auth::{encode_default, get_info_by_token, is_manager},
-        connection::get_conn,
-    },
+    nako::{auth::get_info_by_token, connection::get_conn},
     schema::{
         base_struct::{handle_limit, handle_page},
         modules::{admin::admin::LoginBody, manager::auth::auth::*},
@@ -52,26 +49,18 @@ pub async fn sign_in(
     pool: Data<Pool>,
     req: HttpRequest,
 ) -> Result<impl Responder, impl ResponseError> {
-    let is_manager = is_manager(&req);
-    if is_manager {
-        Err(MyError::permissions_error())
-    } else {
-        let req = body.into_inner();
-        let conn: mysql::PooledConn = get_conn(pool).unwrap();
-        let res = auth_server::sign_in(req, conn).await;
-        match res {
-            Ok(res) => {
-                if res.level < 1 {
-                    Err(MyError::permissions_error())
-                } else {
-                    match encode_default(res) {
-                        Ok(code) => Ok(ResponseData::new(code).into_json_response()),
-                        Err(e) => Err(MyError::encode_error(e)),
-                    }
-                }
+    let req = body.into_inner();
+    let conn: mysql::PooledConn = get_conn(pool).unwrap();
+    let res = auth_server::sign_in(req, conn).await;
+    match res {
+        Ok(res) => {
+            if res.level < 1 {
+                Err(MyError::permissions_error())
+            } else {
+                Ok(ResponseData::new("code").into_json_response())
             }
-            Err(e) => Err(e),
         }
+        Err(e) => Err(e),
     }
 }
 

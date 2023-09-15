@@ -70,8 +70,14 @@ import type {
   GetGameTypesParams,
   UpdateGameTypeReq,
   DeleteGameTypeParams,
+  ManagerInfoRes,
+  GetManagersLimitParams,
   ManagerSignupAccount,
+  SendManagerEmailResData,
+  SendEmailReq,
+  EmailRow,
   ManagerInfoUpdate,
+  ManagerSignIn,
   ActivityRes,
   GetActivityLimitParams,
   DeleteActivityParams,
@@ -115,9 +121,7 @@ import type {
   BannedUser,
   UnblockUserParams,
   UserDetailRes,
-  GetUserDetailParams,
-  SendEmailReq,
-  EmailRow
+  GetUserDetailParams
 } from './schema'
 import { custom_instance } from './custom_instance';
 import type { ErrorType } from './custom_instance';
@@ -2060,51 +2064,51 @@ export const useGetTypesList = <TData = Awaited<ReturnType<typeof getTypesList>>
 
 
 /**
- * manager account signup
- * @summary manager account signup
+ * get managers limit
+ * @summary get managers limit
  */
-export const managerSignup = (
-    managerSignupAccount: ManagerSignupAccount,
+export const getManagersLimit = (
+    params?: GetManagersLimitParams,
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
 ) => {
-      return custom_instance<ResPonseString>(
+      return custom_instance<ManagerInfoRes>(
       {url: `/manager/managers`, method: 'get',
-      headers: {'Content-Type': 'application/json', }, signal
+        params, signal
     },
       options);
     }
   
 
-export const getManagerSignupQueryKey = (managerSignupAccount: ManagerSignupAccount,) => [`/manager/managers`, managerSignupAccount] as const;
+export const getGetManagersLimitQueryKey = (params?: GetManagersLimitParams,) => [`/manager/managers`, ...(params ? [params]: [])] as const;
   
 
     
-export const getManagerSignupQueryOptions = <TData = Awaited<ReturnType<typeof managerSignup>>, TError = ErrorType<unknown>>(managerSignupAccount: ManagerSignupAccount, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof managerSignup>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
-): UseQueryOptions<Awaited<ReturnType<typeof managerSignup>>, TError, TData> & { queryKey: QueryKey } => {
+export const getGetManagersLimitQueryOptions = <TData = Awaited<ReturnType<typeof getManagersLimit>>, TError = ErrorType<unknown>>(params?: GetManagersLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getManagersLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getManagersLimit>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getManagerSignupQueryKey(managerSignupAccount);
+  const queryKey =  queryOptions?.queryKey ?? getGetManagersLimitQueryKey(params);
 
   
   
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof managerSignup>>> = ({ signal }) => managerSignup(managerSignupAccount, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getManagersLimit>>> = ({ signal }) => getManagersLimit(params, requestOptions, signal);
     
       
       
    return  { queryKey, queryFn, ...queryOptions}}
 
-export type ManagerSignupQueryResult = NonNullable<Awaited<ReturnType<typeof managerSignup>>>
-export type ManagerSignupQueryError = ErrorType<unknown>
+export type GetManagersLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getManagersLimit>>>
+export type GetManagersLimitQueryError = ErrorType<unknown>
 
 /**
- * @summary manager account signup
+ * @summary get managers limit
  */
-export const useManagerSignup = <TData = Awaited<ReturnType<typeof managerSignup>>, TError = ErrorType<unknown>>(
- managerSignupAccount: ManagerSignupAccount, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof managerSignup>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+export const useGetManagersLimit = <TData = Awaited<ReturnType<typeof getManagersLimit>>, TError = ErrorType<unknown>>(
+ params?: GetManagersLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getManagersLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getManagerSignupQueryOptions(managerSignupAccount,options)
+  const queryOptions = getGetManagersLimitQueryOptions(params,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -2114,61 +2118,276 @@ export const useManagerSignup = <TData = Awaited<ReturnType<typeof managerSignup
 }
 
 
+/**
+ * manager account signup
+ * @summary manager account signup
+ */
+export const managerSignup = (
+    managerSignupAccount: ManagerSignupAccount,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/managers`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: managerSignupAccount
+    },
+      options);
+    }
+  
+
+
+export const getManagerSignupMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof managerSignup>>, TError,{data: ManagerSignupAccount}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof managerSignup>>, TError,{data: ManagerSignupAccount}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof managerSignup>>, {data: ManagerSignupAccount}> = (props) => {
+          const {data} = props ?? {};
+
+          return  managerSignup(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type ManagerSignupMutationResult = NonNullable<Awaited<ReturnType<typeof managerSignup>>>
+    export type ManagerSignupMutationBody = ManagerSignupAccount
+    export type ManagerSignupMutationError = ErrorType<unknown>
+
+    /**
+ * @summary manager account signup
+ */
+export const useManagerSignup = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof managerSignup>>, TError,{data: ManagerSignupAccount}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getManagerSignupMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * send manager email
+ * @summary send manager email
+ */
+export const sendManagerEmail = (
+    sendEmailReq: SendEmailReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<SendManagerEmailResData>(
+      {url: `/manager/managers/captcha/send`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: sendEmailReq
+    },
+      options);
+    }
+  
+
+
+export const getSendManagerEmailMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof sendManagerEmail>>, TError,{data: SendEmailReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof sendManagerEmail>>, TError,{data: SendEmailReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof sendManagerEmail>>, {data: SendEmailReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  sendManagerEmail(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type SendManagerEmailMutationResult = NonNullable<Awaited<ReturnType<typeof sendManagerEmail>>>
+    export type SendManagerEmailMutationBody = SendEmailReq
+    export type SendManagerEmailMutationError = ErrorType<unknown>
+
+    /**
+ * @summary send manager email
+ */
+export const useSendManagerEmail = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof sendManagerEmail>>, TError,{data: SendEmailReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getSendManagerEmailMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * verify manager email
+ * @summary verify manager email
+ */
+export const verifyManagerEmail = (
+    emailRow: EmailRow,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/managers/captcha/verify`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: emailRow
+    },
+      options);
+    }
+  
+
+
+export const getVerifyManagerEmailMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof verifyManagerEmail>>, TError,{data: EmailRow}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof verifyManagerEmail>>, TError,{data: EmailRow}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof verifyManagerEmail>>, {data: EmailRow}> = (props) => {
+          const {data} = props ?? {};
+
+          return  verifyManagerEmail(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type VerifyManagerEmailMutationResult = NonNullable<Awaited<ReturnType<typeof verifyManagerEmail>>>
+    export type VerifyManagerEmailMutationBody = EmailRow
+    export type VerifyManagerEmailMutationError = ErrorType<unknown>
+
+    /**
+ * @summary verify manager email
+ */
+export const useVerifyManagerEmail = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof verifyManagerEmail>>, TError,{data: EmailRow}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getVerifyManagerEmailMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
 /**
  * update manager info
  * @summary update manager info
  */
 export const updateManagerInfo = (
     managerInfoUpdate: ManagerInfoUpdate,
- options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
-) => {
+ options?: SecondParameter<typeof custom_instance>,) => {
       return custom_instance<ResPonseString>(
-      {url: `/manager/managers/info`, method: 'get',
-      headers: {'Content-Type': 'application/json', }, signal
+      {url: `/manager/managers/info`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: managerInfoUpdate
     },
       options);
     }
   
 
-export const getUpdateManagerInfoQueryKey = (managerInfoUpdate: ManagerInfoUpdate,) => [`/manager/managers/info`, managerInfoUpdate] as const;
-  
 
+export const getUpdateManagerInfoMutationOptions = <TError = ErrorType<unknown>,
     
-export const getUpdateManagerInfoQueryOptions = <TData = Awaited<ReturnType<typeof updateManagerInfo>>, TError = ErrorType<unknown>>(managerInfoUpdate: ManagerInfoUpdate, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof updateManagerInfo>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
-): UseQueryOptions<Awaited<ReturnType<typeof updateManagerInfo>>, TError, TData> & { queryKey: QueryKey } => {
-const {query: queryOptions, request: requestOptions} = options ?? {};
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateManagerInfo>>, TError,{data: ManagerInfoUpdate}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateManagerInfo>>, TError,{data: ManagerInfoUpdate}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getUpdateManagerInfoQueryKey(managerInfoUpdate);
-
-  
-  
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof updateManagerInfo>>> = ({ signal }) => updateManagerInfo(managerInfoUpdate, requestOptions, signal);
-    
       
-      
-   return  { queryKey, queryFn, ...queryOptions}}
 
-export type UpdateManagerInfoQueryResult = NonNullable<Awaited<ReturnType<typeof updateManagerInfo>>>
-export type UpdateManagerInfoQueryError = ErrorType<unknown>
 
-/**
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateManagerInfo>>, {data: ManagerInfoUpdate}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateManagerInfo(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateManagerInfoMutationResult = NonNullable<Awaited<ReturnType<typeof updateManagerInfo>>>
+    export type UpdateManagerInfoMutationBody = ManagerInfoUpdate
+    export type UpdateManagerInfoMutationError = ErrorType<unknown>
+
+    /**
  * @summary update manager info
  */
-export const useUpdateManagerInfo = <TData = Awaited<ReturnType<typeof updateManagerInfo>>, TError = ErrorType<unknown>>(
- managerInfoUpdate: ManagerInfoUpdate, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof updateManagerInfo>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+export const useUpdateManagerInfo = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateManagerInfo>>, TError,{data: ManagerInfoUpdate}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getUpdateManagerInfoMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * manager sign in
+ * @summary manager sign in
+ */
+export const managersSignIn = (
+    managerSignIn: ManagerSignIn,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/managers/signIn`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: managerSignIn
+    },
+      options);
+    }
+  
 
-  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getUpdateManagerInfoQueryOptions(managerInfoUpdate,options)
+export const getManagersSignInMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof managersSignIn>>, TError,{data: ManagerSignIn}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof managersSignIn>>, TError,{data: ManagerSignIn}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
+      
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof managersSignIn>>, {data: ManagerSignIn}> = (props) => {
+          const {data} = props ?? {};
+
+          return  managersSignIn(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type ManagersSignInMutationResult = NonNullable<Awaited<ReturnType<typeof managersSignIn>>>
+    export type ManagersSignInMutationBody = ManagerSignIn
+    export type ManagersSignInMutationError = ErrorType<unknown>
+
+    /**
+ * @summary manager sign in
+ */
+export const useManagersSignIn = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof managersSignIn>>, TError,{data: ManagerSignIn}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getManagersSignInMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
 /**
  * get activity limit
  * @summary get activity limit

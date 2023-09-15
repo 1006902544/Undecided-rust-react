@@ -6,7 +6,8 @@
  */
 
 export interface ManagerSignIn {
+  captcha?: string | null;
   email?: string | null;
-  password: string;
+  password?: string | null;
   username?: string | null;
 }

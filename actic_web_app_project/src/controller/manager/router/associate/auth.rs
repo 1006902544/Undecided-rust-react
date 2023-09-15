@@ -7,7 +7,6 @@ use mysql::Pool;
 
 use crate::{
     app::error::MyError,
-    nako::auth::is_manager,
     schema::modules::{admin::admin_response::ResponseData, manager::router::associate::auth::*},
     server::manager::{permissions::has_permission, router::associate::auth as auth_service},
 };
@@ -37,17 +36,12 @@ pub async fn get_auth_with_router(
     query: Query<AssociateRouterAuthLimitReq>,
     req: HttpRequest,
 ) -> Result<impl Responder, impl ResponseError> {
-    if is_manager(&req) {
-        let mut conn = pool.get_conn().unwrap();
-        if has_permission(&mut conn, &req) {
-            let res =
-                auth_service::get_auth_with_router_associate(&mut conn, query.into_inner()).await;
-            match res {
-                Ok(res) => Ok(ResponseData::new(res).into_json_response()),
-                Err(e) => Err(e),
-            }
-        } else {
-            Err(MyError::permissions_error())
+    let mut conn = pool.get_conn().unwrap();
+    if has_permission(&mut conn, &req) {
+        let res = auth_service::get_auth_with_router_associate(&mut conn, query.into_inner()).await;
+        match res {
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+            Err(e) => Err(e),
         }
     } else {
         Err(MyError::permissions_error())

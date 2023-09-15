@@ -71,7 +71,7 @@ pub fn edit_route(route: UpdateRouteReq, conn: &mut PooledConn) -> Result<u8, My
 }
 
 //获取用户路由表
-pub fn get_user_route(aid: u128, conn: &mut PooledConn) -> Result<Vec<Route>, MyError> {
+pub fn get_user_route(aid: u64, conn: &mut PooledConn) -> Result<Vec<Route>, MyError> {
     let sql_str = format!("select r.* from admin_router as ar left join router as r on r.key=ar.rkey where ar.aid={aid}");
     let res: Result<Vec<Route>, mysql::Error> = conn.query(sql_str);
     match res {

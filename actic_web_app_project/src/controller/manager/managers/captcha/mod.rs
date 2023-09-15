@@ -15,7 +15,7 @@ use crate::{
 
 #[utoipa::path(
   post,
-  path = "/manager/user/captcha/send",
+  path = "/manager/managers/captcha/send",
   request_body = SendEmailReq,
   responses (
     (
@@ -59,7 +59,7 @@ pub async fn send_manager_email(
 
 #[utoipa::path(
   post,
-  path = "/manager/user/captcha/verify",
+  path = "/manager/managers/captcha/verify",
   request_body = EmailRow,
   responses (
     (

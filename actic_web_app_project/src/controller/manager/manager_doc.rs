@@ -124,7 +124,10 @@ use utoipa::OpenApi;
         super::managers::get_managers_limit,
         super::managers::manager_signup,
         super::managers::update_manager_info,
-        //管理端用户email验证码
+        super::managers::managers_sign_in,
+        //管理端用户-email验证码
+        super::managers::captcha::send_manager_email,
+        super::managers::captcha::verify_manager_email,
 
     ),
     components(schemas(

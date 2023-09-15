@@ -100,6 +100,7 @@ export * from './getGameTypesParams';
 export * from './getImagesParams';
 export * from './getManagerInfoReq';
 export * from './getManagerRoleLimitParams';
+export * from './getManagersLimitParams';
 export * from './getPermissionAuthParams';
 export * from './getPermissionParams';
 export * from './getSkuLimitParams';

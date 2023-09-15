@@ -118,7 +118,7 @@ pub fn sign_in(data: LoginBody, mut conn: PooledConn) -> Result<AdminInfo, MyErr
 }
 
 //获取用户信息
-pub fn get_self_info(id: u128, conn: &mut PooledConn) -> Result<AdminInfo, MyError> {
+pub fn get_self_info(id: u64, conn: &mut PooledConn) -> Result<AdminInfo, MyError> {
     let sql_str = format!(
         "select a.id,a.name,l.username,a.age,a.status,a.gender,a.create_time,a.update_time,a.level from admin as a , admin_login as l where a.id = {id} and l.id = {id} limit 1;"
     );

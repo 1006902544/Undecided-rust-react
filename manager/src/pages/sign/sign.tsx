@@ -1,5 +1,5 @@
 import { Tabs } from 'antd';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import SignIn from './signIn';
 import SignUp from './signUp';
@@ -11,6 +11,12 @@ interface TabItem {
 }
 
 export default function Sign() {
+  const [activeKey, setActiveKey] = useState('signIn');
+
+  const onChange = useCallback((v: string) => {
+    setActiveKey(v);
+  }, []);
+
   const items = useMemo<TabItem[]>(
     () => [
       {
@@ -21,7 +27,7 @@ export default function Sign() {
       {
         key: 'signUp',
         label: 'SignUp',
-        children: <SignUp />,
+        children: <SignUp setActiveKey={setActiveKey} />,
       },
     ],
     []
@@ -34,6 +40,8 @@ export default function Sign() {
         items={items}
         centered
         destroyInactiveTabPane
+        activeKey={activeKey}
+        onChange={onChange}
       />
     </Container>
   );

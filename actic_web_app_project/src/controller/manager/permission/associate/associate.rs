@@ -7,7 +7,6 @@ use mysql::Pool;
 
 use crate::{
     app::error::MyError,
-    nako::auth::is_manager,
     schema::modules::manager::{
         manager_response::ResponseData, permission::associate::associate::*,
     },
@@ -29,18 +28,13 @@ pub async fn associate(
     body: Json<PermissionAssociateAuthReqBody>,
     req: HttpRequest,
 ) -> Result<impl Responder, impl ResponseError> {
-    if is_manager(&req) {
-        let mut conn = pool.get_conn().unwrap();
-        let has_per = has_permission(&mut conn, &req);
-        if has_per {
-            let res =
-                associate_service::associate_permission_auth(&mut conn, body.into_inner()).await;
-            match res {
-                Ok(res) => Ok(ResponseData::new(res).into_json_response()),
-                Err(e) => Err(e),
-            }
-        } else {
-            Err(MyError::permissions_error())
+    let mut conn = pool.get_conn().unwrap();
+    let has_per = has_permission(&mut conn, &req);
+    if has_per {
+        let res = associate_service::associate_permission_auth(&mut conn, body.into_inner()).await;
+        match res {
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+            Err(e) => Err(e),
         }
     } else {
         Err(MyError::permissions_error())
@@ -65,19 +59,14 @@ pub async fn disassociate(
     query: Query<PermissionDisassociateAuthReqBody>,
     req: HttpRequest,
 ) -> Result<impl Responder, impl ResponseError> {
-    if is_manager(&req) {
-        let mut conn = pool.get_conn().unwrap();
-        let has_per = has_permission(&mut conn, &req);
-        if has_per {
-            let res =
-                associate_service::disassociate_permission_auth(&mut conn, query.into_inner())
-                    .await;
-            match res {
-                Ok(res) => Ok(ResponseData::new(res).into_json_response()),
-                Err(e) => Err(e),
-            }
-        } else {
-            Err(MyError::permissions_error())
+    let mut conn = pool.get_conn().unwrap();
+    let has_per = has_permission(&mut conn, &req);
+    if has_per {
+        let res =
+            associate_service::disassociate_permission_auth(&mut conn, query.into_inner()).await;
+        match res {
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+            Err(e) => Err(e),
         }
     } else {
         Err(MyError::permissions_error())

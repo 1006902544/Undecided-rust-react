@@ -1,21 +1,54 @@
 import { ProForm, ProFormText } from '@ant-design/pro-components';
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { CaptchaWithButtonFormItem } from '../components';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
+import { useMutation } from '@tanstack/react-query';
+import { managerSignup } from '@/libs/api';
+import type { ManagerSignupAccount } from '@/libs/api/schema';
 
-export default function SignUp() {
-  const [form] = ProForm.useForm();
+interface SignUpForm extends ManagerSignupAccount {
+  ensurePassword: string;
+}
+
+export default function SignUp({
+  setActiveKey,
+}: {
+  setActiveKey: React.Dispatch<React.SetStateAction<string>>;
+}) {
+  const [form] = ProForm.useForm<SignUpForm>();
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: managerSignup,
+    onSuccess() {
+      message.success('SignUp success');
+      setActiveKey('signIn');
+    },
+  });
+
+  const onFinish = useCallback(
+    async (v: SignUpForm) => {
+      console.log(v);
+      mutate(v);
+    },
+    [mutate]
+  );
 
   return (
     <Container className="ml-[774px] w-[360px] mt-[50px]">
       <ProForm
+        onFinish={onFinish}
         form={form}
         submitter={{
           render() {
             return (
               <div className="flex justify-center">
-                <Button type="primary" className="w-[150px]">
+                <Button
+                  type="primary"
+                  className="w-[150px]"
+                  loading={isLoading}
+                  htmlType="submit"
+                >
                   SignUp
                 </Button>
               </div>
@@ -49,7 +82,15 @@ export default function SignUp() {
           ]}
         />
 
-        <CaptchaWithButtonFormItem label="Captcha" name="captcha" />
+        <CaptchaWithButtonFormItem
+          label="Captcha"
+          name="captcha"
+          onSuccess={(data) => {
+            if (data.is_manager) {
+              message.error('This email had been signed up');
+            }
+          }}
+        />
 
         <ProFormText
           label="Password"

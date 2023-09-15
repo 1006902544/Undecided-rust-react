@@ -7,7 +7,6 @@ use mysql::Pool;
 
 use crate::{
     app::error::MyError,
-    nako::auth::is_manager,
     schema::modules::manager::{manager_response::ResponseData, router::associate::associate::*},
     server::manager::{
         permissions::has_permission, router::associate::associate as associate_server,
@@ -32,24 +31,19 @@ pub async fn associate_auth_router(
     body: Json<AssociateRouterAuthReq>,
     req: HttpRequest,
 ) -> Result<impl Responder, impl ResponseError> {
-    if is_manager(&req) {
-        let mut conn = pool.get_conn().unwrap();
-        if has_permission(&mut conn, &req) {
-            let res = if body.associate == 1 {
-                let res =
-                    associate_server::associate_auth_router(&mut conn, body.into_inner()).await;
-                res
-            } else {
-                let res =
-                    associate_server::disassociate_auth_router(&mut conn, body.into_inner()).await;
-                res
-            };
-            match res {
-                Ok(row) => Ok(ResponseData::new(row).into_json_response()),
-                Err(e) => Err(e),
-            }
+    let mut conn = pool.get_conn().unwrap();
+    if has_permission(&mut conn, &req) {
+        let res = if body.associate == 1 {
+            let res = associate_server::associate_auth_router(&mut conn, body.into_inner()).await;
+            res
         } else {
-            Err(MyError::permissions_error())
+            let res =
+                associate_server::disassociate_auth_router(&mut conn, body.into_inner()).await;
+            res
+        };
+        match res {
+            Ok(row) => Ok(ResponseData::new(row).into_json_response()),
+            Err(e) => Err(e),
         }
     } else {
         Err(MyError::permissions_error())

@@ -82,10 +82,11 @@ pub async fn sign_in(body: Form<LoginBody>, pool: Data<Pool>) -> Result<impl Res
     let conn: mysql::PooledConn = get_conn(pool).unwrap();
     let res = server_admin::sign_in(req, conn);
     match res {
-        Ok(res) => match encode_default(res) {
-            Ok(code) => Ok(ResponseData::new(code).into_json_response()),
-            Err(e) => Err(MyError::encode_error(e)),
-        },
+        Ok(code) => Ok(ResponseData::new("code").into_json_response()),
+        // match encode_default(res) {
+        //     Ok(code) => Ok(ResponseData::new("code").into_json_response()),
+        //     Err(e) => Err(MyError::encode_error(e)),
+        // }
         Err(e) => Err(e),
     }
 }

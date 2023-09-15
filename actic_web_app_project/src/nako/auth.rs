@@ -4,16 +4,16 @@ use actix_web::{http::header::AUTHORIZATION, HttpRequest};
 use jsonwebtoken::{decode, encode, errors::Error, DecodingKey, EncodingKey, Header, Validation};
 use serde::{Deserialize, Serialize};
 
-use crate::{middleware::auth_verify::UnlessTree, schema::modules::admin::admin::AdminInfo};
+use crate::{middleware::auth_verify::UnlessTree, schema::modules::manager::managers::ManagerInfo};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Claims {
     pub exp: u128,
-    pub id: u128,
-    pub info: AdminInfo,
+    pub id: u64,
+    pub info: ManagerInfo,
 }
 
-pub fn get_uid_by_token(req: &HttpRequest) -> Option<u128> {
+pub fn get_uid_by_token(req: &HttpRequest) -> Option<u64> {
     let auth = req.headers().get(AUTHORIZATION);
     match auth {
         Some(token) => {
@@ -31,7 +31,7 @@ pub fn get_uid_by_token(req: &HttpRequest) -> Option<u128> {
     }
 }
 
-pub fn get_info_by_token(req: &HttpRequest) -> Option<AdminInfo> {
+pub fn get_info_by_token(req: &HttpRequest) -> Option<ManagerInfo> {
     let auth = req.headers().get(AUTHORIZATION);
     match auth {
         Some(token) => {
@@ -49,20 +49,7 @@ pub fn get_info_by_token(req: &HttpRequest) -> Option<AdminInfo> {
     }
 }
 
-pub fn is_manager(req: &HttpRequest) -> bool {
-    match get_info_by_token(req) {
-        Some(info) => {
-            if info.level > 0 {
-                true
-            } else {
-                false
-            }
-        }
-        None => false,
-    }
-}
-
-pub fn encode_default(info: AdminInfo) -> Result<String, Error> {
+pub fn encode_default(info: ManagerInfo) -> Result<String, Error> {
     encode(
         &Header::default(),
         &Claims {
@@ -118,7 +105,23 @@ pub fn get_unless_tree() -> Vec<UnlessTree> {
                     Some(r"^/manager/upload/static/"),
                     None,
                 ),
-                UnlessTree::new("/user/email", Some("POST"), Some(r"^/user/email"), None),
+                UnlessTree::new(
+                    "/user/email",
+                    Some("POST"),
+                    Some(r"^/manager/user/email"),
+                    None,
+                ),
+                UnlessTree::new(
+                    "/managers",
+                    Some("POST"),
+                    Some(r"^/manager/managers"),
+                    Some(vec![UnlessTree::new(
+                        "/captcha",
+                        Some("POST"),
+                        Some(r"^/manager/managers/captcha"),
+                        None,
+                    )]),
+                ),
             ]),
         ),
     ]

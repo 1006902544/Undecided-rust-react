@@ -194,6 +194,7 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                     .service(get_managers_limit)
                     .service(manager_signup)
                     .service(update_manager_info)
+                    .service(managers_sign_in)
                     .service(
                         web::scope("captcha")
                             .service(send_manager_email)

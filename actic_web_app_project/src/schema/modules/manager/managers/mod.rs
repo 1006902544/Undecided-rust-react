@@ -11,17 +11,17 @@ pub struct ManagerInfo {
     pub id: u64,
     pub username: String,
     pub email: String,
-    pub name: String,
+    pub name: Option<String>,
     pub avatar: Option<String>,
-    pub gender: u64,
+    pub gender: Option<u64>,
     pub age: Option<u64>,
     pub mobile: Option<String>,
-    pub role_id: u64,
-    pub role_name: String,
-    #[schema(value_type = String)]
-    pub create_time: NaiveDateTime,
-    #[schema(value_type = String)]
-    pub update_time: NaiveDateTime,
+    pub role_id: Option<u64>,
+    pub role_name: Option<String>,
+    #[schema(value_type = Option<String>)]
+    pub create_time: Option<NaiveDateTime>,
+    #[schema(value_type = Option<String>)]
+    pub update_time: Option<NaiveDateTime>,
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, IntoParams)]
@@ -56,12 +56,15 @@ pub struct ManagerInfoUpdate {
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, Validate)]
 pub struct ManagerSignIn {
-    #[validate(length(min = 6, max = 18))]
+    #[validate(length(min = 6, max = 18), required)]
     pub username: Option<String>,
-    #[validate(email)]
+    #[validate(length(min = 6, max = 18), required)]
+    pub password: Option<String>,
+
+    #[validate(email, required)]
     pub email: Option<String>,
-    #[validate(length(min = 6, max = 18))]
-    pub password: String,
+    #[validate(length(equal = 6), required)]
+    pub captcha: Option<String>,
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, IntoParams)]

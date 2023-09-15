@@ -8,14 +8,14 @@
 export interface ManagerInfo {
   age?: number | null;
   avatar?: string | null;
-  create_time: string;
+  create_time?: string | null;
   email: string;
-  gender: number;
+  gender?: number | null;
   id: number;
   mobile?: string | null;
-  name: string;
-  role_id: number;
-  role_name: string;
-  update_time: string;
+  name?: string | null;
+  role_id?: number | null;
+  role_name?: string | null;
+  update_time?: string | null;
   username: string;
 }

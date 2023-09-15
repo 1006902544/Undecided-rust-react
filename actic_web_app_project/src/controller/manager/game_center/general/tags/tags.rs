@@ -1,6 +1,5 @@
 use crate::{
     app::error::MyError,
-    nako::auth::is_manager,
     schema::modules::manager::{
         game_center::general::tags::tags::*, manager_response::ResponseData,
     },
@@ -30,17 +29,12 @@ pub async fn get_tags_limit(
     query: Query<TagLimitReq>,
     req: HttpRequest,
 ) -> Result<impl Responder, impl ResponseError> {
-    let is_manager = is_manager(&req);
-    if is_manager {
-        let mut conn = pool.get_conn().unwrap();
-        if has_permission(&mut conn, &req) {
-            let res = tags_server::get_tags_limit(&mut conn, query.into_inner()).await;
-            match res {
-                Ok(res) => Ok(ResponseData::new(res).into_json_response()),
-                Err(e) => Err(e),
-            }
-        } else {
-            Err(MyError::permissions_error())
+    let mut conn = pool.get_conn().unwrap();
+    if has_permission(&mut conn, &req) {
+        let res = tags_server::get_tags_limit(&mut conn, query.into_inner()).await;
+        match res {
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+            Err(e) => Err(e),
         }
     } else {
         Err(MyError::permissions_error())
@@ -62,17 +56,12 @@ pub async fn update_tags(
     data: Json<UpdateTagReq>,
     req: HttpRequest,
 ) -> Result<impl Responder, impl ResponseError> {
-    let is_manager = is_manager(&req);
-    if is_manager {
-        let mut conn = pool.get_conn().unwrap();
-        if has_permission(&mut conn, &req) {
-            let res = tags_server::update_tags(&mut conn, data.into_inner()).await;
-            match res {
-                Ok(res) => Ok(ResponseData::new(res).into_json_response()),
-                Err(e) => Err(e),
-            }
-        } else {
-            Err(MyError::permissions_error())
+    let mut conn = pool.get_conn().unwrap();
+    if has_permission(&mut conn, &req) {
+        let res = tags_server::update_tags(&mut conn, data.into_inner()).await;
+        match res {
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+            Err(e) => Err(e),
         }
     } else {
         Err(MyError::permissions_error())
@@ -94,17 +83,12 @@ pub async fn delete_tags(
     query: Query<DeleteTagReq>,
     req: HttpRequest,
 ) -> Result<impl Responder, impl ResponseError> {
-    let is_manager = is_manager(&req);
-    if is_manager {
-        let mut conn = pool.get_conn().unwrap();
-        if has_permission(&mut conn, &req) {
-            let res = tags_server::delete_tags(&mut conn, query.into_inner().id).await;
-            match res {
-                Ok(res) => Ok(ResponseData::new(res).into_json_response()),
-                Err(e) => Err(e),
-            }
-        } else {
-            Err(MyError::permissions_error())
+    let mut conn = pool.get_conn().unwrap();
+    if has_permission(&mut conn, &req) {
+        let res = tags_server::delete_tags(&mut conn, query.into_inner().id).await;
+        match res {
+            Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+            Err(e) => Err(e),
         }
     } else {
         Err(MyError::permissions_error())
