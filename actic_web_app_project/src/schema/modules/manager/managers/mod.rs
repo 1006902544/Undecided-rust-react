@@ -1,3 +1,4 @@
+pub mod captcha;
 pub mod role_audit;
 use chrono::NaiveDateTime;
 use mysql_common::prelude::FromRow;

@@ -4,6 +4,7 @@ use actix_web::{
     HttpRequest, Responder, ResponseError,
 };
 use mysql::Pool;
+pub mod captcha;
 
 use crate::{
     app::error::MyError,

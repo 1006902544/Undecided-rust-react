@@ -11,7 +11,7 @@ use crate::schema::modules::{
         },
         manager::*,
         manager_response::*,
-        managers::*,
+        managers::{captcha::*, *},
         market::activity::*,
         material_library::images::*,
         permission::{
@@ -124,6 +124,8 @@ use utoipa::OpenApi;
         super::managers::get_managers_limit,
         super::managers::manager_signup,
         super::managers::update_manager_info,
+        //管理端用户email验证码
+
     ),
     components(schemas(
         //文件通用
@@ -186,6 +188,8 @@ use utoipa::OpenApi;
         ManagerRole,ManagerRoleUpdateReq,ManagerRoleReq,ManagerRoleDeleteReq,ManagerRoleList,ManagerRoleRes,ManagerRoleLimitRes,
         //管理端用户
         ManagerInfoRes,ManagerInfoLimitRes,ManagerInfo,GetManagerInfoReq,ManagerSignupAccount,ManagerInfoUpdate,ManagerSignIn,ManagerInfoLimitReq,DeleteManager,
+          //管理端用户email验证码
+        SendManagerEmailResData,SendManagerEmailReq,SendManagerEmailRes,ManagerEmailRow,
     ))
 )]
 pub struct ApiDoc;

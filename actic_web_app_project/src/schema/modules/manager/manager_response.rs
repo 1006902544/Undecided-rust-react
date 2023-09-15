@@ -12,7 +12,7 @@ use super::{
         },
         general::{company_studio::company_studio::*, tags::tags::*, types::types::GameType},
     },
-    managers::ManagerInfo,
+    managers::{captcha::SendManagerEmailRes, ManagerInfo},
     market::activity::*,
     material_library::images::ImagesObject,
     permission::{associate::auth::*, permission::Permission},
@@ -66,7 +66,9 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //管理端角色
     ManagerRoleRes = ResponseData<ManagerRoleLimitRes>,
     //管理端用户
-    ManagerInfoRes = ResponseData<ManagerInfoLimitRes>
+    ManagerInfoRes = ResponseData<ManagerInfoLimitRes>,
+    //管理端用户验证码
+    SendManagerEmailResData = ResponseData<SendManagerEmailRes>
 
 )]
 pub struct ResponseData<B> {

@@ -12,7 +12,7 @@ use crate::controller::manager::{
         general::{company_studio::company_studio::*, tags::tags::*, types::types::*},
     },
     manager_doc::ApiDoc,
-    managers::*,
+    managers::{captcha::*, *},
     market::activity::*,
     material_library::images::*,
     permission::{
@@ -193,7 +193,12 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                 web::scope("managers")
                     .service(get_managers_limit)
                     .service(manager_signup)
-                    .service(update_manager_info),
+                    .service(update_manager_info)
+                    .service(
+                        web::scope("captcha")
+                            .service(send_manager_email)
+                            .service(verify_manager_email),
+                    ),
             ),
     );
 }
