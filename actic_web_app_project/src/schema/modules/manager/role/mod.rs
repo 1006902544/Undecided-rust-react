@@ -22,10 +22,13 @@ pub struct ManagerRoleUpdateReq {
     pub remark: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, ToSchema, IntoParams)]
+#[derive(Debug, Clone, Serialize, Deserialize, ToSchema, IntoParams, Validate)]
 pub struct ManagerRoleReq {
     pub id: Option<u64>,
+    #[validate(length(max = 50), required)]
     pub name: Option<String>,
+    pub limit: Option<u64>,
+    pub page: Option<u64>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, ToSchema, IntoParams)]

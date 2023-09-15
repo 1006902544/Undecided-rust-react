@@ -1,9 +1,11 @@
 pub mod auth;
 pub mod game_center;
 pub mod manager_doc;
+pub mod managers;
 pub mod market;
 pub mod material_library;
 pub mod permission;
+pub mod role;
 pub mod router;
 pub mod upload;
 pub mod user;

@@ -12,12 +12,14 @@ use crate::controller::manager::{
         general::{company_studio::company_studio::*, tags::tags::*, types::types::*},
     },
     manager_doc::ApiDoc,
+    managers::*,
     market::activity::*,
     material_library::images::*,
     permission::{
         associate::{associate::*, auth::*},
         permission::*,
     },
+    role::*,
     router::{
         associate::{associate::*, auth::*},
         router::*,
@@ -180,6 +182,18 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                         .service(delete_activity_goods_bundle)
                         .service(delete_activity_goods_promotion),
                 ),
+            )
+            .service(
+                web::scope("role")
+                    .service(get_manager_role_limit)
+                    .service(update_manager_role)
+                    .service(delete_manager_role),
+            )
+            .service(
+                web::scope("managers")
+                    .service(get_managers_limit)
+                    .service(manager_signup)
+                    .service(update_manager_info),
             ),
     );
 }

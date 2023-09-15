@@ -11,12 +11,14 @@ use crate::schema::modules::{
         },
         manager::*,
         manager_response::*,
+        managers::*,
         market::activity::*,
         material_library::images::*,
         permission::{
             associate::{associate::*, auth::*},
             permission::*,
         },
+        role::*,
         router::{
             associate::{associate::*, auth::*},
             router::*,
@@ -113,8 +115,15 @@ use utoipa::OpenApi;
         super::market::activity::update_activity_promotion_goods,
         super::market::activity::update_activity_bundle_goods,
         super::market::activity::delete_activity_goods_bundle,
-        super::market::activity::delete_activity_goods_promotion
-
+        super::market::activity::delete_activity_goods_promotion,
+        //管理端角色
+        super::role::get_manager_role_limit,
+        super::role::update_manager_role,
+        super::role::delete_manager_role,
+        //管理端用户
+        super::managers::get_managers_limit,
+        super::managers::manager_signup,
+        super::managers::update_manager_info,
     ),
     components(schemas(
         //文件通用
@@ -172,7 +181,11 @@ use utoipa::OpenApi;
         //评论管理
         Comment,DeleteCommentReq,CommentLimitReq,CommentRes,CommentLimitRes,RecoverCommentReq,
         //商城管理-活动管理
-        ActivityUpdateStepOneReq,ActivityUpdateStepTwoReq,ActivityBundleInsertGoodsReq,ActivityBundleDeleteGoodsReq,ActivityPromotionUpdateGoodsReq,ActivityPromotionDeleteGoodsReq,ActivityBaseDetail,ActivityInfoDetail,ActivityDetail,ActivityGoods,ActivityGoodsLimitReq,Activity,ActivityLimitReq,ActivityRes,ActivityGoodsRes,ActivityDetailRes,ActivityLimitRes,ActivityGoodsLimitRes,ActivityDetailReq,DeleteActivityReq,ActivityBundleInsertGoods,ActivityPromotionUpdateGoods
+        ActivityUpdateStepOneReq,ActivityUpdateStepTwoReq,ActivityBundleInsertGoodsReq,ActivityBundleDeleteGoodsReq,ActivityPromotionUpdateGoodsReq,ActivityPromotionDeleteGoodsReq,ActivityBaseDetail,ActivityInfoDetail,ActivityDetail,ActivityGoods,ActivityGoodsLimitReq,Activity,ActivityLimitReq,ActivityRes,ActivityGoodsRes,ActivityDetailRes,ActivityLimitRes,ActivityGoodsLimitRes,ActivityDetailReq,DeleteActivityReq,ActivityBundleInsertGoods,ActivityPromotionUpdateGoods,
+        //管理端角色
+        ManagerRole,ManagerRoleUpdateReq,ManagerRoleReq,ManagerRoleDeleteReq,ManagerRoleList,ManagerRoleRes,ManagerRoleLimitRes,
+        //管理端用户
+        ManagerInfoRes,ManagerInfoLimitRes,ManagerInfo,GetManagerInfoReq,ManagerSignupAccount,ManagerInfoUpdate,ManagerSignIn,ManagerInfoLimitReq,DeleteManager,
     ))
 )]
 pub struct ApiDoc;

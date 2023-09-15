@@ -29,13 +29,14 @@ pub struct GetManagerInfoReq {
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, Validate)]
-pub struct ManagerSignUpAccount {
+pub struct ManagerSignupAccount {
     #[validate(length(min = 6, max = 18))]
-    pub username: Option<String>,
+    pub username: String,
     #[validate(email)]
-    pub email: Option<String>,
+    pub email: String,
     #[validate(length(min = 6, max = 18))]
     pub password: String,
+    pub captcha: String,
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, Validate)]
@@ -46,7 +47,7 @@ pub struct ManagerInfoUpdate {
     pub avatar: Option<String>,
     pub gender: Option<u64>,
     pub age: Option<u8>,
-    #[validate(length(equal = 11))]
+    #[validate(length(equal = 11), required)]
     pub mobile: Option<String>,
     pub role_id: u64,
     pub role_name: String,
