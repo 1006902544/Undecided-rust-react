@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
-import SignIn from './pages/sign/signIn';
+import SignIn from './pages/sign/sign';
 import {
   AuthRouteProvider,
   QueryResourceProvider,
