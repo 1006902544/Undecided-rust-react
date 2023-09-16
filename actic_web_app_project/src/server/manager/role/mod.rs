@@ -1,3 +1,5 @@
+pub mod audit;
+
 use mysql::{prelude::Queryable, PooledConn, TxOpts};
 use mysql_common::params;
 

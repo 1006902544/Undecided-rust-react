@@ -18,7 +18,7 @@ use crate::schema::modules::{
             associate::{associate::*, auth::*},
             permission::*,
         },
-        role::*,
+        role::{audit::*, *},
         router::{
             associate::{associate::*, auth::*},
             router::*,
@@ -194,6 +194,8 @@ use utoipa::OpenApi;
         ManagerInfoRes,ManagerInfoLimitRes,ManagerInfo,GetManagerInfoReq,ManagerSignupAccount,ManagerInfoUpdate,ManagerSignIn,ManagerInfoLimitReq,DeleteManager,ManagerInfoDetailData,
           //管理端用户email验证码
         SendManagerEmailResData,SendManagerEmailReq,SendManagerEmailRes,ManagerEmailRow,
+        //管理端用户角色申请/审核
+        RoleAuditRowRes,CurrentRoleAuditRes,RoleAuditRowLimitRes,RoleAuditRow,ApplyRoleReq,ApplyRoleReq,RoleAuditReq,CurrentRoleAuditReq,RoleAuditLimitReq
     ))
 )]
 pub struct ApiDoc;

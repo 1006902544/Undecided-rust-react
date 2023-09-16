@@ -16,7 +16,7 @@ use super::{
     market::activity::*,
     material_library::images::ImagesObject,
     permission::{associate::auth::*, permission::Permission},
-    role::ManagerRole,
+    role::{audit::RoleAuditRow, ManagerRole},
     router::{associate::auth::*, router::*},
     upload::*,
     user::user::*,
@@ -68,7 +68,9 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //管理端用户
     ManagerInfoRes = ResponseData<ManagerInfoLimitRes>,ManagerInfoDetailData = ResponseData<ManagerInfo>,
     //管理端用户验证码
-    SendManagerEmailResData = ResponseData<SendManagerEmailRes>
+    SendManagerEmailResData = ResponseData<SendManagerEmailRes>,
+    //管理端用户角色申请/审核
+    RoleAuditRowRes = ResponseData<RoleAuditRowLimitRes>,CurrentRoleAuditRes = ResponseData<Option<RoleAuditRow>>,
 
 )]
 pub struct ResponseData<B> {
@@ -134,6 +136,8 @@ impl<B> ResponseData<B> {
     ManagerRoleLimitRes = LimitResults<ManagerRole>,
     //管理端用户
     ManagerInfoLimitRes = LimitResults<ManagerInfo>,
+    //角色申请/审核
+    RoleAuditRowLimitRes = LimitResults<RoleAuditRow>,
 )]
 pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,
