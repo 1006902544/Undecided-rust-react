@@ -120,6 +120,12 @@ use utoipa::OpenApi;
         super::role::get_manager_roles,
         super::role::update_manager_role,
         super::role::delete_manager_role,
+        //管理端用户-角色审核
+        super::role::audit::get_current_role_audit,
+        super::role::audit::create_role_audit,
+        super::role::audit::get_role_audit_limit,
+        super::role::audit::audit_role_reply,
+        super::role::audit::delete_role_audit,
         //管理端用户
         super::managers::get_managers_limit,
         super::managers::manager_signup,
@@ -195,7 +201,7 @@ use utoipa::OpenApi;
           //管理端用户email验证码
         SendManagerEmailResData,SendManagerEmailReq,SendManagerEmailRes,ManagerEmailRow,
         //管理端用户角色申请/审核
-        RoleAuditRowRes,CurrentRoleAuditRes,RoleAuditRowLimitRes,RoleAuditRow,ApplyRoleReq,ApplyRoleReq,RoleAuditReq,CurrentRoleAuditReq,RoleAuditLimitReq
+        RoleAuditRowRes,CurrentRoleAuditRes,RoleAuditRowLimitRes,RoleAuditRow,ApplyRoleReq,ApplyRoleReq,RoleAuditReq,RoleAuditLimitReq,RoleAuditDeleteReq
     ))
 )]
 pub struct ApiDoc;

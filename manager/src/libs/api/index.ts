@@ -110,6 +110,12 @@ import type {
   GetManagerRolesParams,
   ManagerRoleUpdateReq,
   DeleteManagerRoleParams,
+  RoleAuditRowRes,
+  GetRoleAuditLimitParams,
+  RoleAuditReq,
+  DeleteRoleAuditParams,
+  ApplyRoleReq,
+  CurrentRoleAuditRes,
   RoutesVecRes,
   UpdateRouteReq,
   DeleteRouterParams,
@@ -151,24 +157,24 @@ export const getAuthLimit = (
     },
       options);
     }
-
+  
 
 export const getGetAuthLimitQueryKey = (params?: GetAuthLimitParams,) => [`/manager/auth`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetAuthLimitQueryOptions = <TData = Awaited<ReturnType<typeof getAuthLimit>>, TError = ErrorType<unknown>>(params?: GetAuthLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAuthLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getAuthLimit>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetAuthLimitQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getAuthLimit>>> = ({ signal }) => getAuthLimit(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetAuthLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getAuthLimit>>>
@@ -193,7 +199,7 @@ export const useGetAuthLimit = <TData = Awaited<ReturnType<typeof getAuthLimit>>
 
 
 export const getAdminInfo = (
-
+    
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
 ) => {
       return custom_instance<AdminInfoRes>(
@@ -201,24 +207,24 @@ export const getAdminInfo = (
     },
       options);
     }
-
+  
 
 export const getGetAdminInfoQueryKey = () => [`/manager/auth/info`] as const;
+  
 
-
-
+    
 export const getGetAdminInfoQueryOptions = <TData = Awaited<ReturnType<typeof getAdminInfo>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAdminInfo>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getAdminInfo>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetAdminInfoQueryKey();
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getAdminInfo>>> = ({ signal }) => getAdminInfo(requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetAdminInfoQueryResult = NonNullable<Awaited<ReturnType<typeof getAdminInfo>>>
@@ -253,16 +259,16 @@ export const signIn = (
     },
       options);
     }
-
+  
 
 
 export const getSignInMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof signIn>>, TError,{data: LoginBody}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof signIn>>, TError,{data: LoginBody}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof signIn>>, {data: LoginBody}> = (props) => {
@@ -271,9 +277,9 @@ export const getSignInMutationOptions = <TError = ErrorType<unknown>,
           return  signIn(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type SignInMutationResult = NonNullable<Awaited<ReturnType<typeof signIn>>>
@@ -284,15 +290,15 @@ export const getSignInMutationOptions = <TError = ErrorType<unknown>,
  * @summary sign in
  */
 export const useSignIn = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof signIn>>, TError,{data: LoginBody}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getSignInMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get comment limit
  * @summary get comment limit
@@ -307,24 +313,24 @@ export const getCommentLimit = (
     },
       options);
     }
-
+  
 
 export const getGetCommentLimitQueryKey = (params: GetCommentLimitParams,) => [`/manager/gamesCenter/comments`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetCommentLimitQueryOptions = <TData = Awaited<ReturnType<typeof getCommentLimit>>, TError = ErrorType<unknown>>(params: GetCommentLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCommentLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getCommentLimit>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetCommentLimitQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getCommentLimit>>> = ({ signal }) => getCommentLimit(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetCommentLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getCommentLimit>>>
@@ -362,16 +368,16 @@ export const recoverComment = (
     },
       options);
     }
-
+  
 
 
 export const getRecoverCommentMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof recoverComment>>, TError,{data: RecoverCommentReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof recoverComment>>, TError,{data: RecoverCommentReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof recoverComment>>, {data: RecoverCommentReq}> = (props) => {
@@ -380,9 +386,9 @@ export const getRecoverCommentMutationOptions = <TError = ErrorType<unknown>,
           return  recoverComment(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type RecoverCommentMutationResult = NonNullable<Awaited<ReturnType<typeof recoverComment>>>
@@ -393,15 +399,15 @@ export const getRecoverCommentMutationOptions = <TError = ErrorType<unknown>,
  * @summary delete comments physic/logic
  */
 export const useRecoverComment = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof recoverComment>>, TError,{data: RecoverCommentReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getRecoverCommentMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * delete comments physic/logic
  * @summary delete comments physic/logic
@@ -415,16 +421,16 @@ export const deleteComment = (
     },
       options);
     }
-
+  
 
 
 export const getDeleteCommentMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteComment>>, TError,{params: DeleteCommentParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteComment>>, TError,{params: DeleteCommentParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteComment>>, {params: DeleteCommentParams}> = (props) => {
@@ -433,28 +439,28 @@ export const getDeleteCommentMutationOptions = <TError = ErrorType<unknown>,
           return  deleteComment(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteCommentMutationResult = NonNullable<Awaited<ReturnType<typeof deleteComment>>>
-
+    
     export type DeleteCommentMutationError = ErrorType<unknown>
 
     /**
  * @summary delete comments physic/logic
  */
 export const useDeleteComment = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteComment>>, TError,{params: DeleteCommentParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeleteCommentMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get sku limit
  * @summary get sku limit
@@ -469,24 +475,24 @@ export const getSkuLimit = (
     },
       options);
     }
-
+  
 
 export const getGetSkuLimitQueryKey = (params?: GetSkuLimitParams,) => [`/manager/gamesCenter/gamesManagement/sku`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetSkuLimitQueryOptions = <TData = Awaited<ReturnType<typeof getSkuLimit>>, TError = ErrorType<unknown>>(params?: GetSkuLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSkuLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getSkuLimit>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetSkuLimitQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getSkuLimit>>> = ({ signal }) => getSkuLimit(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetSkuLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getSkuLimit>>>
@@ -524,16 +530,16 @@ export const updateSku = (
     },
       options);
     }
-
+  
 
 
 export const getUpdateSkuMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSku>>, TError,{data: SkuUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateSku>>, TError,{data: SkuUpdateReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateSku>>, {data: SkuUpdateReq}> = (props) => {
@@ -542,9 +548,9 @@ export const getUpdateSkuMutationOptions = <TError = ErrorType<unknown>,
           return  updateSku(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateSkuMutationResult = NonNullable<Awaited<ReturnType<typeof updateSku>>>
@@ -555,15 +561,15 @@ export const getUpdateSkuMutationOptions = <TError = ErrorType<unknown>,
  * @summary update SKU
  */
 export const useUpdateSku = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSku>>, TError,{data: SkuUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdateSkuMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * delete sku
  * @summary delete sku
@@ -577,16 +583,16 @@ export const deleteSku = (
     },
       options);
     }
-
+  
 
 
 export const getDeleteSkuMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSku>>, TError,{params: DeleteSkuParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteSku>>, TError,{params: DeleteSkuParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteSku>>, {params: DeleteSkuParams}> = (props) => {
@@ -595,28 +601,28 @@ export const getDeleteSkuMutationOptions = <TError = ErrorType<unknown>,
           return  deleteSku(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteSkuMutationResult = NonNullable<Awaited<ReturnType<typeof deleteSku>>>
-
+    
     export type DeleteSkuMutationError = ErrorType<unknown>
 
     /**
  * @summary delete sku
  */
 export const useDeleteSku = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSku>>, TError,{params: DeleteSkuParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeleteSkuMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get sku notice limit
  * @summary get sku notice limit
@@ -631,24 +637,24 @@ export const getSkuNotice = (
     },
       options);
     }
-
+  
 
 export const getGetSkuNoticeQueryKey = (params?: GetSkuNoticeParams,) => [`/manager/gamesCenter/gamesManagement/sku/notice`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetSkuNoticeQueryOptions = <TData = Awaited<ReturnType<typeof getSkuNotice>>, TError = ErrorType<unknown>>(params?: GetSkuNoticeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSkuNotice>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getSkuNotice>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetSkuNoticeQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getSkuNotice>>> = ({ signal }) => getSkuNotice(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetSkuNoticeQueryResult = NonNullable<Awaited<ReturnType<typeof getSkuNotice>>>
@@ -682,16 +688,16 @@ export const updateSkuNotice = (
     },
       options);
     }
-
+  
 
 
 export const getUpdateSkuNoticeMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSkuNotice>>, TError,{data: SkuNoticeUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateSkuNotice>>, TError,{data: SkuNoticeUpdateReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateSkuNotice>>, {data: SkuNoticeUpdateReq}> = (props) => {
@@ -700,9 +706,9 @@ export const getUpdateSkuNoticeMutationOptions = <TError = ErrorType<unknown>,
           return  updateSkuNotice(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateSkuNoticeMutationResult = NonNullable<Awaited<ReturnType<typeof updateSkuNotice>>>
@@ -710,15 +716,15 @@ export const getUpdateSkuNoticeMutationOptions = <TError = ErrorType<unknown>,
     export type UpdateSkuNoticeMutationError = ErrorType<unknown>
 
     export const useUpdateSkuNotice = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSkuNotice>>, TError,{data: SkuNoticeUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdateSkuNoticeMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * delete sku notice
  * @summary delete sku notice
@@ -732,16 +738,16 @@ export const deleteSkuNotice = (
     },
       options);
     }
-
+  
 
 
 export const getDeleteSkuNoticeMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSkuNotice>>, TError,{params: DeleteSkuNoticeParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteSkuNotice>>, TError,{params: DeleteSkuNoticeParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteSkuNotice>>, {params: DeleteSkuNoticeParams}> = (props) => {
@@ -750,28 +756,28 @@ export const getDeleteSkuNoticeMutationOptions = <TError = ErrorType<unknown>,
           return  deleteSkuNotice(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteSkuNoticeMutationResult = NonNullable<Awaited<ReturnType<typeof deleteSkuNotice>>>
-
+    
     export type DeleteSkuNoticeMutationError = ErrorType<unknown>
 
     /**
  * @summary delete sku notice
  */
 export const useDeleteSkuNotice = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSkuNotice>>, TError,{params: DeleteSkuNoticeParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeleteSkuNoticeMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get SPU limit
  * @summary get SPU limit
@@ -786,24 +792,24 @@ export const getSpuLimit = (
     },
       options);
     }
-
+  
 
 export const getGetSpuLimitQueryKey = (params?: GetSpuLimitParams,) => [`/manager/gamesCenter/gamesManagement/spu`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetSpuLimitQueryOptions = <TData = Awaited<ReturnType<typeof getSpuLimit>>, TError = ErrorType<unknown>>(params?: GetSpuLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSpuLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getSpuLimit>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetSpuLimitQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getSpuLimit>>> = ({ signal }) => getSpuLimit(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetSpuLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getSpuLimit>>>
@@ -841,16 +847,16 @@ export const updateSpu = (
     },
       options);
     }
-
+  
 
 
 export const getUpdateSpuMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSpu>>, TError,{data: UpdateSpuReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateSpu>>, TError,{data: UpdateSpuReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateSpu>>, {data: UpdateSpuReq}> = (props) => {
@@ -859,9 +865,9 @@ export const getUpdateSpuMutationOptions = <TError = ErrorType<unknown>,
           return  updateSpu(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateSpuMutationResult = NonNullable<Awaited<ReturnType<typeof updateSpu>>>
@@ -872,15 +878,15 @@ export const getUpdateSpuMutationOptions = <TError = ErrorType<unknown>,
  * @summary update SPU
  */
 export const useUpdateSpu = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSpu>>, TError,{data: UpdateSpuReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdateSpuMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * delete SPU
  * @summary delete SPU
@@ -894,16 +900,16 @@ export const deleteSpu = (
     },
       options);
     }
-
+  
 
 
 export const getDeleteSpuMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSpu>>, TError,{params: DeleteSpuParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteSpu>>, TError,{params: DeleteSpuParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteSpu>>, {params: DeleteSpuParams}> = (props) => {
@@ -912,28 +918,28 @@ export const getDeleteSpuMutationOptions = <TError = ErrorType<unknown>,
           return  deleteSpu(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteSpuMutationResult = NonNullable<Awaited<ReturnType<typeof deleteSpu>>>
-
+    
     export type DeleteSpuMutationError = ErrorType<unknown>
 
     /**
  * @summary delete SPU
  */
 export const useDeleteSpu = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSpu>>, TError,{params: DeleteSpuParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeleteSpuMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get SPU detail
  * @summary get SPU detail
@@ -948,24 +954,24 @@ export const getSpuDetail = (
     },
       options);
     }
-
+  
 
 export const getGetSpuDetailQueryKey = (params: GetSpuDetailParams,) => [`/manager/gamesCenter/gamesManagement/spu/detail`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetSpuDetailQueryOptions = <TData = Awaited<ReturnType<typeof getSpuDetail>>, TError = ErrorType<unknown>>(params: GetSpuDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSpuDetail>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getSpuDetail>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetSpuDetailQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getSpuDetail>>> = ({ signal }) => getSpuDetail(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetSpuDetailQueryResult = NonNullable<Awaited<ReturnType<typeof getSpuDetail>>>
@@ -1003,24 +1009,24 @@ export const getSpuNotice = (
     },
       options);
     }
-
+  
 
 export const getGetSpuNoticeQueryKey = (params?: GetSpuNoticeParams,) => [`/manager/gamesCenter/gamesManagement/spu/notice`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetSpuNoticeQueryOptions = <TData = Awaited<ReturnType<typeof getSpuNotice>>, TError = ErrorType<unknown>>(params?: GetSpuNoticeParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSpuNotice>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getSpuNotice>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetSpuNoticeQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getSpuNotice>>> = ({ signal }) => getSpuNotice(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetSpuNoticeQueryResult = NonNullable<Awaited<ReturnType<typeof getSpuNotice>>>
@@ -1054,16 +1060,16 @@ export const updateSpuNotice = (
     },
       options);
     }
-
+  
 
 
 export const getUpdateSpuNoticeMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSpuNotice>>, TError,{data: SpuNoticeUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateSpuNotice>>, TError,{data: SpuNoticeUpdateReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateSpuNotice>>, {data: SpuNoticeUpdateReq}> = (props) => {
@@ -1072,9 +1078,9 @@ export const getUpdateSpuNoticeMutationOptions = <TError = ErrorType<unknown>,
           return  updateSpuNotice(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateSpuNoticeMutationResult = NonNullable<Awaited<ReturnType<typeof updateSpuNotice>>>
@@ -1082,15 +1088,15 @@ export const getUpdateSpuNoticeMutationOptions = <TError = ErrorType<unknown>,
     export type UpdateSpuNoticeMutationError = ErrorType<unknown>
 
     export const useUpdateSpuNotice = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSpuNotice>>, TError,{data: SpuNoticeUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdateSpuNoticeMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * delete spu notice
  * @summary delete spu notice
@@ -1104,16 +1110,16 @@ export const deleteSpuNotice = (
     },
       options);
     }
-
+  
 
 
 export const getDeleteSpuNoticeMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSpuNotice>>, TError,{params: DeleteSpuNoticeParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteSpuNotice>>, TError,{params: DeleteSpuNoticeParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteSpuNotice>>, {params: DeleteSpuNoticeParams}> = (props) => {
@@ -1122,28 +1128,28 @@ export const getDeleteSpuNoticeMutationOptions = <TError = ErrorType<unknown>,
           return  deleteSpuNotice(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteSpuNoticeMutationResult = NonNullable<Awaited<ReturnType<typeof deleteSpuNotice>>>
-
+    
     export type DeleteSpuNoticeMutationError = ErrorType<unknown>
 
     /**
  * @summary delete spu notice
  */
 export const useDeleteSpuNotice = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSpuNotice>>, TError,{params: DeleteSpuNoticeParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeleteSpuNoticeMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get SPU tree limit
  * @summary get SPU tree limit
@@ -1158,24 +1164,24 @@ export const getSpuTreeLimit = (
     },
       options);
     }
-
+  
 
 export const getGetSpuTreeLimitQueryKey = (params?: GetSpuTreeLimitParams,) => [`/manager/gamesCenter/gamesManagement/spu/tree`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetSpuTreeLimitQueryOptions = <TData = Awaited<ReturnType<typeof getSpuTreeLimit>>, TError = ErrorType<unknown>>(params?: GetSpuTreeLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSpuTreeLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getSpuTreeLimit>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetSpuTreeLimitQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getSpuTreeLimit>>> = ({ signal }) => getSpuTreeLimit(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetSpuTreeLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getSpuTreeLimit>>>
@@ -1213,24 +1219,24 @@ export const getSpuUpdateRecord = (
     },
       options);
     }
-
+  
 
 export const getGetSpuUpdateRecordQueryKey = (params?: GetSpuUpdateRecordParams,) => [`/manager/gamesCenter/gamesManagement/spu/updateRecord`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetSpuUpdateRecordQueryOptions = <TData = Awaited<ReturnType<typeof getSpuUpdateRecord>>, TError = ErrorType<unknown>>(params?: GetSpuUpdateRecordParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSpuUpdateRecord>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getSpuUpdateRecord>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetSpuUpdateRecordQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getSpuUpdateRecord>>> = ({ signal }) => getSpuUpdateRecord(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetSpuUpdateRecordQueryResult = NonNullable<Awaited<ReturnType<typeof getSpuUpdateRecord>>>
@@ -1268,16 +1274,16 @@ export const updateSpuUpdateRecord = (
     },
       options);
     }
-
+  
 
 
 export const getUpdateSpuUpdateRecordMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSpuUpdateRecord>>, TError,{data: UpdateSpuUpdateRecord}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateSpuUpdateRecord>>, TError,{data: UpdateSpuUpdateRecord}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateSpuUpdateRecord>>, {data: UpdateSpuUpdateRecord}> = (props) => {
@@ -1286,9 +1292,9 @@ export const getUpdateSpuUpdateRecordMutationOptions = <TError = ErrorType<unkno
           return  updateSpuUpdateRecord(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateSpuUpdateRecordMutationResult = NonNullable<Awaited<ReturnType<typeof updateSpuUpdateRecord>>>
@@ -1299,15 +1305,15 @@ export const getUpdateSpuUpdateRecordMutationOptions = <TError = ErrorType<unkno
  * @summary update spu update record
  */
 export const useUpdateSpuUpdateRecord = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSpuUpdateRecord>>, TError,{data: UpdateSpuUpdateRecord}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdateSpuUpdateRecordMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * delete spu update record
  * @summary delete spu update record
@@ -1321,16 +1327,16 @@ export const deleteSpuUpdateRecord = (
     },
       options);
     }
-
+  
 
 
 export const getDeleteSpuUpdateRecordMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSpuUpdateRecord>>, TError,{params: DeleteSpuUpdateRecordParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteSpuUpdateRecord>>, TError,{params: DeleteSpuUpdateRecordParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteSpuUpdateRecord>>, {params: DeleteSpuUpdateRecordParams}> = (props) => {
@@ -1339,28 +1345,28 @@ export const getDeleteSpuUpdateRecordMutationOptions = <TError = ErrorType<unkno
           return  deleteSpuUpdateRecord(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteSpuUpdateRecordMutationResult = NonNullable<Awaited<ReturnType<typeof deleteSpuUpdateRecord>>>
-
+    
     export type DeleteSpuUpdateRecordMutationError = ErrorType<unknown>
 
     /**
  * @summary delete spu update record
  */
 export const useDeleteSpuUpdateRecord = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSpuUpdateRecord>>, TError,{params: DeleteSpuUpdateRecordParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeleteSpuUpdateRecordMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get company/studio
  * @summary get company/studio
@@ -1375,24 +1381,24 @@ export const getCompany = (
     },
       options);
     }
-
+  
 
 export const getGetCompanyQueryKey = (params?: GetCompanyParams,) => [`/manager/gamesCenter/general/companyStudio`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetCompanyQueryOptions = <TData = Awaited<ReturnType<typeof getCompany>>, TError = ErrorType<unknown>>(params?: GetCompanyParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCompany>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getCompany>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetCompanyQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getCompany>>> = ({ signal }) => getCompany(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetCompanyQueryResult = NonNullable<Awaited<ReturnType<typeof getCompany>>>
@@ -1430,16 +1436,16 @@ export const updateCompany = (
     },
       options);
     }
-
+  
 
 
 export const getUpdateCompanyMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateCompany>>, TError,{data: UpdateCompanyStudioReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateCompany>>, TError,{data: UpdateCompanyStudioReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateCompany>>, {data: UpdateCompanyStudioReq}> = (props) => {
@@ -1448,9 +1454,9 @@ export const getUpdateCompanyMutationOptions = <TError = ErrorType<unknown>,
           return  updateCompany(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateCompanyMutationResult = NonNullable<Awaited<ReturnType<typeof updateCompany>>>
@@ -1461,15 +1467,15 @@ export const getUpdateCompanyMutationOptions = <TError = ErrorType<unknown>,
  * @summary update company/studio
  */
 export const useUpdateCompany = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateCompany>>, TError,{data: UpdateCompanyStudioReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdateCompanyMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * delete company/studio
  * @summary delete company/studio
@@ -1483,16 +1489,16 @@ export const deleteCompanyStudio = (
     },
       options);
     }
-
+  
 
 
 export const getDeleteCompanyStudioMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCompanyStudio>>, TError,{params: DeleteCompanyStudioParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteCompanyStudio>>, TError,{params: DeleteCompanyStudioParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteCompanyStudio>>, {params: DeleteCompanyStudioParams}> = (props) => {
@@ -1501,28 +1507,28 @@ export const getDeleteCompanyStudioMutationOptions = <TError = ErrorType<unknown
           return  deleteCompanyStudio(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteCompanyStudioMutationResult = NonNullable<Awaited<ReturnType<typeof deleteCompanyStudio>>>
-
+    
     export type DeleteCompanyStudioMutationError = ErrorType<unknown>
 
     /**
  * @summary delete company/studio
  */
 export const useDeleteCompanyStudio = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCompanyStudio>>, TError,{params: DeleteCompanyStudioParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeleteCompanyStudioMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get company/studio detail
  * @summary get company/studio detail
@@ -1537,24 +1543,24 @@ export const getCompanyDetail = (
     },
       options);
     }
-
+  
 
 export const getGetCompanyDetailQueryKey = (params: GetCompanyDetailParams,) => [`/manager/gamesCenter/general/companyStudio/detail`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetCompanyDetailQueryOptions = <TData = Awaited<ReturnType<typeof getCompanyDetail>>, TError = ErrorType<unknown>>(params: GetCompanyDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCompanyDetail>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getCompanyDetail>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetCompanyDetailQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getCompanyDetail>>> = ({ signal }) => getCompanyDetail(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetCompanyDetailQueryResult = NonNullable<Awaited<ReturnType<typeof getCompanyDetail>>>
@@ -1583,7 +1589,7 @@ export const useGetCompanyDetail = <TData = Awaited<ReturnType<typeof getCompany
  * @summary get company list
  */
 export const getCompanyList = (
-
+    
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
 ) => {
       return custom_instance<ListRes>(
@@ -1591,24 +1597,24 @@ export const getCompanyList = (
     },
       options);
     }
-
+  
 
 export const getGetCompanyListQueryKey = () => [`/manager/gamesCenter/general/companyStudio/list`] as const;
+  
 
-
-
+    
 export const getGetCompanyListQueryOptions = <TData = Awaited<ReturnType<typeof getCompanyList>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCompanyList>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getCompanyList>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetCompanyListQueryKey();
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getCompanyList>>> = ({ signal }) => getCompanyList(requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetCompanyListQueryResult = NonNullable<Awaited<ReturnType<typeof getCompanyList>>>
@@ -1646,24 +1652,24 @@ export const getTagsLimit = (
     },
       options);
     }
-
+  
 
 export const getGetTagsLimitQueryKey = (params?: GetTagsLimitParams,) => [`/manager/gamesCenter/general/tags`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetTagsLimitQueryOptions = <TData = Awaited<ReturnType<typeof getTagsLimit>>, TError = ErrorType<unknown>>(params?: GetTagsLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getTagsLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getTagsLimit>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetTagsLimitQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getTagsLimit>>> = ({ signal }) => getTagsLimit(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetTagsLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getTagsLimit>>>
@@ -1701,16 +1707,16 @@ export const updateTags = (
     },
       options);
     }
-
+  
 
 
 export const getUpdateTagsMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateTags>>, TError,{data: UpdateTagReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateTags>>, TError,{data: UpdateTagReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateTags>>, {data: UpdateTagReq}> = (props) => {
@@ -1719,9 +1725,9 @@ export const getUpdateTagsMutationOptions = <TError = ErrorType<unknown>,
           return  updateTags(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateTagsMutationResult = NonNullable<Awaited<ReturnType<typeof updateTags>>>
@@ -1732,15 +1738,15 @@ export const getUpdateTagsMutationOptions = <TError = ErrorType<unknown>,
  * @summary update tags
  */
 export const useUpdateTags = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateTags>>, TError,{data: UpdateTagReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdateTagsMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * delete tags
  * @summary delete tags
@@ -1754,16 +1760,16 @@ export const deleteTags = (
     },
       options);
     }
-
+  
 
 
 export const getDeleteTagsMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteTags>>, TError,{params: DeleteTagsParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteTags>>, TError,{params: DeleteTagsParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteTags>>, {params: DeleteTagsParams}> = (props) => {
@@ -1772,34 +1778,34 @@ export const getDeleteTagsMutationOptions = <TError = ErrorType<unknown>,
           return  deleteTags(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteTagsMutationResult = NonNullable<Awaited<ReturnType<typeof deleteTags>>>
-
+    
     export type DeleteTagsMutationError = ErrorType<unknown>
 
     /**
  * @summary delete tags
  */
 export const useDeleteTags = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteTags>>, TError,{params: DeleteTagsParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeleteTagsMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get tags list
  * @summary get tags list
  */
 export const getTagsList = (
-
+    
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
 ) => {
       return custom_instance<ListRes>(
@@ -1807,24 +1813,24 @@ export const getTagsList = (
     },
       options);
     }
-
+  
 
 export const getGetTagsListQueryKey = () => [`/manager/gamesCenter/general/tags/list`] as const;
+  
 
-
-
+    
 export const getGetTagsListQueryOptions = <TData = Awaited<ReturnType<typeof getTagsList>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getTagsList>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getTagsList>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetTagsListQueryKey();
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getTagsList>>> = ({ signal }) => getTagsList(requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetTagsListQueryResult = NonNullable<Awaited<ReturnType<typeof getTagsList>>>
@@ -1862,24 +1868,24 @@ export const getGameTypes = (
     },
       options);
     }
-
+  
 
 export const getGetGameTypesQueryKey = (params?: GetGameTypesParams,) => [`/manager/gamesCenter/general/types`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetGameTypesQueryOptions = <TData = Awaited<ReturnType<typeof getGameTypes>>, TError = ErrorType<unknown>>(params?: GetGameTypesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getGameTypes>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getGameTypes>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetGameTypesQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getGameTypes>>> = ({ signal }) => getGameTypes(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetGameTypesQueryResult = NonNullable<Awaited<ReturnType<typeof getGameTypes>>>
@@ -1917,16 +1923,16 @@ export const updateGameType = (
     },
       options);
     }
-
+  
 
 
 export const getUpdateGameTypeMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateGameType>>, TError,{data: UpdateGameTypeReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateGameType>>, TError,{data: UpdateGameTypeReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateGameType>>, {data: UpdateGameTypeReq}> = (props) => {
@@ -1935,9 +1941,9 @@ export const getUpdateGameTypeMutationOptions = <TError = ErrorType<unknown>,
           return  updateGameType(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateGameTypeMutationResult = NonNullable<Awaited<ReturnType<typeof updateGameType>>>
@@ -1948,15 +1954,15 @@ export const getUpdateGameTypeMutationOptions = <TError = ErrorType<unknown>,
  * @summary update game types
  */
 export const useUpdateGameType = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateGameType>>, TError,{data: UpdateGameTypeReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdateGameTypeMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * delete game type
  * @summary delete game type
@@ -1970,16 +1976,16 @@ export const deleteGameType = (
     },
       options);
     }
-
+  
 
 
 export const getDeleteGameTypeMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteGameType>>, TError,{params: DeleteGameTypeParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteGameType>>, TError,{params: DeleteGameTypeParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteGameType>>, {params: DeleteGameTypeParams}> = (props) => {
@@ -1988,34 +1994,34 @@ export const getDeleteGameTypeMutationOptions = <TError = ErrorType<unknown>,
           return  deleteGameType(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteGameTypeMutationResult = NonNullable<Awaited<ReturnType<typeof deleteGameType>>>
-
+    
     export type DeleteGameTypeMutationError = ErrorType<unknown>
 
     /**
  * @summary delete game type
  */
 export const useDeleteGameType = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteGameType>>, TError,{params: DeleteGameTypeParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeleteGameTypeMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get types list
  * @summary get types list
  */
 export const getTypesList = (
-
+    
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
 ) => {
       return custom_instance<ListRes>(
@@ -2023,24 +2029,24 @@ export const getTypesList = (
     },
       options);
     }
-
+  
 
 export const getGetTypesListQueryKey = () => [`/manager/gamesCenter/general/types/list`] as const;
+  
 
-
-
+    
 export const getGetTypesListQueryOptions = <TData = Awaited<ReturnType<typeof getTypesList>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getTypesList>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getTypesList>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetTypesListQueryKey();
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getTypesList>>> = ({ signal }) => getTypesList(requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetTypesListQueryResult = NonNullable<Awaited<ReturnType<typeof getTypesList>>>
@@ -2078,24 +2084,24 @@ export const getManagersLimit = (
     },
       options);
     }
-
+  
 
 export const getGetManagersLimitQueryKey = (params?: GetManagersLimitParams,) => [`/manager/managers`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetManagersLimitQueryOptions = <TData = Awaited<ReturnType<typeof getManagersLimit>>, TError = ErrorType<unknown>>(params?: GetManagersLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getManagersLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getManagersLimit>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetManagersLimitQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getManagersLimit>>> = ({ signal }) => getManagersLimit(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetManagersLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getManagersLimit>>>
@@ -2133,16 +2139,16 @@ export const managerSignup = (
     },
       options);
     }
-
+  
 
 
 export const getManagerSignupMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof managerSignup>>, TError,{data: ManagerSignupAccount}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof managerSignup>>, TError,{data: ManagerSignupAccount}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof managerSignup>>, {data: ManagerSignupAccount}> = (props) => {
@@ -2151,9 +2157,9 @@ export const getManagerSignupMutationOptions = <TError = ErrorType<unknown>,
           return  managerSignup(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type ManagerSignupMutationResult = NonNullable<Awaited<ReturnType<typeof managerSignup>>>
@@ -2164,15 +2170,15 @@ export const getManagerSignupMutationOptions = <TError = ErrorType<unknown>,
  * @summary manager account signup
  */
 export const useManagerSignup = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof managerSignup>>, TError,{data: ManagerSignupAccount}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getManagerSignupMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * send manager email
  * @summary send manager email
@@ -2187,16 +2193,16 @@ export const sendManagerEmail = (
     },
       options);
     }
-
+  
 
 
 export const getSendManagerEmailMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof sendManagerEmail>>, TError,{data: SendEmailReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof sendManagerEmail>>, TError,{data: SendEmailReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof sendManagerEmail>>, {data: SendEmailReq}> = (props) => {
@@ -2205,9 +2211,9 @@ export const getSendManagerEmailMutationOptions = <TError = ErrorType<unknown>,
           return  sendManagerEmail(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type SendManagerEmailMutationResult = NonNullable<Awaited<ReturnType<typeof sendManagerEmail>>>
@@ -2218,15 +2224,15 @@ export const getSendManagerEmailMutationOptions = <TError = ErrorType<unknown>,
  * @summary send manager email
  */
 export const useSendManagerEmail = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof sendManagerEmail>>, TError,{data: SendEmailReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getSendManagerEmailMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * verify manager email
  * @summary verify manager email
@@ -2241,16 +2247,16 @@ export const verifyManagerEmail = (
     },
       options);
     }
-
+  
 
 
 export const getVerifyManagerEmailMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof verifyManagerEmail>>, TError,{data: EmailRow}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof verifyManagerEmail>>, TError,{data: EmailRow}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof verifyManagerEmail>>, {data: EmailRow}> = (props) => {
@@ -2259,9 +2265,9 @@ export const getVerifyManagerEmailMutationOptions = <TError = ErrorType<unknown>
           return  verifyManagerEmail(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type VerifyManagerEmailMutationResult = NonNullable<Awaited<ReturnType<typeof verifyManagerEmail>>>
@@ -2272,21 +2278,21 @@ export const getVerifyManagerEmailMutationOptions = <TError = ErrorType<unknown>
  * @summary verify manager email
  */
 export const useVerifyManagerEmail = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof verifyManagerEmail>>, TError,{data: EmailRow}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getVerifyManagerEmailMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get manager info by token
  * @summary get manager info by token
  */
 export const getManagerInfoByToken = (
-
+    
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
 ) => {
       return custom_instance<ManagerInfoDetailData>(
@@ -2294,24 +2300,24 @@ export const getManagerInfoByToken = (
     },
       options);
     }
-
+  
 
 export const getGetManagerInfoByTokenQueryKey = () => [`/manager/managers/info`] as const;
+  
 
-
-
+    
 export const getGetManagerInfoByTokenQueryOptions = <TData = Awaited<ReturnType<typeof getManagerInfoByToken>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getManagerInfoByToken>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getManagerInfoByToken>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetManagerInfoByTokenQueryKey();
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getManagerInfoByToken>>> = ({ signal }) => getManagerInfoByToken(requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetManagerInfoByTokenQueryResult = NonNullable<Awaited<ReturnType<typeof getManagerInfoByToken>>>
@@ -2349,16 +2355,16 @@ export const updateManagerInfo = (
     },
       options);
     }
-
+  
 
 
 export const getUpdateManagerInfoMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateManagerInfo>>, TError,{data: ManagerInfoUpdate}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateManagerInfo>>, TError,{data: ManagerInfoUpdate}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateManagerInfo>>, {data: ManagerInfoUpdate}> = (props) => {
@@ -2367,9 +2373,9 @@ export const getUpdateManagerInfoMutationOptions = <TError = ErrorType<unknown>,
           return  updateManagerInfo(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateManagerInfoMutationResult = NonNullable<Awaited<ReturnType<typeof updateManagerInfo>>>
@@ -2380,15 +2386,15 @@ export const getUpdateManagerInfoMutationOptions = <TError = ErrorType<unknown>,
  * @summary update manager info
  */
 export const useUpdateManagerInfo = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateManagerInfo>>, TError,{data: ManagerInfoUpdate}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdateManagerInfoMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * manager sign in
  * @summary manager sign in
@@ -2403,16 +2409,16 @@ export const managersSignIn = (
     },
       options);
     }
-
+  
 
 
 export const getManagersSignInMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof managersSignIn>>, TError,{data: ManagerSignIn}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof managersSignIn>>, TError,{data: ManagerSignIn}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof managersSignIn>>, {data: ManagerSignIn}> = (props) => {
@@ -2421,9 +2427,9 @@ export const getManagersSignInMutationOptions = <TError = ErrorType<unknown>,
           return  managersSignIn(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type ManagersSignInMutationResult = NonNullable<Awaited<ReturnType<typeof managersSignIn>>>
@@ -2434,15 +2440,15 @@ export const getManagersSignInMutationOptions = <TError = ErrorType<unknown>,
  * @summary manager sign in
  */
 export const useManagersSignIn = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof managersSignIn>>, TError,{data: ManagerSignIn}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getManagersSignInMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get activity limit
  * @summary get activity limit
@@ -2457,24 +2463,24 @@ export const getActivityLimit = (
     },
       options);
     }
-
+  
 
 export const getGetActivityLimitQueryKey = (params?: GetActivityLimitParams,) => [`/manager/market/activity`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetActivityLimitQueryOptions = <TData = Awaited<ReturnType<typeof getActivityLimit>>, TError = ErrorType<unknown>>(params?: GetActivityLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getActivityLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getActivityLimit>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetActivityLimitQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getActivityLimit>>> = ({ signal }) => getActivityLimit(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetActivityLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getActivityLimit>>>
@@ -2511,16 +2517,16 @@ export const deleteActivity = (
     },
       options);
     }
-
+  
 
 
 export const getDeleteActivityMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteActivity>>, TError,{params: DeleteActivityParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteActivity>>, TError,{params: DeleteActivityParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteActivity>>, {params: DeleteActivityParams}> = (props) => {
@@ -2529,28 +2535,28 @@ export const getDeleteActivityMutationOptions = <TError = ErrorType<unknown>,
           return  deleteActivity(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteActivityMutationResult = NonNullable<Awaited<ReturnType<typeof deleteActivity>>>
-
+    
     export type DeleteActivityMutationError = ErrorType<unknown>
 
     /**
  * @summary delete activity
  */
 export const useDeleteActivity = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteActivity>>, TError,{params: DeleteActivityParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeleteActivityMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * update activity base (step1)
  * @summary update activity base (step1)
@@ -2565,16 +2571,16 @@ export const updateActivityBase = (
     },
       options);
     }
-
+  
 
 
 export const getUpdateActivityBaseMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityBase>>, TError,{data: ActivityUpdateStepOneReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateActivityBase>>, TError,{data: ActivityUpdateStepOneReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateActivityBase>>, {data: ActivityUpdateStepOneReq}> = (props) => {
@@ -2583,9 +2589,9 @@ export const getUpdateActivityBaseMutationOptions = <TError = ErrorType<unknown>
           return  updateActivityBase(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateActivityBaseMutationResult = NonNullable<Awaited<ReturnType<typeof updateActivityBase>>>
@@ -2596,15 +2602,15 @@ export const getUpdateActivityBaseMutationOptions = <TError = ErrorType<unknown>
  * @summary update activity base (step1)
  */
 export const useUpdateActivityBase = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityBase>>, TError,{data: ActivityUpdateStepOneReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdateActivityBaseMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get activity detail
  * @summary get activity detail
@@ -2619,24 +2625,24 @@ export const getActivityDetail = (
     },
       options);
     }
-
+  
 
 export const getGetActivityDetailQueryKey = (params: GetActivityDetailParams,) => [`/manager/market/activity/detail`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetActivityDetailQueryOptions = <TData = Awaited<ReturnType<typeof getActivityDetail>>, TError = ErrorType<unknown>>(params: GetActivityDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getActivityDetail>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getActivityDetail>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetActivityDetailQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getActivityDetail>>> = ({ signal }) => getActivityDetail(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetActivityDetailQueryResult = NonNullable<Awaited<ReturnType<typeof getActivityDetail>>>
@@ -2670,24 +2676,24 @@ export const getActivityGoodsLimit = (
     },
       options);
     }
-
+  
 
 export const getGetActivityGoodsLimitQueryKey = (params: GetActivityGoodsLimitParams,) => [`/manager/market/activity/goods`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetActivityGoodsLimitQueryOptions = <TData = Awaited<ReturnType<typeof getActivityGoodsLimit>>, TError = ErrorType<unknown>>(params: GetActivityGoodsLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getActivityGoodsLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getActivityGoodsLimit>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetActivityGoodsLimitQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getActivityGoodsLimit>>> = ({ signal }) => getActivityGoodsLimit(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetActivityGoodsLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getActivityGoodsLimit>>>
@@ -2722,16 +2728,16 @@ export const updateActivityBundleGoods = (
     },
       options);
     }
-
+  
 
 
 export const getUpdateActivityBundleGoodsMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityBundleGoods>>, TError,{data: ActivityBundleInsertGoodsReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateActivityBundleGoods>>, TError,{data: ActivityBundleInsertGoodsReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateActivityBundleGoods>>, {data: ActivityBundleInsertGoodsReq}> = (props) => {
@@ -2740,9 +2746,9 @@ export const getUpdateActivityBundleGoodsMutationOptions = <TError = ErrorType<u
           return  updateActivityBundleGoods(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateActivityBundleGoodsMutationResult = NonNullable<Awaited<ReturnType<typeof updateActivityBundleGoods>>>
@@ -2753,15 +2759,15 @@ export const getUpdateActivityBundleGoodsMutationOptions = <TError = ErrorType<u
  * @summary update activity bundle goods
  */
 export const useUpdateActivityBundleGoods = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityBundleGoods>>, TError,{data: ActivityBundleInsertGoodsReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdateActivityBundleGoodsMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * delete activity goods bundle
  * @summary delete activity goods bundle
@@ -2775,16 +2781,16 @@ export const deleteActivityGoodsBundle = (
     },
       options);
     }
-
+  
 
 
 export const getDeleteActivityGoodsBundleMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteActivityGoodsBundle>>, TError,{params: DeleteActivityGoodsBundleParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteActivityGoodsBundle>>, TError,{params: DeleteActivityGoodsBundleParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteActivityGoodsBundle>>, {params: DeleteActivityGoodsBundleParams}> = (props) => {
@@ -2793,28 +2799,28 @@ export const getDeleteActivityGoodsBundleMutationOptions = <TError = ErrorType<u
           return  deleteActivityGoodsBundle(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteActivityGoodsBundleMutationResult = NonNullable<Awaited<ReturnType<typeof deleteActivityGoodsBundle>>>
-
+    
     export type DeleteActivityGoodsBundleMutationError = ErrorType<unknown>
 
     /**
  * @summary delete activity goods bundle
  */
 export const useDeleteActivityGoodsBundle = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteActivityGoodsBundle>>, TError,{params: DeleteActivityGoodsBundleParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeleteActivityGoodsBundleMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * update activity promotion goods
  * @summary update activity promotion goods
@@ -2829,16 +2835,16 @@ export const updateActivityPromotionGoods = (
     },
       options);
     }
-
+  
 
 
 export const getUpdateActivityPromotionGoodsMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityPromotionGoods>>, TError,{data: ActivityPromotionUpdateGoodsReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateActivityPromotionGoods>>, TError,{data: ActivityPromotionUpdateGoodsReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateActivityPromotionGoods>>, {data: ActivityPromotionUpdateGoodsReq}> = (props) => {
@@ -2847,9 +2853,9 @@ export const getUpdateActivityPromotionGoodsMutationOptions = <TError = ErrorTyp
           return  updateActivityPromotionGoods(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateActivityPromotionGoodsMutationResult = NonNullable<Awaited<ReturnType<typeof updateActivityPromotionGoods>>>
@@ -2860,15 +2866,15 @@ export const getUpdateActivityPromotionGoodsMutationOptions = <TError = ErrorTyp
  * @summary update activity promotion goods
  */
 export const useUpdateActivityPromotionGoods = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityPromotionGoods>>, TError,{data: ActivityPromotionUpdateGoodsReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdateActivityPromotionGoodsMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 export const deleteActivityGoodsPromotion = (
     params: DeleteActivityGoodsPromotionParams,
  options?: SecondParameter<typeof custom_instance>,) => {
@@ -2878,16 +2884,16 @@ export const deleteActivityGoodsPromotion = (
     },
       options);
     }
-
+  
 
 
 export const getDeleteActivityGoodsPromotionMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteActivityGoodsPromotion>>, TError,{params: DeleteActivityGoodsPromotionParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteActivityGoodsPromotion>>, TError,{params: DeleteActivityGoodsPromotionParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteActivityGoodsPromotion>>, {params: DeleteActivityGoodsPromotionParams}> = (props) => {
@@ -2896,25 +2902,25 @@ export const getDeleteActivityGoodsPromotionMutationOptions = <TError = ErrorTyp
           return  deleteActivityGoodsPromotion(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteActivityGoodsPromotionMutationResult = NonNullable<Awaited<ReturnType<typeof deleteActivityGoodsPromotion>>>
-
+    
     export type DeleteActivityGoodsPromotionMutationError = ErrorType<unknown>
 
     export const useDeleteActivityGoodsPromotion = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteActivityGoodsPromotion>>, TError,{params: DeleteActivityGoodsPromotionParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeleteActivityGoodsPromotionMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * update activity info (step2)
  * @summary update activity info (step2)
@@ -2929,16 +2935,16 @@ export const updateActivityInfo = (
     },
       options);
     }
-
+  
 
 
 export const getUpdateActivityInfoMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityInfo>>, TError,{data: ActivityUpdateStepTwoReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateActivityInfo>>, TError,{data: ActivityUpdateStepTwoReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateActivityInfo>>, {data: ActivityUpdateStepTwoReq}> = (props) => {
@@ -2947,9 +2953,9 @@ export const getUpdateActivityInfoMutationOptions = <TError = ErrorType<unknown>
           return  updateActivityInfo(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateActivityInfoMutationResult = NonNullable<Awaited<ReturnType<typeof updateActivityInfo>>>
@@ -2960,15 +2966,15 @@ export const getUpdateActivityInfoMutationOptions = <TError = ErrorType<unknown>
  * @summary update activity info (step2)
  */
 export const useUpdateActivityInfo = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateActivityInfo>>, TError,{data: ActivityUpdateStepTwoReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdateActivityInfoMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get images limit
  * @summary get images limit
@@ -2983,24 +2989,24 @@ export const getImages = (
     },
       options);
     }
-
+  
 
 export const getGetImagesQueryKey = (params?: GetImagesParams,) => [`/manager/materialLibrary/image`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetImagesQueryOptions = <TData = Awaited<ReturnType<typeof getImages>>, TError = ErrorType<unknown>>(params?: GetImagesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getImages>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getImages>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetImagesQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getImages>>> = ({ signal }) => getImages(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetImagesQueryResult = NonNullable<Awaited<ReturnType<typeof getImages>>>
@@ -3038,16 +3044,16 @@ export const createImage = (
     },
       options);
     }
-
+  
 
 
 export const getCreateImageMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createImage>>, TError,{data: UpdateImageObjectReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof createImage>>, TError,{data: UpdateImageObjectReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof createImage>>, {data: UpdateImageObjectReq}> = (props) => {
@@ -3056,9 +3062,9 @@ export const getCreateImageMutationOptions = <TError = ErrorType<unknown>,
           return  createImage(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type CreateImageMutationResult = NonNullable<Awaited<ReturnType<typeof createImage>>>
@@ -3069,15 +3075,15 @@ export const getCreateImageMutationOptions = <TError = ErrorType<unknown>,
  * @summary create image material
  */
 export const useCreateImage = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createImage>>, TError,{data: UpdateImageObjectReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getCreateImageMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * delete image material
  * @summary delete image material
@@ -3091,16 +3097,16 @@ export const deleteImage = (
     },
       options);
     }
-
+  
 
 
 export const getDeleteImageMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteImage>>, TError,{params: DeleteImageParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteImage>>, TError,{params: DeleteImageParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteImage>>, {params: DeleteImageParams}> = (props) => {
@@ -3109,28 +3115,28 @@ export const getDeleteImageMutationOptions = <TError = ErrorType<unknown>,
           return  deleteImage(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteImageMutationResult = NonNullable<Awaited<ReturnType<typeof deleteImage>>>
-
+    
     export type DeleteImageMutationError = ErrorType<unknown>
 
     /**
  * @summary delete image material
  */
 export const useDeleteImage = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteImage>>, TError,{params: DeleteImageParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeleteImageMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * batch delete images
  * @summary batch delete images
@@ -3145,16 +3151,16 @@ export const batchDeleteImages = (
     },
       options);
     }
-
+  
 
 
 export const getBatchDeleteImagesMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof batchDeleteImages>>, TError,{data: BatchDeleteMaterialImagesReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof batchDeleteImages>>, TError,{data: BatchDeleteMaterialImagesReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof batchDeleteImages>>, {data: BatchDeleteMaterialImagesReq}> = (props) => {
@@ -3163,9 +3169,9 @@ export const getBatchDeleteImagesMutationOptions = <TError = ErrorType<unknown>,
           return  batchDeleteImages(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type BatchDeleteImagesMutationResult = NonNullable<Awaited<ReturnType<typeof batchDeleteImages>>>
@@ -3176,15 +3182,15 @@ export const getBatchDeleteImagesMutationOptions = <TError = ErrorType<unknown>,
  * @summary batch delete images
  */
 export const useBatchDeleteImages = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof batchDeleteImages>>, TError,{data: BatchDeleteMaterialImagesReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getBatchDeleteImagesMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * permission limit
  * @summary permission limit
@@ -3199,24 +3205,24 @@ export const getPermission = (
     },
       options);
     }
-
+  
 
 export const getGetPermissionQueryKey = (params?: GetPermissionParams,) => [`/manager/permission`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetPermissionQueryOptions = <TData = Awaited<ReturnType<typeof getPermission>>, TError = ErrorType<unknown>>(params?: GetPermissionParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPermission>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getPermission>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetPermissionQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getPermission>>> = ({ signal }) => getPermission(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetPermissionQueryResult = NonNullable<Awaited<ReturnType<typeof getPermission>>>
@@ -3254,16 +3260,16 @@ export const updatePermission = (
     },
       options);
     }
-
+  
 
 
 export const getUpdatePermissionMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updatePermission>>, TError,{data: UpdatePermissionBody}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updatePermission>>, TError,{data: UpdatePermissionBody}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updatePermission>>, {data: UpdatePermissionBody}> = (props) => {
@@ -3272,9 +3278,9 @@ export const getUpdatePermissionMutationOptions = <TError = ErrorType<unknown>,
           return  updatePermission(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdatePermissionMutationResult = NonNullable<Awaited<ReturnType<typeof updatePermission>>>
@@ -3285,15 +3291,15 @@ export const getUpdatePermissionMutationOptions = <TError = ErrorType<unknown>,
  * @summary permission update
  */
 export const useUpdatePermission = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updatePermission>>, TError,{data: UpdatePermissionBody}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdatePermissionMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * permission delete
  * @summary permission delete
@@ -3307,16 +3313,16 @@ export const deletePermission = (
     },
       options);
     }
-
+  
 
 
 export const getDeletePermissionMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deletePermission>>, TError,{params: DeletePermissionParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deletePermission>>, TError,{params: DeletePermissionParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deletePermission>>, {params: DeletePermissionParams}> = (props) => {
@@ -3325,28 +3331,28 @@ export const getDeletePermissionMutationOptions = <TError = ErrorType<unknown>,
           return  deletePermission(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeletePermissionMutationResult = NonNullable<Awaited<ReturnType<typeof deletePermission>>>
-
+    
     export type DeletePermissionMutationError = ErrorType<unknown>
 
     /**
  * @summary permission delete
  */
 export const useDeletePermission = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deletePermission>>, TError,{params: DeletePermissionParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeletePermissionMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * associate permission to auth
  * @summary associate permission to auth
@@ -3361,16 +3367,16 @@ export const associate = (
     },
       options);
     }
-
+  
 
 
 export const getAssociateMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof associate>>, TError,{data: PermissionAssociateAuthReqBody}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof associate>>, TError,{data: PermissionAssociateAuthReqBody}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof associate>>, {data: PermissionAssociateAuthReqBody}> = (props) => {
@@ -3379,9 +3385,9 @@ export const getAssociateMutationOptions = <TError = ErrorType<unknown>,
           return  associate(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type AssociateMutationResult = NonNullable<Awaited<ReturnType<typeof associate>>>
@@ -3392,15 +3398,15 @@ export const getAssociateMutationOptions = <TError = ErrorType<unknown>,
  * @summary associate permission to auth
  */
 export const useAssociate = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof associate>>, TError,{data: PermissionAssociateAuthReqBody}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getAssociateMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * associate permission to auth
  * @summary associate permission to auth
@@ -3414,16 +3420,16 @@ export const disassociate = (
     },
       options);
     }
-
+  
 
 
 export const getDisassociateMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof disassociate>>, TError,{params: DisassociateParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof disassociate>>, TError,{params: DisassociateParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof disassociate>>, {params: DisassociateParams}> = (props) => {
@@ -3432,28 +3438,28 @@ export const getDisassociateMutationOptions = <TError = ErrorType<unknown>,
           return  disassociate(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DisassociateMutationResult = NonNullable<Awaited<ReturnType<typeof disassociate>>>
-
+    
     export type DisassociateMutationError = ErrorType<unknown>
 
     /**
  * @summary associate permission to auth
  */
 export const useDisassociate = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof disassociate>>, TError,{params: DisassociateParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDisassociateMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get permission auth with whether is associated
  * @summary get permission auth with whether is associated
@@ -3468,24 +3474,24 @@ export const getPermissionAuth = (
     },
       options);
     }
-
+  
 
 export const getGetPermissionAuthQueryKey = (params: GetPermissionAuthParams,) => [`/manager/permission/associate/auth`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetPermissionAuthQueryOptions = <TData = Awaited<ReturnType<typeof getPermissionAuth>>, TError = ErrorType<unknown>>(params: GetPermissionAuthParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPermissionAuth>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getPermissionAuth>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetPermissionAuthQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getPermissionAuth>>> = ({ signal }) => getPermissionAuth(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetPermissionAuthQueryResult = NonNullable<Awaited<ReturnType<typeof getPermissionAuth>>>
@@ -3523,24 +3529,24 @@ export const getManagerRoles = (
     },
       options);
     }
-
+  
 
 export const getGetManagerRolesQueryKey = (params?: GetManagerRolesParams,) => [`/manager/role`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetManagerRolesQueryOptions = <TData = Awaited<ReturnType<typeof getManagerRoles>>, TError = ErrorType<unknown>>(params?: GetManagerRolesParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getManagerRoles>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getManagerRoles>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetManagerRolesQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getManagerRoles>>> = ({ signal }) => getManagerRoles(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetManagerRolesQueryResult = NonNullable<Awaited<ReturnType<typeof getManagerRoles>>>
@@ -3578,16 +3584,16 @@ export const updateManagerRole = (
     },
       options);
     }
-
+  
 
 
 export const getUpdateManagerRoleMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateManagerRole>>, TError,{data: ManagerRoleUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateManagerRole>>, TError,{data: ManagerRoleUpdateReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateManagerRole>>, {data: ManagerRoleUpdateReq}> = (props) => {
@@ -3596,9 +3602,9 @@ export const getUpdateManagerRoleMutationOptions = <TError = ErrorType<unknown>,
           return  updateManagerRole(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateManagerRoleMutationResult = NonNullable<Awaited<ReturnType<typeof updateManagerRole>>>
@@ -3609,15 +3615,15 @@ export const getUpdateManagerRoleMutationOptions = <TError = ErrorType<unknown>,
  * @summary update manager role
  */
 export const useUpdateManagerRole = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateManagerRole>>, TError,{data: ManagerRoleUpdateReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdateManagerRoleMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * delete manager roles
  * @summary delete manager roles
@@ -3631,16 +3637,16 @@ export const deleteManagerRole = (
     },
       options);
     }
-
+  
 
 
 export const getDeleteManagerRoleMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteManagerRole>>, TError,{params: DeleteManagerRoleParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteManagerRole>>, TError,{params: DeleteManagerRoleParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteManagerRole>>, {params: DeleteManagerRoleParams}> = (props) => {
@@ -3649,34 +3655,269 @@ export const getDeleteManagerRoleMutationOptions = <TError = ErrorType<unknown>,
           return  deleteManagerRole(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteManagerRoleMutationResult = NonNullable<Awaited<ReturnType<typeof deleteManagerRole>>>
-
+    
     export type DeleteManagerRoleMutationError = ErrorType<unknown>
 
     /**
  * @summary delete manager roles
  */
 export const useDeleteManagerRole = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteManagerRole>>, TError,{params: DeleteManagerRoleParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeleteManagerRoleMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
+    
+export const getRoleAuditLimit = (
+    params?: GetRoleAuditLimitParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<RoleAuditRowRes>(
+      {url: `/manager/role/audit`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetRoleAuditLimitQueryKey = (params?: GetRoleAuditLimitParams,) => [`/manager/role/audit`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetRoleAuditLimitQueryOptions = <TData = Awaited<ReturnType<typeof getRoleAuditLimit>>, TError = ErrorType<unknown>>(params?: GetRoleAuditLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRoleAuditLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getRoleAuditLimit>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRoleAuditLimitQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRoleAuditLimit>>> = ({ signal }) => getRoleAuditLimit(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetRoleAuditLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getRoleAuditLimit>>>
+export type GetRoleAuditLimitQueryError = ErrorType<unknown>
+
+export const useGetRoleAuditLimit = <TData = Awaited<ReturnType<typeof getRoleAuditLimit>>, TError = ErrorType<unknown>>(
+ params?: GetRoleAuditLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRoleAuditLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetRoleAuditLimitQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+export const auditRoleReply = (
+    roleAuditReq: RoleAuditReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/role/audit`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: roleAuditReq
+    },
+      options);
+    }
+  
+
+
+export const getAuditRoleReplyMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof auditRoleReply>>, TError,{data: RoleAuditReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof auditRoleReply>>, TError,{data: RoleAuditReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof auditRoleReply>>, {data: RoleAuditReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  auditRoleReply(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type AuditRoleReplyMutationResult = NonNullable<Awaited<ReturnType<typeof auditRoleReply>>>
+    export type AuditRoleReplyMutationBody = RoleAuditReq
+    export type AuditRoleReplyMutationError = ErrorType<unknown>
+
+    export const useAuditRoleReply = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof auditRoleReply>>, TError,{data: RoleAuditReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getAuditRoleReplyMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+export const deleteRoleAudit = (
+    params: DeleteRoleAuditParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/role/audit`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteRoleAuditMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRoleAudit>>, TError,{params: DeleteRoleAuditParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteRoleAudit>>, TError,{params: DeleteRoleAuditParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteRoleAudit>>, {params: DeleteRoleAuditParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteRoleAudit(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteRoleAuditMutationResult = NonNullable<Awaited<ReturnType<typeof deleteRoleAudit>>>
+    
+    export type DeleteRoleAuditMutationError = ErrorType<unknown>
+
+    export const useDeleteRoleAudit = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRoleAudit>>, TError,{params: DeleteRoleAuditParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteRoleAuditMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+export const createRoleAudit = (
+    applyRoleReq: ApplyRoleReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/role/audit/apply`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: applyRoleReq
+    },
+      options);
+    }
+  
+
+
+export const getCreateRoleAuditMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRoleAudit>>, TError,{data: ApplyRoleReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createRoleAudit>>, TError,{data: ApplyRoleReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createRoleAudit>>, {data: ApplyRoleReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  createRoleAudit(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type CreateRoleAuditMutationResult = NonNullable<Awaited<ReturnType<typeof createRoleAudit>>>
+    export type CreateRoleAuditMutationBody = ApplyRoleReq
+    export type CreateRoleAuditMutationError = ErrorType<unknown>
+
+    export const useCreateRoleAudit = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRoleAudit>>, TError,{data: ApplyRoleReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getCreateRoleAuditMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+export const getCurrentRoleAudit = (
+    
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<CurrentRoleAuditRes>(
+      {url: `/manager/role/audit/current`, method: 'get', signal
+    },
+      options);
+    }
+  
+
+export const getGetCurrentRoleAuditQueryKey = () => [`/manager/role/audit/current`] as const;
+  
+
+    
+export const getGetCurrentRoleAuditQueryOptions = <TData = Awaited<ReturnType<typeof getCurrentRoleAudit>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCurrentRoleAudit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getCurrentRoleAudit>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCurrentRoleAuditQueryKey();
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCurrentRoleAudit>>> = ({ signal }) => getCurrentRoleAudit(requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetCurrentRoleAuditQueryResult = NonNullable<Awaited<ReturnType<typeof getCurrentRoleAudit>>>
+export type GetCurrentRoleAuditQueryError = ErrorType<unknown>
+
+export const useGetCurrentRoleAudit = <TData = Awaited<ReturnType<typeof getCurrentRoleAudit>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCurrentRoleAudit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetCurrentRoleAuditQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
 
 /**
  * get routes array
  * @summary get routes array
  */
 export const getRouter = (
-
+    
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
 ) => {
       return custom_instance<RoutesVecRes>(
@@ -3684,24 +3925,24 @@ export const getRouter = (
     },
       options);
     }
-
+  
 
 export const getGetRouterQueryKey = () => [`/manager/router`] as const;
+  
 
-
-
+    
 export const getGetRouterQueryOptions = <TData = Awaited<ReturnType<typeof getRouter>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRouter>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getRouter>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetRouterQueryKey();
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getRouter>>> = ({ signal }) => getRouter(requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetRouterQueryResult = NonNullable<Awaited<ReturnType<typeof getRouter>>>
@@ -3739,16 +3980,16 @@ export const updateRouter = (
     },
       options);
     }
-
+  
 
 
 export const getUpdateRouterMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRouter>>, TError,{data: UpdateRouteReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateRouter>>, TError,{data: UpdateRouteReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateRouter>>, {data: UpdateRouteReq}> = (props) => {
@@ -3757,9 +3998,9 @@ export const getUpdateRouterMutationOptions = <TError = ErrorType<unknown>,
           return  updateRouter(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UpdateRouterMutationResult = NonNullable<Awaited<ReturnType<typeof updateRouter>>>
@@ -3770,15 +4011,15 @@ export const getUpdateRouterMutationOptions = <TError = ErrorType<unknown>,
  * @summary update router
  */
 export const useUpdateRouter = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRouter>>, TError,{data: UpdateRouteReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUpdateRouterMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * delete router
  * @summary delete router
@@ -3792,16 +4033,16 @@ export const deleteRouter = (
     },
       options);
     }
-
+  
 
 
 export const getDeleteRouterMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRouter>>, TError,{params: DeleteRouterParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteRouter>>, TError,{params: DeleteRouterParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteRouter>>, {params: DeleteRouterParams}> = (props) => {
@@ -3810,34 +4051,34 @@ export const getDeleteRouterMutationOptions = <TError = ErrorType<unknown>,
           return  deleteRouter(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type DeleteRouterMutationResult = NonNullable<Awaited<ReturnType<typeof deleteRouter>>>
-
+    
     export type DeleteRouterMutationError = ErrorType<unknown>
 
     /**
  * @summary delete router
  */
 export const useDeleteRouter = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRouter>>, TError,{params: DeleteRouterParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getDeleteRouterMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get all menu
  * @summary get all menu
  */
 export const getAllRouter = (
-
+    
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
 ) => {
       return custom_instance<RoutesVecRes>(
@@ -3845,24 +4086,24 @@ export const getAllRouter = (
     },
       options);
     }
-
+  
 
 export const getGetAllRouterQueryKey = () => [`/manager/router/all`] as const;
+  
 
-
-
+    
 export const getGetAllRouterQueryOptions = <TData = Awaited<ReturnType<typeof getAllRouter>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAllRouter>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getAllRouter>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetAllRouterQueryKey();
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllRouter>>> = ({ signal }) => getAllRouter(requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetAllRouterQueryResult = NonNullable<Awaited<ReturnType<typeof getAllRouter>>>
@@ -3896,16 +4137,16 @@ export const associateAuthRouter = (
     },
       options);
     }
-
+  
 
 
 export const getAssociateAuthRouterMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof associateAuthRouter>>, TError,{data: AssociateRouterAuthReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof associateAuthRouter>>, TError,{data: AssociateRouterAuthReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof associateAuthRouter>>, {data: AssociateRouterAuthReq}> = (props) => {
@@ -3914,9 +4155,9 @@ export const getAssociateAuthRouterMutationOptions = <TError = ErrorType<unknown
           return  associateAuthRouter(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type AssociateAuthRouterMutationResult = NonNullable<Awaited<ReturnType<typeof associateAuthRouter>>>
@@ -3924,15 +4165,15 @@ export const getAssociateAuthRouterMutationOptions = <TError = ErrorType<unknown
     export type AssociateAuthRouterMutationError = ErrorType<unknown>
 
     export const useAssociateAuthRouter = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof associateAuthRouter>>, TError,{data: AssociateRouterAuthReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getAssociateAuthRouterMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get auth limit with router associated
  * @summary get auth limit with router associated
@@ -3947,24 +4188,24 @@ export const getAuthWithRouter = (
     },
       options);
     }
-
+  
 
 export const getGetAuthWithRouterQueryKey = (params: GetAuthWithRouterParams,) => [`/manager/router/associate/auth`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetAuthWithRouterQueryOptions = <TData = Awaited<ReturnType<typeof getAuthWithRouter>>, TError = ErrorType<unknown>>(params: GetAuthWithRouterParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAuthWithRouter>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getAuthWithRouter>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetAuthWithRouterQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getAuthWithRouter>>> = ({ signal }) => getAuthWithRouter(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetAuthWithRouterQueryResult = NonNullable<Awaited<ReturnType<typeof getAuthWithRouter>>>
@@ -3993,7 +4234,7 @@ export const useGetAuthWithRouter = <TData = Awaited<ReturnType<typeof getAuthWi
  * @summary get accessKey
  */
 export const getAccessKey = (
-
+    
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
 ) => {
       return custom_instance<AccessKeyRes>(
@@ -4001,24 +4242,24 @@ export const getAccessKey = (
     },
       options);
     }
-
+  
 
 export const getGetAccessKeyQueryKey = () => [`/manager/upload/accessKey`] as const;
+  
 
-
-
+    
 export const getGetAccessKeyQueryOptions = <TData = Awaited<ReturnType<typeof getAccessKey>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getAccessKey>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getAccessKey>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetAccessKeyQueryKey();
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getAccessKey>>> = ({ signal }) => getAccessKey(requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetAccessKeyQueryResult = NonNullable<Awaited<ReturnType<typeof getAccessKey>>>
@@ -4056,24 +4297,24 @@ export const getUserLimit = (
     },
       options);
     }
-
+  
 
 export const getGetUserLimitQueryKey = (params?: GetUserLimitParams,) => [`/manager/user`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetUserLimitQueryOptions = <TData = Awaited<ReturnType<typeof getUserLimit>>, TError = ErrorType<unknown>>(params?: GetUserLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getUserLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getUserLimit>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetUserLimitQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserLimit>>> = ({ signal }) => getUserLimit(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetUserLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getUserLimit>>>
@@ -4111,16 +4352,16 @@ export const bannedUser = (
     },
       options);
     }
-
+  
 
 
 export const getBannedUserMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bannedUser>>, TError,{data: BannedUser}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof bannedUser>>, TError,{data: BannedUser}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof bannedUser>>, {data: BannedUser}> = (props) => {
@@ -4129,9 +4370,9 @@ export const getBannedUserMutationOptions = <TError = ErrorType<unknown>,
           return  bannedUser(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type BannedUserMutationResult = NonNullable<Awaited<ReturnType<typeof bannedUser>>>
@@ -4142,15 +4383,15 @@ export const getBannedUserMutationOptions = <TError = ErrorType<unknown>,
  * @summary banned custom user
  */
 export const useBannedUser = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof bannedUser>>, TError,{data: BannedUser}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getBannedUserMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * unblock custom user
  * @summary unblock custom user
@@ -4164,16 +4405,16 @@ export const unblockUser = (
     },
       options);
     }
-
+  
 
 
 export const getUnblockUserMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof unblockUser>>, TError,{params: UnblockUserParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof unblockUser>>, TError,{params: UnblockUserParams}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof unblockUser>>, {params: UnblockUserParams}> = (props) => {
@@ -4182,28 +4423,28 @@ export const getUnblockUserMutationOptions = <TError = ErrorType<unknown>,
           return  unblockUser(params,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type UnblockUserMutationResult = NonNullable<Awaited<ReturnType<typeof unblockUser>>>
-
+    
     export type UnblockUserMutationError = ErrorType<unknown>
 
     /**
  * @summary unblock custom user
  */
 export const useUnblockUser = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof unblockUser>>, TError,{params: UnblockUserParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getUnblockUserMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * get custom user limit
  * @summary get custom user limit
@@ -4218,24 +4459,24 @@ export const getUserDetail = (
     },
       options);
     }
-
+  
 
 export const getGetUserDetailQueryKey = (params: GetUserDetailParams,) => [`/manager/user/detail`, ...(params ? [params]: [])] as const;
+  
 
-
-
+    
 export const getGetUserDetailQueryOptions = <TData = Awaited<ReturnType<typeof getUserDetail>>, TError = ErrorType<unknown>>(params: GetUserDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getUserDetail>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 ): UseQueryOptions<Awaited<ReturnType<typeof getUserDetail>>, TError, TData> & { queryKey: QueryKey } => {
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetUserDetailQueryKey(params);
 
-
-
+  
+  
     const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserDetail>>> = ({ signal }) => getUserDetail(params, requestOptions, signal);
-
-
-
+    
+      
+      
    return  { queryKey, queryFn, ...queryOptions}}
 
 export type GetUserDetailQueryResult = NonNullable<Awaited<ReturnType<typeof getUserDetail>>>
@@ -4273,16 +4514,16 @@ export const sendEmail = (
     },
       options);
     }
-
+  
 
 
 export const getSendEmailMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof sendEmail>>, TError,{data: SendEmailReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof sendEmail>>, TError,{data: SendEmailReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof sendEmail>>, {data: SendEmailReq}> = (props) => {
@@ -4291,9 +4532,9 @@ export const getSendEmailMutationOptions = <TError = ErrorType<unknown>,
           return  sendEmail(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type SendEmailMutationResult = NonNullable<Awaited<ReturnType<typeof sendEmail>>>
@@ -4304,15 +4545,15 @@ export const getSendEmailMutationOptions = <TError = ErrorType<unknown>,
  * @summary send email
  */
 export const useSendEmail = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof sendEmail>>, TError,{data: SendEmailReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getSendEmailMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    
 /**
  * verify email
  * @summary verify email
@@ -4327,16 +4568,16 @@ export const verifyEmail = (
     },
       options);
     }
-
+  
 
 
 export const getVerifyEmailMutationOptions = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof verifyEmail>>, TError,{data: EmailRow}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof verifyEmail>>, TError,{data: EmailRow}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-
+      
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof verifyEmail>>, {data: EmailRow}> = (props) => {
@@ -4345,9 +4586,9 @@ export const getVerifyEmailMutationOptions = <TError = ErrorType<unknown>,
           return  verifyEmail(data,requestOptions)
         }
 
+        
 
-
-
+ 
    return  { mutationFn, ...mutationOptions }}
 
     export type VerifyEmailMutationResult = NonNullable<Awaited<ReturnType<typeof verifyEmail>>>
@@ -4358,12 +4599,12 @@ export const getVerifyEmailMutationOptions = <TError = ErrorType<unknown>,
  * @summary verify email
  */
 export const useVerifyEmail = <TError = ErrorType<unknown>,
-
+    
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof verifyEmail>>, TError,{data: EmailRow}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
-
+    
       const mutationOptions = getVerifyEmailMutationOptions(options);
-
+     
       return useMutation(mutationOptions);
     }
-
+    

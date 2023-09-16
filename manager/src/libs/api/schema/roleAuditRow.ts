@@ -5,12 +5,14 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface ManagerInfoUpdate {
-  age?: number | null;
-  avatar?: string | null;
+export interface RoleAuditRow {
+  create_time: string;
   email: string;
-  gender?: number | null;
-  mobile?: string | null;
+  id: number;
   name: string;
+  role_id: number;
+  role_name: string;
+  status: number;
+  update_time: string;
   username: string;
 }

@@ -31,7 +31,9 @@ pub async fn get_current_audit(
     conn: &mut PooledConn,
     uid: u64,
 ) -> Result<Option<RoleAuditRow>, MyError> {
-    let stmt = "select * from manager_role_audit where id=:uid";
+    let stmt = "select mra.*,r.name as role_name from manager_role_audit as mra
+    left join roles as r on r.id=mra.role_id
+    where mra.id=:uid";
     let res = conn.exec_first::<RoleAuditRow, _, _>(
         stmt,
         params! {
@@ -50,8 +52,9 @@ pub async fn get_audit_limit(
 ) -> Result<RoleAuditRowLimitRes, MyError> {
     let limit = handle_limit(&data.limit);
     let page = handle_page(&data.page);
-    let stmt = "select sql_calc_found_rows * from manager_role_audit where
-    (id=:id or :id is null) and (username=:username or :username is null) and (name=:name or :name is null) and (status=:status or :status is null) and (role_id=:role_id or :role_id is null)
+    let stmt = "select sql_calc_found_rows mra.*,r.name as role_name from manager_role_audit as mra
+    left join roles as r on r.id=mra.role_id
+    where (mra.id=:id or :id is null) and (username=:username or :username is null) and (mra.name=:name or :name is null) and (status=:status or :status is null) and (role_id=:role_id or :role_id is null)
     order by update_time desc limit :scope,:limit
     ";
     let res = conn.exec(

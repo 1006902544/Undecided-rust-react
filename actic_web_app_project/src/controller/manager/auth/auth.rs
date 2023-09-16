@@ -47,7 +47,6 @@ pub(super) async fn get_admin_info(req: HttpRequest) -> Result<impl Responder, i
 pub async fn sign_in(
     body: Json<LoginBody>,
     pool: Data<Pool>,
-    req: HttpRequest,
 ) -> Result<impl Responder, impl ResponseError> {
     let req = body.into_inner();
     let conn: mysql::PooledConn = get_conn(pool).unwrap();

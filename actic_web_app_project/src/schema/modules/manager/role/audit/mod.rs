@@ -11,6 +11,7 @@ pub struct RoleAuditRow {
     pub name: String,
     pub status: u8,
     pub role_id: u64,
+    pub role_name: String,
     #[schema(value_type = String)]
     pub create_time: NaiveDateTime,
     #[schema(value_type = String)]
@@ -41,6 +42,6 @@ pub struct RoleAuditReq {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, ToSchema, IntoParams)]
-pub struct CurrentRoleAuditReq {
+pub struct RoleAuditDeleteReq {
     pub id: u64,
 }

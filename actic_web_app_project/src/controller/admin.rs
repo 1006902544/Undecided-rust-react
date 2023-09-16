@@ -1,10 +1,7 @@
 use super::admin_doc::get_api_doc;
 use crate::{
     app::error::MyError,
-    nako::{
-        auth::{encode_default, get_info_by_token},
-        connection::get_conn,
-    },
+    nako::{auth::get_info_by_token, connection::get_conn},
     schema::{
         modules::admin::admin::{LoginBody, SignUpReq},
         response::ResponseData,
@@ -82,7 +79,7 @@ pub async fn sign_in(body: Form<LoginBody>, pool: Data<Pool>) -> Result<impl Res
     let conn: mysql::PooledConn = get_conn(pool).unwrap();
     let res = server_admin::sign_in(req, conn);
     match res {
-        Ok(code) => Ok(ResponseData::new("code").into_json_response()),
+        Ok(_) => Ok(ResponseData::new("code").into_json_response()),
         // match encode_default(res) {
         //     Ok(code) => Ok(ResponseData::new("code").into_json_response()),
         //     Err(e) => Err(MyError::encode_error(e)),
