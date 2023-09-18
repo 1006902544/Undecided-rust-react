@@ -135,6 +135,8 @@ export * from './managerInfoLimitReq';
 export * from './managerInfoLimitRes';
 export * from './managerInfoRes';
 export * from './managerInfoUpdate';
+export * from './managerInfoWithToken';
+export * from './managerInfoWithTokenData';
 export * from './managerRole';
 export * from './managerRoleDeleteReq';
 export * from './managerRoleLimitRes';

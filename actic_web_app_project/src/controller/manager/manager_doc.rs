@@ -197,7 +197,7 @@ use utoipa::OpenApi;
         //管理端角色
         ManagerRole,ManagerRoleUpdateReq,ManagerRoleReq,ManagerRoleDeleteReq,ManagerRoleList,ManagerRoleRes,ManagerRoleLimitRes,
         //管理端用户
-        ManagerInfoRes,ManagerInfoLimitRes,ManagerInfo,GetManagerInfoReq,ManagerSignupAccount,ManagerInfoUpdate,ManagerSignIn,ManagerInfoLimitReq,DeleteManager,ManagerInfoDetailData,
+        ManagerInfoRes,ManagerInfoLimitRes,ManagerInfo,GetManagerInfoReq,ManagerSignupAccount,ManagerInfoUpdate,ManagerSignIn,ManagerInfoLimitReq,DeleteManager,ManagerInfoDetailData,ManagerInfoWithToken,ManagerInfoWithTokenData,
           //管理端用户email验证码
         SendManagerEmailResData,SendManagerEmailReq,SendManagerEmailRes,ManagerEmailRow,
         //管理端用户角色申请/审核

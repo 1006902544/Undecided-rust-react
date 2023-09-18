@@ -76,7 +76,7 @@ import type {
   SendManagerEmailResData,
   SendEmailReq,
   EmailRow,
-  ManagerInfoDetailData,
+  ManagerInfoWithTokenData,
   ManagerInfoUpdate,
   ManagerSignIn,
   ActivityRes,
@@ -2295,7 +2295,7 @@ export const getManagerInfoByToken = (
     
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
 ) => {
-      return custom_instance<ManagerInfoDetailData>(
+      return custom_instance<ManagerInfoWithTokenData>(
       {url: `/manager/managers/info`, method: 'get', signal
     },
       options);

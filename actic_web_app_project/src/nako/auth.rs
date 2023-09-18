@@ -8,7 +8,7 @@ use crate::{middleware::auth_verify::UnlessTree, schema::modules::manager::manag
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Claims {
-    pub exp: u128,
+    pub exp: u64,
     pub id: u64,
     pub info: ManagerInfo,
 }
@@ -53,7 +53,7 @@ pub fn encode_default(info: ManagerInfo) -> Result<String, Error> {
     encode(
         &Header::default(),
         &Claims {
-            exp: 3600000000,
+            exp: jsonwebtoken::get_current_timestamp() + 60,
             id: info.id,
             info,
         },

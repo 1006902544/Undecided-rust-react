@@ -20,11 +20,11 @@ export default function HasApplyAudit({
         isRefused ? 'You can apply again' : 'Please waiting for auditing'
       }
       extra={
-        isRefused ? (
+        isRefused && (
           <div>
             <SubmitApplyButton enabled={true} onSuccess={refetch} />
           </div>
-        ) : null
+        )
       }
     />
   );

@@ -104,16 +104,26 @@ pub async fn update_manager_info(
     get,
     path="/manager/managers/info",
     responses (
-        (status=200,description="success",body=ManagerInfoDetailData)
+        (status=200,description="success",body=ManagerInfoWithTokenData)
     )
   )]
 #[get("/info")]
 ///get manager info by token
 pub async fn get_manager_info_by_token(
+    pool: Data<Pool>,
     req: HttpRequest,
 ) -> Result<impl Responder, impl ResponseError> {
-    match get_info_by_token(&req) {
-        Some(res) => Ok(ResponseData::new(res).into_json_response()),
+    let mut conn = pool.get_conn().unwrap();
+    match get_uid_by_token(&req) {
+        Some(id) => match manager_service::get_manager_by_id(&mut conn, id).await {
+            Ok(info) => match encode_default(info.clone()) {
+                Ok(token) => Ok(
+                    ResponseData::new(ManagerInfoWithToken { info, token }).into_json_response()
+                ),
+                Err(_) => Err(MyError::auth_error()),
+            },
+            Err(e) => Err(e),
+        },
         None => Err(MyError::auth_error()),
     }
 }

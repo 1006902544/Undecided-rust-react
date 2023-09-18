@@ -12,7 +12,7 @@ use super::{
         },
         general::{company_studio::company_studio::*, tags::tags::*, types::types::GameType},
     },
-    managers::{captcha::SendManagerEmailRes, ManagerInfo},
+    managers::{captcha::SendManagerEmailRes, ManagerInfo, ManagerInfoWithToken},
     market::activity::*,
     material_library::images::ImagesObject,
     permission::{associate::auth::*, permission::Permission},
@@ -66,7 +66,7 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //管理端角色
     ManagerRoleRes = ResponseData<ManagerRoleLimitRes>,
     //管理端用户
-    ManagerInfoRes = ResponseData<ManagerInfoLimitRes>,ManagerInfoDetailData = ResponseData<ManagerInfo>,
+    ManagerInfoRes = ResponseData<ManagerInfoLimitRes>,ManagerInfoDetailData = ResponseData<ManagerInfo>,ManagerInfoWithTokenData=ResponseData<ManagerInfoWithToken>,
     //管理端用户验证码
     SendManagerEmailResData = ResponseData<SendManagerEmailRes>,
     //管理端用户角色申请/审核

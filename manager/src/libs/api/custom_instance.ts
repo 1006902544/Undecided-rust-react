@@ -1,5 +1,5 @@
 import Axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { getToken } from '@/utils';
+import { getToken, removeToken } from '@/utils';
 import { message } from 'antd';
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
@@ -9,7 +9,11 @@ export const AXIOS_INSTANCE = Axios.create({ baseURL});
 AXIOS_INSTANCE.interceptors.response.use(
   req=> req,
   err=>{
-    message.error(err?.response?.data?.message??err.message)
+  if(err.response.data.status ===401  ) {
+    removeToken();
+    window.location.hash="/signIn"
+  }
+    message.error(err?.response?.data?.message||err.message)
     return Promise.reject(err)
 });
 

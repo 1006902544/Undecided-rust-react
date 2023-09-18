@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getToken } from '../utils';
+import { getToken, setToken } from '../utils';
 import { useAuthStore } from '@/libs/store';
 import { useGetManagerInfoByToken } from '@/libs/api';
 import { message } from 'antd';
@@ -19,8 +19,9 @@ export default function AuthRouteProvider({ children, unless }: IProps) {
     query: {
       enabled: !!getToken(),
       onSuccess({ data }) {
-        set_auth(data);
-        message.success(`welcome ${data.name || ''} !`);
+        setToken(data.token);
+        set_auth(data.info);
+        message.success(`welcome ${data.info.name || ''} !`);
       },
     },
   });

@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import type { ManagerInfo } from '../api/schema';
 import { getManagerInfoByToken } from '../api';
+import { setToken } from '@/utils';
 
 interface AuthStore {
   auth?: ManagerInfo | null;
@@ -28,7 +29,8 @@ export const useAuthStore = create<AuthStore>()(
 
         getAuth: async () => {
           const res = await getManagerInfoByToken();
-          return set(() => ({ auth: res.data }));
+          setToken(res.data.token);
+          return set(() => ({ auth: res.data.info }));
         },
       }),
       {

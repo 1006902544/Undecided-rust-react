@@ -24,6 +24,12 @@ pub struct ManagerInfo {
     pub update_time: Option<NaiveDateTime>,
 }
 
+#[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
+pub struct ManagerInfoWithToken {
+    pub info: ManagerInfo,
+    pub token: String,
+}
+
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, IntoParams)]
 pub struct GetManagerInfoReq {
     pub id: u64,
