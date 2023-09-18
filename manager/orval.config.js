@@ -71,6 +71,12 @@ module.exports = {
               useQuery: true,
             },
           },
+          //获取当前登录用户角色审核申请
+          getCurrentRoleAudit: {
+            query: {
+              useQuery: true,
+            },
+          },
         },
       },
     },

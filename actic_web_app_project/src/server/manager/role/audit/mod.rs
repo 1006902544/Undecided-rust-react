@@ -17,9 +17,9 @@ pub async fn create_role_audit(
 ) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let stmt = "insert into manager_role_audit (id,status,role_id,name,username,email)
-      select :id,0,:role_id,mi.name,mi.username,mi.email from (select name,username,email from manager_info where id=:id) as mi
-      on duplicate key update status=0
-      ";
+        select :id,0,:role_id,mi.name,mi.username,mi.email from (select name,username,email from manager_info where id=:id) as mi
+        on duplicate key update status=0,role_id=:role_id
+        ";
     let res = trans.exec_drop(stmt, params! {"id" => uid,"role_id" => data.role_id});
     match after_update(trans, res) {
         Ok(_) => Ok("Apply success".to_string()),
@@ -37,7 +37,7 @@ pub async fn get_current_audit(
     let res = conn.exec_first::<RoleAuditRow, _, _>(
         stmt,
         params! {
-          "id" => uid
+          "uid" => uid
         },
     );
     match res {

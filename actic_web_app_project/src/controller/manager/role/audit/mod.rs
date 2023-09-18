@@ -20,6 +20,7 @@ use crate::{
   )
 )]
 #[get("/current")]
+///get current role audit detail by token
 pub async fn get_current_role_audit(
     pool: Data<Pool>,
     req: HttpRequest,
@@ -44,6 +45,7 @@ pub async fn get_current_role_audit(
   )
 )]
 #[post("/apply")]
+///create role apply
 pub async fn create_role_audit(
     pool: Data<Pool>,
     req: HttpRequest,
@@ -71,6 +73,7 @@ pub async fn create_role_audit(
   )
 )]
 #[get("")]
+///get role audit limit
 pub async fn get_role_audit_limit(
     pool: Data<Pool>,
     req: HttpRequest,
@@ -97,7 +100,8 @@ pub async fn get_role_audit_limit(
   )
 )]
 #[post("")]
-pub async fn audit_role_reply(
+///audit role apply
+pub async fn audit_role_apply(
     pool: Data<Pool>,
     req: HttpRequest,
     data: Json<RoleAuditReq>,
@@ -123,6 +127,7 @@ pub async fn audit_role_reply(
   )
 )]
 #[delete("")]
+///delete role audit
 pub async fn delete_role_audit(
     pool: Data<Pool>,
     req: HttpRequest,

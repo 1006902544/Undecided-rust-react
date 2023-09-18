@@ -11,6 +11,7 @@ export default function SignUpInfoRoleModal() {
   return (
     <Container
       open={!auth?.name || !auth?.role_id}
+      closeIcon={false}
       footer={null}
       title="Please input your info"
       width={600}

@@ -124,7 +124,7 @@ use utoipa::OpenApi;
         super::role::audit::get_current_role_audit,
         super::role::audit::create_role_audit,
         super::role::audit::get_role_audit_limit,
-        super::role::audit::audit_role_reply,
+        super::role::audit::audit_role_apply,
         super::role::audit::delete_role_audit,
         //管理端用户
         super::managers::get_managers_limit,

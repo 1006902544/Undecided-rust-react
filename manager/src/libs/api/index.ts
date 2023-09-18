@@ -3677,6 +3677,10 @@ export const useDeleteManagerRole = <TError = ErrorType<unknown>,
       return useMutation(mutationOptions);
     }
     
+/**
+ * get role audit limit
+ * @summary get role audit limit
+ */
 export const getRoleAuditLimit = (
     params?: GetRoleAuditLimitParams,
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
@@ -3710,6 +3714,9 @@ const {query: queryOptions, request: requestOptions} = options ?? {};
 export type GetRoleAuditLimitQueryResult = NonNullable<Awaited<ReturnType<typeof getRoleAuditLimit>>>
 export type GetRoleAuditLimitQueryError = ErrorType<unknown>
 
+/**
+ * @summary get role audit limit
+ */
 export const useGetRoleAuditLimit = <TData = Awaited<ReturnType<typeof getRoleAuditLimit>>, TError = ErrorType<unknown>>(
  params?: GetRoleAuditLimitParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getRoleAuditLimit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 
@@ -3725,7 +3732,11 @@ export const useGetRoleAuditLimit = <TData = Awaited<ReturnType<typeof getRoleAu
 }
 
 
-export const auditRoleReply = (
+/**
+ * audit role apply
+ * @summary audit role apply
+ */
+export const auditRoleApply = (
     roleAuditReq: RoleAuditReq,
  options?: SecondParameter<typeof custom_instance>,) => {
       return custom_instance<ResPonseString>(
@@ -3738,19 +3749,19 @@ export const auditRoleReply = (
   
 
 
-export const getAuditRoleReplyMutationOptions = <TError = ErrorType<unknown>,
+export const getAuditRoleApplyMutationOptions = <TError = ErrorType<unknown>,
     
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof auditRoleReply>>, TError,{data: RoleAuditReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
-): UseMutationOptions<Awaited<ReturnType<typeof auditRoleReply>>, TError,{data: RoleAuditReq}, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof auditRoleApply>>, TError,{data: RoleAuditReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof auditRoleApply>>, TError,{data: RoleAuditReq}, TContext> => {
  const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof auditRoleReply>>, {data: RoleAuditReq}> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof auditRoleApply>>, {data: RoleAuditReq}> = (props) => {
           const {data} = props ?? {};
 
-          return  auditRoleReply(data,requestOptions)
+          return  auditRoleApply(data,requestOptions)
         }
 
         
@@ -3758,20 +3769,27 @@ export const getAuditRoleReplyMutationOptions = <TError = ErrorType<unknown>,
  
    return  { mutationFn, ...mutationOptions }}
 
-    export type AuditRoleReplyMutationResult = NonNullable<Awaited<ReturnType<typeof auditRoleReply>>>
-    export type AuditRoleReplyMutationBody = RoleAuditReq
-    export type AuditRoleReplyMutationError = ErrorType<unknown>
+    export type AuditRoleApplyMutationResult = NonNullable<Awaited<ReturnType<typeof auditRoleApply>>>
+    export type AuditRoleApplyMutationBody = RoleAuditReq
+    export type AuditRoleApplyMutationError = ErrorType<unknown>
 
-    export const useAuditRoleReply = <TError = ErrorType<unknown>,
+    /**
+ * @summary audit role apply
+ */
+export const useAuditRoleApply = <TError = ErrorType<unknown>,
     
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof auditRoleReply>>, TError,{data: RoleAuditReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof auditRoleApply>>, TError,{data: RoleAuditReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
     
-      const mutationOptions = getAuditRoleReplyMutationOptions(options);
+      const mutationOptions = getAuditRoleApplyMutationOptions(options);
      
       return useMutation(mutationOptions);
     }
     
+/**
+ * delete role audit
+ * @summary delete role audit
+ */
 export const deleteRoleAudit = (
     params: DeleteRoleAuditParams,
  options?: SecondParameter<typeof custom_instance>,) => {
@@ -3808,7 +3826,10 @@ export const getDeleteRoleAuditMutationOptions = <TError = ErrorType<unknown>,
     
     export type DeleteRoleAuditMutationError = ErrorType<unknown>
 
-    export const useDeleteRoleAudit = <TError = ErrorType<unknown>,
+    /**
+ * @summary delete role audit
+ */
+export const useDeleteRoleAudit = <TError = ErrorType<unknown>,
     
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRoleAudit>>, TError,{params: DeleteRoleAuditParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
@@ -3818,6 +3839,10 @@ export const getDeleteRoleAuditMutationOptions = <TError = ErrorType<unknown>,
       return useMutation(mutationOptions);
     }
     
+/**
+ * create role apply
+ * @summary create role apply
+ */
 export const createRoleAudit = (
     applyRoleReq: ApplyRoleReq,
  options?: SecondParameter<typeof custom_instance>,) => {
@@ -3855,7 +3880,10 @@ export const getCreateRoleAuditMutationOptions = <TError = ErrorType<unknown>,
     export type CreateRoleAuditMutationBody = ApplyRoleReq
     export type CreateRoleAuditMutationError = ErrorType<unknown>
 
-    export const useCreateRoleAudit = <TError = ErrorType<unknown>,
+    /**
+ * @summary create role apply
+ */
+export const useCreateRoleAudit = <TError = ErrorType<unknown>,
     
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRoleAudit>>, TError,{data: ApplyRoleReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
 ) => {
@@ -3865,6 +3893,10 @@ export const getCreateRoleAuditMutationOptions = <TError = ErrorType<unknown>,
       return useMutation(mutationOptions);
     }
     
+/**
+ * get current role audit detail by token
+ * @summary get current role audit detail by token
+ */
 export const getCurrentRoleAudit = (
     
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
@@ -3897,6 +3929,9 @@ const {query: queryOptions, request: requestOptions} = options ?? {};
 export type GetCurrentRoleAuditQueryResult = NonNullable<Awaited<ReturnType<typeof getCurrentRoleAudit>>>
 export type GetCurrentRoleAuditQueryError = ErrorType<unknown>
 
+/**
+ * @summary get current role audit detail by token
+ */
 export const useGetCurrentRoleAudit = <TData = Awaited<ReturnType<typeof getCurrentRoleAudit>>, TError = ErrorType<unknown>>(
   options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCurrentRoleAudit>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
 

@@ -193,7 +193,7 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                             .service(get_current_role_audit)
                             .service(create_role_audit)
                             .service(get_role_audit_limit)
-                            .service(audit_role_reply)
+                            .service(audit_role_apply)
                             .service(delete_role_audit),
                     ),
             )
