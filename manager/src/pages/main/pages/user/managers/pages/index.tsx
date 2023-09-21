@@ -1,0 +1,1 @@
+export { managerManagementResource } from './managersManagement';

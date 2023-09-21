@@ -32,29 +32,19 @@ pub async fn update_router(
     let mut conn: PooledConn = pool.get_conn().unwrap();
     let has_per = has_permission(&mut conn, &req);
     if has_per {
-        match get_uid_by_token(&req) {
-            Some(id) => {
-                let level = get_self_info(id, &mut conn).unwrap().level;
-                if level < 2 {
-                    Err(MyError::permissions_error())
-                } else {
-                    let body = body.into_inner();
-                    match body.key {
-                        Some(_) => match router_service::edit_route(body, &mut conn) {
-                            Ok(r) => Ok(ResponseData::new(r).into_json_response()),
-                            Err(e) => Err(e),
-                        },
-                        None => {
-                            let res = router_service::create_route(body, &mut conn);
-                            match res {
-                                Ok(res) => Ok(ResponseData::new(res).into_json_response()),
-                                Err(e) => Err(e),
-                            }
-                        }
-                    }
+        let body = body.into_inner();
+        match body.key {
+            Some(_) => match router_service::edit_route(body, &mut conn) {
+                Ok(r) => Ok(ResponseData::new(r).into_json_response()),
+                Err(e) => Err(e),
+            },
+            None => {
+                let res = router_service::create_route(body, &mut conn);
+                match res {
+                    Ok(res) => Ok(ResponseData::new(res).into_json_response()),
+                    Err(e) => Err(e),
                 }
             }
-            None => Err(MyError::auth_error()),
         }
     } else {
         Err(MyError::permissions_error())

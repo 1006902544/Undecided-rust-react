@@ -19,7 +19,7 @@ use crate::controller::manager::{
         associate::{associate::*, auth::*},
         permission::*,
     },
-    role::{audit::*, *},
+    role::{audit::*, role_permission::*, role_router::*, *},
     router::{
         associate::{associate::*, auth::*},
         router::*,
@@ -195,6 +195,17 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                             .service(get_role_audit_limit)
                             .service(audit_role_apply)
                             .service(delete_role_audit),
+                    )
+                    .service(
+                        web::scope("permission")
+                            .service(get_manager_role_permissions)
+                            .service(change_role_permission_status),
+                    )
+                    .service(
+                        web::scope("router")
+                            .service(get_manager_role_router)
+                            .service(change_role_router_status)
+                            .service(get_current_role_router),
                     ),
             )
             .service(

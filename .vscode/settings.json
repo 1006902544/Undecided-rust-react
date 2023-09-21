@@ -1,5 +1,8 @@
 {
   "rust-analyzer.linkedProjects": [
     ".\\actic_web_app_project\\Cargo.toml"
+  ],
+  "cSpell.words": [
+    "isnull"
   ]
 }

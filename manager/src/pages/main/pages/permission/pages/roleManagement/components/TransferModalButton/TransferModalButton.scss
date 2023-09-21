@@ -1,0 +1,18 @@
+
+
+    .transparent-bg-modal {
+      background-color: rgba(0,0,0,0);
+      .ant-modal {
+        .ant-modal-content {
+          background-color: rgba(0,0,0,0) ;
+          box-shadow: none;
+
+          .ant-modal-body {
+            overflow: auto;
+            max-height: none;
+          }
+        }
+      }
+    }
+
+

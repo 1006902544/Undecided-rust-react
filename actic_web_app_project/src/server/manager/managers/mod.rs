@@ -19,7 +19,7 @@ pub async fn get_managers_limit(
     let limit = handle_limit(&data.limit);
     let page = handle_limit(&data.page);
     let stmt = "select sql_calc_found_rows * from manager_info where
-    (id=:id or :id=null) and (username=:username or :username=null) and (name=:name or :name=null) and
+    (id=:id or :id is null) and (username=:username or :username is null) and (name=:name or :name is null) and
     (gender=:gender or :gender is null) and (role_id=:role_id or :role_id is null)
     order by update_time desc limit :scope,:limit";
     let res = conn.exec(
@@ -34,6 +34,7 @@ pub async fn get_managers_limit(
             "limit" => limit,
         },
     );
+
     match res {
         Ok(res) => {
             let total = get_total(conn);

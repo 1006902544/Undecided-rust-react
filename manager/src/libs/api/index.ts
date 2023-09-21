@@ -116,6 +116,12 @@ import type {
   DeleteRoleAuditParams,
   ApplyRoleReq,
   CurrentRoleAuditRes,
+  ManagerRolePermissionRowRes,
+  GetManagerRolePermissionsParams,
+  ManagerRolePermissionStatusReq,
+  ManagerRoleRouterRowRes,
+  GetManagerRoleRouterParams,
+  ManagerRoleRouterStatusReq,
   RoutesVecRes,
   UpdateRouteReq,
   DeleteRouterParams,
@@ -3938,6 +3944,278 @@ export const useGetCurrentRoleAudit = <TData = Awaited<ReturnType<typeof getCurr
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetCurrentRoleAuditQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * get manager role permissions with permission status
+ * @summary get manager role permissions with permission status
+ */
+export const getManagerRolePermissions = (
+    params: GetManagerRolePermissionsParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<ManagerRolePermissionRowRes>(
+      {url: `/manager/role/permission`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetManagerRolePermissionsQueryKey = (params: GetManagerRolePermissionsParams,) => [`/manager/role/permission`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetManagerRolePermissionsQueryOptions = <TData = Awaited<ReturnType<typeof getManagerRolePermissions>>, TError = ErrorType<unknown>>(params: GetManagerRolePermissionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getManagerRolePermissions>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getManagerRolePermissions>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetManagerRolePermissionsQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getManagerRolePermissions>>> = ({ signal }) => getManagerRolePermissions(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetManagerRolePermissionsQueryResult = NonNullable<Awaited<ReturnType<typeof getManagerRolePermissions>>>
+export type GetManagerRolePermissionsQueryError = ErrorType<unknown>
+
+/**
+ * @summary get manager role permissions with permission status
+ */
+export const useGetManagerRolePermissions = <TData = Awaited<ReturnType<typeof getManagerRolePermissions>>, TError = ErrorType<unknown>>(
+ params: GetManagerRolePermissionsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getManagerRolePermissions>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetManagerRolePermissionsQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * change role permission status
+ * @summary change role permission status
+ */
+export const changeRolePermissionStatus = (
+    managerRolePermissionStatusReq: ManagerRolePermissionStatusReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/role/permission`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: managerRolePermissionStatusReq
+    },
+      options);
+    }
+  
+
+
+export const getChangeRolePermissionStatusMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof changeRolePermissionStatus>>, TError,{data: ManagerRolePermissionStatusReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof changeRolePermissionStatus>>, TError,{data: ManagerRolePermissionStatusReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof changeRolePermissionStatus>>, {data: ManagerRolePermissionStatusReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  changeRolePermissionStatus(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type ChangeRolePermissionStatusMutationResult = NonNullable<Awaited<ReturnType<typeof changeRolePermissionStatus>>>
+    export type ChangeRolePermissionStatusMutationBody = ManagerRolePermissionStatusReq
+    export type ChangeRolePermissionStatusMutationError = ErrorType<unknown>
+
+    /**
+ * @summary change role permission status
+ */
+export const useChangeRolePermissionStatus = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof changeRolePermissionStatus>>, TError,{data: ManagerRolePermissionStatusReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getChangeRolePermissionStatusMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * get manager role router with router status
+ * @summary get manager role router with router status
+ */
+export const getManagerRoleRouter = (
+    params: GetManagerRoleRouterParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<ManagerRoleRouterRowRes>(
+      {url: `/manager/role/router`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetManagerRoleRouterQueryKey = (params: GetManagerRoleRouterParams,) => [`/manager/role/router`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetManagerRoleRouterQueryOptions = <TData = Awaited<ReturnType<typeof getManagerRoleRouter>>, TError = ErrorType<unknown>>(params: GetManagerRoleRouterParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getManagerRoleRouter>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getManagerRoleRouter>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetManagerRoleRouterQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getManagerRoleRouter>>> = ({ signal }) => getManagerRoleRouter(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetManagerRoleRouterQueryResult = NonNullable<Awaited<ReturnType<typeof getManagerRoleRouter>>>
+export type GetManagerRoleRouterQueryError = ErrorType<unknown>
+
+/**
+ * @summary get manager role router with router status
+ */
+export const useGetManagerRoleRouter = <TData = Awaited<ReturnType<typeof getManagerRoleRouter>>, TError = ErrorType<unknown>>(
+ params: GetManagerRoleRouterParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getManagerRoleRouter>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetManagerRoleRouterQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * change role router status
+ * @summary change role router status
+ */
+export const changeRoleRouterStatus = (
+    managerRoleRouterStatusReq: ManagerRoleRouterStatusReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/role/router`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: managerRoleRouterStatusReq
+    },
+      options);
+    }
+  
+
+
+export const getChangeRoleRouterStatusMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof changeRoleRouterStatus>>, TError,{data: ManagerRoleRouterStatusReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof changeRoleRouterStatus>>, TError,{data: ManagerRoleRouterStatusReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof changeRoleRouterStatus>>, {data: ManagerRoleRouterStatusReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  changeRoleRouterStatus(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type ChangeRoleRouterStatusMutationResult = NonNullable<Awaited<ReturnType<typeof changeRoleRouterStatus>>>
+    export type ChangeRoleRouterStatusMutationBody = ManagerRoleRouterStatusReq
+    export type ChangeRoleRouterStatusMutationError = ErrorType<unknown>
+
+    /**
+ * @summary change role router status
+ */
+export const useChangeRoleRouterStatus = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof changeRoleRouterStatus>>, TError,{data: ManagerRoleRouterStatusReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getChangeRoleRouterStatusMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * get current manager role router
+ * @summary get current manager role router
+ */
+export const getCurrentRoleRouter = (
+    
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<RoutesVecRes>(
+      {url: `/manager/role/router/current`, method: 'get', signal
+    },
+      options);
+    }
+  
+
+export const getGetCurrentRoleRouterQueryKey = () => [`/manager/role/router/current`] as const;
+  
+
+    
+export const getGetCurrentRoleRouterQueryOptions = <TData = Awaited<ReturnType<typeof getCurrentRoleRouter>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCurrentRoleRouter>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getCurrentRoleRouter>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCurrentRoleRouterQueryKey();
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCurrentRoleRouter>>> = ({ signal }) => getCurrentRoleRouter(requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetCurrentRoleRouterQueryResult = NonNullable<Awaited<ReturnType<typeof getCurrentRoleRouter>>>
+export type GetCurrentRoleRouterQueryError = ErrorType<unknown>
+
+/**
+ * @summary get current manager role router
+ */
+export const useGetCurrentRoleRouter = <TData = Awaited<ReturnType<typeof getCurrentRoleRouter>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCurrentRoleRouter>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetCurrentRoleRouterQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

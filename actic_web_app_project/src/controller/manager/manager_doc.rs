@@ -18,7 +18,7 @@ use crate::schema::modules::{
             associate::{associate::*, auth::*},
             permission::*,
         },
-        role::{audit::*, *},
+        role::{audit::*, role_permission::*, role_router::*, *},
         router::{
             associate::{associate::*, auth::*},
             router::*,
@@ -120,6 +120,13 @@ use utoipa::OpenApi;
         super::role::get_manager_roles,
         super::role::update_manager_role,
         super::role::delete_manager_role,
+        //管理端角色-权限
+        super::role::role_permission::get_manager_role_permissions,
+        super::role::role_permission::change_role_permission_status,
+        //管理端角色-路由
+        super::role::role_router::get_manager_role_router,
+        super::role::role_router::change_role_router_status,
+        super::role::role_router::get_current_role_router,
         //管理端用户-角色审核
         super::role::audit::get_current_role_audit,
         super::role::audit::create_role_audit,
@@ -198,6 +205,10 @@ use utoipa::OpenApi;
         ManagerRole,ManagerRoleUpdateReq,ManagerRoleReq,ManagerRoleDeleteReq,ManagerRoleList,ManagerRoleRes,ManagerRoleLimitRes,
         //管理端用户
         ManagerInfoRes,ManagerInfoLimitRes,ManagerInfo,GetManagerInfoReq,ManagerSignupAccount,ManagerInfoUpdate,ManagerSignIn,ManagerInfoLimitReq,DeleteManager,ManagerInfoDetailData,ManagerInfoWithToken,ManagerInfoWithTokenData,
+        //管理端用户-权限
+        ManagerRolePermissionRow,ManagerRolePermissionRowReq,ManagerRolePermissionStatusReq,ManagerRolePermissionRowRes,ManagerRolePermissionRowLimitRes,
+        //管理端用户-路由
+        ManagerRoleRouterRow,ManagerRoleRouterReq,ManagerRoleRouterStatusReq,ManagerRoleRouterRowRes,ManagerRoleRouterRowLimitRes,
           //管理端用户email验证码
         SendManagerEmailResData,SendManagerEmailReq,SendManagerEmailRes,ManagerEmailRow,
         //管理端用户角色申请/审核

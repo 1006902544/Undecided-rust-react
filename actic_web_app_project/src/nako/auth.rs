@@ -53,7 +53,7 @@ pub fn encode_default(info: ManagerInfo) -> Result<String, Error> {
     encode(
         &Header::default(),
         &Claims {
-            exp: jsonwebtoken::get_current_timestamp() + 60,
+            exp: jsonwebtoken::get_current_timestamp() + 3600,
             id: info.id,
             info,
         },

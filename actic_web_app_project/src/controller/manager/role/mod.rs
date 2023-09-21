@@ -1,4 +1,6 @@
 pub mod audit;
+pub mod role_permission;
+pub mod role_router;
 
 use actix_web::{
     delete, get, post,

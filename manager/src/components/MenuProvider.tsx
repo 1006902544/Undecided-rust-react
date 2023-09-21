@@ -1,4 +1,4 @@
-import { useGetRouter } from '@/libs/api';
+import { useGetCurrentRoleRouter } from '@/libs/api';
 import type { UseQueryResult } from '@tanstack/react-query';
 import React, { useContext, useMemo, useState } from 'react';
 import type { Route, RoutesVecRes } from '@/libs/api/schema';
@@ -29,7 +29,7 @@ export const useMenuContext = () => {
 export default function MenuProvider({ children }: IProps) {
   const [routesTree, setRoutesTree] = useState<PriRoute[]>([]);
 
-  const routesQuery = useGetRouter({
+  const routesQuery = useGetCurrentRoleRouter({
     query: {
       enabled: !!getToken(),
       onSuccess(data) {

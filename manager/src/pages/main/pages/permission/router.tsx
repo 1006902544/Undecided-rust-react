@@ -4,6 +4,7 @@ const PermissionList = lazy(() => import('./pages/permissionList/list'));
 const MenuManagement = lazy(
   () => import('./pages/menuManagement/menuManagement')
 );
+const RoleManagement = lazy(() => import('./pages/roleManagement/list'));
 
 export const permissionRouter = {
   path: 'permissions',
@@ -21,6 +22,14 @@ export const permissionRouter = {
       element: (
         <Suspense fallback="loading">
           <MenuManagement />
+        </Suspense>
+      ),
+    },
+    {
+      path: 'roles',
+      element: (
+        <Suspense fallback="loading">
+          <RoleManagement />
         </Suspense>
       ),
     },

@@ -16,6 +16,10 @@ import {
   gamesCenterCommentRecycleBinResource,
   marketActivityResource,
   marketActivityGoodsModalButtonResource,
+  managerManagementResource,
+  managersManagementPermissionTransferResource,
+  managersManagementMenuTransferResource,
+  permissionRoleManagementResource,
 } from './pages/main/resources';
 
 export const resources = [
@@ -36,4 +40,8 @@ export const resources = [
   gamesCenterCommentRecycleBinResource,
   marketActivityResource,
   marketActivityGoodsModalButtonResource,
+  managerManagementResource,
+  managersManagementPermissionTransferResource,
+  managersManagementMenuTransferResource,
+  permissionRoleManagementResource,
 ];

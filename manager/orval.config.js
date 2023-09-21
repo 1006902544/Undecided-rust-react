@@ -21,7 +21,7 @@ module.exports = {
             },
           },
           //获取用户路由menu
-          getRouter: {
+          getCurrentRoleRouter: {
             query: {
               useQuery: true,
             },

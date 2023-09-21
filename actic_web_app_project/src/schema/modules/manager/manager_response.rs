@@ -16,7 +16,10 @@ use super::{
     market::activity::*,
     material_library::images::ImagesObject,
     permission::{associate::auth::*, permission::Permission},
-    role::{audit::RoleAuditRow, ManagerRole},
+    role::{
+        audit::RoleAuditRow, role_permission::ManagerRolePermissionRow,
+        role_router::ManagerRoleRouterRow, ManagerRole,
+    },
     router::{associate::auth::*, router::*},
     upload::*,
     user::user::*,
@@ -67,10 +70,16 @@ use crate::schema::modules::admin::admin::AdminInfo;
     ManagerRoleRes = ResponseData<ManagerRoleLimitRes>,
     //管理端用户
     ManagerInfoRes = ResponseData<ManagerInfoLimitRes>,ManagerInfoDetailData = ResponseData<ManagerInfo>,ManagerInfoWithTokenData=ResponseData<ManagerInfoWithToken>,
+    //管理端用户-路由
+
     //管理端用户验证码
     SendManagerEmailResData = ResponseData<SendManagerEmailRes>,
     //管理端用户角色申请/审核
     RoleAuditRowRes = ResponseData<RoleAuditRowLimitRes>,CurrentRoleAuditRes = ResponseData<Option<RoleAuditRow>>,
+    //角色管理-角色权限
+    ManagerRolePermissionRowRes = ResponseData<ManagerRolePermissionRowLimitRes>,
+    //角色管理-角色路由
+    ManagerRoleRouterRowRes = ResponseData<ManagerRoleRouterRowLimitRes>
 
 )]
 pub struct ResponseData<B> {
@@ -136,8 +145,12 @@ impl<B> ResponseData<B> {
     ManagerRoleLimitRes = LimitResults<ManagerRole>,
     //管理端用户
     ManagerInfoLimitRes = LimitResults<ManagerInfo>,
+    //角色管理-角色路由
+    ManagerRoleRouterRowLimitRes = LimitResults<ManagerRoleRouterRow>,
     //角色申请/审核
     RoleAuditRowLimitRes = LimitResults<RoleAuditRow>,
+    //角色管理-角色权限
+    ManagerRolePermissionRowLimitRes = LimitResults<ManagerRolePermissionRow>
 )]
 pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,

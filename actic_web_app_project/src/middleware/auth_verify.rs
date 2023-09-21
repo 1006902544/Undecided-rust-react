@@ -6,7 +6,7 @@ use std::{
 use actix_web::{
     body::{BoxBody, EitherBody, MessageBody},
     dev::{forward_ready, Service, ServiceRequest, ServiceResponse, Transform},
-    http::{header::AUTHORIZATION, StatusCode},
+    http::StatusCode,
     web::Bytes,
     Error, HttpResponse,
 };
@@ -14,6 +14,8 @@ use futures_util::future::LocalBoxFuture;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use validators::regex::Regex;
+
+use crate::nako::auth::get_info_by_token;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AuthErr {
@@ -161,23 +163,20 @@ where
 
             let app_data = req.app_data::<Vec<UnlessTree>>();
 
-            let auth = req.headers().get(AUTHORIZATION);
-            match auth {
-                Some(_auth) => could_pass = true,
-                None => {
-                    match app_data {
-                        Some(unless_tree) => {
-                            let unless = handle_unless_tree(unless_tree.clone(), None);
-                            for conf in unless {
-                                if cur_unless.is_same(&conf) {
-                                    could_pass = true;
-                                    break;
-                                }
+            match get_info_by_token(&req.request()) {
+                Some(_info) => could_pass = true,
+                None => match app_data {
+                    Some(unless_tree) => {
+                        let unless = handle_unless_tree(unless_tree.clone(), None);
+                        for conf in unless {
+                            if cur_unless.is_same(&conf) {
+                                could_pass = true;
+                                break;
                             }
                         }
-                        None => (),
-                    };
-                }
+                    }
+                    None => (),
+                },
             };
 
             if could_pass {

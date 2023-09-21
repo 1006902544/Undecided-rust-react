@@ -51,7 +51,7 @@ export default function List({
   //delete mutation
   const deleteMutation = useMutation({
     mutationFn: resource?.delete,
-    onSuccess(data) {
+    onSuccess() {
       message.success('delete success');
       getQuery.refetch();
     },

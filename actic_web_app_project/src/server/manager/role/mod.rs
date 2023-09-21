@@ -1,4 +1,6 @@
 pub mod audit;
+pub mod role_permission;
+pub mod role_router;
 
 use mysql::{prelude::Queryable, PooledConn, TxOpts};
 use mysql_common::params;

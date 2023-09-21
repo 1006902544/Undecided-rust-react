@@ -8,7 +8,7 @@ pub mod captcha;
 
 use crate::{
     app::error::MyError,
-    nako::auth::{encode_default, get_info_by_token, get_uid_by_token},
+    nako::auth::{encode_default, get_uid_by_token},
     schema::modules::manager::{manager_response::ResponseData, managers::*},
     server::manager::{managers as manager_service, permissions::has_permission},
 };
