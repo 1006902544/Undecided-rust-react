@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+// import React, { useEffect } from 'react';
+// import { useNavigate, useLocation } from 'react-router-dom';
 import { getToken, setToken } from '../utils';
 import { useAuthStore } from '@/libs/store';
 import { useGetManagerInfoByToken } from '@/libs/api';
@@ -10,9 +10,9 @@ interface IProps {
   unless?: Array<string>;
 }
 
-export default function AuthRouteProvider({ children, unless }: IProps) {
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
+export default function AuthRouteProvider({ children }: IProps) {
+  // const { pathname } = useLocation();
+  // const navigate = useNavigate();
   const set_auth = useAuthStore(({ set_auth }) => set_auth);
 
   useGetManagerInfoByToken({
@@ -26,12 +26,12 @@ export default function AuthRouteProvider({ children, unless }: IProps) {
     },
   });
 
-  useEffect(() => {
-    const isUnless = unless?.includes(pathname);
-    if (!isUnless && !getToken()) {
-      navigate('/signIn');
-    }
-  }, [pathname, unless, navigate]);
+  // useEffect(() => {
+  //   const isUnless = unless?.includes(pathname);
+  //   if (!isUnless && !getToken()) {
+  //     navigate('/signIn');
+  //   }
+  // }, [pathname, unless, navigate]);
 
   return children;
 }

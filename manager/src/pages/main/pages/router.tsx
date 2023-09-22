@@ -4,6 +4,7 @@ import { gamesCenterRouter } from './gamesCenter/router';
 import { materialRouter } from './materialLibrary/router';
 import { userRouter } from './user/router';
 import { marketRouter } from './market/router';
+import { settingsRouter } from './settings/router';
 
 export const mainPagesRouter: RouteObject[] = [
   permissionRouter,
@@ -11,4 +12,5 @@ export const mainPagesRouter: RouteObject[] = [
   materialRouter,
   userRouter,
   marketRouter,
+  settingsRouter,
 ];

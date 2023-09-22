@@ -10,8 +10,9 @@ interface IProps {
   children: React.ReactNode;
 }
 
-interface PriRoute extends Route {
+interface PriRoute extends Omit<Route, 'key'> {
   children?: Array<PriRoute>;
+  key: React.Key;
 }
 
 export const MenuContext = React.createContext<

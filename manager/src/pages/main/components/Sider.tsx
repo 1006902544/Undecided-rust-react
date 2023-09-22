@@ -13,6 +13,7 @@ export default function Sider() {
 
   const onSelect: MenuProps['onSelect'] = ({ key }) => {
     const selected = res?.data?.find((item) => item.key === Number(key));
+    console.log(res?.data);
 
     if (selected) {
       const pathname = selected?.path;
