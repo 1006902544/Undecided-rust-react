@@ -4,3 +4,4 @@ export { default as TransferModalButton } from './TransferModalButton/TransferMo
 export { default as Transfer } from './Transfer/Transfer';
 export { managersManagementPermissionTransferResource } from './PermissionTransfer';
 export { managersManagementMenuTransferResource } from './MenuTransfer';
+export { Update } from './Update';

@@ -1,12 +1,25 @@
 import { useAuthStore } from '@/libs/store';
-import { Modal } from 'antd';
-import React from 'react';
+import { Button, Modal } from 'antd';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import Info from './SignUpInfo';
 import Role from './SignUpRole';
+import { removeToken } from '@/utils';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignUpInfoRoleModal() {
-  const auth = useAuthStore((s) => s.auth);
+  const navigate = useNavigate();
+
+  const { auth, clear_auth } = useAuthStore((s) => ({
+    auth: s.auth,
+    clear_auth: s.clear_auth,
+  }));
+
+  const backSignIn = useCallback(() => {
+    clear_auth();
+    removeToken();
+    navigate('/signIn');
+  }, [clear_auth, navigate]);
 
   return (
     <Container
@@ -17,6 +30,9 @@ export default function SignUpInfoRoleModal() {
       width={600}
       destroyOnClose
     >
+      <Button className="w-full" type="primary" onClick={backSignIn}>
+        Back to sign in
+      </Button>
       {!auth?.name ? <Info /> : <Role />}
     </Container>
   );

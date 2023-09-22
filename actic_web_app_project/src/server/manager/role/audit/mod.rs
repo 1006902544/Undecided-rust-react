@@ -89,7 +89,7 @@ pub async fn change_role_audit_status(
 ) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let stmt =
-        "update manager_role_audit set status=:status where id=:id and (status=0 or status=1)";
+        "update manager_role_audit set status=:status where id=:id and (status=0 or status=2)";
     let res = trans.exec_drop(
         stmt,
         params! {
@@ -100,9 +100,10 @@ pub async fn change_role_audit_status(
     match res {
         Ok(_) => {
             let affect = trans.affected_rows();
+            println!("{}", affect);
             if affect == 0 {
                 trans.rollback().unwrap();
-                Err(MyError::not_found())
+                Err(MyError::no_changes_happen())
             } else {
                 //如果是拒绝
                 if data.status == 2 {

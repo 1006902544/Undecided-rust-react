@@ -1,10 +1,18 @@
-import { List, Table } from '@/components';
+import {
+  CreateButton,
+  DeleteButton,
+  Filter,
+  List,
+  Table,
+  UpdateButton,
+} from '@/components';
 import React, { useMemo } from 'react';
 import { name as resource } from './';
 import type { ColumnsType } from 'antd/es/table';
 import type { ManagerRole } from '@/libs/api/schema';
 import { Image } from 'antd';
-import { TransferModalButton } from './components';
+import { TransferModalButton, Update } from './components';
+import { ProFormText } from '@ant-design/pro-components';
 
 export default function RoleManagement() {
   const columns = useMemo<ColumnsType<ManagerRole>>(
@@ -37,11 +45,17 @@ export default function RoleManagement() {
         dataIndex: 'option',
         title: 'Option',
         align: 'center',
-        render(_, { id }) {
+        width: 240,
+        fixed: 'right',
+        render(_, record) {
           return (
             <div className="flex justify-center">
-              <TransferModalButton type="permission" role_id={id} />
-              <TransferModalButton type="menu" role_id={id} />
+              <TransferModalButton type="permission" role_id={record.id} />
+              <TransferModalButton type="menu" role_id={record.id} />
+              <UpdateButton label="edit" data={record} meta={{ id: record.id }}>
+                <Update />
+              </UpdateButton>
+              <DeleteButton id={record.id}>delete</DeleteButton>
             </div>
           );
         },
@@ -51,7 +65,20 @@ export default function RoleManagement() {
   );
 
   return (
-    <List resource={resource}>
+    <List
+      resource={resource}
+      actions={
+        <CreateButton>
+          <Update />
+        </CreateButton>
+      }
+      filters={
+        <Filter>
+          <ProFormText label="ID" name="id" />
+          <ProFormText label="Name" name="name" />
+        </Filter>
+      }
+    >
       <Table columns={columns} />
     </List>
   );

@@ -20,6 +20,7 @@ import {
   managersManagementPermissionTransferResource,
   managersManagementMenuTransferResource,
   permissionRoleManagementResource,
+  managerRoleAuditResource,
 } from './pages/main/resources';
 
 export const resources = [
@@ -44,4 +45,5 @@ export const resources = [
   managersManagementPermissionTransferResource,
   managersManagementMenuTransferResource,
   permissionRoleManagementResource,
+  managerRoleAuditResource,
 ];

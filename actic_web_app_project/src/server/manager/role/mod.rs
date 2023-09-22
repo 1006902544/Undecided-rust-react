@@ -70,7 +70,7 @@ pub async fn update_manager_role(
     data: ManagerRoleUpdateReq,
 ) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let stmt = "insert into roles (id,name,icon,remark) values (:id,:name,icon,remark) on duplicate key update name=:name,icon=:icon,remark=:remark";
+    let stmt = "insert into roles (id,name,icon,remark) values (:id,:name,:icon,:remark) on duplicate key update name=:name,icon=:icon,remark=:remark";
     let res = trans.exec_drop(
         stmt,
         params! {

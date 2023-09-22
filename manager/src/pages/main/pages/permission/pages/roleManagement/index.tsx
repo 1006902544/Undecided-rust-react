@@ -1,5 +1,9 @@
 import type { Resource } from '@/components';
-import { getManagerRoles } from '@/libs/api';
+import {
+  deleteManagerRole,
+  getManagerRoles,
+  updateManagerRole,
+} from '@/libs/api';
 
 export {
   managersManagementPermissionTransferResource,
@@ -17,5 +21,39 @@ export const permissionRoleManagementResource: Resource = {
       total: res.data.total,
       current: res.data.current,
     };
+  },
+
+  async check(data) {
+    const params = { ...data };
+    params.icon
+      ? (params.icon = [
+          {
+            name: data.icon,
+            url: data.icon,
+            status: 'done',
+            response: {
+              data: {
+                fileName: data.icon,
+                url: data.icon,
+              },
+            },
+          },
+        ])
+      : (params.icon = []);
+    return params;
+  },
+
+  async update(data) {
+    const params = { ...data, icon: data.icon[0]?.response?.data.url };
+    return await updateManagerRole(params);
+  },
+
+  async create(data) {
+    const params = { ...data, icon: data.icon[0]?.response?.data.url };
+    return await updateManagerRole(params);
+  },
+
+  async delete({ id }) {
+    return await deleteManagerRole({ id: id as number });
   },
 };
