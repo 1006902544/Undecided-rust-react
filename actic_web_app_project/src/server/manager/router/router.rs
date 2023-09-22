@@ -8,7 +8,7 @@ use mysql::{params, PooledConn, TxOpts};
 //创建路由
 pub fn create_route(route: UpdateRouteReq, conn: &mut PooledConn) -> Result<u8, MyError> {
     let sql_str =
-        format!("insert into router (label,path,p_key,sort) values(:label,:path,:p_key,:sort)");
+        format!("insert into router (label,path,p_key,sort,public) values(:label,:path,:p_key,:sort,:public)");
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
     let res = trans.exec_drop(
         sql_str,
@@ -16,7 +16,8 @@ pub fn create_route(route: UpdateRouteReq, conn: &mut PooledConn) -> Result<u8, 
             "label" => route.label,
             "path" => route.path,
             "p_key" => route.p_key,
-            "sort" => route.sort
+            "sort" => route.sort,
+            "public" => route.public
         },
     );
     match res {
@@ -40,7 +41,7 @@ pub fn create_route(route: UpdateRouteReq, conn: &mut PooledConn) -> Result<u8, 
 //修改路由
 pub fn edit_route(route: UpdateRouteReq, conn: &mut PooledConn) -> Result<u8, MyError> {
     let sql_str =
-        "update router set label=:label,path=:path,sort=:sort where router.key=:key;".to_string();
+        "update router set label=:label,path=:path,sort=:sort,public=:public where router.key=:key;".to_string();
     let mut conn = conn.start_transaction(TxOpts::default()).unwrap();
     let res = conn.exec_drop(
         sql_str,
@@ -48,7 +49,8 @@ pub fn edit_route(route: UpdateRouteReq, conn: &mut PooledConn) -> Result<u8, My
             "label" => route.label,
             "path" => route.path,
             "sort" => route.sort,
-            "key" => route.key
+            "key" => route.key,
+            "public" => route.public
         },
     );
     match res {
@@ -71,9 +73,9 @@ pub fn edit_route(route: UpdateRouteReq, conn: &mut PooledConn) -> Result<u8, My
 }
 
 //获取用户路由表
-pub fn get_user_route(aid: u64, conn: &mut PooledConn) -> Result<Vec<Route>, MyError> {
-    let sql_str = format!("select r.* from admin_router as ar left join router as r on r.key=ar.rkey where ar.aid={aid}");
-    let res: Result<Vec<Route>, mysql::Error> = conn.query(sql_str);
+pub fn get_user_route(role_id: Option<u64>, conn: &mut PooledConn) -> Result<Vec<Route>, MyError> {
+    let stmt = "select r.* from router as r where (select count(1) as num from manager_role_router as mrr where mrr.role_id=:role_id)=1 or r.public=1";
+    let res: Result<Vec<Route>, mysql::Error> = conn.exec(stmt, params! {"role_id" => role_id});
     match res {
         Ok(res) => Ok(res),
         Err(e) => Err(MyError::sql_error(e)),
@@ -111,7 +113,7 @@ pub fn delete_route(key: &str, conn: &mut PooledConn) -> Result<u8, MyError> {
 
 //获取所有路由
 pub async fn get_all_router(conn: &mut PooledConn) -> Result<Vec<Route>, MyError> {
-    let res = conn.query("select * from router order by sort");
+    let res = conn.query("select * from router order by update_time desc");
     match res {
         Ok(res) => Ok(res),
         Err(e) => Err(MyError::sql_error(e)),

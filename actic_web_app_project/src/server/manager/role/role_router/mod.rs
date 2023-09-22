@@ -79,7 +79,7 @@ pub async fn get_current_role_router(
         let stmt = "select * from router";
         conn.query(stmt)
     } else {
-        let stmt = "select r.* from manager_role_router as mrr left join router as r on r.key=mrr.router_key where mrr.role_id=:role_id";
+        let stmt = "select r.* from router as r where (select count(1) as num from manager_role_router as mrr where mrr.role_id=:role_id)=1 or r.public=1";
         conn.exec(
             stmt,
             params! {

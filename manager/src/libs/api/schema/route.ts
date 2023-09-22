@@ -6,10 +6,13 @@
  */
 
 export interface Route {
+  create_time: string;
   key?: number | null;
   label: string;
   level: number;
   p_key?: string | null;
   path: string;
+  public: number;
   sort: number;
+  update_time: string;
 }

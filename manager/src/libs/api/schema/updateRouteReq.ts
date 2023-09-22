@@ -10,5 +10,6 @@ export interface UpdateRouteReq {
   label: string;
   p_key?: number | null;
   path: string;
+  public: number;
   sort: number;
 }

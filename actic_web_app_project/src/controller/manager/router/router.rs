@@ -69,7 +69,7 @@ pub async fn get_router(req: HttpRequest, pool: Data<Pool>) -> Result<impl Respo
         let info = get_info_by_token(&req);
         match info {
             Some(info) => {
-                let routes = router_service::get_user_route(info.id, &mut conn);
+                let routes = router_service::get_user_route(info.role_id, &mut conn);
                 match routes {
                     Ok(routes) => Ok(ResponseData::new(routes).into_json_response()),
                     Err(e) => Err(e),

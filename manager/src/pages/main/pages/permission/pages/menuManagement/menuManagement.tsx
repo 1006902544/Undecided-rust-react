@@ -35,7 +35,6 @@ export interface PriRoute extends Route {
 }
 
 export default function MenuManagement() {
-  // const [selectedNode, setSelectedNode] = useState<PriRoute | undefined>();
   const [selectedKeys, setSelectedKeys] = useState<Key[]>([]);
 
   const allRouter = useGetAllRouter({});
@@ -54,7 +53,6 @@ export default function MenuManagement() {
     if (node) {
       (node as PriRoute).children = children;
     }
-
     return node;
   }, [selectedKeys, allRouter.data]);
 

@@ -7,7 +7,11 @@ import React, {
   useMemo,
 } from 'react';
 import type { ModalProps, ButtonProps } from 'antd';
-import { ProForm, ProFormText } from '@ant-design/pro-components';
+import {
+  ProForm,
+  ProFormSelect,
+  ProFormText,
+} from '@ant-design/pro-components';
 import type { ProFormInstance } from '@ant-design/pro-components';
 import { useMutation } from '@tanstack/react-query';
 import type { UpdateRouteReq } from '@/libs/api/schema';
@@ -120,7 +124,6 @@ interface UpdateBodyProps {
 const UpdateBody = forwardRef(
   ({ record, parentRecord }: UpdateBodyProps, ref) => {
     const [form] = ProForm.useForm();
-
     useImperativeHandle(ref, () => form);
 
     return (
@@ -129,7 +132,6 @@ const UpdateBody = forwardRef(
         submitter={false}
         initialValues={{
           sort: 0,
-
           ...record,
           path: record ? record.path : parentRecord?.path,
         }}
@@ -168,6 +170,27 @@ const UpdateBody = forwardRef(
         >
           <InputNumber precision={0} min={0} />
         </ProForm.Item>
+
+        <ProFormSelect
+          name="public"
+          label="Public"
+          rules={[
+            {
+              required: true,
+              message: 'please chose public or private',
+            },
+          ]}
+          options={[
+            {
+              label: 'Private',
+              value: 0,
+            },
+            {
+              label: 'Public',
+              value: 1,
+            },
+          ]}
+        />
       </Container>
     );
   }

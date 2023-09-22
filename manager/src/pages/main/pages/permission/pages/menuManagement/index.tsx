@@ -1,1 +1,0 @@
-export { permissionsMenuRouterAssociateResource } from './components';

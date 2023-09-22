@@ -2,7 +2,7 @@ import React from 'react';
 import { useMenuManagementContext, type PriRoute } from '../menuManagement';
 import { Table } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import { AssociateModalButton, DeleteButton, UpdateModalButton } from './';
+import { DeleteButton, UpdateModalButton } from './';
 
 export default function RoutesLimit() {
   const { selectedNode } = useMenuManagementContext() ?? {};
@@ -30,7 +30,6 @@ export default function RoutesLimit() {
             >
               EDIT
             </UpdateModalButton>
-            <AssociateModalButton rkey={record.key!} />
           </div>
         );
       },
