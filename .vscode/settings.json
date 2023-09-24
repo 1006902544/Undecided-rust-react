@@ -3,6 +3,7 @@
     ".\\actic_web_app_project\\Cargo.toml"
   ],
   "cSpell.words": [
+    "ifnull",
     "isnull"
   ]
 }

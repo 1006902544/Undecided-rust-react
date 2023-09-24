@@ -2,12 +2,10 @@ import { useMenuContext } from '@/components';
 import { useAuthStore } from '@/libs/store';
 import { removeToken } from '@/utils';
 import { LeftOutlined } from '@ant-design/icons';
-import { Avatar, Button, Dropdown } from 'antd';
+import { Button, Dropdown } from 'antd';
 import React, { useCallback, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import maleAvatar from '@/assets/images/male-avatar.png';
-import femaleAvatar from '@/assets/images/female-avatar.png';
-import unknownAvatar from '@/assets/images/unknown-avatar.png';
+import { Avatar } from '.';
 
 export default function Header() {
   const { auth, clear_auth } = useAuthStore(({ auth, clear_auth }) => ({
@@ -22,6 +20,10 @@ export default function Header() {
     navigate('/signIn');
   };
 
+  const goSelf = useCallback(() => {
+    navigate('/settings/self');
+  }, [navigate]);
+
   const { pathname } = useLocation();
   const menuContext = useMenuContext();
   const currentLabel = useMemo(() => {
@@ -32,20 +34,6 @@ export default function Header() {
   const goPrev = useCallback(() => {
     navigate(-1);
   }, [navigate]);
-
-  const avatar = useMemo(() => {
-    if (auth?.avatar) {
-      return auth.avatar;
-    } else {
-      if (auth?.gender === 1) {
-        return maleAvatar;
-      } else if (auth?.gender === 2) {
-        return femaleAvatar;
-      } else {
-        return unknownAvatar;
-      }
-    }
-  }, [auth]);
 
   return (
     <header className="px-[100px] w-full h-[60px] flex justify-between border-b-[1px] border-[#e5e7eb] bg-[white] flex-shrink-0">
@@ -61,6 +49,10 @@ export default function Header() {
           menu={{
             items: [
               {
+                key: 'self',
+                label: <button onClick={goSelf}>self</button>,
+              },
+              {
                 key: 'sign_out',
                 label: <button onClick={sign_out}>sign out</button>,
               },
@@ -69,7 +61,7 @@ export default function Header() {
           placement="bottomLeft"
         >
           <span className="text-[18px] leading-[18px] flex items-end">
-            <Avatar src={avatar} />
+            <Avatar auth={auth} />
             <span className="ml-[10px]">
               {auth?.name}
               <span className="text-[12px] text-[gray] ml-[10px]">

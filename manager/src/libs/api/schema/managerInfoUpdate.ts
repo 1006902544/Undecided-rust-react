@@ -7,10 +7,9 @@
 
 export interface ManagerInfoUpdate {
   age?: number | null;
-  avatar?: string | null;
-  email: string;
+  email?: string | null;
   gender?: number | null;
   mobile?: string | null;
-  name: string;
-  username: string;
+  name?: string | null;
+  username?: string | null;
 }

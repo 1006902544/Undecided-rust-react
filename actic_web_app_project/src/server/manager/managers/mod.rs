@@ -93,14 +93,13 @@ pub async fn update_manager_info(
     id: u64,
 ) -> Result<u64, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let stmt = "insert into manager_info (id,name,avatar,gender,age,mobile,username,email) values (:id,:name,:avatar,:gender,:age,:mobile,:username,:email)
-    on duplicate key update name=:name,avatar=:avatar,gender=:gender,age=:age,mobile=:mobile,username=:username,email=:email";
+    let stmt = "insert into manager_info (id,name,gender,age,mobile,username,email) values (:id,:name,:gender,:age,:mobile,:username,:email)
+    on duplicate key update name=:name,gender=:gender,age=:age,mobile=:mobile";
     let res = trans.exec_drop(
         stmt,
         params! {
             "id" => id,
             "name" => data.name,
-            "avatar" => data.avatar,
             "gender" => data.gender,
             "age" => data.age,
             "mobile" => data.mobile,

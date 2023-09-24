@@ -7,10 +7,18 @@ interface IProps extends Omit<ProFormItemProps, 'fieldProps'> {
   fieldProps?: InputNumberProps;
 }
 
-export default function ProFormTextNumber({ fieldProps, ...props }: IProps) {
+export default function ProFormTextNumber({
+  fieldProps,
+  readonly,
+  ...props
+}: IProps) {
   return (
     <ProForm.Item {...props}>
-      <InputNumber {...fieldProps} />
+      <InputNumber
+        readOnly={readonly}
+        bordered={readonly ? false : fieldProps?.bordered}
+        {...fieldProps}
+      />
     </ProForm.Item>
   );
 }
