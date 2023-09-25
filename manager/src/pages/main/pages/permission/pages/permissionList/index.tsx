@@ -1,7 +1,6 @@
 import type { Resource } from '@/components';
 import { deletePermission, getPermission, updatePermission } from '@/libs/api';
 import type { GetPermissionParams } from '@/libs/api/schema';
-export { permissionHandleAuthAssociateLimitResource } from './components/HandleAuthAssociate/';
 
 export const permissionListResourceName = 'permissionListResource';
 

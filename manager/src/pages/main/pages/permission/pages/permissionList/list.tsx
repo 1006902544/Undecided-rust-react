@@ -6,13 +6,12 @@ import {
   DeleteButton,
   UpdateButton,
   CreateButton,
-  ModalButton,
-} from '@/components/';
+} from '@/components';
 import { permissionListResourceName } from './';
 import { ProFormText } from '@ant-design/pro-components';
 import { ColumnsType } from 'antd/es/table';
 import type { Permission } from '@/libs/api/schema';
-import { HandleAuthAssociate, Update } from './components';
+import { Update } from './components';
 
 export default function list() {
   const columns: ColumnsType<Permission> = [
@@ -67,17 +66,6 @@ export default function list() {
               <Update />
             </UpdateButton>
             <DeleteButton id={record.id} />
-            <ModalButton
-              type="link"
-              label="ASSOCIATE"
-              modalProps={{
-                title: 'Auth Associate',
-                footer: null,
-                width: 1200,
-              }}
-            >
-              <HandleAuthAssociate pid={record.id} />
-            </ModalButton>
           </div>
         );
       },

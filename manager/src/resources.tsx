@@ -1,6 +1,5 @@
 import {
   permissionListResource,
-  permissionHandleAuthAssociateLimitResource,
   gamesCenterGeneralTagsResource,
   mainGameCenterGeneralResource,
   gameCenterGeneralCompanyResource,
@@ -24,7 +23,6 @@ import {
 
 export const resources = [
   permissionListResource,
-  permissionHandleAuthAssociateLimitResource,
   gamesCenterGeneralTagsResource,
   mainGameCenterGeneralResource,
   gameCenterGeneralCompanyResource,
