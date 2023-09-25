@@ -50,11 +50,11 @@ export default function Header() {
             items: [
               {
                 key: 'self',
-                label: <button onClick={goSelf}>self</button>,
+                label: <div onClick={goSelf}>self</div>,
               },
               {
                 key: 'sign_out',
-                label: <button onClick={sign_out}>sign out</button>,
+                label: <div onClick={sign_out}>sign out</div>,
               },
             ],
           }}

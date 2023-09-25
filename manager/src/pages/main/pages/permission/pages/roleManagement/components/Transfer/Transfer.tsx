@@ -1,6 +1,7 @@
 import { Resource, useResourceContext } from '@/components';
+import { ProForm, QueryFilter } from '@ant-design/pro-components';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Table, Transfer, message } from 'antd';
+import { Button, Table, Transfer, message } from 'antd';
 import type { TransferProps } from 'antd';
 import type { TransferDirection } from 'antd/es/transfer';
 import type { TableProps } from 'antd/lib';
@@ -16,12 +17,14 @@ interface IProps<T = any, B = any> extends TransferProps<T> {
     groupKey?: string;
   };
   params?: Record<string, any>;
+  filter?: React.ReactNode[] | React.ReactNode;
 }
 
 export default function TransferContainer({
   table,
   resource: resourceProp,
   params: paramsProp,
+  filter,
   ...props
 }: IProps) {
   const rowKey = useMemo(
@@ -29,6 +32,26 @@ export default function TransferContainer({
     [table?.rowKey]
   );
 
+  //filter
+  const [form] = ProForm.useForm();
+
+  const [filterValues, setFilterValues] = useState<Record<string, any>>(
+    form.getFieldsValue() || {}
+  );
+
+  const onSearch = useCallback(async (data: Record<string, any>) => {
+    setFilterValues(data);
+    setPagination(({ limit }) => ({
+      page: 1,
+      limit,
+    }));
+  }, []);
+
+  const onReset = useCallback((data: Record<string, any>) => {
+    setFilterValues(data);
+  }, []);
+
+  //resource handle
   const resourceContext = useResourceContext();
 
   const resource = useMemo<Resource>(() => {
@@ -38,11 +61,11 @@ export default function TransferContainer({
   const [pagination, setPagination] = useState({ page: 1, limit: 10 });
 
   const { isLoading, data, refetch } = useQuery(
-    [resource?.name, pagination, resourceProp.filterValues],
+    [resource?.name, pagination, resourceProp.filterValues, filterValues],
     () =>
       resource?.get?.({
         pagination,
-        data: { ...pagination, ...resourceProp.filterValues },
+        data: { ...pagination, ...resourceProp.filterValues, ...filterValues },
       }),
     {
       enabled: !!resource,
@@ -92,6 +115,32 @@ export default function TransferContainer({
 
           return (
             <div>
+              {notSelected ? (
+                <QueryFilter
+                  form={form}
+                  onReset={onReset}
+                  onFinish={onSearch}
+                  layout="horizontal"
+                  submitter={{
+                    render(props, dom) {
+                      return [
+                        <Button onClick={props.reset} key={dom[0].key}>
+                          Reset
+                        </Button>,
+                        <Button
+                          onClick={props.submit}
+                          key={dom[1].key}
+                          type="primary"
+                        >
+                          Search
+                        </Button>,
+                      ];
+                    },
+                  }}
+                >
+                  {filter}
+                </QueryFilter>
+              ) : null}
               <Table
                 loading={isLoading || changeLoading}
                 rowSelection={{

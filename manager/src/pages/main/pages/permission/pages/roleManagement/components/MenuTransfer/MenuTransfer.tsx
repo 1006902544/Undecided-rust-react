@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import { name } from '.';
 import type { ColumnsType } from 'antd/es/table';
 import type { ManagerRolePermissionRow } from '@/libs/api/schema';
+import { ProFormText } from '@ant-design/pro-components';
 
 export default function PermissionTransfer({ role_id }: { role_id: number }) {
   const columns = useMemo<ColumnsType<ManagerRolePermissionRow>>(
@@ -41,6 +42,7 @@ export default function PermissionTransfer({ role_id }: { role_id: number }) {
         columns,
       }}
       params={{ role_id }}
+      filter={<ProFormText name="label" label="Label" />}
     />
   );
 }

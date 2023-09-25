@@ -18,7 +18,7 @@ export default function TransferModalButton({ type, role_id }: IProps) {
         title: null,
         closeIcon: null,
         wrapClassName: 'transparent-bg-modal',
-        width: 1400,
+        width: 1800,
       }}
     >
       {type === 'permission' ? (

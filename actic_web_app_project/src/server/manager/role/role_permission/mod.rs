@@ -22,14 +22,20 @@ pub async fn get_manager_role_permissions(
     let stmt = "select sql_calc_found_rows p.id,p.name,p.path,p.method,
                         if(isnull((select mrp.id from manager_role_permission as mrp where mrp.role_id=:role_id and mrp.permission_id=p.id limit 1)),0,1) status
                         from permissions as p
-                        where (p.name=:name or :name is null) and (p.path=:path or :path is null) and (p.method=:method or :method is null)
+                        where (p.name like :name or :name is null) and (p.path like :path or :path is null) and (p.method=:method or :method is null)
                         order by p.update_time desc
                         limit :scope,:limit";
     let res = conn.exec::<ManagerRolePermissionRow, _, _>(
         stmt,
         params! {
-            "name" => data.name,
-            "path" => data.path,
+            "name" => match data.name {
+                Some(name) => Some(format!("%{name}%")),
+                None => None
+            },
+            "path" => match data.path {
+                Some(path) => Some(format!("%{path}%")),
+                None => None
+            },
             "method" => data.method,
             "scope" => limit*(page-1),
             "limit" => limit,

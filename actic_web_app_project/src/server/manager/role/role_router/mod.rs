@@ -19,16 +19,19 @@ pub async fn get_manager_role_router_limit(
 ) -> Result<ManagerRoleRouterRowLimitRes, MyError> {
     let limit = handle_limit(&data.limit);
     let page = handle_page(&data.page);
-    let stmt = "select r.key,r.label,r.path,r.sort,
+    let stmt = "select sql_calc_found_rows r.key,r.label,r.path,r.sort,
                     (if(isnull((select mrr.id from manager_role_router as mrr where mrr.role_id=:role_id and mrr.router_key=r.key limit 1)),0,1)) status
                     from router as r
-                    where (r.key=:router_key or :router_key is null) and (r.label=:label or :label is null) and (r.path=:path or :path is null)
+                    where (r.key=:router_key or :router_key is null) and (r.label like :label or :label is null) and (r.path=:path or :path is null)
                     limit :scope,:limit";
     let res = conn.exec::<ManagerRoleRouterRow, _, _>(
         stmt,
         params! {
           "router_key" => data.router_key,
-          "label" => data.label,
+          "label" => match data.label {
+              Some(label) => Some(format!("%{label}%")),
+              None=>  None
+          },
           "path" => data.path,
           "role_id" => data.role_id,
           "scope" => limit*(page-1),
@@ -79,7 +82,7 @@ pub async fn get_current_role_router(
         let stmt = "select * from router";
         conn.query(stmt)
     } else {
-        let stmt = "select r.* from router as r where (select count(1) as num from manager_role_router as mrr where mrr.role_id=:role_id)=1 or r.public=1";
+        let stmt = "select r.* from router as r where (select count(1) as num from manager_role_router as mrr where mrr.role_id=:role_id and r.key=mrr.router_key)>0 or r.public=1";
         conn.exec(
             stmt,
             params! {

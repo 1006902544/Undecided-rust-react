@@ -28,7 +28,6 @@ export default function SignUp({
 
   const onFinish = useCallback(
     async (v: SignUpForm) => {
-      console.log(v);
       mutate(v);
     },
     [mutate]
