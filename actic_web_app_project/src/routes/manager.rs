@@ -15,15 +15,9 @@ use crate::controller::manager::{
     managers::{captcha::*, *},
     market::activity::*,
     material_library::images::*,
-    permission::{
-        associate::{associate::*, auth::*},
-        permission::*,
-    },
+    permission::permission::*,
     role::{audit::*, role_permission::*, role_router::*, *},
-    router::{
-        associate::{associate::*, auth::*},
-        router::*,
-    },
+    router::router::*,
     upload::{get_access_key, get_static_image, upload_image},
     user::{
         email::{send_email, verify_email},
@@ -53,12 +47,7 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                     .service(update_router)
                     .service(get_router)
                     .service(delete_router)
-                    .service(get_all_router)
-                    .service(
-                        web::scope("associate")
-                            .service(associate_auth_router)
-                            .service(get_auth_with_router),
-                    ),
+                    .service(get_all_router),
             )
             .service(
                 web::scope("auth")
@@ -70,13 +59,7 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                 web::scope("permission")
                     .service(get_permission)
                     .service(delete_permission)
-                    .service(update_permission)
-                    .service(
-                        web::scope("associate")
-                            .service(associate)
-                            .service(disassociate)
-                            .service(get_permission_auth),
-                    ),
+                    .service(update_permission),
             )
             .service(
                 web::scope("gamesCenter")

@@ -77,6 +77,7 @@ impl MyError {
         }
     }
 
+    #[allow(unused)]
     pub fn edit_err() -> MyError {
         MyError {
             name: "edit failed".to_string(),

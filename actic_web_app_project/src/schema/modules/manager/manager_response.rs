@@ -15,12 +15,12 @@ use super::{
     managers::{captcha::SendManagerEmailRes, ManagerInfo, ManagerInfoWithToken},
     market::activity::*,
     material_library::images::ImagesObject,
-    permission::{associate::auth::*, permission::Permission},
+    permission::permission::Permission,
     role::{
         audit::RoleAuditRow, role_permission::ManagerRolePermissionRow,
         role_router::ManagerRoleRouterRow, ManagerRole,
     },
-    router::{associate::auth::*, router::*},
+    router::router::*,
     upload::*,
     user::user::*,
 };
@@ -36,8 +36,6 @@ use crate::schema::modules::admin::admin::AdminInfo;
     AdminInfoListRes = ResponseData<Vec<AdminInfo>>,
     AuthLimitRes = ResponseData<AuthRes>,
     PermissionLimitRes = ResponseData<PermissionRes>,
-    PermissionAssociateAuthLimitRes = ResponseData<PermissionAssociateAuthRes>,
-    RouterAssociateAuthLimitRes = ResponseData<RouterAssociateAuthRes>,
     //通用
     ListRes = ResponseData<Vec<List>>,
     //游戏标签limit
@@ -115,8 +113,6 @@ impl<B> ResponseData<B> {
 #[aliases(
     AuthRes = LimitResults<AdminInfo>,
     PermissionRes = LimitResults<Permission>,
-    PermissionAssociateAuthRes = LimitResults<AssociateAuthLimit>,
-    RouterAssociateAuthRes = LimitResults<AssociateRouterAuthLimit>,
     //游戏标签
     GameTagsLimitRes = LimitResults<Tag>,
     //游戏类型

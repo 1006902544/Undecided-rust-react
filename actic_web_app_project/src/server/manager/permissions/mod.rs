@@ -4,7 +4,6 @@ use mysql::{params, prelude::Queryable, PooledConn};
 use mysql_common::prelude::FromRow;
 use serde::{Deserialize, Serialize};
 
-pub mod associate;
 pub mod permission;
 
 #[derive(Debug, Clone, Serialize, Deserialize, FromRow)]

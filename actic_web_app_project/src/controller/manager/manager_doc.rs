@@ -14,15 +14,9 @@ use crate::schema::modules::{
         managers::{captcha::*, *},
         market::activity::*,
         material_library::images::*,
-        permission::{
-            associate::{associate::*, auth::*},
-            permission::*,
-        },
+        permission::permission::*,
         role::{audit::*, role_permission::*, role_router::*, *},
-        router::{
-            associate::{associate::*, auth::*},
-            router::*,
-        },
+        router::router::*,
         upload::*,
         user::{email::*, user::*},
     },
@@ -36,8 +30,6 @@ use utoipa::OpenApi;
         super::router::router::get_router,
         super::router::router::delete_router,
         super::router::router::get_all_router,
-        super::router::associate::auth::get_auth_with_router,
-        super::router::associate::associate::associate_auth_router,
         super::auth::auth::sign_in,
         super::auth::auth::get_admin_info,
         super::auth::auth::get_auth_limit,
@@ -45,9 +37,6 @@ use utoipa::OpenApi;
         super::permission::permission::get_permission,
         super::permission::permission::update_permission,
         super::permission::permission::delete_permission,
-        super::permission::associate::auth::get_permission_auth,
-        super::permission::associate::associate::associate,
-        super::permission::associate::associate::disassociate,
         //素材库-图片
         super::material_library::images::create_image,
         super::material_library::images::delete_image,
@@ -161,17 +150,10 @@ use utoipa::OpenApi;
         UpdatePermissionBody,
         PermissionLimitRes,
         PermissionLimitQuery,
-        PermissionAssociateAuthReqBody,
-        PermissionDisassociateAuthReqBody,
         DeletePermissionQuery,
-        AssociateAuthLimit,
-        AssociateAuthLimitReq,
-        PermissionAssociateAuthLimitRes,
         UpdateRouteReq,
         //通用
         List,
-        //用户菜单权限相关
-        AssociateRouterAuthLimitReq,AssociateRouterAuthLimit,RouterAssociateAuthRes,RouterAssociateAuthLimitRes,AssociateRouterAuthReq,
         //游戏标签
         Tag,UpdateTagReq,TagLimitReq,DeleteTagReq,GameTagsRes,GameTagsLimitRes,
         //上传，accessKey
