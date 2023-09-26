@@ -10,7 +10,7 @@ import { SubmitterProps } from '@ant-design/pro-components';
 import { Button, message } from 'antd';
 import React, { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { Roles } from './components';
+import { Roles, UploadAvatarModalButton } from './components';
 import { useMutation } from '@tanstack/react-query';
 import { updateManagerInfo } from '@/libs/api';
 import type { ManagerInfoUpdate } from '@/libs/api/schema';
@@ -78,7 +78,9 @@ export default function Self() {
   return (
     <Container>
       <div className="flex justify-center items-end shadow-lg py-[10px]">
-        <Avatar auth={auth} size="large" />
+        <UploadAvatarModalButton>
+          <Avatar auth={auth} size="large" />
+        </UploadAvatarModalButton>
 
         <h2 className="ml-[15px]">{auth?.name}</h2>
         <span className="ml-[8px] text-[14px]">#{auth?.id}</span>

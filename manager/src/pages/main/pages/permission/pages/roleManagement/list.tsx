@@ -45,7 +45,7 @@ export default function RoleManagement() {
         dataIndex: 'option',
         title: 'Option',
         align: 'center',
-        width: 240,
+        width: 360,
         fixed: 'right',
         render(_, record) {
           return (

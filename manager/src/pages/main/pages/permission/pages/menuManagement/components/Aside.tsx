@@ -51,20 +51,22 @@ export default function Aside() {
       <div className="flex-shrink-0 mb-[20px]">
         <UpdateModalButton>Create Root Router</UpdateModalButton>
       </div>
-      <Tree
-        onSelect={onSelect}
-        className="flex-1 w-[300px]"
-        treeData={mapToTree({
-          data: (res?.data as any) ?? [],
-          fieldProps: {
-            pkey: 'p_key',
-          },
-        })}
-        fieldNames={{
-          title: 'label',
-        }}
-        titleRender={titleRender as any}
-      />
+      <div className="flex-1 w-full overflow-y-scroll">
+        <Tree
+          onSelect={onSelect}
+          className="h-full w-full"
+          treeData={mapToTree({
+            data: (res?.data as any) ?? [],
+            fieldProps: {
+              pkey: 'p_key',
+            },
+          })}
+          fieldNames={{
+            title: 'label',
+          }}
+          titleRender={titleRender as any}
+        />
+      </div>
     </div>
   );
 }
