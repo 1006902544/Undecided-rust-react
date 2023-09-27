@@ -1,5 +1,5 @@
 import { DeleteButton, Filter, List, Table, UpdateButton } from '@/components';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { name as resource } from '.';
 import type { ColumnsType } from 'antd/es/table';
 import type { ManagerAvatarAuditRow } from '@/libs/api/schema';
@@ -8,6 +8,8 @@ import { Audit } from './components';
 import { ProFormText } from '@ant-design/pro-components';
 
 export default function ListContainer() {
+  useEffect(() => {}, []);
+
   const columns = useMemo<ColumnsType<ManagerAvatarAuditRow>>(
     () => [
       {

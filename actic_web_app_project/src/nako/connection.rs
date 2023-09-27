@@ -50,12 +50,13 @@ pub fn get_total(conn: &mut PooledConn) -> u128 {
 pub fn get_current(total: u128, page: u128, limit: u128) -> u128 {
     if total == 0 {
         return 1;
-    }
-    let total_page = (total as f64 / limit as f64).ceil();
-    if total_page > page as f64 {
-        return page;
     } else {
-        return total_page as u128;
+        let total_page = (total as f64 / limit as f64).ceil();
+        if total_page > page as f64 {
+            return page;
+        } else {
+            return total_page as u128;
+        }
     }
 }
 
