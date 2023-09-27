@@ -40,7 +40,7 @@ export default function UploadAvatarModalButton({ children }: IProps) {
           overflow: 'auto',
         }}
       >
-        <UploadAvatar />
+        <UploadAvatar onCancel={onCancel} />
       </Modal>
     </>
   );

@@ -98,7 +98,7 @@ pub async fn delete_manager_avatar_audit(
     (status=200,description="success",body=ResPonseString )
   )
 )]
-#[delete("/apply")]
+#[post("/apply")]
 pub async fn manager_avatar_apply(
     pool: Data<Pool>,
     data: Json<ManagerAvatarApplyReq>,

@@ -1,19 +1,15 @@
 import { CloudUploadOutlined } from '@ant-design/icons';
-import { Button, Upload } from 'antd';
+import { Button, Upload, message } from 'antd';
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import type { UploadRequestOption } from 'rc-upload/lib/interface';
 import CropModal from './CropModal';
 import { getToken } from '@/utils';
 import axios from 'axios';
+import { useMutation } from '@tanstack/react-query';
+import { managerAvatarApply } from '@/libs/api';
 
-interface ResponseData {
-  etag: string;
-  fileName: string;
-  url: string;
-}
-
-export default function UploadAvatar() {
+export default function UploadAvatar({ onCancel }: { onCancel: () => void }) {
   //handle crop
   const [waitingCrop, setWaitingCrop] = useState<
     string | ArrayBuffer | null | undefined
@@ -65,6 +61,24 @@ export default function UploadAvatar() {
     }
   }, [dataUrlToFile, resultCrop]);
 
+  const apply = useCallback(async () => {
+    const uploadRes = await upload();
+    console.log(uploadRes);
+
+    const avatar = uploadRes?.data?.data?.url;
+    if (avatar) {
+      return managerAvatarApply({ avatar });
+    }
+  }, [upload]);
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: apply,
+    onSuccess() {
+      message.success('Your application had been update , please wait');
+      onCancel();
+    },
+  });
+
   return (
     <Container className="w-full">
       <Upload
@@ -89,7 +103,8 @@ export default function UploadAvatar() {
         type="primary"
         htmlType="button"
         className="w-full"
-        onClick={upload}
+        onClick={mutate as any}
+        loading={isLoading}
       >
         Apply
       </Button>

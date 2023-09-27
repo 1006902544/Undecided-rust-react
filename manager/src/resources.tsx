@@ -19,6 +19,7 @@ import {
   managersManagementMenuTransferResource,
   permissionRoleManagementResource,
   managerRoleAuditResource,
+  userManagerAvatarAuditResource,
 } from './pages/main/resources';
 
 export const resources = [
@@ -42,4 +43,5 @@ export const resources = [
   managersManagementMenuTransferResource,
   permissionRoleManagementResource,
   managerRoleAuditResource,
+  userManagerAvatarAuditResource,
 ];

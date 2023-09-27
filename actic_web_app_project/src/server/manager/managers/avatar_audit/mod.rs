@@ -21,7 +21,7 @@ pub async fn get_manager_avatar_audits(
     let stmt = "select sql_calc_found_rows maa.*,mi.name,mi.username from manager_avatar_audit as maa
                     left join manager_info as mi on mi.id = maa.id
                     where (maa.id=:id or :id is null) and (maa.status=:status or :status is null)
-                        and (mi.username=:username or username is null) and (mi.name=:name or name is null)
+                        and (mi.username=:username or :username is null) and (mi.name=:name or :name is null)
                     order by maa.update_time desc
                     limit :scope,:limit
                     ";
@@ -55,8 +55,11 @@ pub async fn manager_avatar_audit(
     data: ManagerAvatarAuditReq,
 ) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let stmt = "update manager_avatar_audit set status=:status where id=:id";
-    match trans.exec_drop(stmt, params! {"status"=>data.status,"id" => data.id}) {
+    let stmt = "update manager_avatar_audit set status=:status,reason=:reason where id=:id";
+    match trans.exec_drop(
+        stmt,
+        params! {"status"=>data.status,"reason" => data.reason,"id" => data.id},
+    ) {
         Ok(_) => {
             if data.status == 1 {
                 let stmt = "select avatar from manager_avatar_audit where id=:id and status=1";
@@ -118,7 +121,7 @@ pub async fn manager_avatar_apply(
     id: u64,
 ) -> Result<String, MyError> {
     let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
-    let stmt = "insert into manager_avatar_audit (id,avatar) values (:id,avatar) on duplicate key update avatar=:avatar,status=0";
+    let stmt = "insert into manager_avatar_audit (id,avatar) values (:id,avatar) on duplicate key update avatar=:avatar,status=0,reason=null";
     let res = trans.exec_drop(
         stmt,
         params! {
