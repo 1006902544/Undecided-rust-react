@@ -73,6 +73,11 @@ import type {
   ManagerInfoRes,
   GetManagersLimitParams,
   ManagerSignupAccount,
+  ManagerAvatarApplyReq,
+  ManagerAvatarAuditRowRes,
+  GetManagerAvatarAuditsParams,
+  ManagerAvatarAuditReq,
+  DeleteManagerAvatarAuditParams,
   SendManagerEmailResData,
   SendEmailReq,
   EmailRow,
@@ -2174,6 +2179,194 @@ export const useManagerSignup = <TError = ErrorType<unknown>,
 ) => {
     
       const mutationOptions = getManagerSignupMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+export const managerAvatarApply = (
+    managerAvatarApplyReq: ManagerAvatarApplyReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/managers/avatar/apply`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: managerAvatarApplyReq
+    },
+      options);
+    }
+  
+
+
+export const getManagerAvatarApplyMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof managerAvatarApply>>, TError,{data: ManagerAvatarApplyReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof managerAvatarApply>>, TError,{data: ManagerAvatarApplyReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof managerAvatarApply>>, {data: ManagerAvatarApplyReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  managerAvatarApply(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type ManagerAvatarApplyMutationResult = NonNullable<Awaited<ReturnType<typeof managerAvatarApply>>>
+    export type ManagerAvatarApplyMutationBody = ManagerAvatarApplyReq
+    export type ManagerAvatarApplyMutationError = ErrorType<unknown>
+
+    export const useManagerAvatarApply = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof managerAvatarApply>>, TError,{data: ManagerAvatarApplyReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getManagerAvatarApplyMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+export const getManagerAvatarAudits = (
+    params?: GetManagerAvatarAuditsParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<ManagerAvatarAuditRowRes>(
+      {url: `/manager/managers/avatar/audit`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetManagerAvatarAuditsQueryKey = (params?: GetManagerAvatarAuditsParams,) => [`/manager/managers/avatar/audit`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetManagerAvatarAuditsQueryOptions = <TData = Awaited<ReturnType<typeof getManagerAvatarAudits>>, TError = ErrorType<unknown>>(params?: GetManagerAvatarAuditsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getManagerAvatarAudits>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getManagerAvatarAudits>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetManagerAvatarAuditsQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getManagerAvatarAudits>>> = ({ signal }) => getManagerAvatarAudits(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetManagerAvatarAuditsQueryResult = NonNullable<Awaited<ReturnType<typeof getManagerAvatarAudits>>>
+export type GetManagerAvatarAuditsQueryError = ErrorType<unknown>
+
+export const useGetManagerAvatarAudits = <TData = Awaited<ReturnType<typeof getManagerAvatarAudits>>, TError = ErrorType<unknown>>(
+ params?: GetManagerAvatarAuditsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getManagerAvatarAudits>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetManagerAvatarAuditsQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+export const managerAvatarAudit = (
+    managerAvatarAuditReq: ManagerAvatarAuditReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/managers/avatar/audit`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: managerAvatarAuditReq
+    },
+      options);
+    }
+  
+
+
+export const getManagerAvatarAuditMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof managerAvatarAudit>>, TError,{data: ManagerAvatarAuditReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof managerAvatarAudit>>, TError,{data: ManagerAvatarAuditReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof managerAvatarAudit>>, {data: ManagerAvatarAuditReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  managerAvatarAudit(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type ManagerAvatarAuditMutationResult = NonNullable<Awaited<ReturnType<typeof managerAvatarAudit>>>
+    export type ManagerAvatarAuditMutationBody = ManagerAvatarAuditReq
+    export type ManagerAvatarAuditMutationError = ErrorType<unknown>
+
+    export const useManagerAvatarAudit = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof managerAvatarAudit>>, TError,{data: ManagerAvatarAuditReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getManagerAvatarAuditMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+export const deleteManagerAvatarAudit = (
+    params: DeleteManagerAvatarAuditParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/managers/avatar/audit`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteManagerAvatarAuditMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteManagerAvatarAudit>>, TError,{params: DeleteManagerAvatarAuditParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteManagerAvatarAudit>>, TError,{params: DeleteManagerAvatarAuditParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteManagerAvatarAudit>>, {params: DeleteManagerAvatarAuditParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteManagerAvatarAudit(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteManagerAvatarAuditMutationResult = NonNullable<Awaited<ReturnType<typeof deleteManagerAvatarAudit>>>
+    
+    export type DeleteManagerAvatarAuditMutationError = ErrorType<unknown>
+
+    export const useDeleteManagerAvatarAudit = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteManagerAvatarAudit>>, TError,{params: DeleteManagerAvatarAuditParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteManagerAvatarAuditMutationOptions(options);
      
       return useMutation(mutationOptions);
     }

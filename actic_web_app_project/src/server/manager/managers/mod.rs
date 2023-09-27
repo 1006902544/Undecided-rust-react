@@ -1,6 +1,7 @@
 use actix_web::http::StatusCode;
 use mysql::{prelude::Queryable, PooledConn, TxOpts};
 use mysql_common::params;
+pub mod avatar_audit;
 pub mod captcha;
 
 use crate::{

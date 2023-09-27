@@ -4,43 +4,41 @@ use serde::{Deserialize, Serialize};
 use utoipa::{IntoParams, ToSchema};
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, FromRow)]
-pub struct ManagerRoleAudit {
+pub struct ManagerAvatarAuditRow {
     pub id: u64,
+    pub avatar: String,
     pub name: String,
     pub username: String,
-    pub email: String,
-    ///0-disAudit 1-auditing 2-passed 3-refused
-    pub status: String,
-    pub role_id: String,
-    pub role_name: String,
-    #[schema(value_type=String)]
-    pub create_time: NaiveDateTime,
+    pub status: u8,
+    pub reason: Option<String>,
     #[schema(value_type=String)]
     pub update_time: NaiveDateTime,
+    #[schema(value_type=String)]
+    pub create_time: NaiveDateTime,
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, IntoParams)]
-pub struct ManagerRoleAuditReq {
+pub struct ManagerAvatarLimitReq {
+    pub status: Option<u8>,
     pub id: Option<u64>,
     pub name: Option<String>,
     pub username: Option<String>,
-    pub status: Option<u8>,
-    pub role_id: String,
+    pub limit: Option<u64>,
+    pub page: Option<u64>,
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
-pub struct ManagerRoleAuditCreate {
-    pub id: Option<u64>,
-}
-
-#[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
-pub struct ManagerRoleAuditStatusUpdate {
-    pub id: u64,
-    ///0-disAudit 1-auditing 2-passed 3-refused
+pub struct ManagerAvatarAuditReq {
     pub status: u8,
+    pub id: u64,
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize, IntoParams)]
-pub struct DeleteManagerRoleAudit {
+pub struct ManagerAvatarAuditDeleteReq {
     pub id: u64,
+}
+
+#[derive(Debug, Clone, ToSchema, Serialize, Deserialize, IntoParams)]
+pub struct ManagerAvatarApplyReq {
+    pub avatar: String,
 }

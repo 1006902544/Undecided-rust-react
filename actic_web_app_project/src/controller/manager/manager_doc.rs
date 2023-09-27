@@ -11,7 +11,7 @@ use crate::schema::modules::{
         },
         manager::*,
         manager_response::*,
-        managers::{captcha::*, *},
+        managers::{avatar_audit::*, captcha::*, *},
         market::activity::*,
         material_library::images::*,
         permission::permission::*,
@@ -131,7 +131,11 @@ use utoipa::OpenApi;
         //管理端用户-email验证码
         super::managers::captcha::send_manager_email,
         super::managers::captcha::verify_manager_email,
-
+        //管理端用户-头像审核
+        super::managers::avatar_audit::get_manager_avatar_audits,
+        super::managers::avatar_audit::manager_avatar_audit,
+        super::managers::avatar_audit::delete_manager_avatar_audit,
+        super::managers::avatar_audit::manager_avatar_apply,
     ),
     components(schemas(
         //文件通用
@@ -194,7 +198,9 @@ use utoipa::OpenApi;
           //管理端用户email验证码
         SendManagerEmailResData,SendManagerEmailReq,SendManagerEmailRes,ManagerEmailRow,
         //管理端用户角色申请/审核
-        RoleAuditRowRes,CurrentRoleAuditRes,RoleAuditRowLimitRes,RoleAuditRow,ApplyRoleReq,ApplyRoleReq,RoleAuditReq,RoleAuditLimitReq,RoleAuditDeleteReq
+        RoleAuditRowRes,CurrentRoleAuditRes,RoleAuditRowLimitRes,RoleAuditRow,ApplyRoleReq,ApplyRoleReq,RoleAuditReq,RoleAuditLimitReq,RoleAuditDeleteReq,
+        //管理端用户-头像审核
+        ManagerAvatarAuditRow,ManagerAvatarLimitReq,ManagerAvatarAuditReq,ManagerAvatarAuditDeleteReq,ManagerAvatarAuditRowLimitRes,ManagerAvatarAuditRowRes,ManagerAvatarApplyReq
     ))
 )]
 pub struct ApiDoc;

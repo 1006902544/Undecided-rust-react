@@ -12,7 +12,7 @@ use crate::controller::manager::{
         general::{company_studio::company_studio::*, tags::tags::*, types::types::*},
     },
     manager_doc::ApiDoc,
-    managers::{captcha::*, *},
+    managers::{avatar_audit::*, captcha::*, *},
     market::activity::*,
     material_library::images::*,
     permission::permission::*,
@@ -202,6 +202,13 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                         web::scope("captcha")
                             .service(send_manager_email)
                             .service(verify_manager_email),
+                    )
+                    .service(
+                        web::scope("avatar")
+                            .service(get_manager_avatar_audits)
+                            .service(manager_avatar_audit)
+                            .service(delete_manager_avatar_audit)
+                            .service(manager_avatar_apply),
                     ),
             ),
     );

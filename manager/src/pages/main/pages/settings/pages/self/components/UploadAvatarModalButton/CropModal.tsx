@@ -8,9 +8,16 @@ interface IProps {
   setWaitingCrop: React.Dispatch<
     React.SetStateAction<string | ArrayBuffer | null | undefined>
   >;
+  setResultCrop: React.Dispatch<
+    React.SetStateAction<string | ArrayBuffer | null | undefined>
+  >;
 }
 
-export default function CropModal({ waitingCrop, setWaitingCrop }: IProps) {
+export default function CropModal({
+  waitingCrop,
+  setWaitingCrop,
+  setResultCrop,
+}: IProps) {
   const onCancel = useCallback(() => {
     Modal.confirm({
       title: 'Ensure',
@@ -35,17 +42,17 @@ export default function CropModal({ waitingCrop, setWaitingCrop }: IProps) {
       }}
       destroyOnClose
     >
-      <Crop waitingCrop={waitingCrop} />
+      <Crop
+        waitingCrop={waitingCrop}
+        setResultCrop={setResultCrop}
+        setWaitingCrop={setWaitingCrop}
+      />
     </Modal>
   );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-const Crop = ({
-  waitingCrop,
-}: {
-  waitingCrop: string | ArrayBuffer | null | undefined;
-}) => {
+const Crop = ({ waitingCrop, setResultCrop, setWaitingCrop }: IProps) => {
   const [crop, setCrop] = useState<Crop>({
     unit: 'px', // Can be 'px' or '%'
     x: 0,
@@ -73,7 +80,7 @@ const Crop = ({
 
   const imgRef = useRef<HTMLImageElement>(null);
 
-  const getCroppedImg = useCallback(() => {
+  const getCurrentDataUrl = useCallback(() => {
     const canvas = document.createElement('canvas');
     canvas.width = crop.width;
     canvas.height = crop.height;
@@ -93,13 +100,17 @@ const Crop = ({
       crop.width,
       crop.height
     );
-
     return canvas.toDataURL();
   }, [crop]);
 
+  const onOk = useCallback(async () => {
+    setResultCrop(getCurrentDataUrl());
+    setWaitingCrop(undefined);
+  }, [getCurrentDataUrl, setResultCrop, setWaitingCrop]);
+
   return (
     <div className="flex flex-col items-center">
-      <ReactCrop crop={crop} onChange={(c) => setCrop(c)} aspect={1}>
+      <ReactCrop crop={crop} onChange={setCrop} aspect={1}>
         <img
           src={waitingCrop as string}
           alt=""
@@ -108,11 +119,7 @@ const Crop = ({
         />
       </ReactCrop>
 
-      <Button
-        type="primary"
-        className="w-full mt-[20px]"
-        onClick={getCroppedImg}
-      >
+      <Button type="primary" className="w-full mt-[20px]" onClick={onOk}>
         Ensure
       </Button>
     </div>

@@ -12,7 +12,10 @@ use super::{
         },
         general::{company_studio::company_studio::*, tags::tags::*, types::types::GameType},
     },
-    managers::{captcha::SendManagerEmailRes, ManagerInfo, ManagerInfoWithToken},
+    managers::{
+        avatar_audit::ManagerAvatarAuditRow, captcha::SendManagerEmailRes, ManagerInfo,
+        ManagerInfoWithToken,
+    },
     market::activity::*,
     material_library::images::ImagesObject,
     permission::permission::Permission,
@@ -77,7 +80,9 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //角色管理-角色权限
     ManagerRolePermissionRowRes = ResponseData<ManagerRolePermissionRowLimitRes>,
     //角色管理-角色路由
-    ManagerRoleRouterRowRes = ResponseData<ManagerRoleRouterRowLimitRes>
+    ManagerRoleRouterRowRes = ResponseData<ManagerRoleRouterRowLimitRes>,
+    //管理端用户-头像审核
+    ManagerAvatarAuditRowRes = ResponseData<ManagerAvatarAuditRowLimitRes>
 
 )]
 pub struct ResponseData<B> {
@@ -146,7 +151,9 @@ impl<B> ResponseData<B> {
     //角色申请/审核
     RoleAuditRowLimitRes = LimitResults<RoleAuditRow>,
     //角色管理-角色权限
-    ManagerRolePermissionRowLimitRes = LimitResults<ManagerRolePermissionRow>
+    ManagerRolePermissionRowLimitRes = LimitResults<ManagerRolePermissionRow>,
+    //管理端用户-头像审核
+    ManagerAvatarAuditRowLimitRes = LimitResults<ManagerAvatarAuditRow>
 )]
 pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,
