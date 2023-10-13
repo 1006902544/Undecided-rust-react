@@ -14,6 +14,6 @@ export interface GetSpuLimitReq {
   page?: number | null;
   start_issue_time?: string | null;
   start_price?: number | null;
-  tag_ids?: number | null;
-  type_ids?: number | null;
+  tag_id?: number | null;
+  type_id?: number | null;
 }

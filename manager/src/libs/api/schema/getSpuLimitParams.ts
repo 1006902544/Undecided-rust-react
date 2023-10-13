@@ -9,8 +9,8 @@ export type GetSpuLimitParams = {
 limit?: number | null;
 page?: number | null;
 id?: number | null;
-tag_ids?: number | null;
-type_ids?: number | null;
+tag_id?: number | null;
+type_id?: number | null;
 name?: string | null;
 start_price?: number | null;
 end_price?: number | null;

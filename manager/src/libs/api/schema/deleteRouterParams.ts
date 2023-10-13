@@ -6,8 +6,5 @@
  */
 
 export type DeleteRouterParams = {
-/**
- * deleting router's key
- */
 key: number;
 };

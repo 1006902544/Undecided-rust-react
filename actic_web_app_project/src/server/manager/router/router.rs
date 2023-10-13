@@ -1,4 +1,5 @@
 use crate::app::error::MyError;
+use crate::nako::connection::after_update;
 use crate::schema::modules::manager::router::router::*;
 
 use actix_web::http::StatusCode;
@@ -83,31 +84,18 @@ pub fn get_user_route(role_id: Option<u64>, conn: &mut PooledConn) -> Result<Vec
 }
 
 //删除路由
-pub fn delete_route(key: &str, conn: &mut PooledConn) -> Result<u8, MyError> {
-    let sql_str = format!("delete from router where router.key=:key");
-    let mut conn = conn.start_transaction(TxOpts::default()).unwrap();
-    let res = conn.exec_first::<String, String, params::Params>(
-        sql_str,
+pub fn delete_route(key: u64, conn: &mut PooledConn) -> Result<u8, MyError> {
+    let stmt = "delete from router where `key`=:key";
+    let mut trans = conn.start_transaction(TxOpts::default()).unwrap();
+    let res = trans.exec_drop(
+        stmt,
         params! {
             "key" => key
         },
     );
-    match res {
-        Ok(_) => {
-            let row = conn.affected_rows() as u8;
-            conn.commit().unwrap();
-            match row {
-                1 => Ok(row),
-                _ => Err(MyError {
-                    name: "no changes happened".to_string(),
-                    status: Some(StatusCode::BAD_REQUEST),
-                }),
-            }
-        }
-        Err(e) => {
-            conn.commit().unwrap();
-            Err(MyError::sql_error(e))
-        }
+    match after_update(trans, res) {
+        Ok(_) => Ok(1),
+        Err(e) => Err(e),
     }
 }
 

@@ -246,10 +246,10 @@ pub async fn get_spu_limit(
     let page = handle_page(&params.page);
     let sql_str = "
     select sql_calc_found_rows s.id,s.name,s.price,s.issue_time,s.create_time,s.update_time,c.name as company_name,cv.cover_url as cover_url,cv.cover_name as cover_name,group_concat(distinct type.type_name separator ',') as types,group_concat(distinct tag.tag_name separator ',') as tags from spus as s
+    inner join spu_tag as tag on tag.spu_id=s.id and (tag.tag_id=:tag_id or :tag_id is null)
+    inner join spu_type as type on type.spu_id=s.id and (type.type_id=:type_id or :type_id is null)
     left join company_studios as c on c.id=s.company_id
     left join spu_cover as cv on cv.spu_id=s.id
-    left join spu_type as type on type.spu_id=s.id
-    left join spu_tag as tag on tag.spu_id=s.id
     where (s.id=:id or :id is null) and (s.name=:name or :name is null)
     group by s.id
     order by s.update_time desc
@@ -273,7 +273,9 @@ pub async fn get_spu_limit(
             "scope" => limit*(page-1),
             "limit" => limit,
             "id" => params.id,
-            "name" => params.name
+            "name" => params.name,
+            "tag_id" => params.tag_id,
+            "type_id" => params.type_id,
         },
         |(
             id,

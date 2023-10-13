@@ -1,8 +1,7 @@
 use crate::{
     app::error::MyError,
-    nako::auth::{get_info_by_token, get_uid_by_token},
+    nako::auth::get_info_by_token,
     schema::modules::manager::{manager_response::*, router::router::*},
-    server::admin::get_self_info,
     server::manager::{permissions::has_permission, router::router as router_service},
 };
 use actix_web::{
@@ -87,7 +86,7 @@ pub async fn get_router(req: HttpRequest, pool: Data<Pool>) -> Result<impl Respo
     delete,
     path = "/manager/router",
     params(
-    ("key" = u128, Query, description = "deleting router's key"),
+    DeleteRouteQuery,
     )
     ,responses((
     status = 200 ,
@@ -105,20 +104,10 @@ pub async fn delete_router(
     let has_per = has_permission(&mut conn, &req);
 
     if has_per {
-        match get_uid_by_token(&req) {
-            Some(id) => {
-                let level = get_self_info(id, &mut conn).unwrap().level;
-                if level < 2 {
-                    Err(MyError::permissions_error())
-                } else {
-                    let res = router_service::delete_route(search.key.as_str(), &mut conn);
-                    match res {
-                        Ok(row) => Ok(ResponseData::new(row).into_json_response()),
-                        Err(e) => Err(e),
-                    }
-                }
-            }
-            None => Err(MyError::auth_error()),
+        let res = router_service::delete_route(search.key, &mut conn);
+        match res {
+            Ok(row) => Ok(ResponseData::new(row).into_json_response()),
+            Err(e) => Err(e),
         }
     } else {
         Err(MyError::permissions_error())

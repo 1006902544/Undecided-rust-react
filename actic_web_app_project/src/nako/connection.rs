@@ -86,6 +86,11 @@ pub fn after_update<T>(
     }
 }
 
+#[allow(unused)]
+pub fn vec_into_array(items: Vec<String>) -> String {
+    format!("({})", items.join(","))
+}
+
 #[derive(Debug, Clone)]
 pub struct BatchHandler<T> {
     pub items: Vec<T>,

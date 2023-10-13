@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Image } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import type { SpuLimit } from '@/libs/api/schema';
-import { ProFormText } from '@ant-design/pro-components';
+import { ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { CheckSkuModalButton, CreateNotation } from './components';
+import { getTagsList, getTypesList } from '@/libs/api';
 
 export default function ListContainer() {
   const navigate = useNavigate();
@@ -166,6 +167,22 @@ export default function ListContainer() {
         <Filter>
           <ProFormText name="id" label="ID" />
           <ProFormText name="name" label="Name" />
+          <ProFormSelect
+            name="type_id"
+            label="Type"
+            request={async () => {
+              const { data: list } = await getTypesList();
+              return list;
+            }}
+          />
+          <ProFormSelect
+            name="tag_id"
+            label="Tag"
+            request={async () => {
+              const { data: list } = await getTagsList();
+              return list;
+            }}
+          />
         </Filter>
       }
     >

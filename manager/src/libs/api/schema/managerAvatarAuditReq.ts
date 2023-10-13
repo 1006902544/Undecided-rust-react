@@ -7,5 +7,6 @@
 
 export interface ManagerAvatarAuditReq {
   id: number;
+  reason?: string | null;
   status: number;
 }

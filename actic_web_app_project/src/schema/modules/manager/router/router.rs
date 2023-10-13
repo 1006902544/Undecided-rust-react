@@ -1,7 +1,7 @@
 use chrono::NaiveDateTime;
 use mysql::prelude::FromRow;
 use serde::{Deserialize, Serialize};
-use utoipa::ToSchema;
+use utoipa::{IntoParams, ToSchema};
 
 #[derive(Debug, Clone, Deserialize, Serialize, ToSchema, FromRow)]
 pub struct Route {
@@ -18,9 +18,9 @@ pub struct Route {
     pub update_time: NaiveDateTime,
 }
 
-#[derive(Debug, Deserialize, Serialize, ToSchema, FromRow)]
+#[derive(Debug, Deserialize, Serialize, ToSchema, FromRow, IntoParams)]
 pub struct DeleteRouteQuery {
-    pub key: String,
+    pub key: u64,
 }
 
 #[derive(Debug, Deserialize, Serialize, ToSchema, FromRow)]
