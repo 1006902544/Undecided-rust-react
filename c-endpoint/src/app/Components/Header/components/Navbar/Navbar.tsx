@@ -2,10 +2,12 @@
 import React, {
   MouseEventHandler,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
 import NavbarButton from './NavbarButton';
+import { useRouter } from 'next/navigation';
 
 interface Navbar {
   value: string;
@@ -14,11 +16,13 @@ interface Navbar {
 }
 
 export default function Navbar() {
+  const { push } = useRouter();
+
   const [option, setOption] = useState<Navbar[]>([
     {
       label: 'Market',
       value: '/market',
-      active: true,
+      active: false,
     },
     {
       label: 'Storehouse',
@@ -47,13 +51,20 @@ export default function Navbar() {
     [option]
   );
 
+  useEffect(() => {
+    activityIndex !== -1 && push(option[activityIndex].value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activityIndex]);
+
   const blockStyle = useMemo(() => {
     const per = (1 / option.length) * 100;
-    return {
-      width: `${per.toFixed(2)}%`,
-      bottom: 0,
-      left: `${(activityIndex * per).toFixed(2)}%`,
-    };
+    return activityIndex === -1
+      ? { display: 'none' }
+      : {
+          width: `${per.toFixed(2)}%`,
+          bottom: 0,
+          left: `${(activityIndex * per).toFixed(2)}%`,
+        };
   }, [activityIndex, option.length]);
 
   return (
