@@ -1,6 +1,6 @@
 package main
 
-import start "c-endpoint/src"
+import start "c-backend/src"
 
 func main() {
 	start.Start()

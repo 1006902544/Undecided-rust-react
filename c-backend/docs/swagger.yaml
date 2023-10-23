@@ -1,0 +1,72 @@
+definitions:
+  captcha.SendCaptchaReq:
+    properties:
+      email:
+        type: string
+    required:
+    - email
+    type: object
+  captcha.VerifyCaptchaReq:
+    properties:
+      captcha:
+        type: string
+      email:
+        type: string
+    required:
+    - captcha
+    - email
+    type: object
+  response.RestfulResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/user/captcha/send:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/captcha.SendCaptchaReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/response.RestfulResponse'
+      summary: SendCaptchaToEmail
+      tags:
+      - User
+  /api/user/captcha/verify:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/captcha.VerifyCaptchaReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/response.RestfulResponse'
+      summary: EmailVerify
+      tags:
+      - User
+swagger: "2.0"

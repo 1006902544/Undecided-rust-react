@@ -5,13 +5,13 @@ import (
 	"gorm.io/gorm"
 )
 
-var db *gorm.DB
+var DB *gorm.DB
 
 func InitDb() {
-	dsn := "root:123456@tcp(127.0.0.1:3306)/actix_project?charset=utf8mb4"
+	dsn := "root:123456@tcp(127.0.0.1:3306)/actix_project?charset=utf8mb4&parseTime=true&loc=Local"
 	cur_db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err == nil {
-		db = cur_db
+		DB = cur_db
 	} else {
 		panic(err.Error())
 	}
