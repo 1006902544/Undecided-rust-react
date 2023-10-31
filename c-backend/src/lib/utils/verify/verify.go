@@ -11,6 +11,6 @@ func VerifyJsonParams(c *gin.Context, obj any, fn gin.HandlerFunc) {
 	if err == nil {
 		fn(c)
 	} else {
-		response.Forbidden(c, err.Error())
+		response.BadRequest(c, err.Error())
 	}
 }

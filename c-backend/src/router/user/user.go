@@ -11,7 +11,7 @@ func UserRouter(r *gin.RouterGroup) {
 	router := r.Group("/user")
 
 	{
-		router.GET("", userController.SignUp)
+		router.POST("/signUp", userController.SignUp)
 	}
 
 	captchaRouter.CaptchaRouter(router)

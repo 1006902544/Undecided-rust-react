@@ -34,6 +34,10 @@ func SqlError(msg string) RestfulResponse {
 	return New(http.StatusForbidden, msg, nil)
 }
 
+func BadRequest(c *gin.Context, message string) {
+	Send(c, New(http.StatusBadRequest, message, nil))
+}
+
 func Forbidden(c *gin.Context, message string) {
 	Send(c, New(http.StatusForbidden, message, nil))
 }

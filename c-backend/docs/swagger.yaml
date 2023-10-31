@@ -24,6 +24,61 @@ definitions:
       message:
         type: string
     type: object
+  user.UserCreateOrUpdateInfoReq:
+    properties:
+      avatarUrl:
+        type: string
+      birthday:
+        type: string
+      createTime:
+        type: string
+      gender:
+        type: integer
+      id:
+        type: integer
+      mobile:
+        type: integer
+      nickname:
+        type: string
+      region:
+        type: string
+      updateTime:
+        type: string
+      username:
+        type: string
+    required:
+    - id
+    - nickname
+    - region
+    - username
+    type: object
+  user.UserSignUpAccountReq:
+    properties:
+      captcha:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - captcha
+    - email
+    - password
+    - username
+    type: object
+  user.UserSignUpReq:
+    properties:
+      account:
+        $ref: '#/definitions/user.UserSignUpAccountReq'
+      info:
+        $ref: '#/definitions/user.UserCreateOrUpdateInfoReq'
+      type:
+        type: string
+    required:
+    - type
+    type: object
 info:
   contact: {}
 paths:
@@ -67,6 +122,32 @@ paths:
           schema:
             $ref: '#/definitions/response.RestfulResponse'
       summary: EmailVerify
+      tags:
+      - User
+  /api/user/signUp:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/user.UserSignUpReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestfulResponse'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: SignUp
       tags:
       - User
 swagger: "2.0"
