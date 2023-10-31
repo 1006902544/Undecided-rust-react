@@ -5,7 +5,9 @@ import { Navbar } from './components';
 export default function Header() {
   return (
     <header className={style.header}>
-      <Navbar />
+      <div className="w-[1600px]">
+        <Navbar />
+      </div>
     </header>
   );
 }

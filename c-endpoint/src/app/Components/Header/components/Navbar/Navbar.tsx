@@ -6,8 +6,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import NavbarButton from './NavbarButton';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface Navbar {
   value: string;
@@ -16,7 +15,8 @@ interface Navbar {
 }
 
 export default function Navbar() {
-  const { push } = useRouter();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const [option, setOption] = useState<Navbar[]>([
     {
@@ -36,54 +36,36 @@ export default function Navbar() {
     },
   ]);
 
-  const moveTo: MouseEventHandler = useCallback((e) => {
-    const link = (e.currentTarget as any).dataset.value;
-    setOption((pre) =>
-      pre.map((item) => ({
+  useEffect(() => {
+    setOption((option) =>
+      option.map((item) => ({
         ...item,
-        active: item.value === link,
+        active: item.value === pathname,
       }))
     );
-  }, []);
+  }, [pathname]);
 
-  const activityIndex = useMemo(
-    () => option.findIndex((item) => item.active),
-    [option]
+  const push = useCallback(
+    (path: string) => {
+      router.push(path);
+    },
+    [router]
   );
 
-  useEffect(() => {
-    activityIndex !== -1 && push(option[activityIndex].value);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activityIndex]);
-
-  const blockStyle = useMemo(() => {
-    const per = (1 / option.length) * 100;
-    return activityIndex === -1
-      ? { display: 'none' }
-      : {
-          width: `${per.toFixed(2)}%`,
-          bottom: 0,
-          left: `${(activityIndex * per).toFixed(2)}%`,
-        };
-  }, [activityIndex, option.length]);
-
   return (
-    <div className="relative flex">
+    <div className="flex space-x-6 ml-52">
       {option.map((item) => (
-        <div
+        <button
+          className="border-[#a54141] leading-7 px-[10px]"
+          style={{
+            borderBottomWidth: item.active ? 1 : 0,
+          }}
           key={item.value}
-          data-value={item.value}
-          onClick={moveTo}
-          className="w-[200px] flex justify-center items-center"
+          onClick={() => push(item.value)}
         >
-          <NavbarButton disabled={item.active}>{item.label}</NavbarButton>
-        </div>
+          {item.label}
+        </button>
       ))}
-
-      <i
-        className="absolute h-[3px] transition-all bg-[#4669dd] rounded-sm"
-        style={blockStyle}
-      />
     </div>
   );
 }

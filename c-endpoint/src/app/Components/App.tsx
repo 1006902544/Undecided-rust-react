@@ -6,7 +6,7 @@ import { Header } from '.';
 export default function App({ children }: { children: React.ReactNode }) {
   return (
     <NextUIProvider>
-      <div className="w-[100vw] h-[100vh] flex flex-col bg-[white]">
+      <div className="w-[100vw] h-[100vh] flex flex-col bg-[#313338]">
         <Header />
 
         <div className="flex-1"> {children}</div>
