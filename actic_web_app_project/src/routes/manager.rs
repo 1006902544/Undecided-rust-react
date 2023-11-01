@@ -13,7 +13,14 @@ use crate::controller::manager::{
     },
     manager_doc::ApiDoc,
     managers::{avatar_audit::*, captcha::*, *},
-    market::activity::*,
+    market::{
+        activity::*,
+        decoration::{
+            carousel::{delete_carousel, get_carousel, update_carousel},
+            hot_activity::{delete_hot_activity, get_hot_activity, update_hot_activity},
+            news::{delete_news, get_news, update_news},
+        },
+    },
     material_library::images::*,
     permission::permission::*,
     role::{audit::*, role_permission::*, role_router::*, *},
@@ -151,20 +158,42 @@ pub fn manager_config(cfg: &mut ServiceConfig) {
                     ),
             )
             .service(
-                web::scope("market").service(
-                    web::scope("activity")
-                        .service(get_activity_limit)
-                        .service(get_activity_detail)
-                        .service(update_activity_base)
-                        .service(update_activity_info)
-                        .service(delete_activity)
-                        .service(get_activity_goods_limit)
-                        .service(update_activity_base)
-                        .service(update_activity_promotion_goods)
-                        .service(update_activity_bundle_goods)
-                        .service(delete_activity_goods_bundle)
-                        .service(delete_activity_goods_promotion),
-                ),
+                web::scope("market")
+                    .service(
+                        web::scope("activity")
+                            .service(get_activity_limit)
+                            .service(get_activity_detail)
+                            .service(update_activity_base)
+                            .service(update_activity_info)
+                            .service(delete_activity)
+                            .service(get_activity_goods_limit)
+                            .service(update_activity_base)
+                            .service(update_activity_promotion_goods)
+                            .service(update_activity_bundle_goods)
+                            .service(delete_activity_goods_bundle)
+                            .service(delete_activity_goods_promotion),
+                    )
+                    .service(
+                        web::scope("decoration")
+                            .service(
+                                web::scope("hotActivity")
+                                    .service(get_hot_activity)
+                                    .service(update_hot_activity)
+                                    .service(delete_hot_activity),
+                            )
+                            .service(
+                                web::scope("news")
+                                    .service(get_news)
+                                    .service(update_news)
+                                    .service(delete_news),
+                            )
+                            .service(
+                                web::scope("carousel")
+                                    .service(get_carousel)
+                                    .service(update_carousel)
+                                    .service(delete_carousel),
+                            ),
+                    ),
             )
             .service(
                 web::scope("role")

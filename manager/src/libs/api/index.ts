@@ -98,6 +98,17 @@ import type {
   ActivityPromotionUpdateGoodsReq,
   DeleteActivityGoodsPromotionParams,
   ActivityUpdateStepTwoReq,
+  Carousel,
+  UpdateCarouselReq,
+  DeleteCarouselParams,
+  MarketHotActivityRes,
+  GetHotActivityParams,
+  UpdateHotActivityReq,
+  DeleteHotActivityParams,
+  MarketNewsLimitRes,
+  GetNewsParams,
+  UpdateNewsReq,
+  DeleteNewsParams,
   MaterialImageRes,
   GetImagesParams,
   UpdateImageObjectReq,
@@ -3163,6 +3174,491 @@ export const useUpdateActivityInfo = <TError = ErrorType<unknown>,
 ) => {
     
       const mutationOptions = getUpdateActivityInfoMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * get carousel
+ * @summary get carousel
+ */
+export const getCarousel = (
+    
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<Carousel[]>(
+      {url: `/manager/market/decoration/carousel`, method: 'get', signal
+    },
+      options);
+    }
+  
+
+export const getGetCarouselQueryKey = () => [`/manager/market/decoration/carousel`] as const;
+  
+
+    
+export const getGetCarouselQueryOptions = <TData = Awaited<ReturnType<typeof getCarousel>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCarousel>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getCarousel>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCarouselQueryKey();
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCarousel>>> = ({ signal }) => getCarousel(requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetCarouselQueryResult = NonNullable<Awaited<ReturnType<typeof getCarousel>>>
+export type GetCarouselQueryError = ErrorType<unknown>
+
+/**
+ * @summary get carousel
+ */
+export const useGetCarousel = <TData = Awaited<ReturnType<typeof getCarousel>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCarousel>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetCarouselQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * update carousel
+ * @summary update carousel
+ */
+export const updateCarousel = (
+    updateCarouselReq: UpdateCarouselReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/market/decoration/carousel`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: updateCarouselReq
+    },
+      options);
+    }
+  
+
+
+export const getUpdateCarouselMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateCarousel>>, TError,{data: UpdateCarouselReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateCarousel>>, TError,{data: UpdateCarouselReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateCarousel>>, {data: UpdateCarouselReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateCarousel(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateCarouselMutationResult = NonNullable<Awaited<ReturnType<typeof updateCarousel>>>
+    export type UpdateCarouselMutationBody = UpdateCarouselReq
+    export type UpdateCarouselMutationError = ErrorType<unknown>
+
+    /**
+ * @summary update carousel
+ */
+export const useUpdateCarousel = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateCarousel>>, TError,{data: UpdateCarouselReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getUpdateCarouselMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * delete carousel
+ * @summary delete carousel
+ */
+export const deleteCarousel = (
+    params: DeleteCarouselParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/market/decoration/carousel`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteCarouselMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCarousel>>, TError,{params: DeleteCarouselParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteCarousel>>, TError,{params: DeleteCarouselParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteCarousel>>, {params: DeleteCarouselParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteCarousel(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteCarouselMutationResult = NonNullable<Awaited<ReturnType<typeof deleteCarousel>>>
+    
+    export type DeleteCarouselMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete carousel
+ */
+export const useDeleteCarousel = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCarousel>>, TError,{params: DeleteCarouselParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteCarouselMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * get hotActivity
+ * @summary get hotActivity
+ */
+export const getHotActivity = (
+    params?: GetHotActivityParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<MarketHotActivityRes>(
+      {url: `/manager/market/decoration/hotActivity`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetHotActivityQueryKey = (params?: GetHotActivityParams,) => [`/manager/market/decoration/hotActivity`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetHotActivityQueryOptions = <TData = Awaited<ReturnType<typeof getHotActivity>>, TError = ErrorType<unknown>>(params?: GetHotActivityParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getHotActivity>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getHotActivity>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetHotActivityQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getHotActivity>>> = ({ signal }) => getHotActivity(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetHotActivityQueryResult = NonNullable<Awaited<ReturnType<typeof getHotActivity>>>
+export type GetHotActivityQueryError = ErrorType<unknown>
+
+/**
+ * @summary get hotActivity
+ */
+export const useGetHotActivity = <TData = Awaited<ReturnType<typeof getHotActivity>>, TError = ErrorType<unknown>>(
+ params?: GetHotActivityParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getHotActivity>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetHotActivityQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * update hotActivity
+ * @summary update hotActivity
+ */
+export const updateHotActivity = (
+    updateHotActivityReq: UpdateHotActivityReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/market/decoration/hotActivity`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: updateHotActivityReq
+    },
+      options);
+    }
+  
+
+
+export const getUpdateHotActivityMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateHotActivity>>, TError,{data: UpdateHotActivityReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateHotActivity>>, TError,{data: UpdateHotActivityReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateHotActivity>>, {data: UpdateHotActivityReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateHotActivity(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateHotActivityMutationResult = NonNullable<Awaited<ReturnType<typeof updateHotActivity>>>
+    export type UpdateHotActivityMutationBody = UpdateHotActivityReq
+    export type UpdateHotActivityMutationError = ErrorType<unknown>
+
+    /**
+ * @summary update hotActivity
+ */
+export const useUpdateHotActivity = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateHotActivity>>, TError,{data: UpdateHotActivityReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getUpdateHotActivityMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * delete hotActivity
+ * @summary delete hotActivity
+ */
+export const deleteHotActivity = (
+    params: DeleteHotActivityParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/market/decoration/hotActivity`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteHotActivityMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteHotActivity>>, TError,{params: DeleteHotActivityParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteHotActivity>>, TError,{params: DeleteHotActivityParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteHotActivity>>, {params: DeleteHotActivityParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteHotActivity(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteHotActivityMutationResult = NonNullable<Awaited<ReturnType<typeof deleteHotActivity>>>
+    
+    export type DeleteHotActivityMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete hotActivity
+ */
+export const useDeleteHotActivity = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteHotActivity>>, TError,{params: DeleteHotActivityParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteHotActivityMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * get market news
+ * @summary get market news
+ */
+export const getNews = (
+    params?: GetNewsParams,
+ options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
+) => {
+      return custom_instance<MarketNewsLimitRes>(
+      {url: `/manager/market/decoration/news`, method: 'get',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getGetNewsQueryKey = (params?: GetNewsParams,) => [`/manager/market/decoration/news`, ...(params ? [params]: [])] as const;
+  
+
+    
+export const getGetNewsQueryOptions = <TData = Awaited<ReturnType<typeof getNews>>, TError = ErrorType<unknown>>(params?: GetNewsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getNews>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+): UseQueryOptions<Awaited<ReturnType<typeof getNews>>, TError, TData> & { queryKey: QueryKey } => {
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetNewsQueryKey(params);
+
+  
+  
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getNews>>> = ({ signal }) => getNews(params, requestOptions, signal);
+    
+      
+      
+   return  { queryKey, queryFn, ...queryOptions}}
+
+export type GetNewsQueryResult = NonNullable<Awaited<ReturnType<typeof getNews>>>
+export type GetNewsQueryError = ErrorType<unknown>
+
+/**
+ * @summary get market news
+ */
+export const useGetNews = <TData = Awaited<ReturnType<typeof getNews>>, TError = ErrorType<unknown>>(
+ params?: GetNewsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getNews>>, TError, TData>, request?: SecondParameter<typeof custom_instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetNewsQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+/**
+ * update market news
+ * @summary update market news
+ */
+export const updateNews = (
+    updateNewsReq: UpdateNewsReq,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/market/decoration/news`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: updateNewsReq
+    },
+      options);
+    }
+  
+
+
+export const getUpdateNewsMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateNews>>, TError,{data: UpdateNewsReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateNews>>, TError,{data: UpdateNewsReq}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateNews>>, {data: UpdateNewsReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateNews(data,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateNewsMutationResult = NonNullable<Awaited<ReturnType<typeof updateNews>>>
+    export type UpdateNewsMutationBody = UpdateNewsReq
+    export type UpdateNewsMutationError = ErrorType<unknown>
+
+    /**
+ * @summary update market news
+ */
+export const useUpdateNews = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateNews>>, TError,{data: UpdateNewsReq}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getUpdateNewsMutationOptions(options);
+     
+      return useMutation(mutationOptions);
+    }
+    
+/**
+ * delete market news
+ * @summary delete market news
+ */
+export const deleteNews = (
+    params: DeleteNewsParams,
+ options?: SecondParameter<typeof custom_instance>,) => {
+      return custom_instance<ResPonseString>(
+      {url: `/manager/market/decoration/news`, method: 'delete',
+        params
+    },
+      options);
+    }
+  
+
+
+export const getDeleteNewsMutationOptions = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteNews>>, TError,{params: DeleteNewsParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteNews>>, TError,{params: DeleteNewsParams}, TContext> => {
+ const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteNews>>, {params: DeleteNewsParams}> = (props) => {
+          const {params} = props ?? {};
+
+          return  deleteNews(params,requestOptions)
+        }
+
+        
+
+ 
+   return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteNewsMutationResult = NonNullable<Awaited<ReturnType<typeof deleteNews>>>
+    
+    export type DeleteNewsMutationError = ErrorType<unknown>
+
+    /**
+ * @summary delete market news
+ */
+export const useDeleteNews = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteNews>>, TError,{params: DeleteNewsParams}, TContext>, request?: SecondParameter<typeof custom_instance>}
+) => {
+    
+      const mutationOptions = getDeleteNewsMutationOptions(options);
      
       return useMutation(mutationOptions);
     }

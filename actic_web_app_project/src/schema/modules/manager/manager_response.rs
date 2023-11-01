@@ -16,7 +16,10 @@ use super::{
         avatar_audit::ManagerAvatarAuditRow, captcha::SendManagerEmailRes, ManagerInfo,
         ManagerInfoWithToken,
     },
-    market::activity::*,
+    market::{
+        activity::*,
+        decoration::{hot_activity::HotActivity, news::News},
+    },
     material_library::images::ImagesObject,
     permission::permission::Permission,
     role::{
@@ -82,7 +85,11 @@ use crate::schema::modules::admin::admin::AdminInfo;
     //角色管理-角色路由
     ManagerRoleRouterRowRes = ResponseData<ManagerRoleRouterRowLimitRes>,
     //管理端用户-头像审核
-    ManagerAvatarAuditRowRes = ResponseData<ManagerAvatarAuditRowLimitRes>
+    ManagerAvatarAuditRowRes = ResponseData<ManagerAvatarAuditRowLimitRes>,
+    //商城装修-新闻
+    MarketNewsRes = ResponseData<MarketNewsLimitRes>,
+    //商城装修-热门活动
+    MarketHotActivityRes = ResponseData<MarketHotActivityLimitRes>,
 
 )]
 pub struct ResponseData<B> {
@@ -153,7 +160,11 @@ impl<B> ResponseData<B> {
     //角色管理-角色权限
     ManagerRolePermissionRowLimitRes = LimitResults<ManagerRolePermissionRow>,
     //管理端用户-头像审核
-    ManagerAvatarAuditRowLimitRes = LimitResults<ManagerAvatarAuditRow>
+    ManagerAvatarAuditRowLimitRes = LimitResults<ManagerAvatarAuditRow>,
+    //商城装修-新闻
+    MarketNewsLimitRes = LimitResults<News>,
+    //商城装修-热门活动
+    MarketHotActivityLimitRes = LimitResults<HotActivity>
 )]
 pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,

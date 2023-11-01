@@ -12,7 +12,10 @@ use crate::schema::modules::{
         manager::*,
         manager_response::*,
         managers::{avatar_audit::*, captcha::*, *},
-        market::activity::*,
+        market::{
+            activity::*,
+            decoration::{carousel::*, hot_activity::*, news::*},
+        },
         material_library::images::*,
         permission::permission::*,
         role::{audit::*, role_permission::*, role_router::*, *},
@@ -136,6 +139,18 @@ use utoipa::OpenApi;
         super::managers::avatar_audit::manager_avatar_audit,
         super::managers::avatar_audit::delete_manager_avatar_audit,
         super::managers::avatar_audit::manager_avatar_apply,
+        //商城装修-热门活动
+        super::market::decoration::hot_activity::get_hot_activity,
+        super::market::decoration::hot_activity::update_hot_activity,
+        super::market::decoration::hot_activity::delete_hot_activity,
+        //商城装修-新闻
+        super::market::decoration::news::get_news,
+        super::market::decoration::news::update_news,
+        super::market::decoration::news::delete_news,
+        //商城装修-轮播
+        super::market::decoration::carousel::get_carousel,
+        super::market::decoration::carousel::update_carousel,
+        super::market::decoration::carousel::delete_carousel,
     ),
     components(schemas(
         //文件通用
@@ -200,7 +215,13 @@ use utoipa::OpenApi;
         //管理端用户角色申请/审核
         RoleAuditRowRes,CurrentRoleAuditRes,RoleAuditRowLimitRes,RoleAuditRow,ApplyRoleReq,ApplyRoleReq,RoleAuditReq,RoleAuditLimitReq,RoleAuditDeleteReq,
         //管理端用户-头像审核
-        ManagerAvatarAuditRow,ManagerAvatarLimitReq,ManagerAvatarAuditReq,ManagerAvatarAuditDeleteReq,ManagerAvatarAuditRowLimitRes,ManagerAvatarAuditRowRes,ManagerAvatarApplyReq
+        ManagerAvatarAuditRow,ManagerAvatarLimitReq,ManagerAvatarAuditReq,ManagerAvatarAuditDeleteReq,ManagerAvatarAuditRowLimitRes,ManagerAvatarAuditRowRes,ManagerAvatarApplyReq,
+        //商城装修-新闻
+        UpdateNewsReq,DeleteNewsReq,GetNewsReq,MarketNewsLimitRes,MarketNewsRes,News,
+        //商城装修-热门活动
+        HotActivity,UpdateHotActivityReq,DeleteHotActivityReq,GetHotActivityReq,MarketHotActivityLimitRes,MarketHotActivityRes,
+        //商城装修-轮播
+        Carousel,UpdateCarouselReq,DeleteCarouselReq,
     ))
 )]
 pub struct ApiDoc;

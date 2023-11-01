@@ -31,5 +31,5 @@ pub struct UpdateCarouselReq {
 
 #[derive(Debug, Clone, Deserialize, Serialize, ToSchema, IntoParams)]
 pub struct DeleteCarouselReq {
-    id: u64,
+    pub id: u64,
 }
