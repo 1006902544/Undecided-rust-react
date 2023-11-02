@@ -11,6 +11,7 @@ export interface Activity {
   create_time?: string | null;
   end_time?: string | null;
   id: number;
+  is_hot: number;
   publish_time?: string | null;
   publish_type?: string | null;
   start_time?: string | null;

@@ -1,7 +1,13 @@
 import { Button, Modal } from 'antd';
 import type { ModalProps } from 'antd';
 import { ButtonProps } from 'antd/lib/button';
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 
 interface IModalButtonContext {
   open: boolean;
@@ -31,20 +37,39 @@ export default function ModalButton({
   ...btnProps
 }: IProps) {
   const [open, setOpen] = useState(false);
-  const onOk = () => {
+  const onOpen = () => {
     setOpen(true);
   };
-  const onCancel = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    modalProps?.onCancel?.(e);
-    setOpen(false);
-  };
+
+  const onCancel = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      modalProps?.onCancel?.(e);
+      setOpen(false);
+    },
+    [modalProps]
+  );
+
+  const onOk = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      modalProps?.onOk?.(e);
+      onCancel(e);
+    },
+    [modalProps, onCancel]
+  );
 
   return (
     <ModalButtonContext.Provider value={{ open, setOpen }}>
-      <Button onClick={onOk} {...btnProps}>
+      <Button {...btnProps} onClick={onOpen}>
         {label}
       </Button>
-      <Modal open={open} destroyOnClose {...modalProps} onCancel={onCancel}>
+
+      <Modal
+        open={open}
+        destroyOnClose
+        {...modalProps}
+        onOk={onOk}
+        onCancel={onCancel}
+      >
         {children}
       </Modal>
     </ModalButtonContext.Provider>

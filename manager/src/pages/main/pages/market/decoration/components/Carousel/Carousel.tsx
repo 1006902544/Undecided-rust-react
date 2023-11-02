@@ -10,26 +10,28 @@ export default function CarouselContainer() {
   const { data, isLoading, refetch } = useGetCarousel();
 
   return (
-    <Spin spinning={isLoading}>
-      <Container className="w-[800px] h-[400px] shadow-lg">
-        {isLoading || data?.data?.length === 0 ? (
-          <UpdateModalButton
-            type="create"
-            className="w-full h-full flex justify-center flex-col items-center cursor-pointer"
-            onSuccess={refetch}
-          >
-            <PlusOutlined className="text-[50px] mb-[20px]" />
-            <h2>Click to create a carousel</h2>
-          </UpdateModalButton>
-        ) : (
-          <Carousel>
-            {data?.data?.map((item) => (
-              <Item {...item} key={item.id} refetch={refetch} />
-            ))}
-          </Carousel>
-        )}
-      </Container>
-    </Spin>
+    <div className="w-[800px] h-[400px]">
+      <Spin spinning={isLoading}>
+        <Container className="w-[800px] h-[400px] shadow-lg">
+          {isLoading || data?.data?.length === 0 ? (
+            <UpdateModalButton
+              type="create"
+              className="w-full h-full flex justify-center flex-col items-center cursor-pointer"
+              onSuccess={refetch}
+            >
+              <PlusOutlined className="text-[50px] mb-[20px]" />
+              <h2>Click to create a carousel</h2>
+            </UpdateModalButton>
+          ) : (
+            <Carousel>
+              {data?.data?.map((item) => (
+                <Item {...item} key={item.id} refetch={refetch} />
+              ))}
+            </Carousel>
+          )}
+        </Container>
+      </Spin>
+    </div>
   );
 }
 

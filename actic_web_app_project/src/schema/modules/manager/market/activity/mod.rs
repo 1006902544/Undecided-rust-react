@@ -139,6 +139,7 @@ pub struct Activity {
     pub cover_url: String,
     pub activity_type: String,
     pub publish_type: Option<String>,
+    pub is_hot: u8,
     #[schema(value_type = Option<String>)]
     pub publish_time: Option<NaiveDateTime>,
     #[schema(value_type = Option<String>)]

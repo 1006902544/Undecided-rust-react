@@ -7,6 +7,7 @@ use utoipa::{IntoParams, ToSchema};
 pub struct HotActivity {
     pub id: u64,
     pub cover_url: String,
+    pub title: String,
     pub sort: u64,
     pub activity_type: String,
     pub price: Option<f64>,
@@ -32,4 +33,5 @@ pub struct DeleteHotActivityReq {
 pub struct GetHotActivityReq {
     pub limit: Option<u64>,
     pub page: Option<u64>,
+    pub title: Option<String>,
 }

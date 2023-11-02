@@ -8,4 +8,5 @@
 export type GetHotActivityParams = {
 limit?: number | null;
 page?: number | null;
+title?: string | null;
 };

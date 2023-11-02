@@ -8,4 +8,5 @@
 export interface GetHotActivityReq {
   limit?: number | null;
   page?: number | null;
+  title?: string | null;
 }

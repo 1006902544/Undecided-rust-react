@@ -13,5 +13,6 @@ export interface HotActivity {
   id: number;
   price?: number | null;
   sort: number;
+  title: string;
   update_time: string;
 }

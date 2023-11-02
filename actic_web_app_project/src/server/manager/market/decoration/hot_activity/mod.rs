@@ -16,10 +16,11 @@ pub async fn get_hot_activity(
 ) -> Result<LimitResults<HotActivity>, MyError> {
     let limit = handle_limit(&data.limit);
     let page = handle_page(&data.page);
-    let stmt = "select a.id,a.cover_url,a.activity_type,ab.price,ap.discount,ha.sort,ha.create_time,ha.update_time from market_hot_activity as ha
+    let stmt = "select a.id,a.cover_url,a.activity_type,ab.price,ap.discount,ha.sort,ha.title,ha.create_time,ha.update_time from market_hot_activity as ha
                     left join activity_base as a on a.id=ha.id
                     left join activity_bundle as ab on ab.id=a.id
                     left join activity_promotion as ap on ap.id=a.id
+                    where (ha.title like :title or :title is null)
                     order by ha.sort
                     limit :scope,:limit
     ";
@@ -27,7 +28,11 @@ pub async fn get_hot_activity(
         stmt,
         params! {
             "scope" => (page-1)*limit,
-            "limit" => limit
+            "limit" => limit,
+            "title" => match data.title {
+                Some(title) => Some(format!("%{}%", title)),
+                None => None
+            }
         },
     ) {
         Ok(res) => {
@@ -47,16 +52,31 @@ pub async fn update_hot_activity(
     conn: &mut PooledConn,
     data: UpdateHotActivityReq,
 ) -> Result<String, MyError> {
-    let stmt = "insert into market_hot_activity (id,sort) values (:id,:sort) on duplicate key update sort=:sort";
-    let res = conn.exec_drop(
-        stmt,
+    match conn.exec_first::<String, _, _>(
+        "select title from activity_base where id=:id",
         params! {
-            "id" => data.id,
-            "sort" => data.sort,
+            "id" => data.id
         },
-    );
-    match res {
-        Ok(_) => Ok("Update success".to_string()),
+    ) {
+        Ok(res) => match res {
+            Some(title) => {
+                let stmt =
+                    "insert into market_hot_activity (id,sort,title) values (:id,:sort,:title) on duplicate key update id=:id,sort=:sort";
+                let res = conn.exec_drop(
+                    stmt,
+                    params! {
+                        "id" => data.id,
+                        "sort" => data.sort,
+                        "title" => title,
+                    },
+                );
+                match res {
+                    Ok(_) => Ok("Update success".to_string()),
+                    Err(e) => Err(MyError::sql_error(e)),
+                }
+            }
+            None => Err(MyError::not_found()),
+        },
         Err(e) => Err(MyError::sql_error(e)),
     }
 }
@@ -66,7 +86,7 @@ pub async fn delete_hot_activity(conn: &mut PooledConn, id: u64) -> Result<Strin
     match conn.exec_drop(
         stmt,
         params! {
-          "id" =>id
+            "id" =>id
         },
     ) {
         Ok(_) => Ok("Delete success".to_string()),

@@ -22,13 +22,13 @@ pub async fn update_activity_base(
     let res = trans.exec_drop(
         stmt,
         params! {
-          "id" => data.id,
-          "title" => data.title,
-          "subtitle" => data.subtitle,
-          "content" => data.content,
-          "cover_url" => data.cover_url,
-          "cover_name" => data.cover_name,
-          "activity_type" => data.activity_type,
+            "id" => data.id,
+            "title" => data.title,
+            "subtitle" => data.subtitle,
+            "content" => data.content,
+            "cover_url" => data.cover_url,
+            "cover_name" => data.cover_name,
+            "activity_type" => data.activity_type,
         },
     );
     match res {
@@ -67,7 +67,7 @@ pub async fn update_activity_info(
     match trans.exec_first::<String, &str, _>(
         "select activity_type from activity_base where id=:id",
         params! {
-          "id" => data.id
+              "id" => data.id
         },
     ) {
         Ok(activity_type) => match activity_type {
@@ -77,8 +77,8 @@ pub async fn update_activity_info(
                     let res = trans.exec_drop(
                         stmt,
                         params! {
-                          "id" => data.id,
-                          "price" => data.price
+                            "id" => data.id,
+                            "price" => data.price
                         },
                     );
                     match res {
@@ -90,8 +90,8 @@ pub async fn update_activity_info(
                     let res = trans.exec_drop(
                         stmt,
                         params! {
-                          "id" => data.id,
-                          "discount" => data.discount
+                            "id" => data.id,
+                            "discount" => data.discount
                         },
                     );
                     match res {
@@ -107,15 +107,15 @@ pub async fn update_activity_info(
                 match info_res {
                     Ok(_) => {
                         let stmt = "insert into activity_publish (id,publish_type,publish_time,start_time,end_time) values (:id,:publish_type,:publish_time,:start_time,:end_time)
-                      on duplicate key update publish_type=:publish_type,publish_time=:publish_time,start_time=:start_time,end_time:=end_time";
+                        on duplicate key update publish_type=:publish_type,publish_time=:publish_time,start_time=:start_time,end_time:=end_time";
                         let publish_res = trans.exec_drop(
                             stmt,
                             params! {
-                              "id" => data.id,
-                              "publish_type" => data.publish_type,
-                              "publish_time" => data.publish_time,
-                              "start_time" => data.start_time,
-                              "end_time" => data.end_time,
+                                "id" => data.id,
+                                "publish_type" => data.publish_type,
+                                "publish_time" => data.publish_time,
+                                "start_time" => data.start_time,
+                                "end_time" => data.end_time,
                             },
                         );
                         match publish_res {
@@ -201,9 +201,9 @@ pub async fn delete_bundle_goods(
     let res = trans.exec_drop(
         "delete from activity_bundle_goods where id=:id and spu_id=:spu_id and sku_id=:sku_id",
         params! {
-          "id" => data.id,
-          "spu_id" => data.spu_id,
-          "sku_id" => data.sku_id,
+            "id" => data.id,
+            "spu_id" => data.spu_id,
+            "sku_id" => data.sku_id,
         },
     );
     match after_update(trans, res).await {
@@ -282,9 +282,9 @@ pub async fn delete_promotion_goods(
     let res = trans.exec_drop(
         "delete from activity_promotion_goods where id=:id and spu_id=:spu_id and sku_id=:sku_id",
         params! {
-          "id" => data.id,
-          "spu_id" => data.spu_id,
-          "sku_id" => data.sku_id,
+            "id" => data.id,
+            "spu_id" => data.spu_id,
+            "sku_id" => data.sku_id,
         },
     );
     match after_update(trans, res).await {
@@ -329,7 +329,7 @@ pub async fn get_activity_detail(
     let base_res: Result<Option<ActivityBaseDetail>, mysql::Error> = conn.exec_first(
         stmt_base,
         params! {
-          "id" => id
+            "id" => id
         },
     );
     match base_res {
@@ -362,18 +362,24 @@ pub async fn get_activity_limit(
 ) -> Result<ActivityLimitRes, MyError> {
     let limit = handle_limit(&data.limit);
     let page = handle_page(&data.page);
-    let stmt = "select sql_calc_found_rows ab.id,title,subtitle,cover_url,activity_type,create_time,ap.publish_type,ap.publish_time,ap.start_time,ap.end_time from activity_base as ab
-  left join activity_publish as ap on ap.id=ab.id
-  where (ab.id=:id or :id is null) and (title=:title or :title is null) and (activity_type=:activity_type or :activity_type is null)
-  limit :scope,:limit";
+    let stmt = "select sql_calc_found_rows
+    ab.id,ab.title,subtitle,cover_url,activity_type,ab.create_time,ap.publish_type,ap.publish_time,ap.start_time,ap.end_time,if(ha.id is null,false,true) as is_hot
+    from activity_base as ab
+    left join activity_publish as ap on ap.id=ab.id
+    left join market_hot_activity as ha on ha.id = ab.id
+    where (ab.id=:id or :id is null) and (ab.title like :title or :title is null) and (activity_type=:activity_type or :activity_type is null)
+    limit :scope,:limit";
     let res: Result<Vec<Activity>, mysql::Error> = conn.exec(
         stmt,
         params! {
-          "id" => data.id,
-          "title" => data.title,
-          "activity_type" => data.activity_type,
-          "scope" => limit*(page-1),
-          "limit" => limit,
+            "id" => data.id,
+            "title" => match data.title {
+                Some(title) => Some(format!("%{}%",title)),
+                None=> None
+            },
+            "activity_type" => data.activity_type,
+            "scope" => limit*(page-1),
+            "limit" => limit,
         },
     );
     match res {
