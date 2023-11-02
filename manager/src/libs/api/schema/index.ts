@@ -179,6 +179,7 @@ export * from './managerRoleRouterStatusReq';
 export * from './managerRoleUpdateReq';
 export * from './managerSignIn';
 export * from './managerSignupAccount';
+export * from './marketCarouselRes';
 export * from './marketHotActivityLimitRes';
 export * from './marketHotActivityRes';
 export * from './marketNewsLimitRes';

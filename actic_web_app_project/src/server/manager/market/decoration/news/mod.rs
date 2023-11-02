@@ -17,14 +17,16 @@ pub async fn get_news(
     conn: &mut PooledConn,
     data: GetNewsReq,
 ) -> Result<MarketNewsLimitRes, MyError> {
-    let stmt =
-        "select * from news where (title like %:title% or :title is null) limit :scope,:limit";
+    let stmt = "select * from news where (title like :title or :title is null) limit :scope,:limit";
     let limit = handle_limit(&data.limit);
     let page = handle_page(&data.page);
     match conn.exec::<News, _, _>(
         stmt,
         params! {
-            "title" => data.title,
+            "title" => match data.title {
+                Some(title) => format!("%{title}%"),
+                None => "null".to_string()
+            },
             "limit" => limit,
             "scope" => (page-1)*limit
         },

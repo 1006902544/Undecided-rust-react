@@ -3,7 +3,7 @@ use crate::{
     schema::modules::admin::admin::{AdminInfo, LoginBody, SignUpReq},
 };
 use actix_web::http::StatusCode;
-use mysql::{prelude::Queryable, Error, PooledConn, TxOpts};
+use mysql::{prelude::Queryable, PooledConn, TxOpts};
 
 //注册
 pub fn sign_up(data: SignUpReq, mut conn: PooledConn) -> Result<u128, MyError> {
@@ -111,25 +111,6 @@ pub fn sign_in(data: LoginBody, mut conn: PooledConn) -> Result<AdminInfo, MyErr
                     }
                     Err(e) => Err(MyError::sql_error(e)),
                 }
-            }
-        }
-        Err(e) => Err(MyError::sql_error(e)),
-    }
-}
-
-//获取用户信息
-pub fn get_self_info(id: u64, conn: &mut PooledConn) -> Result<AdminInfo, MyError> {
-    let sql_str = format!(
-        "select a.id,a.name,l.username,a.age,a.status,a.gender,a.create_time,a.update_time,a.level from admin as a , admin_login as l where a.id = {id} and l.id = {id} limit 1;"
-    );
-    let res: Result<Vec<AdminInfo>, Error> = conn.query(sql_str);
-    match res {
-        Ok(mut res) => {
-            if res.is_empty() {
-                Err(MyError::not_found())
-            } else {
-                let info = res.remove(0);
-                Ok(info)
             }
         }
         Err(e) => Err(MyError::sql_error(e)),

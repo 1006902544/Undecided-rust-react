@@ -77,6 +77,24 @@ module.exports = {
               useQuery: true,
             },
           },
+          //获取商城新闻
+          getNews: {
+            query: {
+              useQuery: true,
+            },
+          },
+          //获取商城轮播
+          getCarousel: {
+            query: {
+              useQuery: true,
+            },
+          },
+          //获取商城热门活动
+          getHotActivity: {
+            query: {
+              useQuery: true,
+            },
+          },
         },
       },
     },

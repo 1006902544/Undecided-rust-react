@@ -21,7 +21,7 @@ interface IProps extends Omit<ProFormItemProps, 'onChange'> {
   onChange?: UploadChange;
 }
 
-interface ResponseData {
+export interface ResponseData {
   etag: string;
   fileName: string;
   url: string;

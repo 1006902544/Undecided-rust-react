@@ -23,7 +23,7 @@ responses (
 )
 )]
 ///get market news
-#[get("/news")]
+#[get("")]
 pub async fn get_news(
     pool: Data<Pool>,
     req: HttpRequest,
@@ -51,7 +51,7 @@ responses (
 )
 )]
 ///update market news
-#[post("/news")]
+#[post("")]
 pub async fn update_news(
     pool: Data<Pool>,
     req: HttpRequest,
@@ -79,7 +79,7 @@ responses (
 )
 )]
 ///delete market news
-#[delete("/news")]
+#[delete("")]
 pub async fn delete_news(
     pool: Data<Pool>,
     req: HttpRequest,

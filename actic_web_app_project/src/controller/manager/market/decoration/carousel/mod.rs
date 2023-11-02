@@ -20,11 +20,11 @@ use crate::{
   get,
   path = "/manager/market/decoration/carousel",
   responses (
-      (status = 200 , body = Vec<Carousel> , description = "success")
+      (status = 200 , body = MarketCarouselRes , description = "success")
   )
   )]
 ///get carousel
-#[get("/carousel")]
+#[get("")]
 pub async fn get_carousel(
     pool: Data<Pool>,
     req: HttpRequest,
@@ -51,7 +51,7 @@ pub async fn get_carousel(
   )
   )]
 ///update carousel
-#[post("/carousel")]
+#[post("")]
 pub async fn update_carousel(
     pool: Data<Pool>,
     req: HttpRequest,
@@ -79,7 +79,7 @@ pub async fn update_carousel(
   )
   )]
 ///delete carousel
-#[delete("/carousel")]
+#[delete("")]
 pub async fn delete_carousel(
     pool: Data<Pool>,
     req: HttpRequest,

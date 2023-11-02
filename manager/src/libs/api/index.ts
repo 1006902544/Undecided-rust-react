@@ -98,7 +98,7 @@ import type {
   ActivityPromotionUpdateGoodsReq,
   DeleteActivityGoodsPromotionParams,
   ActivityUpdateStepTwoReq,
-  Carousel,
+  MarketCarouselRes,
   UpdateCarouselReq,
   DeleteCarouselParams,
   MarketHotActivityRes,
@@ -3186,7 +3186,7 @@ export const getCarousel = (
     
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
 ) => {
-      return custom_instance<Carousel[]>(
+      return custom_instance<MarketCarouselRes>(
       {url: `/manager/market/decoration/carousel`, method: 'get', signal
     },
       options);

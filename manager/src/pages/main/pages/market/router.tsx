@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 
 const Activity = lazy(() => import('./activity/list'));
 const Update = lazy(() => import('./activity/components/Update/index'));
+const Decoration = lazy(() => import('./decoration/decoration'));
 
 export const marketRouter = {
   path: 'market',
@@ -34,6 +35,14 @@ export const marketRouter = {
           ),
         },
       ],
+    },
+    {
+      path: 'decoration',
+      element: (
+        <Suspense fallback="...loading">
+          <Decoration />
+        </Suspense>
+      ),
     },
   ],
 };

@@ -27,7 +27,7 @@ responses (
 )
 )]
 ///get hotActivity
-#[get("/hotActivity")]
+#[get("")]
 pub async fn get_hot_activity(
     pool: Data<Pool>,
     req: HttpRequest,
@@ -55,7 +55,7 @@ responses (
 )
 )]
 ///update hotActivity
-#[post("/hotActivity")]
+#[post("")]
 pub async fn update_hot_activity(
     pool: Data<Pool>,
     req: HttpRequest,
@@ -83,7 +83,7 @@ responses (
 )
 )]
 ///delete hotActivity
-#[delete("/hotActivity")]
+#[delete("")]
 pub async fn delete_hot_activity(
     pool: Data<Pool>,
     req: HttpRequest,

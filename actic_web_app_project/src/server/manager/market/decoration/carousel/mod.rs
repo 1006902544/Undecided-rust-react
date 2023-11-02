@@ -4,7 +4,7 @@ use mysql_common::params;
 use crate::{app::error::MyError, schema::modules::manager::market::decoration::carousel::*};
 
 pub async fn get_carousel(conn: &mut PooledConn) -> Result<Vec<Carousel>, MyError> {
-    let stmt = "select * from market_carousel";
+    let stmt = "select * from market_carousel order by sort";
     match conn.query(stmt) {
         Ok(res) => Ok(res),
         Err(e) => Err(MyError::sql_error(e)),

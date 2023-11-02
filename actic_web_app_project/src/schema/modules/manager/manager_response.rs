@@ -18,7 +18,7 @@ use super::{
     },
     market::{
         activity::*,
-        decoration::{hot_activity::HotActivity, news::News},
+        decoration::{carousel::Carousel, hot_activity::HotActivity, news::News},
     },
     material_library::images::ImagesObject,
     permission::permission::Permission,
@@ -90,6 +90,8 @@ use crate::schema::modules::admin::admin::AdminInfo;
     MarketNewsRes = ResponseData<MarketNewsLimitRes>,
     //商城装修-热门活动
     MarketHotActivityRes = ResponseData<MarketHotActivityLimitRes>,
+    //商城装修-轮播
+    MarketCarouselRes = ResponseData<Vec<Carousel>>,
 
 )]
 pub struct ResponseData<B> {
@@ -164,7 +166,7 @@ impl<B> ResponseData<B> {
     //商城装修-新闻
     MarketNewsLimitRes = LimitResults<News>,
     //商城装修-热门活动
-    MarketHotActivityLimitRes = LimitResults<HotActivity>
+    MarketHotActivityLimitRes = LimitResults<HotActivity>,
 )]
 pub struct LimitResults<T> {
     pub results: Option<Vec<T>>,
