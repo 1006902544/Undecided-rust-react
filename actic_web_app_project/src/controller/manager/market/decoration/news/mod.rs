@@ -19,7 +19,7 @@ get,
 path = "/manager/market/decoration/news",
 params(GetNewsReq),
 responses (
-  (status = 200 , body = MarketNewsLimitRes , description = "success")
+  (status = 200 , body = MarketNewsRes , description = "success")
 )
 )]
 ///get market news

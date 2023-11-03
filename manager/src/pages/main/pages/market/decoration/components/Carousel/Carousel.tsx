@@ -23,7 +23,7 @@ export default function CarouselContainer() {
               <h2>Click to create a carousel</h2>
             </UpdateModalButton>
           ) : (
-            <Carousel>
+            <Carousel autoplay>
               {data?.data?.map((item) => (
                 <Item {...item} key={item.id} refetch={refetch} />
               ))}

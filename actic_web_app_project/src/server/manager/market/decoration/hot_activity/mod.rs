@@ -53,7 +53,12 @@ pub async fn update_hot_activity(
     data: UpdateHotActivityReq,
 ) -> Result<String, MyError> {
     match conn.exec_first::<String, _, _>(
-        "select title from activity_base where id=:id",
+        "select title from activity_base
+            where id=:id and
+            (
+            id in (select id from (select id from activity_bundle where id=:id limit 1) as bundle) or
+            id in (select id from (select id from activity_promotion where id=:id limit 1) as promotion)
+            )",
         params! {
             "id" => data.id
         },

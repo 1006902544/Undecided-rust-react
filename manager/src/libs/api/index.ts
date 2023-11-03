@@ -105,7 +105,7 @@ import type {
   GetHotActivityParams,
   UpdateHotActivityReq,
   DeleteHotActivityParams,
-  MarketNewsLimitRes,
+  MarketNewsRes,
   GetNewsParams,
   UpdateNewsReq,
   DeleteNewsParams,
@@ -3509,7 +3509,7 @@ export const getNews = (
     params?: GetNewsParams,
  options?: SecondParameter<typeof custom_instance>,signal?: AbortSignal
 ) => {
-      return custom_instance<MarketNewsLimitRes>(
+      return custom_instance<MarketNewsRes>(
       {url: `/manager/market/decoration/news`, method: 'get',
         params, signal
     },

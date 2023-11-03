@@ -113,13 +113,13 @@ export default function TransferContainer() {
                 className="rounded-md px-4 flex justify-between items-center leading-10 bg-[#ebebeb] mb-2"
               >
                 <span className="flex items-center">
-                  {item.is_hot && (
+                  {item.is_hot ? (
                     <img
                       alt=""
                       src={hotPng}
                       className="w-[18px] h-[18px] mr-[10px]"
                     />
-                  )}
+                  ) : null}
                   {item.title}
                 </span>
 
@@ -127,7 +127,7 @@ export default function TransferContainer() {
                   id={item.id}
                   mutate={createMutate}
                   loading={createLoading}
-                  disabled={!!item.is_hot}
+                  disabled={!!item.is_hot || !item.publish_type}
                 />
               </div>
             ))}

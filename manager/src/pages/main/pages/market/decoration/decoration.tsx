@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel, HotActivity } from './components';
+import { Carousel, HotActivity, News } from './components';
 
 export default function Decoration() {
   return (
@@ -7,11 +7,13 @@ export default function Decoration() {
       <Carousel />
 
       <div className="flex mt-[24px]">
-        <div className="w-[1100px]">
+        <div className="w-[1100px] flex-shrink-0">
           <HotActivity />
         </div>
 
-        <div className="flex-1"></div>
+        <div className="flex-1 mx-8">
+          <News />
+        </div>
       </div>
     </div>
   );
