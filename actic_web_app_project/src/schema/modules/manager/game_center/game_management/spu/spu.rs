@@ -4,6 +4,8 @@ use serde::{Deserialize, Serialize};
 use utoipa::{IntoParams, ToSchema};
 use validator::Validate;
 
+use crate::schema::modules::manager::manager_response::OrderBy;
+
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]
 pub struct SpuLimit {
     pub id: u64,
@@ -93,18 +95,33 @@ pub struct DeleteSpuDetailReq {
     pub id: String,
 }
 
-#[derive(Debug, IntoParams, ToSchema, Serialize, Deserialize)]
+#[derive(Debug, IntoParams, ToSchema, Serialize, Deserialize, Validate)]
 pub struct GetSpuLimitReq {
     pub limit: Option<u64>,
     pub page: Option<u64>,
     pub id: Option<u64>,
     pub tag_id: Option<u64>,
     pub type_id: Option<u64>,
+    #[validate(length(min = 6, max = 10), required)]
     pub name: Option<String>,
     pub start_price: Option<u64>,
     pub end_price: Option<u64>,
     pub start_issue_time: Option<String>,
     pub end_issue_time: Option<String>,
+    pub sort: Option<SpuLimitSort>,
+    pub order: Option<OrderBy>,
+}
+
+#[derive(ToSchema, Debug, Serialize, Deserialize)]
+pub enum SpuLimitSort {
+    #[serde(rename = "default")]
+    Default,
+    #[serde(rename = "time")]
+    Time,
+    #[serde(rename = "most_likely")]
+    MostLikely,
+    #[serde(rename = "most_attention")]
+    MostAttention,
 }
 
 #[derive(Debug, Clone, ToSchema, Serialize, Deserialize)]

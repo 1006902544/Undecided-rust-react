@@ -80,7 +80,7 @@ export default function News() {
               >
                 <div
                   className="absolute z-10 w-full h-full transition-all
-                  bg-[rgba(0,0,0,.5)] text-[white] flex justify-center opacity-0 hover:opacity-100 space-x-6"
+                  bg-[rgba(0,0,0,.5)] text-[white] flex justify-center items-center opacity-0 hover:opacity-100 space-x-6"
                 >
                   <UpdateModalButton
                     type="edit"

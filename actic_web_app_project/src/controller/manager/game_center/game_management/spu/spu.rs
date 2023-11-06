@@ -18,6 +18,7 @@ use crate::{
 #[utoipa::path(
   post,
   path = "/manager/gamesCenter/gamesManagement/spu",
+  tag = "spu",
   request_body = UpdateSpuReq,
   responses (
     (status = 200 , body = SpuUpdateResData , description = "success")
@@ -50,6 +51,7 @@ pub async fn update_spu(
     get,
     path = "/manager/gamesCenter/gamesManagement/spu",
     params (GetSpuLimitReq),
+    tag = "spu",
     responses (
         (status = 200 , body = SpuRes , description = "success")
         )
@@ -78,6 +80,7 @@ pub async fn get_spu_limit(
     get,
     path = "/manager/gamesCenter/gamesManagement/spu/detail",
     params (GetSpuDetailReq),
+    tag = "spu",
     responses (
         (status = 200 , body = SpuDetailRes , description = "success")
         )
@@ -106,6 +109,7 @@ pub async fn get_spu_detail(
     delete,
     path = "/manager/gamesCenter/gamesManagement/spu",
     params (DeleteSpuDetailReq),
+    tag = "spu",
     responses (
         (status = 200 , body = ResPonseString , description = "success")
         )
@@ -134,6 +138,7 @@ pub async fn delete_spu(
     get,
     path = "/manager/gamesCenter/gamesManagement/spu/tree",
     params (GetSpuTreeReq),
+    tag = "spu",
     responses (
         (status = 200 , body = SpuSkuTreeRes , description = "success")
         )

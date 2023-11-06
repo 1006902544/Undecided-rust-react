@@ -172,6 +172,8 @@ use utoipa::OpenApi;
         DeletePermissionQuery,
         UpdateRouteReq,
         //通用
+        OrderBy,
+        //通用模块
         List,
         //游戏标签
         Tag,UpdateTagReq,TagLimitReq,DeleteTagReq,GameTagsRes,GameTagsLimitRes,
@@ -183,7 +185,7 @@ use utoipa::OpenApi;
         GetCompanyStudioReq,UpdateCompanyStudioReq,CompanyStudioDetail,CompanyStudio,CompanyStudioRes,CompanyStudioLimitRes,GetCompanyStudioDetailReq,DeleteCompanyStudioDetailReq,CompanyLocation,CompanyLocationRes,
         //spu
         SpuLimit,SpuDetail,UpdateSpuReq,GetSpuDetailReq,DeleteSpuDetailReq,GetSpuLimitReq, SpuFileObject,SpuRes,SpuLimitRes,SpuDetailRes,SpuUpdateRes,SpuUpdateResData,SpuSkuTreeRes
-        ,SpuSkuTreeLimitRes,SpuSkuTree,SpuTreeChildren,GetSpuTreeReq,
+        ,SpuSkuTreeLimitRes,SpuSkuTree,SpuTreeChildren,GetSpuTreeReq,SpuLimitSort,
         //spu更新记录
         SpuUpdateRecord,UpdateSpuUpdateRecord,SpuUpdateRecordLimitReq,SpuUpdateRecordDeleteReq,SpuUpdateRecordRes,SpuUpdateRecordLimitRes,UpdateSpuUpdateRecordResData,UpdateSpuUpdateRecordRes,
         //spu公告

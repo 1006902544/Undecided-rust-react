@@ -42,7 +42,7 @@ use crate::schema::modules::admin::admin::AdminInfo;
     AdminInfoListRes = ResponseData<Vec<AdminInfo>>,
     AuthLimitRes = ResponseData<AuthRes>,
     PermissionLimitRes = ResponseData<PermissionRes>,
-    //通用
+    //通用模块
     ListRes = ResponseData<Vec<List>>,
     //游戏标签limit
     GameTagsRes = ResponseData<GameTagsLimitRes>,
@@ -119,6 +119,25 @@ impl<B> ResponseData<B> {
             data,
             message,
             status,
+        }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize, ToSchema, Clone)]
+pub enum OrderBy {
+    #[schema(rename = "desc")]
+    #[serde(rename = "DESC")]
+    DESC,
+    #[schema(rename = "asc")]
+    #[serde(rename = "ASC")]
+    ASC,
+}
+
+impl From<OrderBy> for String {
+    fn from(order_by: OrderBy) -> Self {
+        match order_by {
+            OrderBy::DESC => "DESC".into(),
+            OrderBy::ASC => "ASC".into(),
         }
     }
 }

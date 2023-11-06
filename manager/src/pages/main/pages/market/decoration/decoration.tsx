@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel, HotActivity, News } from './components';
+import { Carousel, Goods, HotActivity, News } from './components';
 
 export default function Decoration() {
   return (
@@ -9,6 +9,8 @@ export default function Decoration() {
       <div className="flex mt-[24px]">
         <div className="w-[1100px] flex-shrink-0">
           <HotActivity />
+
+          <Goods />
         </div>
 
         <div className="flex-1 mx-8">

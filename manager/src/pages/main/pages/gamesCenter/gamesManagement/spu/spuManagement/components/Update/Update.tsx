@@ -45,7 +45,7 @@ export default function Update() {
 
     const res = {
       ...data,
-      companyId: data.company_id,
+      companyId: data.company_id?.toString(),
       cover: [
         {
           url: data.cover.url,

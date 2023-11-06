@@ -9,7 +9,7 @@ use crate::{
         base_struct::{handle_limit, handle_page},
         modules::manager::{
             game_center::game_management::spu::spu::*,
-            manager_response::{LimitResults, SpuLimitRes, SpuSkuTreeLimitRes},
+            manager_response::{LimitResults, OrderBy, SpuLimitRes, SpuSkuTreeLimitRes},
         },
     },
 };
@@ -244,7 +244,7 @@ pub async fn get_spu_limit(
 ) -> Result<SpuLimitRes, MyError> {
     let limit = handle_limit(&params.limit);
     let page = handle_page(&params.page);
-    let sql_str = "
+    let stmt = format!("
     select sql_calc_found_rows s.id,s.name,s.price,s.issue_time,s.create_time,s.update_time,c.name as company_name,cv.cover_url as cover_url,cv.cover_name as cover_name,group_concat(distinct type.type_name separator ',') as types,group_concat(distinct tag.tag_name separator ',') as tags from spus as s
     inner join spu_tag as tag on tag.spu_id=s.id and (tag.tag_id=:tag_id or :tag_id is null)
     inner join spu_type as type on type.spu_id=s.id and (type.type_id=:type_id or :type_id is null)
@@ -252,9 +252,24 @@ pub async fn get_spu_limit(
     left join spu_cover as cv on cv.spu_id=s.id
     where (s.id=:id or :id is null) and (s.name=:name or :name is null)
     group by s.id
-    order by s.update_time desc
+    order by s.{} {:#?}
     limit :scope,:limit
-    ";
+    ",match params.sort {
+        Some(sort) => {
+            match sort {
+                SpuLimitSort::Default => "update_time",
+                SpuLimitSort::Time => "issue_time",
+                SpuLimitSort::MostLikely => "acclaim",
+                SpuLimitSort::MostAttention => "views",
+            }
+        },
+        None => {
+            "update_time"
+        }
+    },match  params.order {
+        Some(order) => order,
+        None => OrderBy::DESC
+    });
     let res = conn.exec_map::<(
         u64,
         String,
@@ -267,8 +282,8 @@ pub async fn get_spu_limit(
         String,
         String,
         String,
-    ), &str, _, _, SpuLimit>(
-        sql_str,
+    ), String, _, _, SpuLimit>(
+        stmt,
         params! {
             "scope" => limit*(page-1),
             "limit" => limit,
@@ -404,6 +419,7 @@ pub async fn get_spu_tree_limit(
         group by sp.id
         order by sp.update_time desc
         limit :scope,:limit";
+
     let res = conn.exec_map::<(u64, String, f64, String, serde_json::Value), _, _, _, _>(
         stmt,
         params! {

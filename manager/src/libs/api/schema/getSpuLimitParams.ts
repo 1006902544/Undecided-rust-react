@@ -4,6 +4,7 @@
  * actic_web_app_project
  * OpenAPI spec version: 0.1.0
  */
+import type { SpuLimitSort } from './spuLimitSort';
 
 export type GetSpuLimitParams = {
 limit?: number | null;
@@ -16,4 +17,5 @@ start_price?: number | null;
 end_price?: number | null;
 start_issue_time?: string | null;
 end_issue_time?: string | null;
+sort?: SpuLimitSort | null;
 };
