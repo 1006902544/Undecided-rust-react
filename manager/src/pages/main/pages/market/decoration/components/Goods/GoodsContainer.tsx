@@ -12,6 +12,7 @@ export default function GoodsContainer() {
     tag_id: tag,
     type_id: type,
     sort: sortBy,
+    order: sortBy === 'time' ? 'ASC' : 'DESC',
   });
 
   const navigate = useNavigate();

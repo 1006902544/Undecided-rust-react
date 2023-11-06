@@ -4,6 +4,7 @@
  * actic_web_app_project
  * OpenAPI spec version: 0.1.0
  */
+import type { GetSpuLimitReqOrder } from './getSpuLimitReqOrder';
 import type { GetSpuLimitReqSort } from './getSpuLimitReqSort';
 
 export interface GetSpuLimitReq {
@@ -12,6 +13,7 @@ export interface GetSpuLimitReq {
   id?: number | null;
   limit?: number | null;
   name?: string | null;
+  order?: GetSpuLimitReqOrder;
   page?: number | null;
   sort?: GetSpuLimitReqSort;
   start_issue_time?: string | null;

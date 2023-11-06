@@ -5,6 +5,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type { SpuLimitSort } from './spuLimitSort';
+import type { OrderBy } from './orderBy';
 
 export type GetSpuLimitParams = {
 limit?: number | null;
@@ -18,4 +19,5 @@ end_price?: number | null;
 start_issue_time?: string | null;
 end_issue_time?: string | null;
 sort?: SpuLimitSort | null;
+order?: OrderBy | null;
 };
