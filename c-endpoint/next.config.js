@@ -8,6 +8,7 @@ const nextConfig = {
   env: {
     APP_ENV: process.env.APP_ENV,
   },
+  reactStrictMode: false,
 };
 
 module.exports = nextConfig;

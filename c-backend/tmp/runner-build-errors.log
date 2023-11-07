@@ -1,2 +1,0 @@
-# c-backend/src/lib/utils/verify
-src\lib\utils\verify\verify.go:15:26: cannot use strings.Split(err.Error(), "/n") (value of type []string) as string value in argument to response.BadRequest

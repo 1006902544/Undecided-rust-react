@@ -2,13 +2,11 @@
 import { NextUIProvider } from '@nextui-org/react';
 import React, { useEffect } from 'react';
 import { Header } from '.';
-import { postApiUserSignUp } from '@/lib/endpoint';
+import { message } from '@/lib/components';
 
 export default function App({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    postApiUserSignUp({
-      type: 'account',
-    });
+    message.success('casc');
   }, []);
 
   return (

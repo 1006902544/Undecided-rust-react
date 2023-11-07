@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import React, { useEffect } from 'react';
 import style from './Header.module.scss';
 import { Navbar } from './components';
 
