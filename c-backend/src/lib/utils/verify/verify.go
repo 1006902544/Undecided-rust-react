@@ -2,6 +2,7 @@ package verify
 
 import (
 	"c-backend/src/lib/utils/response"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,6 +12,6 @@ func VerifyJsonParams(c *gin.Context, obj any, fn gin.HandlerFunc) {
 	if err == nil {
 		fn(c)
 	} else {
-		response.BadRequest(c, err.Error())
+		response.BadRequest(c, strings.Split(err.Error(), "\n")[0])
 	}
 }

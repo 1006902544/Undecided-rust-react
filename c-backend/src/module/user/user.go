@@ -13,16 +13,16 @@ const (
 // 用户注册参数
 type UserSignUpReq struct {
 	Type    string                    `json:"type" binding:"required"`
-	Account UserSignUpAccountReq      `json:"account" binding:""`
-	Info    UserCreateOrUpdateInfoReq `json:"info" binding:""`
+	Account UserSignUpAccountReq      `json:"account" `
+	Info    UserCreateOrUpdateInfoReq `json:"info"`
 }
 
 // 用户注册参数-账号
 type UserSignUpAccountReq struct {
-	Username string `json:"username" binding:"required"`
-	Password string `json:"password" binding:"required"`
-	Email    string `json:"email" binding:"required,email"`
-	Captcha  string `json:"captcha" binding:"required"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Email    string `json:"email" binding:"email"`
+	Captcha  string `json:"captcha" binding:"len=6"`
 }
 
 // 用户注册参数-信息
