@@ -27,16 +27,15 @@ type UserSignUpAccountReq struct {
 
 // 用户注册参数-信息
 type UserCreateOrUpdateInfoReq struct {
-	Id         int       `json:"id" binding:"required"`
-	Nickname   string    `json:"nickname" binding:"required"`
-	Username   string    `json:"username" binding:"required"`
-	Gender     int       `json:"gender"`
-	Birthday   time.Time `json:"birthday"`
-	AvatarUrl  string    `json:"avatarUrl" gorm:"column:avatar_url"`
-	CreateTime time.Time `json:"createTime" gorm:"column:create_time"`
-	UpdateTime time.Time `json:"updateTime" gorm:"column:update_time"`
-	Mobile     int       `json:"mobile"`
-	Region     string    `json:"region" binding:"required"`
+	Id        int       `json:"id"`
+	Nickname  string    `json:"nickname"`
+	Username  string    `json:"username"`
+	Gender    int       `json:"gender"`
+	Birthday  time.Time `json:"birthday"`
+	AvatarUrl string    `json:"avatarUrl" gorm:"column:avatar_url"`
+	Mobile    int       `json:"mobile"`
+	Region    string    `json:"region"`
+	Email     string    `json:"email" binding:"email"`
 }
 
 // 用户账号-表
@@ -63,6 +62,7 @@ type UserInfo struct {
 	UpdateTime time.Time `json:"updateTime" gorm:"column:update_time"`
 	Mobile     int       `json:"mobile"`
 	Region     string    `json:"region" binding:"required"`
+	Email      string    `json:"email" binding:"required,email"`
 }
 
 func (UserInfo) TableName() string {
@@ -82,21 +82,3 @@ type UserInfoWithType struct {
 	Type string `json:"type" binding:"required"`
 	UserInfo
 }
-
-// // 自定义验证器
-// func init() {
-// 	myValidator()
-// }
-
-// var Validate *validator.Validate
-
-// func myValidator() {
-// 	Validate = validator.New()
-// 	Validate.RegisterValidation("my", myFunc)
-// }
-
-// func myFunc(f validator.FieldLevel) bool {
-// 	sct := f.Field()
-// 	fmt.Println(sct)
-// 	return true
-// }

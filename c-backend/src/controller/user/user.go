@@ -24,6 +24,9 @@ func SignUp(c *gin.Context) {
 		case userModule.Account:
 			res := userServer.CreateAccount(data.Account)
 			response.Send(c, res)
+		case userModule.Info:
+			res := userServer.CreateOrUpdateInfo(data.Info)
+			response.Send(c, res)
 		default:
 			response.BadRequest(c, "Type should be account or info")
 		}
