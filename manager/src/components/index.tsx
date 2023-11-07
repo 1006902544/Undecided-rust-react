@@ -23,3 +23,4 @@ export { default as ProFormSelectList } from './ProFormSelectList';
 export { default as ProFormTextNumber } from './ProFormTextNumber';
 export { Map } from './Map';
 export { default as ProFormMap } from './ProFormMap';
+export { Echarts } from './Echarts';
