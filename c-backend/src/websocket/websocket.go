@@ -1,8 +1,12 @@
 package websocket
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
+
+	wsModule "c-backend/src/websocket/module"
+	wsRouter "c-backend/src/websocket/router"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
@@ -20,20 +24,30 @@ func Handler(c *gin.Context) {
 	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
 		fmt.Println(err)
-		return
+		conn.Close()
 	}
 
 	for {
-		messageType, p, err := conn.ReadMessage()
+		key, err := getKey(conn)
 		if err != nil {
-			fmt.Println(err)
-			break
+			conn.WriteJSON(err.Error())
+		} else {
+			wsRouter.Router(key, conn, c)
 		}
-		fmt.Println("messageType:", messageType)
-		fmt.Println("p:", string(p))
+	}
+}
 
-		c.Writer.Write(p)
+func getKey(conn *websocket.Conn) (string, error) {
+	var req = wsModule.RequestParams[interface{}]{}
+	err := conn.ReadJSON(&req)
+	if err != nil {
+		return "", err
+	} else {
+		if req.Key == "" {
+			return req.Key, errors.New("missing key 'key'")
+		} else {
+			return req.Key, err
+		}
 	}
 
-	conn.Close()
 }
