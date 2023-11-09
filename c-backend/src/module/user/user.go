@@ -1,6 +1,7 @@
 package user
 
 import (
+	"errors"
 	"time"
 )
 
@@ -71,11 +72,30 @@ func (UserInfo) TableName() string {
 
 // 用户登录参数
 type SignInReq struct {
-	Type     string `json:"type" binding:"required"`
-	Username string `json:"username"  binding:"min=8,max=18"`
-	Password string `json:"password" binding:"min=8,max=18"`
-	Email    string `json:"email" binding:"email"`
-	Captcha  string `json:"captcha" binding:"len=6"`
+	Type     string `json:"type" validate:"required,oneof='email' 'password'"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Email    string `json:"email"`
+	Captcha  string `json:"captcha"`
+}
+
+func (req SignInReq) Validate() error {
+	switch req.Type {
+	case "email":
+		if req.Email == "" || req.Captcha == "" {
+			return errors.New("missing field 'email' or 'captcha'")
+		}
+		return nil
+
+	case "password":
+		if req.Username == "" || req.Password == "" {
+			return errors.New("missing field 'username' or 'password'")
+		}
+		return nil
+
+	default:
+		return nil
+	}
 }
 
 type UserInfoWithType struct {

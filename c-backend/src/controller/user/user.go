@@ -24,11 +24,46 @@ func SignUp(c *gin.Context) {
 		case userModule.Account:
 			res := userServer.CreateAccount(data.Account)
 			response.Send(c, res)
+
 		case userModule.Info:
 			res := userServer.CreateOrUpdateInfo(data.Info)
 			response.Send(c, res)
+
 		default:
 			response.BadRequest(c, "Type should be account or info")
+		}
+	})
+}
+
+// @Summary SignIn
+// @Schemas
+// @Tags User
+// @Accept json
+// @Produce json
+// @Success 200 {object} response.RestfulResponse{data=string} "ok"
+// @Param request body userModule.UserSignInReq true "body"
+// @Router /api/user/signIn [post]
+func SignIn(c *gin.Context) {
+	var data userModule.SignInReq
+	verify.VerifyJsonParams(c, &data, func(c *gin.Context) {
+
+		err := data.Validate()
+		if err != nil {
+			response.BadRequest(c, err.Error())
+			return
+		}
+
+		switch data.Type {
+		case "email":
+			res := userServer.SignInByEmail(data.Email, data.Captcha)
+			response.Send(c, res)
+
+		case "password":
+			res := userServer.SignInByPassword(data.Username, data.Password)
+			response.Send(c, res)
+
+		default:
+			response.BadRequest(c, "type must be 'email' or 'password'")
 		}
 	})
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func VerifyJsonParams(c *gin.Context, obj any, fn gin.HandlerFunc) {
+func VerifyJsonParams(c *gin.Context, obj interface{}, fn gin.HandlerFunc) {
 	err := c.ShouldBindJSON(obj)
 	if err == nil {
 		fn(c)

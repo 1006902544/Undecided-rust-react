@@ -1,6 +1,6 @@
 package module
 
-import wsFriendModule "c-backend/src/websocket/module/friend"
+import wsFriendModule "c-backend/src/websocket/module/user/friend"
 
 type Responder struct {
 	Code    int         `json:"code"`

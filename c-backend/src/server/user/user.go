@@ -1,6 +1,7 @@
 package user
 
 import (
+	"c-backend/src/lib/authorization"
 	"c-backend/src/lib/db"
 	"c-backend/src/lib/utils/response"
 	userModule "c-backend/src/module/user"
@@ -56,4 +57,49 @@ func CreateOrUpdateInfo(data userModule.UserCreateOrUpdateInfoReq) response.Rest
 	} else {
 		return response.New(http.StatusOK, "Handle success", nil)
 	}
+}
+
+func SignInByEmail(email string, captcha string) response.RestfulResponse {
+	captchaRes := captchaServer.VerifyCaptcha(captchaModule.VerifyCaptchaReq{
+		Email:   email,
+		Captcha: captcha,
+	})
+	var user userModule.UserInfo
+	if captchaRes.Code == 200 {
+		res := db.DB.Where("email = ?", email).First(&user)
+
+		if res.RowsAffected == 0 {
+			return response.NotFoundError()
+		}
+
+		token, tokenErr := authorization.EncodeToken(user)
+		if tokenErr != nil {
+			return response.New(http.StatusUnauthorized, "encode failed", nil)
+		}
+
+		return response.New(200, "success", token)
+	} else {
+		return response.New(http.StatusBadRequest, "captcha is wrong", nil)
+	}
+}
+
+func SignInByPassword(username string, password string) response.RestfulResponse {
+	var user userModule.UserInfo
+	res := db.DB.Table("user_account as ua").Select("ui.*").Where("ua.username = ? and ua.password = ?", username, password).Limit(1).Joins("left join user_info as ui on ui.id = ua.id").Scan(&user)
+
+	if res.Error != nil {
+		return response.SqlError(res.Error.Error())
+	}
+
+	if res.RowsAffected == 0 {
+		return response.NotFoundError()
+	}
+
+	token, tokenErr := authorization.EncodeToken(user)
+
+	if tokenErr != nil {
+		return response.New(http.StatusUnauthorized, "encode failed", nil)
+	}
+
+	return response.New(200, "success", token)
 }

@@ -42,6 +42,14 @@ func Forbidden(c *gin.Context, message string) {
 	Send(c, New(http.StatusForbidden, message, nil))
 }
 
+func AuthError() RestfulResponse {
+	return New(http.StatusUnauthorized, "authorized error", nil)
+}
+
+func Unauthorized(c *gin.Context) {
+	Send(c, AuthError())
+}
+
 func Send(c *gin.Context, res RestfulResponse) {
 	c.JSON(res.Code, res)
 }

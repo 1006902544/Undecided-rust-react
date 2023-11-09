@@ -2,7 +2,7 @@ package start
 
 import (
 	"c-backend/src/lib/db"
-	"c-backend/src/lib/middleware/errorHandler"
+	authorization "c-backend/src/lib/middleware/authorization"
 	basic "c-backend/src/router"
 	ws "c-backend/src/websocket"
 
@@ -15,7 +15,7 @@ func Start() {
 
 	r := gin.Default()
 	r.Use(cors.Default())
-	r.Use(errorHandler.RestfulError())
+	r.Use(authorization.JWTAuth())
 
 	r.GET("/ws", ws.Handler)
 	basic.BasicRouter(r)

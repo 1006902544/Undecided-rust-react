@@ -30,7 +30,7 @@ func Handler(c *gin.Context) {
 	for {
 		key, err := getKey(conn)
 		if err != nil {
-			conn.WriteJSON(err.Error())
+			conn.WriteJSON(wsModule.Responder{Code: 400, Message: err.Error()})
 		} else {
 			wsRouter.Router(key, conn, c)
 		}
