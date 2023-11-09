@@ -3,16 +3,22 @@
  * Do not edit manually.
  */
 import {
+  useQuery,
   useMutation
 } from '@tanstack/react-query'
 import type {
+  UseQueryOptions,
   UseMutationOptions,
-  MutationFunction
+  QueryFunction,
+  MutationFunction,
+  UseQueryResult,
+  QueryKey
 } from '@tanstack/react-query'
 import type {
   ResponseRestfulResponse,
   CaptchaSendCaptchaReq,
   CaptchaVerifyCaptchaReq,
+  GetApiUserSelf200,
   PostApiUserSignIn200,
   UserSignInReq,
   PostApiUserSignUp200,
@@ -111,6 +117,47 @@ export const postApiUserCaptchaVerify = (
       return useMutation<Awaited<ReturnType<typeof postApiUserCaptchaVerify>>, TError, {data: CaptchaVerifyCaptchaReq}, TContext>(mutationFn, mutationOptions)
     }
     
+/**
+ * @summary GetSelfInfo
+ */
+export const getApiUserSelf = (
+    
+ options?: SecondParameter<typeof instance>,signal?: AbortSignal
+) => {
+      return instance<GetApiUserSelf200>(
+      {url: `/api/user/self`, method: 'get', signal
+    },
+      options);
+    }
+  
+
+export const getGetApiUserSelfQueryKey = () => [`/api/user/self`];
+
+    
+export type GetApiUserSelfQueryResult = NonNullable<Awaited<ReturnType<typeof getApiUserSelf>>>
+export type GetApiUserSelfQueryError = ErrorType<unknown>
+
+export const useGetApiUserSelf = <TData = Awaited<ReturnType<typeof getApiUserSelf>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getApiUserSelf>>, TError, TData>, request?: SecondParameter<typeof instance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetApiUserSelfQueryKey();
+
+  
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getApiUserSelf>>> = ({ signal }) => getApiUserSelf(requestOptions, signal);
+
+  const query = useQuery<Awaited<ReturnType<typeof getApiUserSelf>>, TError, TData>(queryKey, queryFn, queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryKey;
+
+  return query;
+}
+
+
 /**
  * @summary SignIn
  */

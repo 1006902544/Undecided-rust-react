@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 
 export default function Home() {
   const { push } = useRouter();

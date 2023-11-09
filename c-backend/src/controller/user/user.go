@@ -1,6 +1,7 @@
 package user
 
 import (
+	"c-backend/src/lib/authorization"
 	"c-backend/src/lib/utils/response"
 	"c-backend/src/lib/utils/verify"
 	userModule "c-backend/src/module/user"
@@ -66,4 +67,25 @@ func SignIn(c *gin.Context) {
 			response.BadRequest(c, "type must be 'email' or 'password'")
 		}
 	})
+}
+
+// @Summary GetSelfInfo
+// @Schemas
+// @Tags User
+// @Accept json
+// @Produce json
+// @Success 200 {object} response.RestfulResponse{data=userModule.UserInfo} "ok"
+// @Router /api/user/self [get]
+func GetSelfInfo(c *gin.Context) {
+	token := c.Request.Header.Get("Authorization")
+	if token == "" {
+		response.Unauthorized(c)
+	} else {
+		res, err := authorization.DecodeToken(token)
+		if err != nil {
+			response.Unauthorized(c)
+		} else {
+			response.Success(c, res)
+		}
+	}
 }

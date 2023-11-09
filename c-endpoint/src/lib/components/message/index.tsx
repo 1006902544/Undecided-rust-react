@@ -6,6 +6,7 @@ import type {
   MessageProps,
 } from './index.d';
 import Message from './Message';
+import { Root, createRoot } from 'react-dom/client';
 
 const message: MessageProps = {
   success(content, conf) {
@@ -44,7 +45,7 @@ const messageFn = ({ content, timeout, status }: CreateRootFnProps) => {
   let ele: HTMLDivElement | null = document.querySelector(`.${className}`);
   if (!ele) {
     const root = document.createElement('div');
-    root.className = `.${className}`;
+    root.className = className;
     document.body.appendChild(root);
     ele = root;
   }
@@ -57,15 +58,37 @@ const messageFn = ({ content, timeout, status }: CreateRootFnProps) => {
   });
 };
 
+const unmount = (
+  ele: HTMLDivElement,
+  root: Root,
+  container: HTMLDivElement
+) => {
+  root.unmount();
+  ele.removeChild(container);
+};
+
 const createComponent = ({
   content,
   status,
   ele,
   timeout,
 }: CreateComponentFnProps) => {
-  createPortal(
-    <Message status={status} content={content} timeout={timeout} />,
-    ele
+  const container = document.createElement('div');
+  ele.appendChild(container);
+  const root = createRoot(container);
+
+  const remove = () => unmount(ele, root, container);
+
+  root.render(
+    createPortal(
+      <Message
+        status={status}
+        content={content}
+        timeout={timeout}
+        remove={remove}
+      />,
+      container
+    )
   );
 };
 

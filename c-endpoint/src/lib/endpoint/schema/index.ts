@@ -1,5 +1,7 @@
 export * from './captchaSendCaptchaReq';
 export * from './captchaVerifyCaptchaReq';
+export * from './getApiUserSelf200';
+export * from './getApiUserSelf200AllOf';
 export * from './postApiUserSignIn200';
 export * from './postApiUserSignIn200AllOf';
 export * from './postApiUserSignUp200';
@@ -8,5 +10,6 @@ export * from './responseRestfulResponse';
 export * from './userSignInReq';
 export * from './userSignInReqType';
 export * from './userUserCreateOrUpdateInfoReq';
+export * from './userUserInfo';
 export * from './userUserSignUpAccountReq';
 export * from './userUserSignUpReq';

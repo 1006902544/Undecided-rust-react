@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function layout({ children }: LayoutBase) {
-  return <div>{children}</div>;
+  return <div className="h-full p-[24px]">{children}</div>;
 }

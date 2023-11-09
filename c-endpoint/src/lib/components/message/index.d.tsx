@@ -1,9 +1,12 @@
+import type { Root } from 'react-dom/client';
+
 export type Status = 'success' | 'failed' | 'default' | 'info';
 
 export interface MessageComponentProps {
   timeout?: number;
   content: React.ReactNode;
   status: Status;
+  remove: () => void;
 }
 
 export interface CreateRootFnProps {

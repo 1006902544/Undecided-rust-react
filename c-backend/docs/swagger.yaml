@@ -63,6 +63,37 @@ definitions:
       username:
         type: string
     type: object
+  user.UserInfo:
+    properties:
+      avatarUrl:
+        type: string
+      birthday:
+        type: string
+      createTime:
+        type: string
+      email:
+        type: string
+      gender:
+        type: integer
+      id:
+        type: integer
+      mobile:
+        type: integer
+      nickname:
+        type: string
+      region:
+        type: string
+      updateTime:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - id
+    - nickname
+    - region
+    - username
+    type: object
   user.UserSignUpAccountReq:
     properties:
       captcha:
@@ -128,6 +159,25 @@ paths:
           schema:
             $ref: '#/definitions/response.RestfulResponse'
       summary: EmailVerify
+      tags:
+      - User
+  /api/user/self:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestfulResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/user.UserInfo'
+              type: object
+      summary: GetSelfInfo
       tags:
       - User
   /api/user/signIn:

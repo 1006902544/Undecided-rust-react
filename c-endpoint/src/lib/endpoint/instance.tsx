@@ -10,7 +10,6 @@ AXIOS_INSTANCE.interceptors.response.use(
   (err) => {
     if (err.response.data.status === 401) {
       removeToken();
-      window.location.hash = '/signIn';
     }
     return Promise.reject(err);
   }

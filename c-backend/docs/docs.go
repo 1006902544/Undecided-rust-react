@@ -81,6 +81,40 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/user/self": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "GetSelfInfo",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestfulResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/user.UserInfo"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/signIn": {
             "post": {
                 "consumes": [
@@ -263,6 +297,51 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "region": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "user.UserInfo": {
+            "type": "object",
+            "required": [
+                "email",
+                "id",
+                "nickname",
+                "region",
+                "username"
+            ],
+            "properties": {
+                "avatarUrl": {
+                    "type": "string"
+                },
+                "birthday": {
+                    "type": "string"
+                },
+                "createTime": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "mobile": {
+                    "type": "integer"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "updateTime": {
                     "type": "string"
                 },
                 "username": {

@@ -1,3 +1,4 @@
 export { default as message } from './message';
+export { default as Spin } from './Spin/Spin';
 
 export const componentPrefixClassName = 'nazabanma';
