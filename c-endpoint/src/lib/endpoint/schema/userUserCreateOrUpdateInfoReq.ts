@@ -6,12 +6,11 @@
 export interface UserUserCreateOrUpdateInfoReq {
   avatarUrl?: string;
   birthday?: string;
-  createTime?: string;
+  email?: string;
   gender?: number;
-  id: number;
+  id?: number;
   mobile?: number;
-  nickname: string;
-  region: string;
-  updateTime?: string;
-  username: string;
+  nickname?: string;
+  region?: string;
+  username?: string;
 }

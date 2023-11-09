@@ -24,13 +24,31 @@ definitions:
       message:
         type: string
     type: object
+  user.SignInReq:
+    properties:
+      captcha:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      type:
+        enum:
+        - email
+        - password
+        type: string
+      username:
+        type: string
+    required:
+    - type
+    type: object
   user.UserCreateOrUpdateInfoReq:
     properties:
       avatarUrl:
         type: string
       birthday:
         type: string
-      createTime:
+      email:
         type: string
       gender:
         type: integer
@@ -42,15 +60,8 @@ definitions:
         type: string
       region:
         type: string
-      updateTime:
-        type: string
       username:
         type: string
-    required:
-    - id
-    - nickname
-    - region
-    - username
     type: object
   user.UserSignUpAccountReq:
     properties:
@@ -62,11 +73,6 @@ definitions:
         type: string
       username:
         type: string
-    required:
-    - captcha
-    - email
-    - password
-    - username
     type: object
   user.UserSignUpReq:
     properties:
@@ -122,6 +128,32 @@ paths:
           schema:
             $ref: '#/definitions/response.RestfulResponse'
       summary: EmailVerify
+      tags:
+      - User
+  /api/user/signIn:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/user.SignInReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestfulResponse'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: SignIn
       tags:
       - User
   /api/user/signUp:

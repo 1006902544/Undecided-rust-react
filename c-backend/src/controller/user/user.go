@@ -41,7 +41,7 @@ func SignUp(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Success 200 {object} response.RestfulResponse{data=string} "ok"
-// @Param request body userModule.UserSignInReq true "body"
+// @Param request body userModule.SignInReq true "body"
 // @Router /api/user/signIn [post]
 func SignIn(c *gin.Context) {
 	var data userModule.SignInReq

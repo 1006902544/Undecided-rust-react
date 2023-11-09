@@ -34,6 +34,11 @@ export default function Navbar() {
       value: '/community',
       active: false,
     },
+    {
+      label: 'Mine',
+      value: '/mine',
+      active: false,
+    },
   ]);
 
   useEffect(() => {

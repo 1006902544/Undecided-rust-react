@@ -81,6 +81,51 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/user/signIn": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "SignIn",
+                "parameters": [
+                    {
+                        "description": "body",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.SignInReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestfulResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/api/user/signUp": {
             "post": {
                 "consumes": [
@@ -166,14 +211,35 @@ const docTemplate = `{
                 }
             }
         },
-        "user.UserCreateOrUpdateInfoReq": {
+        "user.SignInReq": {
             "type": "object",
             "required": [
-                "id",
-                "nickname",
-                "region",
-                "username"
+                "type"
             ],
+            "properties": {
+                "captcha": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "email",
+                        "password"
+                    ]
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "user.UserCreateOrUpdateInfoReq": {
+            "type": "object",
             "properties": {
                 "avatarUrl": {
                     "type": "string"
@@ -181,7 +247,7 @@ const docTemplate = `{
                 "birthday": {
                     "type": "string"
                 },
-                "createTime": {
+                "email": {
                     "type": "string"
                 },
                 "gender": {
@@ -199,9 +265,6 @@ const docTemplate = `{
                 "region": {
                     "type": "string"
                 },
-                "updateTime": {
-                    "type": "string"
-                },
                 "username": {
                     "type": "string"
                 }
@@ -209,12 +272,6 @@ const docTemplate = `{
         },
         "user.UserSignUpAccountReq": {
             "type": "object",
-            "required": [
-                "captcha",
-                "email",
-                "password",
-                "username"
-            ],
             "properties": {
                 "captcha": {
                     "type": "string"

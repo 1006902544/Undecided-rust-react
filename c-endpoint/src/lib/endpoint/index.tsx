@@ -13,6 +13,8 @@ import type {
   ResponseRestfulResponse,
   CaptchaSendCaptchaReq,
   CaptchaVerifyCaptchaReq,
+  PostApiUserSignIn200,
+  UserSignInReq,
   PostApiUserSignUp200,
   UserUserSignUpReq
 } from './schema'
@@ -107,6 +109,44 @@ export const postApiUserCaptchaVerify = (
         }
 
       return useMutation<Awaited<ReturnType<typeof postApiUserCaptchaVerify>>, TError, {data: CaptchaVerifyCaptchaReq}, TContext>(mutationFn, mutationOptions)
+    }
+    
+/**
+ * @summary SignIn
+ */
+export const postApiUserSignIn = (
+    userSignInReq: UserSignInReq,
+ options?: SecondParameter<typeof instance>,) => {
+      return instance<PostApiUserSignIn200>(
+      {url: `/api/user/signIn`, method: 'post',
+      headers: {'Content-Type': 'application/json', },
+      data: userSignInReq
+    },
+      options);
+    }
+  
+
+
+    export type PostApiUserSignInMutationResult = NonNullable<Awaited<ReturnType<typeof postApiUserSignIn>>>
+    export type PostApiUserSignInMutationBody = UserSignInReq
+    export type PostApiUserSignInMutationError = ErrorType<unknown>
+
+    export const usePostApiUserSignIn = <TError = ErrorType<unknown>,
+    
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof postApiUserSignIn>>, TError,{data: UserSignInReq}, TContext>, request?: SecondParameter<typeof instance>}
+) => {
+      const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof postApiUserSignIn>>, {data: UserSignInReq}> = (props) => {
+          const {data} = props ?? {};
+
+          return  postApiUserSignIn(data,requestOptions)
+        }
+
+      return useMutation<Awaited<ReturnType<typeof postApiUserSignIn>>, TError, {data: UserSignInReq}, TContext>(mutationFn, mutationOptions)
     }
     
 /**
